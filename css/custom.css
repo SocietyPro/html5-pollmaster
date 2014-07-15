@@ -1,0 +1,12 @@
+button {
+	margin-left: .5em;
+}
+
+#pollHeader button {
+	float: right;
+}
+
+.clearBoth {
+	display: block;
+	clear: both;
+}

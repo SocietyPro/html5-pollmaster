@@ -11,17 +11,20 @@
     <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
   <body ng-controller="pollAppCtrl">
-    <div class="row" id="pollHeader">
-      <div class="col-md-12">
-        <img src="assets/images/pollmaster_logo.png">
-        </img>
-        <button class="green btn" id="peerListsButton" ng-click="peerListsShow()">Peer Lists</button>
-        
+    <div class="container">
+      <div class="row" id="pollHeader">
+        <div class="col-md-12">
+          <img src="assets/images/pollmaster_logo.png">
+          </img>
+          <button class="green btn" id="peerListsButton" ng-click="peerListsShow()">Peer Lists</button>
+          <button class="green btn" id="manageTemplatesButton" ng-click="manageTemplatesShow()">Manage Templates</button>
+          <button class="green btn" id="createPollButton" ng-click="createPollShow()">Create Poll</button>
+          <button class="green btn" id="helpButton" ng-click="helpShow()">Help</button> 
+        </div>
+      </div>
+      <div class="clearBoth"></div>
+      <div ng-view>
       </div>
     </div>
-    <div ng-view>
-    </div>
-    <h1>{{message || "Hello World"}}</h1>
-    <input ng-model="message" />
   </body>
 </html>
