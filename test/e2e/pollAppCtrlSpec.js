@@ -8,7 +8,8 @@ describe("pollAppCtrl", function () {
 	});
 
 	it("has a peer lists button", function () {
-
+    var peerLists = element(by.id("peerListsButton"));
+		expect(peerLists.getText()).toEqual("Peer Lists");
 	});
 
 	it("shows the peer lists management screen when the peer lists button is clicked", function () {
