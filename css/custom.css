@@ -2,7 +2,7 @@ button {
 	margin-left: .5em;
 }
 
-#pollHeader button {
+.navButtons {
 	float: right;
 }
 
