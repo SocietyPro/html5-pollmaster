@@ -1,7 +1,7 @@
-console.log(angular);
-var helloModule = angular.module("pollApp", ["ngRoute"]) // array is required
+console.log(Cambrian.pollApp);
+var pollApp = angular.module("pollApp", ["ngRoute"]) // array is required
 
-helloModule.config(function($routeProvider){
+pollApp.config(function($routeProvider){
   
   $routeProvider.when("/peerLists", {
     templateUrl: "/partials/peerLists.html",
@@ -25,7 +25,7 @@ helloModule.config(function($routeProvider){
 
 });
   
-helloModule.controller("pollAppCtrl", function($scope, $location){
+pollApp.controller("pollAppCtrl", function($scope, $location){
     $scope.peerListsShow = function(){
       $location.path("/peerLists");
     };
@@ -44,18 +44,18 @@ helloModule.controller("pollAppCtrl", function($scope, $location){
     };    
 });
 
-helloModule.controller("peerListsCtrl", function($scope){
+pollApp.controller("peerListsCtrl", function($scope){
     console.log($scope);
 });
 
-helloModule.controller("ManageTemplatesCtrl", function($scope){
+pollApp.controller("ManageTemplatesCtrl", function($scope){
     console.log($scope);
 });
 
-helloModule.controller("createPollCtrl", function($scope){
+pollApp.controller("createPollCtrl", function($scope){
     console.log($scope);
 });
 
-helloModule.controller("helpCtrl", function($scope){
+pollApp.controller("helpCtrl", function($scope){
     console.log($scope);
 });
