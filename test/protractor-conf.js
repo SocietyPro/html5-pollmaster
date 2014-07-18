@@ -1,3 +1,5 @@
+var HtmlReporter = require('protractor-html-screenshot-reporter');
+
 exports.config = {
   allScriptsTimeout: 11000,
 
@@ -15,5 +17,12 @@ exports.config = {
 
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
+  },
+
+  onPrepare: function() {
+    jasmine.getEnv().addReporter(new HtmlReporter({
+      baseDirectory: '/tmp/screenshots'
+      , docTitle: 'Pantheon Ping Application Test Results'
+    }));
   }
 };
