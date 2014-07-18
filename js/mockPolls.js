@@ -1,0 +1,61 @@
+var Cambrian = Cambrian || {};
+Cambrian.pollApp = {};
+
+var pollData = [
+  { 
+    id: "UUID1",
+    type: "Battle Ping",
+    title: "Join Operation Red Dawn!",
+    status: "started",
+    dateStarted: new Date("2014-07-18"),
+    nRecipients: 100,
+    nResponses: 82,
+    description: "We are going to burn the Russian Starbase. Scythe/Moa fleet is leaving at 21:00 from V-3.", 
+    options: ["I'll be there", "I can't go"],
+  },
+  { 
+    id: "UUID2",
+    type: "Poll",
+    title: "What is your favorite Snack?",
+    status: "started",
+    dateStarted: new Date("2014-07-15"),
+    nRecipients: 30,
+    nResponses: 20,
+    description: "We are about to restock the vending machine and want to know what y'all want in it.",
+    options: ["Tortrix BBQ", "Tortrix Crema Agria", "Lays BBQ", "Lays Original"],
+  },
+  { 
+    id: "UUID3",
+    type: "Vote",
+    title: "Leonardo di Cambrian for President of the Organization",
+    status: "complete",
+    dateStarted: new Date("2014-07-14"),
+    nRecipients: 100,
+    nResponses: 32,
+    description: "Vote for me, I promise I won't do anything evil.",
+    options: ["Vote Yes", "Vote No"],
+  },
+  { 
+    id: "UUID4",
+    type: "LocalTrader",
+    title: "I have 2 BTC to sell immediately. Takers?",
+    status: "unstarted",
+    dateStarted: null,
+    nRecipients: null,
+    nResponses: null,
+    description: "bitstamp +5%",
+    options: ["Yes, I'll buy BTC now"],
+  },
+  { 
+    id: "UUID5",
+    type: "Community",
+    title: "Swarm protest at 1pm. Can you join?",
+    status: "unstarted",
+    dateStarted: new Date("2014-06-13"),
+    nRecipients: 100,
+    nResponses: 55,
+    description: "Location and slogans are opsec, we'll tell you if you commit to joining.",
+    options: ["Yes, I can join", "Yes, I can join and bring my megaphone", "No, but good luck!", "No way. Swarm Rules!"],
+  },
+]
+Cambrian.pollApp.mocks = pollData;
