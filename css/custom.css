@@ -17,10 +17,23 @@ button {
 	border: 1px solid black;
 	margin: 10px;
 	padding: 8px;
+	background-color: #eee;
 }
 
 .entryTitle {
-	font-size: 33px;
+	font-size: 25px;
+}
+
+.poll-btn-group {
+	text-align: right;
+}
+
+.template-btn-group {
+	text-align: right;
+}
+
+.copyPollButton {
+	margin-right: 5px;
 }
 
 #pollsListHeader {
@@ -30,4 +43,3 @@ button {
 	text-align: center;
 	font-size: 33px;
 }
-

@@ -1,7 +1,7 @@
 describe("polls listing", function () {
-	
-	browser.get('default.htm#/');
 
+	browser.get('default.htm');
+	
 	it("has a listing of all saved polls", function () {
 		var listContainer = element(by.id('pollsListContainer'));
 		expect(listContainer.isDisplayed()).toBeTruthy();
@@ -38,7 +38,7 @@ describe("polls listing", function () {
 		
 		it("displays the poll type", function () {
 			expect(pollType.isDisplayed).toBeTruthy();
-			expect(pollType.getText()).toEqual("Battle Ping");
+			expect(pollType.getText()).toEqual("Battle Ping:");
 		});
 		
 		it("displays the poll title", function () {
