@@ -1,22 +1,21 @@
 describe("polls listing", function () {
 	
-	browser.get('default.htm');
+	browser.get('default.htm#/');
 
 	it("has a listing of all saved polls", function () {
-		var listContainer = element(by.id('listContainer'));
+		var listContainer = element(by.id('pollsListContainer'));
 		expect(listContainer.isDisplayed()).toBeTruthy();
 	});
 
 	describe("entry", function () {
 
 		var entries = element.all(by.repeater("poll in polls"));
-		var status = entries[0].findElement(by.binding("poll.status"));
-		var totalPolled = entries[0].findElement(by.binding("poll.nRecipients"));
-		var totalResponded = entries[0].findElement(by.binding("poll.nResponses"));
-		var pollDate = entries[0].findElement(by.binding("poll.dateStarted"));
-		var pollType = entries[0].findElement(by.binding("poll.type"));
-		var pollTitle = entries[0].findElement(by.binding("poll.title"));
-		var pollDescription = entries[0].findElement(by.binding("poll.description"));
+		var status = entries.get(0).findElement(by.binding("poll.status"));
+		var totalPolled = entries.get(0).findElement(by.binding("poll.nRecipients"));
+		var totalResponded = entries.get(0).findElement(by.binding("poll.nResponses"));
+		var pollDate = entries.get(0).findElement(by.binding("poll.dateStarted"));
+		var pollType = entries.get(0).findElement(by.binding("poll.type"));
+		var pollTitle = entries.get(0).findElement(by.binding("poll.title"));
 
 		it("displays the status", function () {
 			expect(status.isDisplayed).toBeTruthy();
@@ -25,18 +24,16 @@ describe("polls listing", function () {
 		
 		it("displays the total number polled", function () {
 			expect(totalPolled.isDisplayed).toBeTruthy();
-			expect(totalPolled.getText()).toEqual(100);
+			expect(totalPolled.getText()).toEqual("100");
 		});
 
 		it("displays the total number responded", function () {
 			expect(totalResponded.isDisplayed).toBeTruthy();
-			expect(totalResponded.getText()).toEqual(82);
+			expect(totalResponded.getText()).toEqual("82");
 		});
 		
 		it("displays the poll date", function () {
-			expectedDate = new Date("2014-07-18");
 			expect(pollDate.isDisplayed).toBeTruthy();
-			expect(pollDate.getText()).toEqual(expectedDate);
 		});
 		
 		it("displays the poll type", function () {
@@ -48,20 +45,15 @@ describe("polls listing", function () {
 			expect(pollTitle.isDisplayed).toBeTruthy();
 			expect(pollTitle.getText()).toEqual("Join Operation Red Dawn!");
 		});
-		
-		it("displays the poll description", function () {
-			expect(pollDescription.isDisplayed).toBeTruthy();
-			expect(pollDescription.getText()).toEqual("We are going to burn the Russian Starbase. Scythe/Moa fleet is leaving at 21:00 from V-3.");
-		});
 
 		it("has a copy button", function () {
-			var copyButton = entries[0].findElement(by.css(".copyPollButton"));
+			var copyButton = entries.get(0).findElement(by.css(".copyPollButton"));
 			expect(copyButton.isDisplayed()).toBeTruthy();
 			expect(copyButton.getText()).toEqual("Copy");
 		});
 
 		it("has a delete button", function () {
-			var deleteButton = entries[0].findElement(by.css(".deletePollButton"));
+			var deleteButton = entries.get(0).findElement(by.css(".deletePollButton"));
 			expect(deleteButton.isDisplayed()).toBeTruthy();
 			expect(deleteButton.getText()).toEqual("Delete");
 		});
@@ -69,31 +61,59 @@ describe("polls listing", function () {
 		describe("that is unstarted", function() {
 
 			it("has an edit poll button", function () {
-				var editPollButton = entries[3].findElement(by.css(".editPollButton"));
+				var editPollButton = entries.get(3).findElement(by.css(".editPollButton"));
 				expect(editPollButton.isDisplayed()).toBeTruthy();
 				expect(editPollButton.getText()).toEqual("Edit Poll");
 			});
 
 			it("has a start poll button", function () {
-				var startPollButton = entries[3].findElement(by.css(".startPollButton"));
+				var startPollButton = entries.get(3).findElement(by.css(".startPollButton"));
 				expect(startPollButton.isDisplayed()).toBeTruthy();
 				expect(startPollButton.getText()).toEqual("Start Poll");
 			});
 
-			it("does not display the poll date", function () {
-				var pollDate = entries[3].findElement(by.binding("poll.dateStarted"))
-				expect(pollDate.isPresent()).toBeFalsy();
+			it("does not display response data", function () {
+				var totalPolled = entries.get(3).findElement(by.binding("poll.nRecipients"));
+				var totalResponded = entries.get(3).findElement(by.binding("poll.nResponses"));
+				expect(totalPolled.isDisplayed()).toBeFalsy();
+				expect(totalResponded.isDisplayed()).toBeFalsy();
 			});
+
+			it("does not display the poll date", function () {
+				var pollDate = entries.get(3).findElement(by.binding("poll.dateStarted"))
+				expect(pollDate.isDisplayed()).toBeFalsy();
+			});
+
+			it("does not display the view results button", function () {
+				var viewResultsButton = entries.get(3).findElement(by.css(".viewResultsButton"));
+				expect(viewResultsButton.isDisplayed()).toBeFalsy();
+			})
 
 		});
 
 		describe("that is started or completed", function () {
 
 			it("has a view results button", function() {
-				var startedShowResultsButton = entries[0].findElement(by.css(".showResultsButton"));
-				var completedShowResultsButton = entries[2].findElement(by.css(".showResultsButton"));
-				expect(startedShowResultsButton.isPresent()).toBeTruthy();
-				expect(startedShowResultsButton.getText()).toEqual("View Results");
+				var startedViewResultsButton = entries.get(0).findElement(by.css(".viewResultsButton"));
+				var completedViewResultsButton = entries.get(2).findElement(by.css(".viewResultsButton"));
+				expect(startedViewResultsButton.isDisplayed()).toBeTruthy();
+				expect(startedViewResultsButton.getText()).toEqual("View Results");
+				expect(completedViewResultsButton.isDisplayed()).toBeTruthy();
+				expect(completedViewResultsButton.getText()).toEqual("View Results");
+			});
+
+			it("does not show edit poll button", function () {
+				var startedEditPollButton = entries.get(0).findElement(by.css(".editPollButton"));
+				var completedEditPollButton = entries.get(2).findElement(by.css(".editPollButton"));
+				expect(startedEditPollButton.isDisplayed()).toBeFalsy();
+				expect(completedEditPollButton.isDisplayed()).toBeFalsy();
+			});
+
+			it("does not show start poll button", function () {
+				var startedStartPollButton = entries.get(0).findElement(by.css(".startPollButton"));
+				var completedStartPollButton = entries.get(2).findElement(by.css(".startPollButton"));
+				expect(startedStartPollButton.isDisplayed()).toBeFalsy();
+				expect(completedStartPollButton.isDisplayed()).toBeFalsy();
 			});
 		});
 

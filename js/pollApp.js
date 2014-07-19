@@ -6,30 +6,41 @@ pollApp.config(function($routeProvider){
   $routeProvider.when("/peerLists", {
     templateUrl: "/partials/peerLists.html",
     controller: "peerListsCtrl"
-  });
-
-  $routeProvider.when("/manageTemplates", {
+  }).
+  when("/manageTemplates", {
     templateUrl: "/partials/manageTemplates.html",
     controller: "manageTemplatesCtrl"
-  });
-
-  $routeProvider.when("/createPoll", {
+  }).
+  when("/createPoll", {
     templateUrl: "/partials/createPoll.html",
     controller: "createPollCtrl"
-  });
-
-  $routeProvider.when("/help", {
+  }).
+  when("/help", {
     templateUrl: "/partials/help.html",
     controller: "helpCtrl"
+  }).
+  when("/", {
+    templateUrl: "/partials/pollsListing.html",
+    controller: "pollsListingCtrl"
+  }).
+  otherwise({
+    redirectTo: "/"
   });
 
 });
   
 pollApp.controller("pollAppCtrl", function($scope, $location){
+
+    $scope.polls = Cambrian.pollApp.mocks;
+    console.log($scope.polls);
+
+    $scope.pollsListingShow = function () {
+      $location.path("/");
+    };
+
     $scope.peerListsShow = function(){
       $location.path("/peerLists");
     };
-    console.log($scope);
 
     $scope.manageTemplatesShow = function(){
       $location.path("/manageTemplates");
@@ -42,6 +53,10 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
     $scope.helpShow = function(){
       $location.path("/help");
     };    
+});
+
+pollApp.controller("pollsListingCtrl", function ($scope) {
+    console.log($scope);
 });
 
 pollApp.controller("peerListsCtrl", function($scope){

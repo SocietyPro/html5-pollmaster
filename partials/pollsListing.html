@@ -1,0 +1,35 @@
+<div id="pollsListContainer">
+	<div id="pollsListHeader">
+		<em>Polls</em>
+	</div>
+	<div class="pollEntryContainer" ng-repeat="poll in polls">
+		<div class="row">
+			<div class="col-md-2">{{poll.status}}</div>
+			<div class="col-md-8">
+				<span ng-hide="poll.status === 'unstarted'">
+					(<span>{{poll.nResponses}}</span>/
+					<span>{{poll.nRecipients}}</span> 
+					Responses Complete)
+				</span>
+			</div>
+			<div class="col-md-2">
+				<button class="btn orange viewResultsButton" ng-hide="poll.status === 'unstarted'">View Results</button>
+			</div>
+		</div>
+		<div class="entryTitle">
+			<span>{{poll.type}}:</span>
+			<span> {{poll.title}}</span>
+		</div>
+		<button class="editPollButton" ng-show="poll.status === 'unstarted'">Edit Poll</button>
+		<button class="startPollButton" ng-show="poll.status === 'unstarted'">Start Poll</button>
+		
+		<div class="col-md-2">
+			<span ng-hide="poll.status === 'unstarted'">{{poll.dateStarted | date : short}}</span>
+		</div>
+		<div class="col-md-8"></div>
+		<div class="col-md-2">
+			<button class="copyPollButton">Copy</button>
+			<button class="deletePollButton">Delete</button>
+		</div>
+	</div>
+</div>
