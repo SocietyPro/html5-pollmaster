@@ -1,6 +1,6 @@
-describe("polls listing header", function () {
+browser.get("default.htm");
 
-	browser.get('default.htm');
+describe("polls listing header", function () {
 		
 	it("has a logo on the far left", function () {
 		var logo = element(by.css("img"));
@@ -15,7 +15,6 @@ describe("polls listing header", function () {
 	it("shows the peer lists management screen when the peer lists button is clicked", function () {
     element(by.id('peerListsButton')).click();
 		expect($("p.test").isDisplayed()).toBeTruthy();
-		browser.navigate().back();
 	});
 
 	it("has a manage templates button", function () {
@@ -26,7 +25,6 @@ describe("polls listing header", function () {
 	it("shows the manage templates screen when the manage templates button is clicked", function () {
     element(by.id('manageTemplatesButton')).click();
 		expect($("p.test").isDisplayed()).toBeTruthy();
-		browser.navigate().back();
 	});
 
 	it("has a create new poll button", function () {
@@ -37,7 +35,6 @@ describe("polls listing header", function () {
 	it("shows the create new poll screen when the create new poll button is clicked", function () {
     element(by.id('createPollButton')).click();
 		expect($("p.test").isDisplayed()).toBeTruthy();
-		browser.navigate().back();
 	});
 
 	it("has a help button", function () {
@@ -47,7 +44,6 @@ describe("polls listing header", function () {
 	it("shows the help screen when the help button is clicked", function () {
     element(by.id('helpButton')).click();
 		expect($("p.test").isDisplayed()).toBeTruthy();
-		browser.navigate().back();
 	});
 });
 

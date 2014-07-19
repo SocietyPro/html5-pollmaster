@@ -1,7 +1,7 @@
+browser.get('default.htm');
+
 describe("polls listing", function () {
 
-	browser.get('default.htm');
-	
 	it("has a listing of all saved polls", function () {
 		var listContainer = element(by.id('pollsListContainer'));
 		expect(listContainer.isDisplayed()).toBeTruthy();
