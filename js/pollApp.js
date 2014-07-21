@@ -19,6 +19,10 @@ pollApp.config(function($routeProvider){
     templateUrl: "/partials/help.html",
     controller: "helpCtrl"
   }).
+  when("/pollResults", {
+    templateUrl: "/partials/pollResults.html",
+    controller: "pollsResultsCtrl"
+  }).
   when("/", {
     templateUrl: "/partials/pollsListing.html",
     controller: "pollsListingCtrl"
@@ -36,6 +40,10 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
 
     $scope.pollsListingShow = function () {
       $location.path("/");
+    };
+
+    $scope.pollResultsShow = function () {
+      $location.path("/pollResults")
     };
 
     $scope.peerListsShow = function(){
@@ -56,6 +64,10 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
 });
 
 pollApp.controller("pollsListingCtrl", function ($scope) {
+    console.log($scope);
+});
+
+pollApp.controller("pollsResultsCtrl", function ($scope) {
     console.log($scope);
 });
 

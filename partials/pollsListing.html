@@ -18,7 +18,7 @@
 			</div>
 			<div class="col-md-2 poll-btn-group">
 				<div class="col-md-11 btn-group-vertical btn-group-solid btn-group-xs">
-					<div class="btn yellow btn-xs viewResultsButton" ng-hide="poll.status === 'unstarted'">
+					<div class="btn yellow btn-xs viewResultsButton" ng-hide="poll.status === 'unstarted'" ng-click="pollResultsShow()">
 						View Results
 					</div>
 					<div class="col-md-11 btn blue btn-xs editPollButton" ng-show="poll.status === 'unstarted'">

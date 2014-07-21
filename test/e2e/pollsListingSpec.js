@@ -128,6 +128,13 @@ describe("polls listing", function () {
 				expect(pollsListPanel.startedStartPollButton.isDisplayed()).toBeFalsy();
 				expect(pollsListPanel.completedStartPollButton.isDisplayed()).toBeFalsy();
 			});
+
+			it("displays a poll results screen for this poll when the View Results button is clicked", function () {
+				var pollResultsScreen = element(by.id('pollResultsContainer'));
+				expect(pollResultsScreen.isPresent()).toBeFalsy;
+				pollsListPanel.completedViewResultsButton.click();
+				expect(pollResultsScreen.isDisplayed()).toBeTruthy;
+			});
 		});
 
 	});
