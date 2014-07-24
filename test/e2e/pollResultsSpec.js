@@ -10,11 +10,17 @@ var PollResults = function () {
   this.ballotView = element(by.id("ballotView"));
   this.status = element(by.binding("poll.status"));
   this.tallyTable = element(by.id("tallyTable"));
-  this.commentsTable = element(by.css(".commentsTable"));
+  this.commentsTable = element(by.css('.commentsTable'));
+  this.commentName = element.all(by.repeater("comment in poll.comments")).first().element(by.binding('comment[0]'));
+  this.commentComment = element.all(by.repeater("comment in poll.comments")).first().element(by.binding('comment[1]'));
+  this.commentChatButton = element.all(by.repeater("comment in poll.comments")).first().element(by.css('.chatButton'));
 };
 
+/* This says those last three should work: https://github.com/angular/protractor/blob/master/docs/locators.md#finding-sub-elements */
+
+var pollResults;
+
 describe("poll results header", function () {
-	var pollResults;
 
 	it("sets up the page for testing", function () {
 		browser.get("default.htm#/pollResults");
@@ -100,19 +106,20 @@ describe("poll results", function () {
 			it("has the commenter's name on the left", function () {
         browser.get("default.htm#/pollResults");
         pollResults = new PollResults();
-        var name = element.all(by.repeater("comment in poll.comments")).first().element(by.binding('comment[0]'));
-				expect(name.getText()).toEqual("darlith");
+				expect(pollResults.commentName.getText()).toEqual("darlith");
 			});
       
       it("has the comment in the middle", function () {
-        var comment = element.all(by.repeater("comment in poll.comments")).first().element(by.binding('comment[1]'));
-        expect(comment.getText()).toEqual("I will be 10 minutes late.");
+        browser.get("default.htm#/pollResults");
+        pollResults = new PollResults();
+        expect(pollResults.commentComment.getText()).toEqual("I will be 10 minutes late.");
       });
 
       it("has a button to open a chat with this commenter on the right", function () {
-        var chatButton = element.all(by.repeater("comment in poll.comments")).first().element(by.css('.chatButton'));
-        expect(chatButton.isDisplayed()).toBeTruthy;
-        expect(chatButton.getText()).toEqual("Chat");
+        browser.get("default.htm#/pollResults");
+        pollResults = new PollResults();
+        expect(pollResults.commentChatButton.isDisplayed()).toBeTruthy;
+        expect(pollResults.commentChatButton.getText()).toEqual("Chat");
       });
 
 		});
