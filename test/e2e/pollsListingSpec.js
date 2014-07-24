@@ -4,8 +4,8 @@ var PollsListPanel = function () {
 	this.listContainer = element(by.id('pollsListContainer'));
 	
     this.completedStatus = this.entries.get(0).findElement(by.binding("poll.status"));
-	this.completedTotalPolled = this.entries.get(0).findElement(by.binding("poll.nRecipients"));
-	this.completedTotalResponded = this.entries.get(0).findElement(by.binding("poll.nResponses"));
+	this.completedTotalPolled = this.entries.get(0).findElement(by.binding("poll.stats.sent"));
+	this.completedTotalResponded = this.entries.get(0).findElement(by.binding("poll.stats.responded"));
 	this.completedPollDate = this.entries.get(0).findElement(by.binding("poll.dateStarted"));
 	this.completedPollType = this.entries.get(0).findElement(by.binding("poll.type"));
 	this.completedPollTitle = this.entries.get(0).findElement(by.binding("poll.title"));
@@ -19,8 +19,8 @@ var PollsListPanel = function () {
 	this.completedStartPollButton = this.entries.get(2).findElement(by.css(".startPollButton"));
 	this.unstartedEditPollButton = this.entries.get(3).findElement(by.css(".editPollButton"));
 	this.unstartedStartPollButton = this.entries.get(3).findElement(by.css(".startPollButton"));
-	this.unstartedTotalPolled = this.entries.get(3).findElement(by.binding("poll.nRecipients"));
-	this.unstartedTotalResponded = this.entries.get(3).findElement(by.binding("poll.nResponses"));
+	this.unstartedTotalPolled = this.entries.get(3).findElement(by.binding("poll.stats.sent"));
+	this.unstartedTotalResponded = this.entries.get(3).findElement(by.binding("poll.stats.responded"));
 	this.unstartedPollDate = this.entries.get(3).findElement(by.binding("poll.dateStarted"));
 	this.unstartedViewResultsButton = this.entries.get(3).findElement(by.css(".viewResultsButton"));
 };

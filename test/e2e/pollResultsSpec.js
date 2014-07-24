@@ -97,22 +97,23 @@ describe("poll results", function () {
 
 		describe("comments table", function () {
 
-      pollResults.comment1 = element.all(by.repeater(comment in poll.comments)).get(0);
-      pollResults.comment1.name = pollResults.comment1.findElement(by.binding('comment.name'));
-      pollResults.comment1.comment = pollResults.comment1.findElement(by.binding('comment.comment'));
-      pollResults.comment1.chatButton = pollResults.comment1.findElement(by.css('.chatButton'));
-
 			it("has the commenter's name on the left", function () {
-				expect(pollResults.commment1.name.getText()).toEqual("darlith");
+        browser.get("default.htm#/pollResults");
+        pollResults = new PollResults();
+        var name = element.all(by.repeater("comment in poll.comments")).first().element(by.binding('comment[0]'));
+				expect(name.getText()).toEqual("darlith");
 			});
+      
+      it("has the comment in the middle", function () {
+        var comment = element.all(by.repeater("comment in poll.comments")).first().element(by.binding('comment[1]'));
+        expect(comment.getText()).toEqual("I will be 10 minutes late.");
+      });
 
-			it("has the comment in the middle", function () {
-				expect(pollResults.commment1.comment.getText()).toEqual("I will be 10 minutes late.");
-			});
-
-			it("has a button to open a chat with this commenter on the right", function () {
-				expect(pollResults.comment1.chatButton.isDisplayed()).toBeTruthy;
-			});
+      it("has a button to open a chat with this commenter on the right", function () {
+        var chatButton = element.all(by.repeater("comment in poll.comments")).first().element(by.css('.chatButton'));
+        expect(chatButton.isDisplayed()).toBeTruthy;
+        expect(chatButton.getText()).toEqual("Chat");
+      });
 
 		});
 

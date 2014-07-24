@@ -11,12 +11,16 @@ exports.config = {
     'browserName': 'chrome'
   },
 
+  suites: {
+    results: "e2e/pollResultsSpec.js"
+  },
+
   baseUrl: 'http://localhost:8000/',
 
   framework: 'jasmine',
 
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 30000
+    defaultTimeoutInterval: 5000
   },
 
   onPrepare: function() {

@@ -38,8 +38,8 @@
           </div>
           <div class="col-md-9">
             <span ng-hide="poll.status === 'unstarted'">
-              (<span>{{poll.nResponses}}</span> /
-              <span>{{poll.nRecipients}}</span> 
+              (<span>{{poll.stats.responded}}</span> /
+              <span>{{poll.stats.sent}}</span> 
               Responses Complete)
             </span>
           </div>
