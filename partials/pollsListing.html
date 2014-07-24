@@ -1,56 +1,82 @@
+<div class="row" id="pollHeader">
+  <div class="col-md-12">
+    <a id="logo" href="#"><img src="assets/images/ping_logo.png"></a>
+    </img>
+    <div class="navButtons">
+      <button class="green btn" id="peerListsButton" ng-click="peerListsShow()">
+        <i class="fa fa-list"></i>
+        Peer Lists
+      </button>
+      <button class="green btn" id="manageTemplatesButton" ng-click="manageTemplatesShow()">
+        <i class="fa fa-file-text-o"></i>
+        Manage Templates
+        </button>
+      <button class="green btn" id="createPollButton" ng-click="createPollShow()">
+        <i class="fa fa-plus"></i>
+        Create Poll
+      </button>
+      <button class="green btn" id="helpButton" ng-click="helpShow()">
+        <i class="fa fa-question-circle"></i>
+      </button>
+    </div> 
+  </div>
+  <div class="clearBoth"></div>
+</div>
+
 <div id="pollsListContainer">
-	<div id="pollsListHeader">
-		<em>Polls</em>
-	</div>
-	<div class="pollEntryContainer" ng-repeat="poll in polls">
-		<div class="row">
-			<div class="col-md-2"> 
-				<div class="col-md-11 btn btn-xs" ng-class="{red: poll.status === 'unstarted', green: poll.status === 'started', blue: poll.status === 'complete'}">
-					{{poll.status}}
-				</div>
-			</div>
-			<div class="col-md-8">
-				<span ng-hide="poll.status === 'unstarted'">
-					(<span>{{poll.nResponses}}</span>/
-					<span>{{poll.nRecipients}}</span> 
-					Responses Complete)
-				</span>
-			</div>
-			<div class="col-md-2 poll-btn-group">
-				<div class="col-md-11 btn-group-vertical btn-group-solid btn-group-xs">
-					<div class="btn yellow btn-xs viewResultsButton" ng-hide="poll.status === 'unstarted'" ng-click="pollResultsShow()">
-						View Results
-					</div>
-					<div class="col-md-11 btn blue btn-xs editPollButton" ng-show="poll.status === 'unstarted'">
-						Edit Poll
-					</div>
-					<div class="col-md-11 btn green btn-xs startPollButton" ng-show="poll.status === 'unstarted'">
-						Start Poll
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="entryTitle">
-			<span>{{poll.type}}:</span>
-			<span> {{poll.title}}</span>
-		</div>
-		
-		<div class="row">
-			<div class="col-md-2">
-				<span ng-hide="poll.status === 'unstarted'">{{poll.dateStarted | date : short}}</span>
-			</div>
-			<div class="col-md-8"></div>
-			<div class="col-md-2 template-btn-group">
-				<span class="copyPollButton">
-					<i class="fa fa-copy"></i>
-					Copy
-				</span>
-				<span class="deletePollButton">
-					<i class="fa fa-trash-o"></i>
-					Delete
-				</span>
-			</div>
-		</div>
-		<div class="clearBoth"></div>
-	</div>
+  <div id="pollsListHeader">
+    <em>Polls</em>
+  </div>
+  <div class="pollEntryContainer" ng-repeat="poll in polls">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="col-md-12 btn btn-xs" ng-class="{red: poll.status === 'unstarted', green: poll.status === 'started', blue: poll.status === 'complete'}">
+              {{poll.status}}
+            </div>
+          </div>
+          <div class="col-md-9">
+            <span ng-hide="poll.status === 'unstarted'">
+              (<span>{{poll.nResponses}}</span> /
+              <span>{{poll.nRecipients}}</span> 
+              Responses Complete)
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 entryTitle">
+            <span>{{poll.type}}:</span>
+            <span> {{poll.title}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <span class="col-md-12" ng-hide="poll.status === 'unstarted'">{{poll.dateStarted | date : short}}</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="col-md-12 btn-group-vertical btn-group-solid btn-group-xs poll-btn-group">
+          <div class="btn yellow btn-xs viewResultsButton" ng-hide="poll.status === 'unstarted'" ng-click="pollResultsShow()">
+            View Results
+          </div>
+          <div class="btn blue btn-xs editPollButton" ng-show="poll.status === 'unstarted'">
+            Edit Poll
+          </div>
+          <div class="btn green btn-xs startPollButton" ng-show="poll.status === 'unstarted'">
+            Start Poll
+          </div>
+          <div class="template-btn-group">
+            <span class="copyPollButton">
+              <i class="fa fa-copy"></i>
+              Copy
+            </span>
+            <span class="deletePollButton">
+              <i class="fa fa-trash-o"></i>
+              Delete
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

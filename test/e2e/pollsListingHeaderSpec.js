@@ -25,34 +25,40 @@ describe("polls listing header", function () {
 	});
 
 	it("shows the peer lists management screen when the peer lists button is clicked", function () {
-    	element(by.id('peerListsButton')).click();
+    element(by.id('peerListsButton')).click();
 		expect($("p.test").isDisplayed()).toBeTruthy();
 	});
 
 	it("has a manage templates button", function () {
+		browser.get("default.htm");
+		pollsListHeader = new PollsListHeader();
 		expect(pollsListHeader.manageTemplates.getText()).toEqual("Manage Templates");
 	});
 
 	it("shows the manage templates screen when the manage templates button is clicked", function () {
-    	element(by.id('manageTemplatesButton')).click();
+    element(by.id('manageTemplatesButton')).click();
 		expect($("p.test").isDisplayed()).toBeTruthy();
 	});
 
 	it("has a create new poll button", function () {
+		browser.get("default.htm");
+		pollsListHeader = new PollsListHeader();
 		expect(pollsListHeader.createPoll.getText()).toEqual("Create Poll");
 	});
 
 	it("shows the create new poll screen when the create new poll button is clicked", function () {
-    	element(by.id('createPollButton')).click();
+    element(by.id('createPollButton')).click();
 		expect($("p.test").isDisplayed()).toBeTruthy();
 	});
 
 	it("has a help button", function () {
-    	expect(pollsListHeader.help.isDisplayed()).toBeTruthy();
+		browser.get("default.htm");
+		pollsListHeader = new PollsListHeader();
+    expect(pollsListHeader.help.isDisplayed()).toBeTruthy();
 	});
 
 	it("shows the help screen when the help button is clicked", function () {
-    	element(by.id('helpButton')).click();
+    element(by.id('helpButton')).click();
 		expect($("p.test").isDisplayed()).toBeTruthy();
 	});
 });

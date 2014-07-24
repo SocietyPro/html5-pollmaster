@@ -54,13 +54,13 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
       $location.path("/manageTemplates");
     };
 
-	$scope.createPollShow = function(){
+	  $scope.createPollShow = function(){
       $location.path("/createPoll");
     };
 
     $scope.helpShow = function(){
       $location.path("/help");
-    };    
+    };
 });
 
 pollApp.controller("pollsListingCtrl", function ($scope) {
@@ -75,7 +75,7 @@ pollApp.controller("peerListsCtrl", function($scope){
     console.log($scope);
 });
 
-pollApp.controller("ManageTemplatesCtrl", function($scope){
+pollApp.controller("manageTemplatesCtrl", function($scope){
     console.log($scope);
 });
 

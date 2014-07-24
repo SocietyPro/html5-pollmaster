@@ -11,6 +11,11 @@ button {
 	clear: both;
 }
 
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
 /* Styles for pollListings */
 
 .pollEntryContainer {
@@ -21,15 +26,17 @@ button {
 }
 
 .entryTitle {
-	font-size: 25px;
+	font-size: 20px;
 }
 
 .poll-btn-group {
-	text-align: right;
+	height: 68px;
+	position: relative;
 }
 
 .template-btn-group {
-	text-align: right;
+	position: absolute;
+	bottom: 0;
 }
 
 .copyPollButton {
