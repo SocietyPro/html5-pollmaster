@@ -4,27 +4,27 @@ var pollApp = angular.module("pollApp", ["ngRoute"]) // array is required
 pollApp.config(function($routeProvider){
   
   $routeProvider.when("/peerLists", {
-    templateUrl: "/partials/peerLists.html",
+    templateUrl: "partials/peerLists.html",
     controller: "peerListsCtrl"
   }).
   when("/manageTemplates", {
-    templateUrl: "/partials/manageTemplates.html",
+    templateUrl: "partials/manageTemplates.html",
     controller: "manageTemplatesCtrl"
   }).
   when("/createPoll", {
-    templateUrl: "/partials/createPoll.html",
+    templateUrl: "partials/createPoll.html",
     controller: "createPollCtrl"
   }).
   when("/help", {
-    templateUrl: "/partials/help.html",
+    templateUrl: "partials/help.html",
     controller: "helpCtrl"
   }).
   when("/pollResults", {
-    templateUrl: "/partials/pollResults.html",
-    controller: "pollResultsCtrl"
+    templateUrl: "partials/pollResults.html",
+    controller: "pollsResultsCtrl"
   }).
   when("/", {
-    templateUrl: "/partials/pollsListing.html",
+    templateUrl: "partials/pollsListing.html",
     controller: "pollsListingCtrl"
   }).
   otherwise({
