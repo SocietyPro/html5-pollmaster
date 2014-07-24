@@ -32,8 +32,8 @@
       <div class="col-md-9">
         <div class="row">
           <div class="col-md-3">
-            <div class="col-md-12 btn btn-xs" ng-class="{red: poll.status === 'unstarted', green: poll.status === 'started', blue: poll.status === 'complete'}">
-              {{poll.status}}
+            <div class="label" ng-class="{'label-danger': poll.status === 'unstarted', 'label-success': poll.status === 'started', 'label-primary': poll.status === 'complete'}">
+              <b>{{poll.status}}</b>
             </div>
           </div>
           <div class="col-md-9">
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12 entryTitle">
+          <div class="col-md-12 pollTitle">
             <span>{{poll.type}}:</span>
             <span> {{poll.title}}</span>
           </div>
@@ -56,7 +56,7 @@
       </div>
       <div class="col-md-3">
         <div class="col-md-12 btn-group-vertical btn-group-solid btn-group-xs poll-btn-group">
-          <div class="btn yellow btn-xs viewResultsButton" ng-hide="poll.status === 'unstarted'" ng-click="pollResultsShow()">
+          <div class="btn yellow btn-xs viewResultsButton" ng-hide="poll.status === 'unstarted'" ng-click="pollResultsShow(poll)">
             View Results
           </div>
           <div class="btn blue btn-xs editPollButton" ng-show="poll.status === 'unstarted'">

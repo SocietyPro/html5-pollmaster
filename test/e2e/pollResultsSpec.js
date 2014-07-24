@@ -5,12 +5,12 @@ var PollResults = function () {
   this.helpButton = element(by.id("helpButton"));
   this.title = element(by.binding("poll.title"));
   this.type = element(by.binding("poll.type"));
-  this.copyButton = element(by.id("copyPollButton"));
-  this.deleteButton = element(by.id("deletePollButton"));
+  this.copyButton = element(by.css(".copyPollButton"));
+  this.deleteButton = element(by.css(".deletePollButton"));
   this.ballotView = element(by.id("ballotView"));
   this.status = element(by.binding("poll.status"));
   this.tallyTable = element(by.id("tallyTable"));
-  this.commentsTable = element(by.id("commentsTable"));
+  this.commentsTable = element(by.css(".commentsTable"));
 };
 
 describe("poll results header", function () {
@@ -96,6 +96,11 @@ describe("poll results", function () {
 		});
 
 		describe("comments table", function () {
+
+      pollResults.comment1 = element.all(by.repeater(comment in poll.comments)).get(0);
+      pollResults.comment1.name = pollResults.comment1.findElement(by.binding('comment.name'));
+      pollResults.comment1.comment = pollResults.comment1.findElement(by.binding('comment.comment'));
+      pollResults.comment1.chatButton = pollResults.comment1.findElement(by.css('.chatButton'));
 
 			it("has the commenter's name on the left", function () {
 				expect(pollResults.commment1.name.getText()).toEqual("darlith");

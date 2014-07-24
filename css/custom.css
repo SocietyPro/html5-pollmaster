@@ -11,21 +11,28 @@ button {
 	clear: both;
 }
 
-.col-centered{
+.col-centered {
     float: none;
     margin: 0 auto;
+}
+
+.cambrianWell {
+	border: 1px solid black;
+	margin: 10px 0px;
+	padding: 8px;
+	background-color: #eee;
 }
 
 /* Styles for pollListings */
 
 .pollEntryContainer {
 	border: 1px solid black;
-	margin: 10px;
+	margin: 10px 0px;
 	padding: 8px;
 	background-color: #eee;
 }
 
-.entryTitle {
+.pollTitle {
 	font-size: 20px;
 }
 
@@ -46,7 +53,57 @@ button {
 #pollsListHeader {
 	border: 1px solid lightgrey;
 	background-color: orange;
-	margin: 10px;
 	text-align: center;
 	font-size: 33px;
+}
+
+/* Styles for pollResults */
+
+.resultsTable {
+	width: 50%;
+	border: 1px solid lightgrey;
+}
+
+.commentsTable {
+	width: 75%;
+	border: 1px solid lightgrey;
+}
+
+.commentsTable thead {
+	display: block;
+}
+
+.commentsTable tbody {
+	height: 200px;
+	overflow-y:scroll;
+	display: block;
+}
+
+table td,
+table th {
+	padding: 8px;
+	border: 1px solid black;
+}
+
+.resultsTable tr:first-child td,
+.commentsTable tr:first-child th {
+	border-top: 0;
+}
+
+table tr:last-child td {
+	border-bottom: 0;
+}
+
+table tr td:first-child,
+table tr th:first-child {
+	border-left: 0;
+}
+
+table tr td:last-child,
+table tr th:last-child {
+	border-right: 0;
+}
+
+.commentsTable tr td:last-child {
+	width: 70px;
 }
