@@ -21,7 +21,7 @@ pollApp.config(function($routeProvider){
   }).
   when("/pollResults", {
     templateUrl: "partials/pollResults.html",
-    controller: "pollsResultsCtrl"
+    controller: "pollResultsCtrl"
   }).
   when("/", {
     templateUrl: "partials/pollsListing.html",
