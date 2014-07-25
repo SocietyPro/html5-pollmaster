@@ -1,0 +1,48 @@
+<!-- begin ballot view -->
+<div id="ballotView" class="cambrianAntiWell">
+  <div id="ballotTitle">
+    <b>{{poll.type}}: {{poll.title}}</b>
+  </div>
+  <table class="ballot-table">
+    <tr>
+      <td ROWSPAN=2 style="text-align: center; width: 53px;"><img src="http://placepic.me/space/50-50" style="margin-right: 3px;"></td>
+      <td id="ballotOriginator"><b>{{poll.originator || "BallotCreator"}} says:</b></td>
+      <td id="ballotDate">{{poll.dateStarted | date:'short'}}</td>
+    </tr>
+    <tr>
+      <td colspan="2" id="ballotDescription">
+        {{poll.description}}
+      </td>
+    </tr>
+  </table>
+
+  <div ng-show="poll.options.length > 0">
+    <h4>Respond to Ping:</h4>
+    <div ng-hide="poll.multipleSelect"><b>Select One:</b></div>
+    <div ng-show="poll.multipleSelect"><b>Select One or More:</b></div>
+    <div class="modal-well">
+      <form>
+        <div ng-repeat="option in poll.options" ng-show="poll.multipleSelect">
+          <input type="checkbox">
+            {{option}}
+        </div>
+        <div ng-repeat="option in poll.options" ng-hide="poll.multipleSelect">
+          <input type="radio" value="{{option}}">
+            {{option}}
+        </div>
+        <div style="margin-top: 10px;" class="form-group" ng-show="poll.allowComment">
+          <lable for="comment">Send a note to {{poll.originator || "BallotCreator"}}:</lable>
+          <input id="comment" type="text" class="form-control">
+        </div>
+      </form>   
+    </div>
+  </div>
+  <div ng-hide="poll.options == 0">
+    <button type="button" class="btn default" ng-disabled="true">{{poll.dismissText || "Dismiss"}}</button>
+    <button type="submit" class="btn blue" ng-disabled="true">{{poll.submitText || "Submit"}}</button>
+  </div>
+  <div ng-show="poll.options == 0">
+    <button type="button" class="btn default" ng-disabled="true">Close</button>
+  </div>
+</div>
+<!-- end ballot view -->

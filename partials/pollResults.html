@@ -42,12 +42,15 @@
     </div>    
     <div class="row">
       <div class="col-md-12">
-        <div id="ballotView" class="col-md-5">
-          <!-- Ballot postview go here -->
+
+        <div id="left-side" class="col-md-5">
+          <div class="col-md-12 label label-default"><b>Original Ballot</b></div>
+          <div ng-include="'partials/ballotView.html'"></div>
         </div>
       
         <!-- right side -->
         <div class="col-md-7">
+          <div class="col-md-12 label label-default"><b>Results</b></div>
           <div class="row">
             <div class="col-md-12">
               <b>Status:</b> 
