@@ -11,22 +11,54 @@ var PollResults = function () {
   this.status = element(by.binding("poll.status"));
   this.tallyTable = element(by.id("tallyTable"));
   this.commentsTable = element(by.css('.commentsTable'));
+
+  /* This was breaking under some circumstances:
   this.commentName = element.all(by.repeater("comment in poll.comments")).first().element(by.binding('comment[0]'));
-  this.commentComment = element.all(by.repeater("comment in poll.comments")).first().element(by.binding('comment[1]'));
-  this.commentChatButton = element.all(by.repeater("comment in poll.comments")).first().element(by.css('.chatButton'));
+  Further docs: 
+  https://github.com/angular/protractor/blob/master/docs/locators.md#finding-sub-elements
+  */
+  this.commentName = element(by.repeater("comment in poll.comments").row(0)).element(by.binding('comment[0]'));
+  this.commentComment = element(by.repeater("comment in poll.comments").row(0)).element(by.binding('comment[1]'));
+  this.commentChatButton = element(by.repeater("comment in poll.comments").row(0)).element(by.css('.chatButton'));
 };
 
-/* This says those last three should work: https://github.com/angular/protractor/blob/master/docs/locators.md#finding-sub-elements */
 
 var pollResults;
 
+describe("javascript backend setup", function(){
+  describe("pollResults, pre-setup", function(){
+    it("is undefined", function(){
+      expect(pollResults).not.toBeDefined();
+    });
+  });
+  describe("PollResults", function(){
+    it("is in scope", function(){
+      expect(PollResults).not.toEqual({});
+      expect(PollResults).toBeDefined();
+    });
+  });
+  describe("pollResults, post-setup", function(){
+    it("is not undefined", function(){
+      /* SETUP HERE: */
+      browser.get("default.htm#/pollResults");
+      pollResults = new PollResults();
+      expect(pollResults).toBeDefined();
+    });
+    it("instantiated as an object", function(){
+      expect(typeof pollResults).toEqual("object");
+    });
+    it("has a property pollHeader", function(){
+      expect(pollResults.hasOwnProperty("pollHeader")).toEqual(true);
+    });
+    it("has the pollHeader element as the value of the pollHeader property", function(){
+      expect(pollResults.hasOwnProperty("pollHeader")).toEqual(true);
+    });
+  });
+
+});
+
 describe("poll results header", function () {
 
-	it("sets up the page for testing", function () {
-		browser.get("default.htm#/pollResults");
-		pollResults = new PollResults();
-		expect(pollResults.hasOwnProperty("pollHeader")).toEqual(true);
-	});
 		
 	it("has a logo on the far left", function () {
 		expect(pollResults.logo.isDisplayed()).toBeTruthy();
