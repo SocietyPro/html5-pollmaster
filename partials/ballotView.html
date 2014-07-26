@@ -18,9 +18,9 @@
 
   <div ng-show="poll.options.length > 0">
     <h4>Respond to Ping:</h4>
-    <div ng-hide="poll.multipleSelect"><b>Select One:</b></div>
-    <div ng-show="poll.multipleSelect"><b>Select One or More:</b></div>
-    <div class="modal-well">
+    <div id="ballotOptions" class="modal-well">
+      <div ng-hide="poll.multipleSelect"><b>Select One:</b></div>
+      <div ng-show="poll.multipleSelect"><b>Select One or More:</b></div>
       <form>
         <div ng-repeat="option in poll.options" ng-show="poll.multipleSelect">
           <input type="checkbox">
@@ -37,12 +37,15 @@
       </form>   
     </div>
   </div>
-  <div ng-hide="poll.options == 0">
-    <button type="button" class="btn default" ng-disabled="true">{{poll.dismissText || "Dismiss"}}</button>
-    <button type="submit" class="btn blue" ng-disabled="true">{{poll.submitText || "Submit"}}</button>
+  <div class="pull-right">
+    <div ng-hide="poll.options == 0">
+      <button type="button" class="btn default" ng-disabled="true">{{poll.dismissText || "Dismiss"}}</button>
+      <button type="submit" class="btn blue" ng-disabled="true">{{poll.submitText || "Submit"}}</button>
+    </div>
+    <div ng-show="poll.options == 0">
+      <button type="button" class="btn default" ng-disabled="true">Close</button>
+    </div>
   </div>
-  <div ng-show="poll.options == 0">
-    <button type="button" class="btn default" ng-disabled="true">Close</button>
-  </div>
+  <div class="clearBoth"></div>
 </div>
 <!-- end ballot view -->

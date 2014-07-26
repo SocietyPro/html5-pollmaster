@@ -72,20 +72,58 @@ pollApp.controller("pollResultsCtrl", function ($scope) {
     console.log($scope);
 
     $scope.poll = $scope.poll || $scope.polls[0];
+    $scope.chartData = [];
+    for (var i = 0; i < $scope.poll.options.length; i++) {
+      $scope.chartData[i] = {
+        label: $scope.poll.options[i],
+        data: $scope.poll.counts[i]
+      }
+    }
 });
 
-pollApp.controller("peerListsCtrl", function($scope){
+pollApp.controller("peerListsCtrl", function ($scope){
     console.log($scope);
 });
 
-pollApp.controller("manageTemplatesCtrl", function($scope){
+pollApp.controller("manageTemplatesCtrl", function ($scope){
     console.log($scope);
 });
 
-pollApp.controller("createPollCtrl", function($scope){
+pollApp.controller("createPollCtrl", function ($scope){
     console.log($scope);
 });
 
 pollApp.controller("helpCtrl", function($scope){
     console.log($scope);
+});
+
+pollApp.directive('resultsChart', function () {
+  return {
+    restrict: 'E',
+    link: function (scope, element, attrs) {
+
+      var chart = null,
+          opts = {
+            series: {
+              pie: {
+                show: true
+              }
+            },
+            legend: {
+              show: false
+            },
+            colors: ["red", "orange", "green", "blue", "purple"]
+          }
+
+      scope.$watch(attrs.ngmodel, function (v) {
+        if (!chart){
+          chart = $.plot(element, v, opts);
+          element.show();
+        } else {
+          chart.setData(v);
+          chart.draw();
+        }
+      });
+    }
+  }
 });

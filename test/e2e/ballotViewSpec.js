@@ -4,7 +4,7 @@ var BallotView = function () {
   this.originator = element(by.id('ballotOriginator'));
   this.date = element(by.id('ballotDate'));
   this.description = element(by.id('ballotDescription'));
-
+  this.options = element(by.id('ballotOptions'));
 };
 
 describe("ballot view", function () {
@@ -17,23 +17,27 @@ describe("ballot view", function () {
     ballotView = new BallotView();
   });
 
-  it("has a ballot title", function () {
+  it("displays the ballot title", function () {
     expect(ballotView.title.isDisplayed()).toBeTruthy();
     expect(ballotView.title.getText()).toEqual('Battle Ping: Join Operation Red Dawn!')
   });
 
-  it("has the originator line", function () {
+  it("displays the originator line", function () {
     expect(ballotView.originator.isDisplayed()).toBeTruthy();
     expect(ballotView.originator.getText()).toEqual('BallotCreator says:')
   });
 
-  it("has the ballot start date/time", function () {
+  it("displays the ballot start date/time", function () {
     expect(ballotView.date.isDisplayed()).toBeTruthy();
   });
 
-  it("has the ballot description", function () {
+  it("displays the ballot description", function () {
     expect(ballotView.description.isDisplayed()).toBeTruthy();
     expect(ballotView.description.getText()).toEqual("We are going to burn the Russian Starbase. Scythe/Moa fleet is leaving at 21:00 from V-3.")
+  });
+
+  it("displays the ballot options", function () {
+    expect(ballotView.options.isDisplayed()).toBeTruthy();
   });
 
 });

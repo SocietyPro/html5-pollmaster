@@ -42,7 +42,7 @@ var pollData = [
     },
     options: ["Tortrix BBQ", "Tortrix Crema Agria", "Lays BBQ", "Lays Original"],
     comments: [],
-    counts: [10, 930, 5, 5],
+    counts: [100, 630, 100, 120],
   },
   { 
     id: "UUID3",
