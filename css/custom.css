@@ -30,6 +30,10 @@ button {
 	background-color: #fff;
 }
 
+.nav-tabs li {
+	cursor: pointer;
+}
+
 /* Styles for pollListings */
 
 .pollEntryContainer {

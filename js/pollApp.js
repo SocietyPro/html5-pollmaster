@@ -1,5 +1,5 @@
 console.log(Cambrian.pollApp);
-var pollApp = angular.module("pollApp", ["ngRoute"]) // array is required
+var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap"]) // array is required
 
 pollApp.config(function($routeProvider){
   
