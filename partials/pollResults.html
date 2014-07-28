@@ -93,13 +93,13 @@
               <table class="commentsTable">
                 <thead>
                   <tr>
-                    <th><em>From:</em></th>
+                    <th><div class="fromCol"><em>From:</em></div></th>
                     <th><em>Comment:</em></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="comment in poll.comments">
-                    <td>{{comment[0]}}</td>
+                    <td><div class="fromCol">{{comment[0]}}</div></td>
                     <td>{{comment[1]}}</td>
                     <td>
                       <div class="chatButton">
