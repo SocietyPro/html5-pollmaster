@@ -34,6 +34,11 @@ button {
 	cursor: pointer;
 }
 
+/* Styles for createPoll */
+#pollFromRecentContainer .label-success {
+  min-width: 7em;
+}
+
 /* Styles for pollListings */
 
 .pollEntryContainer {

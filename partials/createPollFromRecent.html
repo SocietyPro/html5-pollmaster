@@ -1,0 +1,10 @@
+<div id="pollFromRecentContainer">
+  <div ng-repeat="recentPoll in recentPolls">
+    <span class="label label-success">{{recentPoll.type == "" ? "Smart Ping" : recentPoll.type}}</span>
+    <span>{{recentPoll.title}}</span>
+    <span class="copyPollButton pull-right" ng-click="copyPoll(recentPoll)">
+      <i class="fa fa-copy"></i> 
+      Copy
+    </span>
+  </div>
+</div>

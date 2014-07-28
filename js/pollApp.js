@@ -15,6 +15,10 @@ pollApp.config(function($routeProvider){
     templateUrl: "partials/createPoll.html",
     controller: "createPollCtrl"
   }).
+  when("/createPoll/customize", {
+    templateUrl: "partials/customizePoll.html",
+    controller: "customizePollCtrl"
+  }).
   when("/help", {
     templateUrl: "partials/help.html",
     controller: "helpCtrl"
@@ -62,6 +66,11 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
     $scope.helpShow = function(){
       $location.path("/help");
     };
+
+    $scope.copyPoll = function(pollObject){
+      $scope.skeletonPoll = japi.polls.build(pollObject);
+      $location.path = "/createPoll/customize";
+    };
 });
 
 pollApp.controller("pollsListingCtrl", function ($scope) {
@@ -91,6 +100,9 @@ pollApp.controller("manageTemplatesCtrl", function ($scope){
 
 pollApp.controller("createPollCtrl", function ($scope){
     console.log($scope);
+    //var allPolls = japi.polls.getList();
+    var allPolls = $scope.polls;
+    $scope.recentPolls = allPolls.slice(0, 5);
 });
 
 pollApp.controller("helpCtrl", function($scope){
