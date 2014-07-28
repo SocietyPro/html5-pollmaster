@@ -1,14 +1,14 @@
 var PollTemplates = function () {
-  	this.templateManger = element(by.id('templateManager'));
+  	this.templateManager = element(by.id('templateManager'));
     this.sectionTabs = element(by.id('sectionTabs'));
     this.recentTab = element(by.id('recentTab'));
     this.recentTabContent = element(by.id('recentTabContent'));
     this.myTemplatesTab = element(by.id('myTemplatesTab'));
     this.myTemplatesTabContent = element(by.id('myTemplatesTabContent'));
     this.examplesTab = element(by.id('examplesTab'));
-    this.examplesTabContent = element(by.id('examplesTabContent'))
+    this.examplesTabContent = element(by.id('examplesTabContent'));
     this.peerRecommendedTab = element(by.id('peerRecommendedTab'));
-    this.PeerRecommendedTabContent = element(by.id('PeerRecommendedTabContent'));
+    this.peerRecommendedTabContent = element(by.id('peerRecommendedTabContent'));
 };
 
 var pollTemplates;
@@ -17,7 +17,7 @@ describe("new poll using a template page", function () {
 
     it("sets up the page for testing", function () {
         browser.get('default.htm#/createPoll');
-        pollTemplates = new PollTemplates;
+        pollTemplates = new PollTemplates();
         expect(pollTemplates.templateManager.isDisplayed()).toBeTruthy();
     });
 
@@ -45,7 +45,7 @@ describe("new poll using a template page", function () {
 
     it("shows peer recommended templates when the Peer Recommended tab is clicked", function () {
         pollTemplates.peerRecommendedTab.click();
-        expect(pollTemplates.PeerRecommendedTabContent.isDisplayed()).toBeTruthy();
+        expect(pollTemplates.peerRecommendedTabContent.isDisplayed()).toBeTruthy();
     });
 
 });

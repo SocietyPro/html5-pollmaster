@@ -20,7 +20,7 @@
   "scripts": {
     "postinstall": "bower install",
     "prestart": "npm install",
-    "start": "http-server -p 8000",
+    "start": "http-server -a localhost -p 8000",
     "pretest": "npm install",
     "test": "protractor test/protractor-conf.js",
     "test-results": "protractor test/protractor-conf.js --specs test/e2e/pollResultsSpec.js",

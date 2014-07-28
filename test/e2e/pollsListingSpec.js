@@ -29,7 +29,7 @@ describe("polls listing", function () {
 
 	var pollsListPanel; 
 	it("sets up the second page for tests", function(){
-		browser.get('default.htm')
+		browser.get('default.htm');
 		pollsListPanel = new PollsListPanel();
         expect(pollsListPanel.hasOwnProperty("listContainer")).toEqual(true);		
 	});

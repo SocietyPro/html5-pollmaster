@@ -48,7 +48,8 @@ describe("polls listing header", function () {
 
 	it("shows the create new poll screen when the create new poll button is clicked", function () {
     element(by.id('createPollButton')).click();
-		expect($("p.test").isDisplayed()).toBeTruthy();
+    var templateManager = element(by.id('templateManager'));
+		expect(templateManager.isDisplayed()).toBeTruthy();
 	});
 
 	it("has a help button", function () {
