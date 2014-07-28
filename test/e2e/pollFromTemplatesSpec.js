@@ -5,6 +5,8 @@ var PollTemplates = function () {
     this.recentTabContent = element(by.id('recentTabContent'));
     this.myTemplatesTab = element(by.id('myTemplatesTab'));
     this.myTemplatesTabContent = element(by.id('myTemplatesTabContent'));
+    this.examplesTab = element(by.id('examplesTab'));
+    this.examplesTabContent = element(by.id('examplesTabContent'))
     this.peerRecommendedTab = element(by.id('peerRecommendedTab'));
     this.PeerRecommendedTabContent = element(by.id('PeerRecommendedTabContent'));
 };
