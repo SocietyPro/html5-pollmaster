@@ -34,9 +34,11 @@ button {
 	cursor: pointer;
 }
 
-/* Styles for createPoll */
-#pollFromRecentContainer .label-success {
-  min-width: 7em;
+/* Style some bootstrap labels to fill their columns: */
+#pollsFromRecentContainer .label,
+.pollEntryContainer .label
+{
+  display: block;
 }
 
 /* Styles for pollListings */
