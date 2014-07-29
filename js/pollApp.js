@@ -71,9 +71,56 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
       $location.path("/help");
     };
 
-    $scope.copyPoll = function(pollObject){
-      $scope.skeletonPoll = japi.polls.build(pollObject);
+    $scope.startCustomizing = function(pollObject){
+      // We won't modify or save this until save is clicked:
+      $scope.pollToCustomize = pollObject; 
+
+      // We will modify this during our WIP. See saveCustomization for where it
+      // gets copied back.
+      $scope.skeletonPoll = angular.copy(pollObject);
       $location.path = "/createPoll/customize";
+    };
+
+    $scope.saveCustomization = function(isPoll, isTemplate){
+      // Called upon user clicking Save in poll customization screen.
+      if(isPoll){
+        $scope.savePollCustomization();
+      };
+      if(isTemplate){
+        $scope.saveTemplateCustomization();
+      };
+      // TODO: ASYNC
+      delete $scope.skeletonPoll;
+      delete $scope.pollToCustomize;
+    };
+
+    $scope.savePollCustomization = function(){
+      $scope.pollToCustomize = angular.copy($scope.skeletonPoll);
+      $scope.pollToCustomize.save();
+      delete $scope.skeletonPoll;
+    };
+
+    $scope.saveTemplateCustomization = function(){
+      return undefined;
+    };
+
+    $scope.copyPoll = function(oldPoll){
+      var newPoll = japi.polls.build(oldPoll);
+      $scope.startCustomizing(newPoll);
+    };
+
+    $scope.editPoll = function(oldPoll){
+      $scope.startCustomizing(oldPoll);
+    };
+
+    $scope.newPollFromScratch = function(){
+      var newPoll = japi.polls.build();
+      $scope.startCustomizing(newPoll);
+    };
+
+    $scope.newPollFromTemplate = function(template){
+      var newPoll = japi.polls.build(template);
+      $scope.startCustomizing(newPoll);
     };
 });
 
