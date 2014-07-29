@@ -16,23 +16,38 @@
 </div>
 
 <div id="templateManager">
+  <div id="pollsListHeader">
+    <em>Create a New Poll Using a Template</em>
+  </div>
   <div id="sectionTabs">
 
     <!-- UI Bootstrap creates this as an unordered list -->
-    <tabset class="tabbable tabbable-custom tabbable-full-width">
+    <tabset class="tabbable tabbable-custom">
       <tab heading="Recent Polls" id="recentTab">
-        <div id="recentTabContent">
+        <div id="recentTabContent" class="tab-content">
           <ng-include src="'partials/createPollFromRecent.html'"></ng-include>
         </div>  
       </tab>
       <tab heading="My Templates" id="myTemplatesTab">
-        <div id="myTemplatesTabContent">My Templates</div>
+        <div id="myTemplatesTabContent" class="tab-content">
+          My Templates
+          <div class="col-md-2 col-centered">
+            <a class="green btn">
+              <i class="fa fa-plus fa-2"></i>
+              Create New Template from Scratch
+            </a>
+          </div>
+        </div>
       </tab>
       <tab heading="Examples" id="examplesTab">
-        <div id="examplesTabContent">Example Templates</div>
+        <div id="examplesTabContent" class="tab-content">
+          Example Templates
+        </div>
       </tab>
       <tab heading="Peer Recommended" id="peerRecommendedTab">
-        <div id="peerRecommendedTabContent">Peer Recommended Templates</div>        
+        <div id="peerRecommendedTabContent" class="tab-content">
+          Peer Recommended Templates
+        </div>        
       </tab>
     </tabset>
   </div>
