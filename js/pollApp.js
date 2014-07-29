@@ -63,6 +63,10 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
       $location.path("/createPoll");
     };
 
+    $scope.customizePollShow = function (poll) {
+      $location.path("/createPoll/customize");
+    };
+
     $scope.helpShow = function(){
       $location.path("/help");
     };
