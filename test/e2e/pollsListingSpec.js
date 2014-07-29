@@ -1,4 +1,4 @@
-var PollsListPanel = function () {
+var Elements = function () {
 
 	this.entries = element.all(by.repeater("poll in polls"));
 	this.listContainer = element(by.id('pollsListContainer'));
@@ -30,7 +30,7 @@ describe("polls listing", function () {
 	var pollsListPanel; 
 	it("sets up the second page for tests", function(){
 		browser.get('default.htm');
-		pollsListPanel = new PollsListPanel();
+		pollsListPanel = new Elements();
         expect(pollsListPanel.hasOwnProperty("listContainer")).toEqual(true);		
 	});
 

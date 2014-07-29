@@ -1,4 +1,4 @@
-var BallotView = function () {
+var Elements = function () {
   this.partial = element(by.id('ballotView'));
   this.title = element(by.id('ballotTitle'));
   this.originator = element(by.id('ballotOriginator'));
@@ -14,7 +14,7 @@ describe("ballot view", function () {
   it("sets up the partial up for tests", function () {
     browser.get('default.htm');
     element(by.repeater('poll in polls').row(0)).element(by.css('.viewResultsButton')).click();
-    ballotView = new BallotView();
+    ballotView = new Elements();
   });
 
   it("displays the ballot title", function () {

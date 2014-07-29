@@ -1,4 +1,4 @@
-var PollTemplates = function () {
+var Elements = function () {
   	this.templateManager = element(by.id('templateManager'));
     this.sectionTabs = element(by.id('sectionTabs'));
     this.recentTab = element(by.id('recentTab'));
@@ -17,7 +17,7 @@ describe("new poll using a template page", function () {
 
     it("sets up the page for testing", function () {
         browser.get('default.htm#/createPoll');
-        pollTemplates = new PollTemplates();
+        pollTemplates = new Elements();
         expect(pollTemplates.templateManager.isDisplayed()).toBeTruthy();
     });
 

@@ -1,4 +1,4 @@
-var PollResults = function () {
+var Elements = function () {
 	this.pollHeader = element(by.id('pollHeader'));
 	this.logo = element(by.css("img"));
 	this.backButton = element(by.id("backButton"));
@@ -31,17 +31,17 @@ describe("javascript backend setup", function(){
       expect(pollResults).not.toBeDefined();
     });
   });
-  describe("PollResults", function(){
+  describe("Elements", function(){
     it("is in scope", function(){
-      expect(PollResults).not.toEqual({});
-      expect(PollResults).toBeDefined();
+      expect(Elements).not.toEqual({});
+      expect(Elements).toBeDefined();
     });
   });
   describe("pollResults, post-setup", function(){
     it("is not undefined", function(){
       /* SETUP HERE: */
       browser.get("default.htm#/pollResults");
-      pollResults = new PollResults();
+      pollResults = new Elements();
       expect(pollResults).toBeDefined();
     });
     it("instantiated as an object", function(){
@@ -76,7 +76,7 @@ describe("poll results header", function () {
 
 	it("has a help button", function () {
 		browser.get("default.htm#/pollResults");
-		pollResults = new PollResults();
+		pollResults = new Elements();
     expect(pollResults.helpButton.isDisplayed()).toBeTruthy();
 	});
 
@@ -90,7 +90,7 @@ describe("poll results", function () {
 
 	it("displays poll type", function () {
 		browser.get("default.htm#/pollResults");
-		pollResults = new PollResults();
+		pollResults = new Elements();
 		expect(pollResults.type.isDisplayed()).toBeTruthy();
 		expect(pollResults.type.getText()).toEqual("Battle Ping:")
 	});
@@ -137,19 +137,19 @@ describe("poll results", function () {
 
 			it("has the commenter's name on the left", function () {
         browser.get("default.htm#/pollResults");
-        pollResults = new PollResults();
+        pollResults = new Elements();
 				expect(pollResults.commentName.getText()).toEqual("darlith");
 			});
       
       it("has the comment in the middle", function () {
         browser.get("default.htm#/pollResults");
-        pollResults = new PollResults();
+        pollResults = new Elements();
         expect(pollResults.commentComment.getText()).toEqual("I will be 10 minutes late.");
       });
 
       it("has a button to open a chat with this commenter on the right", function () {
         browser.get("default.htm#/pollResults");
-        pollResults = new PollResults();
+        pollResults = new Elements();
         expect(pollResults.commentChatButton.isDisplayed()).toBeTruthy;
         expect(pollResults.commentChatButton.getText()).toEqual("Chat");
       });
