@@ -23,21 +23,21 @@
 
     <!-- UI Bootstrap creates this as an unordered list -->
     <tabset class="tabbable tabbable-custom">
-      <tab heading="Recent Polls" id="recentTab">
-        <div id="recentTabContent" class="tab-content">
-          <ng-include src="'partials/createPollFromRecent.html'"></ng-include>
-        </div>  
-      </tab>
       <tab heading="My Templates" id="myTemplatesTab">
         <div id="myTemplatesTabContent" class="tab-content">
-          My Templates
+          <ng-include src="'partials/createPollFromMyTemplates.html'"></ng-include>
           <div class="col-md-2 col-centered">
-            <a class="green btn">
+            <a id="newTemplateFromScratchButton" class="green btn">
               <i class="fa fa-plus fa-2"></i>
               Create New Template from Scratch
             </a>
           </div>
         </div>
+      </tab>
+      <tab heading="Recent Polls" id="recentTab">
+        <div id="recentTabContent" class="tab-content">
+          <ng-include src="'partials/createPollFromRecent.html'"></ng-include>
+        </div>  
       </tab>
       <tab heading="Examples" id="examplesTab">
         <div id="examplesTabContent" class="tab-content">
