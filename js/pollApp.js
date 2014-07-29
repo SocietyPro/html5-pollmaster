@@ -103,6 +103,7 @@ pollApp.controller("createPollCtrl", function ($scope){
     //var allPolls = japi.polls.getList();
     var allPolls = $scope.polls;
     $scope.recentPolls = allPolls.slice(0, 5);
+    $scope.examplePolls = allPolls.slice(0, 5);
 });
 
 pollApp.controller("helpCtrl", function($scope){
