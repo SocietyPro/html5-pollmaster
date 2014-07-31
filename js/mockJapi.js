@@ -1,4 +1,7 @@
 var Cambrian = Cambrian || {}
+
+Cambrian.idSeed = 0;
+
 Cambrian.JAPI = function(){
   // Define some children objects, this is necessary because trying to set
   // more than one deep of an undefined object fails.
@@ -21,6 +24,7 @@ Cambrian.JAPI = function(){
     },
   }
 
+  var listOfPolls = [];
   /* 
    * JAPI PEER API
    * These functions involve communications with other Cambrian Peers
@@ -70,7 +74,8 @@ Cambrian.JAPI = function(){
    */
 
   japi.utils.getUUID = function(){
-    return "UUID1";
+    Cambrian.idSeed++;
+    return "UUID" + Cambrian.idSeed.toString();
   };
 
 
@@ -85,15 +90,28 @@ Cambrian.JAPI = function(){
     // of each, or something else invalid.
     var mockPoll = {
         id: japi.utils.getUUID(), 
-        title: "Mock Poll",
+        title: "",
         status: "deleted", 
         dateStarted: null,
-        save: function(){},
+        save: function(){
+          savePoll(this)
+        },
         start: function(){},
         stop: function(){},
         getResults: function(){},
         delete: function(){},
       };
+
+    var savePoll = function (poll) {
+      for (var i = 0; i < listOfPolls.length; i++) {
+        if (listOfPolls[i].id === poll.id) {
+          listOfPolls[i] = poll;
+          return undefined;
+        };
+        listOfPolls.push(poll);
+        return undefined;
+      }
+    };
 
     function copyPoll(source){
       //  source might be a poll OR a template 
@@ -105,19 +123,26 @@ Cambrian.JAPI = function(){
         };
       };
       // override some properties with defaults:
-      tmp.id = "UUID2";
+      tmp.id = japi.utils.getUUID;
       tmp.status = "deleted";
+      listOfPolls.push(tmp);
       return tmp;
     };
 
     if(arguments.length === 0){ 
       // No arguments. Return a new poll synchronously.
-      return mockPoll;
+      var builtPoll = mockPoll;
+      listOfPolls.push(builtPoll);
+      return builtPoll;
     } else if(arguments.length === 1 && typeof source === "function"){
       // One callback argument passed in. 
       // Return undefined now; call the callback asynchronously w/ the new poll.
       setTimeout(function(){ 
-        callback(null, mockPoll) 
+        callback(null, function () {
+          var builtPoll = mockPoll;
+          listOfPolls.push(builtPoll);
+          return builtPoll;
+        }); 
       }, 200);
       return undefined;
     } else if(arguments.length === 1 && typeof source === "object") {
@@ -141,21 +166,27 @@ Cambrian.JAPI = function(){
 
   japi.polls.getList = function(callback){
     //setTimeout(function(){ callback(null, false) }, 200);
-    var poll1 = japi.polls.build();
-    var poll2 = japi.polls.build();
-    poll2.id = "UUID2";
-    return [poll1, poll2];
+    //var poll1 = japi.polls.build();
+    //var poll2 = japi.polls.build();
+    return listOfPolls;
   };
 
   japi.polls.get = function(UUID, callback){
     //setTimeout(function(){ callback(null, false) }, 200);
-    if(UUID.match(/^UUID[0-9]$/)){ // Succeed on UUID0 to UUID9; otherwise fail
+    /*if(UUID.match(/^UUID[0-9]$/)){ // Succeed on UUID0 to UUID9; otherwise fail
       var myPoll = japi.polls.build();
       myPoll.id = UUID;
       return myPoll;
     } else {
       return false;
-    };
+    }; */
+
+    for (var i = 0; i < listOfPolls.length; i++) {
+      if (listOfPolls[i].id === UUID) {
+        return listOfPolls[i];
+      }
+      return false;
+    }
   };
 
   /* Not yet specced:

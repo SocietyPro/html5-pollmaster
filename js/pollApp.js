@@ -40,6 +40,7 @@ pollApp.config(function($routeProvider){
 pollApp.controller("pollAppCtrl", function($scope, $location){
 
     $scope.polls = Cambrian.pollApp.mocks;
+   // $scope.polls = Cambrian.polls.getList();
     console.log($scope.polls);
 
     $scope.pollsListingShow = function () {
@@ -97,7 +98,6 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
     $scope.savePollCustomization = function(){
       $scope.pollToCustomize = angular.copy($scope.skeletonPoll);
       $scope.pollToCustomize.save();
-      delete $scope.skeletonPoll;
     };
 
     $scope.saveTemplateCustomization = function(){
