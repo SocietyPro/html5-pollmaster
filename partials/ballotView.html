@@ -7,7 +7,7 @@
     <tr>
       <td ROWSPAN=2 style="text-align: center; width: 53px;"><img src="http://placepic.me/space/50-50" style="margin-right: 3px;"></td>
       <td id="ballotOriginator"><b>{{poll.originator || "BallotCreator"}} says:</b></td>
-      <td id="ballotDate">{{poll.dateStarted | date:'short'}}</td>
+      <td id="ballotDate">{{(poll.dateStarted || new Date()) | date:'short'}}</td>
     </tr>
     <tr>
       <td colspan="2" id="ballotDescription">
@@ -19,8 +19,8 @@
   <div ng-show="poll.options.length > 0">
     <h4>Respond to Ping:</h4>
     <div id="ballotOptions" class="modal-well">
-      <div ng-hide="poll.multipleSelect"><b>Select One:</b></div>
-      <div ng-show="poll.multipleSelect"><b>Select One or More:</b></div>
+      <div class="selectInstructions" ng-hide="poll.multipleSelect"><b>Select One:</b></div>
+      <div class="selectInstructions" ng-show="poll.multipleSelect"><b>Select One or More:</b></div>
       <form>
         <div ng-repeat="option in poll.options" ng-show="poll.multipleSelect">
           <input type="checkbox">
@@ -30,9 +30,9 @@
           <input type="radio" value="{{option}}">
             {{option}}
         </div>
-        <div style="margin-top: 10px;" class="form-group" ng-show="poll.allowComment">
-          <lable for="comment">Send a note to {{poll.originator || "BallotCreator"}}:</lable>
-          <input id="comment" type="text" class="form-control">
+        <div id="commentBoxContainer" style="margin-top: 10px;" class="form-group" ng-show="poll.allowComment">
+          <lable id="commentBoxLabel" for="comment">Send a note to {{poll.originator || "BallotCreator"}}:</lable>
+          <input id="commentBox" type="text" class="form-control">
         </div>
       </form>   
     </div>
