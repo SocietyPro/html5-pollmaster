@@ -1,0 +1,27 @@
+div#targetSelectionContainer.container.soProContainer(ng-controller="targetSelectionCtrl")
+  h4.whiteTitle Poll Target Selection
+  div.row.col-md-12
+    div#targetPaneTabs.row.col-md-3
+      div.targetTab( ng-click="chooseTarget('peers')"
+      , ng-class="{targeting: targetCategory == 'peers'}" ) 
+        span.fa.fa-fw.fa-male
+        span Peer
+      div.targetTab( ng-click="chooseTarget('groups')"
+      , ng-class="{targeting: targetCategory == 'groups'}" ) 
+        span.fa.fa-fw.fa-group
+        span Group
+      div.targetTab( ng-click="chooseTarget('peerLists')" 
+      , ng-class="{targeting: targetCategory == 'peerLists'}" ) 
+        span.fa.fa-fw.fa-list-ul
+        span List
+    div#targetPaneList.row.col-md-9
+      h4 {{targetHint}}
+      select.paneChoices(
+      size="5"
+      , ng-options="target.name for target in targetChoices"
+      , ng-model="poll.target"
+      , ng-disabled="targetChoices.length == 0"
+      )
+div
+  pre
+    code {{prettyJSON(poll.target)}}

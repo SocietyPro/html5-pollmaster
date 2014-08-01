@@ -1,10 +1,5 @@
 var Elements = function () {
   this.customizePollContainer = element(by.id('customizePollContainer'));
-  this.pollTargetSelectionContainer = element(by.id('targetSelectionContainer'));
-  this.chatGroupsContainer = element(by.id('chatGroupsContainer'));
-  this.peerListsContainer = element(by.id('peerListsContainer'));
-  this.firstChatGroup = element(by.repeater('chatGroup in chatGroups').row(0));
-  this.firstPeerGroup = element(by.repeater('peerList in peerLists').row(0));
   this.pollEditingSection = element(by.id('pollEditingSection'));
   this.pollEditTitle = element(by.model('poll.title'));
   this.pollEditType = element(by.model('poll.type'));
@@ -24,34 +19,6 @@ describe("Customize poll/template screen", function () {
     browser.get('default.htm#/createPoll/customize');
     elements = new Elements();
     expect(elements.customizePollContainer.isDisplayed()).toBeTruthy();
-  });
-
-  describe("Poll Target Selection section", function () {
-
-    it("is displayed", function () {
-      expect(elements.targetSelectionContainer.isDisplayed()).toBeTruthy();
-    });
-
-    it("has a list of cambrian chat groups", function () {
-      expect(elements.chatGroupsContainer.isDisplayed()).toBeTruthy();
-    });
-
-    it("has a list of cambrian peer lists", function () {
-      expect(elements.peerListsContainer.isDisplayed()).toBeTruthy();
-    });
-
-    it("has user directions", function () {
-      expect(elements.targetSelectionUserDirections.isDisplayed()).toBeTruthy();
-      expect(elements.targetSelectionUserDirections.getText()).toEqual('Select a target group for the vote.');      
-    });
-
-    it("allows choosing only one target", function () {
-      elements.firstChatGroup.click();
-      expect(elements.firstChatGroup.isSelected()).toBeTruthy();
-      elements.firstPeerList.click();
-      expect(elements.firstChatGroup.isSelected()).toBeFalsy();
-    });
-
   });
 
   describe("poll editing section", function() {

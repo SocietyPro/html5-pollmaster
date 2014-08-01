@@ -107,11 +107,11 @@ button {
 }
 
 /* Styles for targetSelection */
-#targetSelector{
+#targetPaneTabs{
   padding-top: 24px;
 }
 
-.paneTab{
+.targetTab{
   position: relative;
   line-height: 24px;
   font-size: 20px;
@@ -122,24 +122,24 @@ button {
   padding-left: 20px;
   cursor: pointer;
 }
-.paneTab .fa{
+.targetTab .fa{
   font-size: 18px;
   line-height: 24px;
   margin: 0 5px 0 0;
 }
-.paneTab.targeting{
+.targetTab.targeting{
   background-color: #777777;
 }
 #targetSelectionContainer{
   min-height: 140px;
 }
-#targetList{
+#targetPaneList{
   background-color: #777777;
   padding-top: 0;
   padding-bottom: 20px;
   color: white;
 }
-#targetList select{
+#targetPaneList select{
   width: 100%;
   display: block;
   color: black;
