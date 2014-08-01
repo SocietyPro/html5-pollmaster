@@ -14,6 +14,8 @@ var Elements = function () {
   this.autoJoinChatRoomInput = element(by.id('autoJoinChatRoomInput'));
   this.dismissLabelInput = element(by.id('dismissLabelInput'));
   this.submitLabelInput = element(by.id('submitLabelInput'));
+  this.allowComments = element(by.id('allowComments'));
+  this.pollPreviewContainer = element(by.id('pollPreviewContainer'));
 };
 
 var elements;
@@ -91,17 +93,12 @@ describe("Customize poll/template screen", function () {
       };
 
       it("accepts added options", function () {
-        expect(elements.newOptionInput.isDisplayed()).toBeTruthy();
-        expect(elements.newOptionInput.getTagName()).toEqual('input');
-        expect(elements.newOptionInput.getAttribute('type')).toEqual('text');
-        elements.newOptionInput.sendKeys("Option1");
-        expect(elements.addOption.isDisplayed()).toBeTruthy();
-        expect(elements.newOptionInput.getTagName()).toEqual('button');
-        expect(elements.newOptionInput.getText()).toEqual('Add');
-        elements.addOption.click();
+        expect(elements.addNewOptionLink.isDisplayed()).toBeTruthy();
+        elements.addNewOptionLink.click();
         optionListElements = new OptionListElements();
         expect(optionListElements.firstOption.isDisplayed()).toBeTruthy();
-        expect(optionListElements.firstOptionOption.getText()).toEqual("Option1");
+        expect(optionListElements.firstOption.getTagName()).toEqual('input');
+        expect(optionListElements.firstOption.getAttribute('type')).toEqual('text');
       });
 
       it("removes subtracted options", function () {
@@ -119,19 +116,54 @@ describe("Customize poll/template screen", function () {
 
     it("has an 'auto join chat room' input", function () {
       expect(elements.autoJoinChatRoomInput.isDisplayed()).toBeTruthy();
+      expect(elements.autoJoinChatRoomInput.getTagName()).toEqual('input');
+      expect(elements.autoJoinChatRoomInput.getAttribute('type')).toEqual('text');
     });
 
     it("has a dismiss label customization input", function () {
       expect(elements.dismissLabelInput.isDisplayed()).toBeTruthy();
+      expect(elements.dismissLabelInput.getTagName()).toEqual('input');
+      expect(elements.dismissLabelInput.getAttribute('type')).toEqual('text');
     });
 
     it("has a submit label customization input", function () {
       expect(elements.submitLabelInput.isDisplayed()).toBeTruthy();
+      expect(elements.submitLabelInput.getTagName()).toEqual('input');
+      expect(elements.submitLabelInput.getAttribute('type')).toEqual('text');
     });
 
     it("has an 'allow comments' checkbox", function () {
       expect(elements.allowComments.isDisplayed()).toBeTruthy();
       expect(elements.allowComments.getAttribute("type")).toEqual('checkbox');
+    });
+
+  });
+
+  describe("poll preview section", function () {
+
+    it("is displayed", function () {
+      expect(elements.pollPreviewContainer.isDisplayed()).toBeTruthy();
+    });
+  });
+
+  describe("bottom", function () {
+
+    it("has a 'save' button", function () {
+      expect(elements.saveButton.isDisplayed()).toBeTruthy();
+      expect(elements.saveButton.getTagName()).toEqual('button');
+      expect(elements.saveButton.getText()).toEqual('Save');
+    });
+
+    describe("save button", function () {
+
+      it("saves the customized poll when clicked", function () {
+        
+      });
+
+      it("switches the view to the polls list screen when clicked", function () {
+
+      });
+
     });
 
   });
