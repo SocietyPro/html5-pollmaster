@@ -26,7 +26,7 @@ beforeEach(function () {
 describe("setup", function () {
   it("instantiates mock japi", function () {
     function instantiateMockJapi(){
-      japi = Cambrian.JAPI();
+      japi = Cambrian.mockJAPI();
     };
     expect(instantiateMockJapi).not.toThrow();
     expect(japi.polls).toBeDefined();

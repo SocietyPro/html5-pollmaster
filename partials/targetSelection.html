@@ -1,0 +1,18 @@
+
+<div id="targetSelectionContainer" class="container soProContainer">
+  <h4 class="whiteTitle">Poll Target Selection</h4>
+  <div class="row col-md-12">
+    <div id="targetSelector" class="row col-md-3">
+      <div ng-click="chooseTarget('peers')" ng-class="{targeting: targetCategory == 'peers'}" class="paneTab"><span class="fa fa-fw fa-male"></span><span>Peer</span></div>
+      <div ng-click="chooseTarget('groups')" ng-class="{targeting: targetCategory == 'groups'}" class="paneTab"><span class="fa fa-fw fa-group"></span><span>Group</span></div>
+      <div ng-click="chooseTarget('peerLists')" ng-class="{targeting: targetCategory == 'peerLists'}" class="paneTab"><span class="fa fa-fw fa-list-ul"></span><span>List</span></div>
+    </div>
+    <div id="targetList" class="row col-md-9">
+      <h4>{{targetHint}}</h4>
+      <select size="5" ng-options="target.name for target in targetChoices" ng-model="poll.target" class="paneChoices"></select>
+    </div>
+  </div>
+</div>
+<div>
+  <pre><code>{{prettyJSON(poll.target)}}</code></pre>
+</div>

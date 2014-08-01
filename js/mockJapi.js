@@ -2,13 +2,16 @@ var Cambrian = Cambrian || {}
 
 Cambrian.idSeed = 0;
 
-Cambrian.JAPI = function(){
+Cambrian.mockJAPI = function(){
   // Define some children objects, this is necessary because trying to set
   // more than one deep of an undefined object fails.
   // {}.foo=true works but {}.foo.bar=true doesn't: 
   // TypeError: Cannot set property 'bar' of undefined
+  console.log("Instantiating mockJAPI");
 
   var japi = {
+    me: {
+    },
     peer: {
       ping: {},
       recommendations: {},
@@ -24,7 +27,25 @@ Cambrian.JAPI = function(){
     },
   }
 
-  var listOfPolls = [];
+  var listOfPolls = Cambrian.pollApp.mockPolls;
+
+  /* 
+   * JAPI ME API
+   * These functions give apps access to context about the current role
+   */
+
+  japi.me.peers = function(){
+    return Cambrian.pollApp.mockTargets.peers;
+  };
+
+  japi.me.groups = function(){
+    return Cambrian.pollApp.mockTargets.groups;
+  };
+
+  japi.me.peerLists = function(){
+    return Cambrian.pollApp.mockTargets.peerLists;
+  };
+
   /* 
    * JAPI PEER API
    * These functions involve communications with other Cambrian Peers

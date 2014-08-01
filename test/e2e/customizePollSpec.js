@@ -1,6 +1,6 @@
 var Elements = function () {
   this.customizePollContainer = element(by.id('customizePollContainer'));
-  this.pollTargetSelectionContainer = element(by.id('pollTargetSelectionContainer'));
+  this.pollTargetSelectionContainer = element(by.id('targetSelectionContainer'));
   this.chatGroupsContainer = element(by.id('chatGroupsContainer'));
   this.peerListsContainer = element(by.id('peerListsContainer'));
   this.firstChatGroup = element(by.repeater('chatGroup in chatGroups').row(0));
@@ -29,7 +29,7 @@ describe("Customize poll/template screen", function () {
   describe("Poll Target Selection section", function () {
 
     it("is displayed", function () {
-      expect(elements.pollTargetSelectionContainer.isDisplayed()).toBeTruthy();
+      expect(elements.targetSelectionContainer.isDisplayed()).toBeTruthy();
     });
 
     it("has a list of cambrian chat groups", function () {

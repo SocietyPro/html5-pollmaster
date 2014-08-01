@@ -1,5 +1,5 @@
 var Cambrian = Cambrian || {};
-Cambrian.pollApp = {};
+Cambrian.pollApp = Cambrian.pollApp || {};
 
 var mockTargets = {
   peers: [
@@ -8,8 +8,12 @@ var mockTargets = {
       name: "plato",
     },
     {
-      id: "UID001",
-      name: "plato",
+      id: "UID002",
+      name: "voodoo",
+    },
+    {
+      id: "UID003",
+      name: "hiro",
     }
   ],
 
@@ -29,7 +33,7 @@ var mockTargets = {
       ],
     },
     {
-      id: "GID001",
+      id: "GID002",
       name: "Cambrian Sprouts",
       peers: [
         {
@@ -47,7 +51,7 @@ var mockTargets = {
   peerLists: [
     {
       id: "LID001",
-      name: "Cambrian Devs",
+      name: "My Marketing List",
       peers: [
         {
           id: "UID001",
@@ -60,8 +64,22 @@ var mockTargets = {
       ],
     },
     {
-      id: "LID001",
-      name: "Cambrian Sprouts",
+      id: "LID002",
+      name: "People I know with cars",
+      peers: [
+        {
+          id: "UID003",
+          name: "paulo",
+        },
+        {
+          id: "UID004",
+          name: "future dev",
+        }
+      ],
+    },
+    {
+      id: "LID003",
+      name: "My Enemies",
       peers: [
         {
           id: "UID003",

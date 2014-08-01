@@ -99,4 +99,4 @@ var pollData = [
     counts: [0],
   },
 ]
-Cambrian.pollApp.mocks = pollData;
+Cambrian.pollApp.mockPolls = pollData;

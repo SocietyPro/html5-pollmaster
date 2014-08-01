@@ -1,3 +1,11 @@
+var japi;
+if(Cambrian.JAPI !== undefined){
+  japi = Cambrian.JAPI();
+} else {
+  // use mocks
+  japi = Cambrian.mockJAPI();
+}
+
 console.log(Cambrian.pollApp);
 var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap"]) // array is required
 
@@ -39,8 +47,7 @@ pollApp.config(function($routeProvider){
   
 pollApp.controller("pollAppCtrl", function($scope, $location){
 
-    $scope.polls = Cambrian.pollApp.mocks;
-   // $scope.polls = Cambrian.polls.getList();
+    $scope.polls = japi.polls.getList();
     console.log($scope.polls);
 
     $scope.pollsListingShow = function () {
@@ -65,6 +72,7 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
     };
 
     $scope.customizePollShow = function (poll) {
+      $scope.poll = poll;
       $location.path("/createPoll/customize");
     };
 
@@ -122,6 +130,11 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
       var newPoll = japi.polls.build(template);
       $scope.startCustomizing(newPoll);
     };
+   
+    $scope.prettyJSON = function(obj){
+      return JSON.stringify(obj, null, 2)
+    };
+
 });
 
 pollApp.controller("pollsListingCtrl", function ($scope) {
@@ -156,6 +169,40 @@ pollApp.controller("createPollCtrl", function ($scope){
     $scope.recentPolls = allPolls.slice(0, 5);
     $scope.examplePolls = allPolls.slice(0, 5);
     $scope.myTemplates = allPolls.slice(0, 5);
+});
+
+pollApp.controller("customizePollCtrl", function ($scope){
+  $scope.chooseTarget = function(type){
+    console.log('Choosing',type);
+    var targets = null;
+    var hint = null;
+    switch(type){
+      case 'peers': 
+        targets = japi.me.peers();
+        hint = "Choose one target Peer:"
+        break;
+      case 'groups':
+        targets = japi.me.groups();
+        hint = "Choose one target Group:"
+        break;
+      case 'peerLists':
+        targets = japi.me.peerLists();
+        hint = "Choose one target Peer List:"
+        break;
+    };
+    $scope.targetCategory = type;
+    $scope.targetHint = hint;
+    $scope.targetChoices = targets;
+    $scope.poll.target = targets[0];
+  }
+
+  $scope.poll = $scope.poll || japi.polls.build();
+  console.log('$scope.poll:');
+  console.log($scope.poll);
+  $scope.targetCategory = 'peers';
+  //$scope.targetChoices = japi.me.peers();
+  //$scope.poll.target = $scope.targetChoices[0];
+  $scope.chooseTarget('peers');
 });
 
 pollApp.controller("helpCtrl", function($scope){
