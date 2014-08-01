@@ -4,6 +4,7 @@ var Elements = function () {
   this.pollEditTitle = element(by.model('poll.title'));
   this.pollEditType = element(by.model('poll.type'));
   this.pollEditDescription = element(by.model('poll.description'));
+  this.addNewOptionLink = element(by.id('addNewOptionLink'));
   this.pollOptionsList = element(by.id('pollOptionsList'));
   this.allowMultipleOptions = element(by.id('allowMultipleOptions'));
   this.autoJoinChatRoomInput = element(by.id('autoJoinChatRoomInput'));
