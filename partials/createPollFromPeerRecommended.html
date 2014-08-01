@@ -1,0 +1,19 @@
+<div id="pollsFromPeerRecommendedContainer">
+  <div class="pollEntryContainer" ng-repeat="peerPoll in peerPolls">
+    <div class="col-md-9">
+      <div class="col-md-4">
+        <span class="label label-success">{{peerPoll.type == "" ? "Smart Ping" : peerPoll.type}}</span>
+      </div>
+      <div class="col-md-8">
+        <span>{{peerPoll.title}}</span>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <span class="copyPollButton pull-right" ng-click="copyPoll(peerPoll)">
+        <i class="fa fa-copy"></i> 
+        Copy
+      </span>
+    </div>
+    <div class="clearBoth"></div>
+  </div>
+</div>

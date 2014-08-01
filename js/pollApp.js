@@ -163,12 +163,11 @@ pollApp.controller("manageTemplatesCtrl", function ($scope){
 });
 
 pollApp.controller("createPollCtrl", function ($scope){
-    console.log($scope);
-    //var allPolls = japi.polls.getList();
-    var allPolls = $scope.polls;
-    $scope.recentPolls = allPolls.slice(0, 5);
-    $scope.examplePolls = allPolls.slice(0, 5);
-    $scope.myTemplates = allPolls.slice(0, 5);
+  console.log($scope);
+  $scope.recentPolls = japi.polls.getList();
+  $scope.examplePolls = japi.polls.getExamples();
+  $scope.myTemplates = japi.polls.getTemplates();
+  $scope.peerPolls = japi.polls.getPeerRecommended();
 });
 
 pollApp.controller("customizePollCtrl", function ($scope){

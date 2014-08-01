@@ -210,6 +210,16 @@ Cambrian.mockJAPI = function(){
     }
   };
 
+  japi.polls.getExamples = function(){
+    return listOfPolls;
+  };
+  japi.polls.getTemplates= function(){
+    return listOfPolls;
+  };
+  japi.polls.getPeerRecommended = function(){
+    return listOfPolls;
+  };
+
   /* Not yet specced:
   japi.polls.myTemplates.save = function(UUID, XML, callback){
     setTimeout(function(){ callback(null, false) }, 200);
