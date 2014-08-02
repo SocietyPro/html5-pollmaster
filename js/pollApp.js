@@ -90,17 +90,21 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
       $location.path = "/createPoll/customize";
     };
 
-    $scope.saveCustomization = function(isPoll, isTemplate){
+    $scope.saveCustomization = function(){
       // Called upon user clicking Save in poll customization screen.
-      if(isPoll){
+      if($scope.isPoll){
         $scope.savePollCustomization();
+        if($scope.startPollAfterCustomizing){
+          //$scope.poll.start();
+        };
       };
-      if(isTemplate){
+      if($scope.isTemplate){
         $scope.saveTemplateCustomization();
       };
       // TODO: ASYNC
       delete $scope.skeletonPoll;
       delete $scope.pollToCustomize;
+      $location.path('/');
     };
 
     $scope.savePollCustomization = function(){
@@ -171,6 +175,19 @@ pollApp.controller("createPollCtrl", function ($scope){
 });
 
 pollApp.controller("customizePollCtrl", function ($scope){
+  $scope.isPoll = true;
+  $scope.isTemplate = false;
+  $scope.saveButtonLabel = "Save";
+  $scope.setPollSaveOptions = function(){
+    if($scope.isPoll == false){
+      $scope.startPollAfterCustomizing = false; // Turn the Start Poll option off
+    };
+    if($scope.isPoll && $scope.startPollAfterCustomizing){
+      $scope.saveButtonLabel = "Save and Start";
+    } else {
+      $scope.saveButtonLabel = "Save";
+    };
+  };
 
   $scope.poll = $scope.poll || japi.polls.build();
   console.log('$scope.poll:');

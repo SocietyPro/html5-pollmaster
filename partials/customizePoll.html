@@ -1,5 +1,24 @@
 <div id="customizePollContainer">
   <div>Walkthrough buttons go here</div>
   <ng-include src="'partials/targetSelection.html'"></ng-include>
+  <div id="pollSaveWidget">
+   <h4>Save Options</h4>
+   <div id="pollSaveAsPoll">
+     <label for="pollSaveCheckPoll">
+       <input type="checkbox" id="pollSaveCheckPoll" ng-model="isPoll" ng-change="setPollSaveOptions()">
+       Save as Poll</label>
+   </div>
+   <div id="pollSaveAsTemplate">
+     <label for="pollSaveCheckTemplate">
+       <input type="checkbox" id="pollSaveCheckTemplate" ng-model="isTemplate" ng-change="setPollSaveOptions()">
+       Save as Template</label>
+   </div>
+   <div id="pollSaveCheckPoll">
+     <label for="pollSaveCheckStart" ng-class="{greyedOut:!isPoll}">
+       <input type="checkbox" id="pollSaveCheckStart" ng-model="startPollAfterCustomizing" ng-disabled="!isPoll" ng-change="setPollSaveOptions()">
+       Start Now</label>
+   </div>
+   <button id="pollSaveButton" class="btn green" ng-disabled="!isPoll && !isTemplate" ng-click="saveCustomization()">{{saveButtonLabel}}</button>
+  </div>
 </div>
 

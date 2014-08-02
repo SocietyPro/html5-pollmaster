@@ -12,6 +12,9 @@ var Elements = function () {
   this.submitLabelInput = element(by.id('submitLabelInput'));
   this.allowComments = element(by.id('allowComments'));
   this.pollPreviewContainer = element(by.id('pollPreviewContainer'));
+  this.pollSaveButton = element(by.id('pollSaveButton'));
+  this.pollSaveWidget = element(by.id('pollSaveWidget'));
+  this.pollSaveCheckboxes = element.all(by.css('#pollSaveWidget input[type=checkbox]'));
 };
 
 var elements;
@@ -116,20 +119,96 @@ describe("Customize poll/template screen", function () {
 
   describe("bottom", function () {
 
-    it("has a 'save' button", function () {
-      expect(elements.saveButton.isDisplayed()).toBeTruthy();
-      expect(elements.saveButton.getTagName()).toEqual('button');
-      expect(elements.saveButton.getText()).toEqual('Save');
+    var check1, check2, check3;
+
+    it("has a container for save controls", function(){
+      expect(elements.pollSaveWidget.isDisplayed()).toBeTruthy();
     });
 
-    describe("save button", function () {
 
-      it("saves the customized poll when clicked", function () {
-        
+    describe("Checkboxes", function () {
+      beforeEach(function(){
+        browser.get('default.htm#/createPoll/customize');
+        elements = new Elements();
+        check1 = elements.pollSaveCheckboxes.get(0);
+        check2 = elements.pollSaveCheckboxes.get(1);
+        check3 = elements.pollSaveCheckboxes.get(2);
+      });
+      
+      it("has a 'Save as Template' checkbox, checked by default", function(){
+        expect(check1.isDisplayed()).toBeTruthy();
+        expect(check1.isSelected()).toBeTruthy();
+      });
+   
+      it("has a 'Save as Poll' checkbox, unchecked by default", function(){
+        expect(check2.isDisplayed()).toBeTruthy();
+        expect(check2.isSelected()).toBeFalsy();
+      });
+   
+      it("has a 'Start Now' checkbox, unchecked by default", function(){
+        expect(check3.isDisplayed()).toBeTruthy();
+        expect(check3.isSelected()).toBeFalsy();
+      });
+    
+      it("Sets the 'Start Now' checkbox to false, if 'Save as Poll' is false", function(){
+        expect(check1.isSelected()).toBeTruthy();
+        check1.click(); // Click the Save as Poll checkbox, toggling off
+        expect(check1.isSelected()).toBeFalsy();
+
+        expect(check3.isSelected()).toBeFalsy();
+        check1.click(); // Click the Save as Poll checkbox, toggling back on
+      });
+  
+      it("Disables the 'Start Now' checkbox, if 'Save as Poll' is false", function(){
+        expect(check1.isSelected()).toBeTruthy();
+        check1.click(); // Click the Save as Poll checkbox, toggling off
+        expect(check1.isSelected()).toBeFalsy();
+
+        expect(check3.getAttribute('disabled')).toBeTruthy();
+        check1.click(); // Click the Save as Poll checkbox, toggling back on
+        expect(check3.getAttribute('disabled')).toBeFalsy();
+      });
+   
+      it("Greys out the 'Start Now' label text, if 'Save as Poll' is false", function(){
+        expect(check1.isSelected()).toBeTruthy();
+        check1.click(); // Click the Save as Poll checkbox, toggling off
+        expect(check1.isSelected()).toBeFalsy();
+
+        var greyLabels = element.all(by.css('#pollSaveWidget label.greyedOut'));
+        expect(greyLabels.count()).toBe(1);
+        var label = greyLabels.get(0);
+
+        expect(label.getText()).toEqual('Start Now')
+        check1.click(); // Click the Save as Poll checkbox, toggling back on
+        expect(check1.isSelected()).toBeTruthy();
+
+        var greyLabels = element.all(by.css('#pollSaveWidget label.greyedOut'));
+        expect(greyLabels.count()).toBe(0);
+      });
+   
+      it("Disables the 'Save' button, if 'Save as Poll' and 'Save as Template' are both false", function(){
+        expect(check1.isSelected()).toBeTruthy();
+        expect(check2.isSelected()).toBeFalsy();
+        check1.click(); // Click the Save as Poll checkbox, toggling off
+        expect(check1.isSelected()).toBeFalsy();
+        expect(elements.pollSaveButton.getAttribute('disabled')).toBeTruthy();
+
+        check1.click(); // Click the Save as Poll checkbox, toggling back on
+      });
+
+    });
+
+    describe("Save Button", function () {
+      it("has a 'save' button", function () {
+        expect(elements.pollSaveButton.isDisplayed()).toBeTruthy();
+        expect(elements.pollSaveButton.getTagName()).toEqual('button');
+        expect(elements.pollSaveButton.getText()).toMatch(/Save/); // sometimes is "Save and Start"
       });
 
       it("switches the view to the polls list screen when clicked", function () {
-
+        elements.pollSaveButton.click();
+        // Look for a known ID:
+        expect(element(by.id("pollsListContainer")).isDisplayed()).toBeTruthy();
       });
 
     });

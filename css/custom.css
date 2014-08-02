@@ -145,6 +145,34 @@ button {
   color: black;
 }
 
+/* Styles for customizePoll */
+#pollSaveWidget{
+  width: 20em;
+  margin: auto;
+  padding: 10px 20px 0 20px;
+  border: 1px solid black;
+}
+#pollSaveWidget h4{
+  display: inline-block;
+  position: absolute;
+  background-color: white;
+  margin-top: -20px;
+  margin-left: 8px;
+}
+#pollSaveWidget input[checkbox]{
+  display: inline-block; 
+}
+#pollSaveWidget label{
+  display: block;
+}
+#pollSaveButton{
+  display: block;
+  margin: 0 auto 5px auto;
+}
+.greyedOut, .grayedOut{
+  color: #777777;
+}
+
 /* Styles for pollResults */
 
 #ballotView {
