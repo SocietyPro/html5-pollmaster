@@ -1,1 +1,57 @@
-<p class="test">Template Management go here!</p>
+<div class="row" id="pollHeader">
+  <div class="col-md-12">
+    <a id="logo" href="#"><img src="assets/images/ping_logo.png"></a>
+    </img>
+    <div class="navButtons">
+      <button class="green btn" id="backButton" ng-click="pollsListingShow()">
+        <i class="fa fa-list"></i>
+        Back to Polls
+      </button>
+      <button class="green btn" id="helpButton" ng-click="helpShow()">
+        <i class="fa fa-question-circle"></i>
+      </button>
+    </div> 
+  </div>
+  <div class="clearBoth"></div>
+</div>
+
+<div id="templateManager">
+  <div id="pollsListHeader">
+    <em>Template Manager</em>
+  </div>
+  <b>Copy a Recent Poll, Manage Your Own Templates or use our Examples for your inspiration:
+  <div id="sectionTabs">
+
+    <!-- UI Bootstrap creates this as an unordered list -->
+    <tabset class="tabbable tabbable-custom">
+      <tab heading="My Templates" id="myTemplatesTab">
+        <div id="myTemplatesTabContent" class="tab-content">
+          <ng-include src="'partials/manageMyTemplates.html'"></ng-include>
+        </div>
+      </tab>
+      <tab heading="Copy from Recent Polls" id="recentPollsTab">
+        <div id="recentPollsTabContent" class="tab-content">
+          <ng-include src="'partials/createTemplateFromRecent.html'"></ng-include>
+        </div>  
+      </tab>
+      <tab heading="Copy from Examples" id="examplesTab">
+        <div id="examplesTabContent" class="tab-content">
+          <ng-include src="'partials/createTemplateFromExamples.html'"></ng-include>
+        </div>
+      </tab>
+      <tab heading="Copy from Peer Recommended" id="peerRecommendedTab">
+        <div id="peerRecommendedTabContent" class="tab-content">
+          <ng-include src="'partials/createTemplateFromPeerRecommended.html'"></ng-include>
+        </div>        
+      </tab>
+    </tabset>
+
+    <div class="col-md-2 col-centered">
+      <a id="createTemplateFromScratchButton" class="green btn" ng-click="newPollFromScratch()">
+        <i class="fa fa-plus fa-2"></i>
+        Create New Template from Scratch
+      </a>
+    </div>
+
+  </div>
+</div>

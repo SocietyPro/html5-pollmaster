@@ -37,7 +37,7 @@ describe("polls listing header", function () {
 
 	it("shows the manage templates screen when the manage templates button is clicked", function () {
     element(by.id('manageTemplatesButton')).click();
-		expect($("p.test").isDisplayed()).toBeTruthy();
+		expect(element(by.id('templateManager').isDisplayed()).toBeTruthy();
 	});
 
 	it("has a create new poll button", function () {

@@ -1,0 +1,24 @@
+<div id="templatesFromPeerRecommendedContainer">
+  <div ng-hide="peerTemplates.length > 0">
+    No peer recommended templates. Perhaps you are not liked well enough?
+  </div>
+  <div ng-show="peerTemplates.length > 0">
+  <div class="templateEntryContainer" ng-repeat="peerTemplate in peerTemplates">
+      <div class="col-md-9">
+        <div class="col-md-4">
+          <span class="label label-success">{{peerTemplate.type == "" ? "Smart Ping" : peerTemplate.type}}</span>
+        </div>
+        <div class="col-md-8">
+          <span>{{peerTemplate.title}}</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <span class="copyTemplateButton pull-right" ng-click="copyTemplate(peerTemplate)">
+          <i class="fa fa-copy"></i> 
+          Copy
+        </span>
+      </div>
+      <div class="clearBoth"></div>
+    </div>
+  </div>
+</div>
