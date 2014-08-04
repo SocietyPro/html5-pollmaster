@@ -154,7 +154,6 @@ Cambrian.mockJAPI = function(){
     if(arguments.length === 0){ 
       // No arguments. Return a new poll synchronously.
       var builtPoll = mockPoll;
-      listOfPolls.push(builtPoll);
       return builtPoll;
     } else if(arguments.length === 1 && typeof source === "function"){
       // One callback argument passed in. 
@@ -162,7 +161,6 @@ Cambrian.mockJAPI = function(){
       setTimeout(function(){ 
         callback(null, function () {
           var builtPoll = mockPoll;
-          listOfPolls.push(builtPoll);
           return builtPoll;
         }); 
       }, 200);
