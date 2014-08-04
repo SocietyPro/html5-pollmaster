@@ -35,6 +35,7 @@ Cambrian.mockJAPI = function(){
     mock.start = function(){
       console.log('Starting mock');
       mock.status = 'started';
+      mock.dateStarted = new Date();
     };
     return mock;
   });
@@ -130,6 +131,7 @@ Cambrian.mockJAPI = function(){
         },
         start: function(){
           console.log("Starting Poll");
+          this.dateStarted = new Date();
           this.status = "started";
         },
         stop: function(){},

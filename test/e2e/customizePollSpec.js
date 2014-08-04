@@ -213,6 +213,20 @@ describe("Customize poll/template screen", function () {
         expect(element(by.id("pollsListContainer")).isDisplayed()).toBeTruthy();
       });
 
+      it("With Start Now selected, it sets the poll's status to 'started' when clicked", function(){
+        browser.get('default.htm#/createPoll/customize');
+        elements = new Elements();
+        check3 = elements.pollSaveCheckboxes.get(2);
+        check3.click();
+        elements.pollSaveButton.click();
+        // Check the poll status of the first poll listed on the poll listings page
+        var polls = element.all(by.repeater("poll in polls"));
+        var unstartedStatus = polls.get(0).findElement(by.binding("poll.status"));
+        expect(unstartedStatus.getText()).toEqual("started");
+        browser.get('default.htm#/createPoll/customize');
+        elements = new Elements();
+      });
+
     });
 
   });
