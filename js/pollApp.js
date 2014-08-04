@@ -108,6 +108,12 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
       $scope.startCustomizing(oldPoll);
     };
 
+    $scope.startPoll = function(oldPoll){
+      console.log("Starting Poll:");
+      console.log(oldPoll);
+      oldPoll.start();
+    };
+
     $scope.newPollFromScratch = function(){
       var newPoll = japi.polls.build();
       $scope.startCustomizing(newPoll);
@@ -210,7 +216,7 @@ pollApp.controller("customizePollCtrl", function ($scope, $location, $controller
       case "Months":
         $scope.poll.pollTimeLength = length * 2592000;
         break;
-      case "Months":
+      case "Years":
         $scope.poll.pollTimeLength = length * 31536000;
         break;
     }
@@ -220,16 +226,17 @@ pollApp.controller("customizePollCtrl", function ($scope, $location, $controller
     // Called upon user clicking Save in poll customization screen.
     $scope.convertTimeToSeconds($scope.temporaryPollOptions.lifespan, $scope.temporaryPollOptions.timeUnits);
     $scope.poll.status = "unstarted";
-    $scope.skeletonPoll = $scope.poll;
+    //$scope.skeletonPoll = $scope.poll;
 
+    if($scope.isTemplate){
+      $scope.saveTemplateCustomization();
+    };
     if($scope.isPoll){
       $scope.savePollCustomization();
       if($scope.startPollAfterCustomizing){
         //$scope.poll.start();
+        $scope.startPoll($scope.poll);
       };
-    };
-    if($scope.isTemplate){
-      $scope.saveTemplateCustomization();
     };
     // TODO: ASYNC
     delete $scope.poll;

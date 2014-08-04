@@ -59,10 +59,10 @@
           <div class="btn yellow btn-xs viewResultsButton" ng-hide="poll.status === 'unstarted'" ng-click="pollResultsShow(poll)">
             View Results
           </div>
-          <div class="btn blue btn-xs editPollButton" ng-show="poll.status === 'unstarted'">
+          <div class="btn blue btn-xs editPollButton" ng-show="poll.status === 'unstarted'" ng-click="editPoll(poll)">
             Edit Poll
           </div>
-          <div class="btn green btn-xs startPollButton" ng-show="poll.status === 'unstarted'">
+          <div class="btn green btn-xs startPollButton" ng-show="poll.status === 'unstarted'" ng-click="startPoll(poll)">
             Start Poll
           </div>
           <div class="template-btn-group">

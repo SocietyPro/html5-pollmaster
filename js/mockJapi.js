@@ -27,7 +27,17 @@ Cambrian.mockJAPI = function(){
     },
   }
 
-  var listOfPolls = Cambrian.pollApp.mockPolls;
+  /* Our mocks don't have a start function but we need it for testing. Adding
+   * here:
+   */
+  var listOfPollMocks = Cambrian.pollApp.mockPolls;
+  var listOfPolls = listOfPollMocks.map(function(mock){
+    mock.start = function(){
+      console.log('Starting mock');
+      mock.status = 'started';
+    };
+    return mock;
+  });
 
   /* 
    * JAPI ME API
@@ -118,7 +128,10 @@ Cambrian.mockJAPI = function(){
         save: function(){
           savePoll(this)
         },
-        start: function(){},
+        start: function(){
+          console.log("Starting Poll");
+          this.status = "started";
+        },
         stop: function(){},
         getResults: function(){},
         delete: function(){},
