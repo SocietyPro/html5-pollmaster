@@ -190,8 +190,51 @@ pollApp.controller("customizePollCtrl", function ($scope){
   };
 
   $scope.poll = $scope.poll || japi.polls.build();
-  console.log('$scope.poll:');
-  console.log($scope.poll);
+  $scope.temporaryPollOptions = {};
+
+  $scope.poll.dateStarted = $scope.poll.dateStarted || new Date();
+  $scope.pollTypes = ["Eve Battle Ping", "Vote", "Opinion"];
+  $scope.units = ["Minutes", "Hours", "Days", "Weeks", "Months", "Years"];
+
+  $scope.addOption = function () {
+    var newOption = { text: "", subgroup: "" };
+    if ($scope.temporaryPollOptions.defaultChatRoom) {
+      newOption.subgroup = $scope.temporaryPollOptions.defaultChatRoom;
+    }
+    $scope.poll.options.push(newOption);
+  };
+
+  $scope.removeOption = function (option) {
+    var index = $scope.poll.options.indexOf(option);
+
+    if (index > -1) {
+      $scope.poll.options.splice(index, 1);
+    }
+  };
+
+  $scope.convertTimeToSeconds = function (length, units) {
+    switch(units) {
+      case "Minutes":
+        $scope.poll.pollTimeLength = length * 60;
+        break;
+      case "Hours":
+        $scope.poll.pollTimeLength = length * 3600;
+        break;
+      case "Days":
+        $scope.poll.pollTimeLength = length * 86400;
+        break;
+      case "Weeks":
+        $scope.poll.pollTimeLength = length * 604800;
+        break;
+      case "Months":
+        $scope.poll.pollTimeLength = length * 2592000;
+        break;
+      case "Months":
+        $scope.poll.pollTimeLength = length * 31536000;
+        break;
+    }
+  };
+
 });
 
 pollApp.controller("helpCtrl", function($scope){

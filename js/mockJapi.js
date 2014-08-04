@@ -114,6 +114,7 @@ Cambrian.mockJAPI = function(){
         title: "",
         status: "deleted", 
         dateStarted: null,
+        options: [],
         save: function(){
           savePoll(this)
         },

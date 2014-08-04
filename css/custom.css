@@ -273,3 +273,7 @@ button {
 	padding: 8px;
 	margin-bottom: 10px;
 }
+
+.ballot-table {
+  width: 100%;
+}

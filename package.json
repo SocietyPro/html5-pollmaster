@@ -32,7 +32,8 @@
     "test-header": "protractor test/protractor-conf.js --specs test/e2e/pollsListingHeaderSpec.js",
     "test-pollslist": "protractor test/protractor-conf.js --specs test/e2e/pollsListingSpec.js",
     "test-createpoll": "protractor test/protractor-conf.js --specs test/e2e/createPollFromRecentSpec.js,test/e2e/createPollSpec.js,test/e2e/createPollFromMyTemplatesSpec.js,test/e2e/createPollFromExamplesSpec.js,test/e2e/createPollFromPeerRecommendedSpec.js",
-    "test-customize": "protractor test/protractor-conf.js --specs test/e2e/customizePollSpec.js,test/e2e/targetSelectionSpec.js",
+    "test-customize": "protractor test/protractor-conf.js --specs test/e2e/customizePollSpec.js,test/e2e/targetSelectionSpec.js,test/e2e/ballotViewSpec.js",
+    "test-ballotview": "protractor test/protractor-conf.js --specs test/e2e/ballotViewSpec.js",
 
     "test-single-run": "karma start test/karma.conf.js  --single-run",
 

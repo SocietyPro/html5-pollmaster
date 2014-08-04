@@ -6,7 +6,7 @@ var Elements = function () {
   this.pollEditDescription = element(by.model('poll.description'));
   this.addNewOptionLink = element(by.id('addNewOptionLink'));
   this.pollOptionsList = element(by.id('pollOptionsList'));
-  this.allowMultipleOptions = element(by.id('allowMultipleOptions'));
+  this.allowMultipleChoices = element(by.id('allowMultipleChoices'));
   this.autoJoinChatRoomInput = element(by.id('autoJoinChatRoomInput'));
   this.dismissLabelInput = element(by.id('dismissLabelInput'));
   this.submitLabelInput = element(by.id('submitLabelInput'));
@@ -61,28 +61,30 @@ describe("Customize poll/template screen", function () {
         this.firstOption = element(by.repeater('option in poll.options').row(0));
         this.firstOptionOption = this.firstOption.element(by.model('option.text'));
         this.firstOptionSubtract = this.firstOption.element(by.css('.subtract'));
+        this.subtracts = element.all(by.css('.subtract'));
       };
 
       it("accepts added options", function () {
         expect(elements.addNewOptionLink.isDisplayed()).toBeTruthy();
+        expect(elements.addNewOptionLink.getText()).toEqual("+ Add Additional Answer");
         elements.addNewOptionLink.click();
         optionListElements = new OptionListElements();
-        expect(optionListElements.firstOption.isDisplayed()).toBeTruthy();
-        expect(optionListElements.firstOption.getTagName()).toEqual('input');
-        expect(optionListElements.firstOption.getAttribute('type')).toEqual('text');
+        expect(optionListElements.firstOptionOption.isDisplayed()).toBeTruthy();
+        expect(optionListElements.firstOptionOption.getTagName()).toEqual('input');
+        expect(optionListElements.firstOptionOption.getAttribute('type')).toEqual('text');
       });
 
       it("removes subtracted options", function () {
-        expect(optionListElements.firstOption.isDisplayed()).toBeTruthy();
+        expect(optionListElements.subtracts.count()).toEqual(1);
         optionListElements.firstOptionSubtract.click();
-        expect(optionListElements.firstOption.isDisplayed()).toBeFalsy();
+        expect(optionListElements.subtracts.count()).toEqual(0);
       });
 
     });
 
     it("has an 'allow multiple selections' checkbox", function () {
-      expect(elements.allowMultipleOptions.isDisplayed()).toBeTruthy();
-      expect(elements.allowMultipleOptions.getAttribute("type")).toEqual("checkbox");
+      expect(elements.allowMultipleChoices.isDisplayed()).toBeTruthy();
+      expect(elements.allowMultipleChoices.getAttribute("type")).toEqual("checkbox");
     });
 
     it("has an 'auto join chat room' input", function () {

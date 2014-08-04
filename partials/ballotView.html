@@ -1,5 +1,6 @@
 <!-- begin ballot view -->
 <div id="ballotView" class="cambrianAntiWell">
+  <h4>Ballot Options</h4>
   <div id="ballotTitle">
     <b>{{poll.type}}: {{poll.title}}</b>
   </div>
@@ -7,7 +8,7 @@
     <tr>
       <td ROWSPAN=2 style="text-align: center; width: 53px;"><img src="http://placepic.me/space/50-50" style="margin-right: 3px;"></td>
       <td id="ballotOriginator"><b>{{poll.originator || "BallotCreator"}} says:</b></td>
-      <td id="ballotDate">{{(poll.dateStarted || new Date()) | date:'short'}}</td>
+      <td id="ballotDate">{{poll.dateStarted | date:'short'}}</td>
     </tr>
     <tr>
       <td colspan="2" id="ballotDescription">
@@ -19,18 +20,18 @@
   <div ng-show="poll.options.length > 0">
     <h4>Respond to Ping:</h4>
     <div id="ballotOptions" class="modal-well">
-      <div class="selectInstructions" ng-hide="poll.multipleSelect"><b>Select One:</b></div>
-      <div class="selectInstructions" ng-show="poll.multipleSelect"><b>Select One or More:</b></div>
+      <div class="selectInstructions" ng-hide="poll.allowMultipleChoices"><b>Select One:</b></div>
+      <div class="selectInstructions" ng-show="poll.allowMultipleChoices"><b>Select One or More:</b></div>
       <form>
-        <div ng-repeat="option in poll.options" ng-show="poll.multipleSelect">
-          <input type="checkbox">
-            {{option}}
+        <div ng-repeat="option in poll.options" ng-show="poll.allowMultipleChoices">
+          <input class="optionInput" type="checkbox">
+            {{option.text}}
         </div>
-        <div ng-repeat="option in poll.options" ng-hide="poll.multipleSelect">
-          <input type="radio" value="{{option}}">
-            {{option}}
+        <div ng-repeat="option in poll.options" ng-hide="poll.allowMultipleChoices">
+          <input class="optionInput" type="radio" value="{{option.text}}">
+            {{option.text}}
         </div>
-        <div id="commentBoxContainer" style="margin-top: 10px;" class="form-group" ng-show="poll.allowComment">
+        <div id="commentBoxContainer" style="margin-top: 10px;" class="form-group" ng-show="poll.allowComments">
           <lable id="commentBoxLabel" for="comment">Send a note to {{poll.originator || "BallotCreator"}}:</lable>
           <input id="commentBox" type="text" class="form-control">
         </div>
@@ -38,12 +39,12 @@
     </div>
   </div>
   <div class="pull-right">
-    <div ng-hide="poll.options == 0">
-      <button type="button" class="btn default" ng-disabled="true">{{poll.dismissText || "Dismiss"}}</button>
-      <button type="submit" class="btn blue" ng-disabled="true">{{poll.submitText || "Submit"}}</button>
+    <div ng-show="poll.options.length > 0">
+      <button id="dismissButton" type="button" class="btn default" ng-disabled="true">{{poll.dismissText || "Dismiss"}}</button>
+      <button id="submitButton" type="submit" class="btn blue" ng-disabled="true">{{poll.submitText || "Submit"}}</button>
     </div>
-    <div ng-show="poll.options == 0">
-      <button type="button" class="btn default" ng-disabled="true">Close</button>
+    <div ng-hide="poll.options.length > 0">
+      <button id="closeButton" type="button" class="btn default" ng-disabled="true">Close</button>
     </div>
   </div>
   <div class="clearBoth"></div>
