@@ -6,7 +6,6 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-console.log(Cambrian.pollApp);
 var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap"]) // array is required
 
 pollApp.config(function($routeProvider){
@@ -48,7 +47,7 @@ pollApp.config(function($routeProvider){
 pollApp.controller("pollAppCtrl", function($scope, $location){
 
     $scope.polls = japi.polls.getList();
-    console.log($scope.polls);
+
 
     $scope.pollsListingShow = function () {
       $location.path("/");
@@ -126,11 +125,9 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
 });
 
 pollApp.controller("pollsListingCtrl", function ($scope) {
-    console.log($scope);
 });
 
 pollApp.controller("pollResultsCtrl", function ($scope) {
-    console.log($scope);
 
     $scope.poll = $scope.poll || $scope.polls[0];
     $scope.chartData = [];
@@ -143,22 +140,20 @@ pollApp.controller("pollResultsCtrl", function ($scope) {
 });
 
 pollApp.controller("peerListsCtrl", function ($scope){
-    console.log($scope);
 });
 
 pollApp.controller("manageTemplatesCtrl", function ($scope){
-    console.log($scope);
 });
 
 pollApp.controller("createPollCtrl", function ($scope){
-  console.log($scope);
   $scope.recentPolls = japi.polls.getList();
   $scope.examplePolls = japi.polls.getExamples();
   $scope.myTemplates = japi.polls.getTemplates();
   $scope.peerPolls = japi.polls.getPeerRecommended();
 });
 
-pollApp.controller("customizePollCtrl", function ($scope, $location){
+pollApp.controller("customizePollCtrl", function ($scope, $location, $controller){
+  $controller("pollAppCtrl", {$scope: $scope});
   $scope.isPoll = true;
   $scope.isTemplate = false;
   $scope.saveButtonLabel = "Save";
@@ -173,6 +168,8 @@ pollApp.controller("customizePollCtrl", function ($scope, $location){
       $scope.saveButtonLabel = "Save";
     };
   };
+
+  $scope.poll = $scope.poll || japi.polls.build();
 
   $scope.temporaryPollOptions = {};
 
@@ -243,7 +240,6 @@ pollApp.controller("customizePollCtrl", function ($scope, $location){
 });
 
 pollApp.controller("helpCtrl", function($scope){
-    console.log($scope);
 });
 
 pollApp.directive('resultsChart', function () {

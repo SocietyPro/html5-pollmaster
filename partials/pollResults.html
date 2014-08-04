@@ -59,7 +59,7 @@
             <b>Results:</b>
             <table id="tallyTable" class="resultsTable">
               <tr ng-repeat="(index, option) in poll.options">
-                <td>{{option}}</td>
+                <td>{{option.text}}</td>
                 <td>{{poll.counts[index]}}</td>
               </tr>
             </table>

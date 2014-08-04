@@ -58,7 +58,7 @@ describe("Customize poll/template screen", function () {
     describe("poll options list", function () {
 
       var OptionListElements = function () {
-        this.firstOption = element(by.repeater('option in poll.options').row(0));
+        this.firstOption = element(by.repeater("option in poll.options").row(0));
         this.firstOptionOption = this.firstOption.element(by.model('option.text'));
         this.firstOptionSubtract = this.firstOption.element(by.css('.subtract'));
         this.subtracts = element.all(by.css('.subtract'));
