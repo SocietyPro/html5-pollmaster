@@ -17,7 +17,7 @@ var pollData = [
         invalid: 0
     },
     turnoutPercent: "82",
-    options: ["I'll be there", "I can't go"],
+    options: [{text: "I'll be there"}, {text: "I can't go"}],
     comments: [
         ["darlith", "I will be 10 minutes late.", new Date("2014-07-18")],
         ["frankenlaser", "This better pay off, last 3 deals with you were bum.", new Date("2014-07-18")],
@@ -40,7 +40,7 @@ var pollData = [
         pending: 50,
         invalid: 50
     },
-    options: ["Tortrix BBQ", "Tortrix Crema Agria", "Lays BBQ", "Lays Original"],
+    options: [{text: "Tortrix BBQ"}, {text: "Tortrix Crema Agria"}, {text: "Lays BBQ"}, {text: "Lays Original"}],
     comments: [],
     counts: [100, 630, 100, 120],
   },
@@ -58,7 +58,7 @@ var pollData = [
         pending: 10,
         invalid: 0
     },
-    options: ["Vote Yes", "Vote No"],
+    options: [{text: "Vote Yes"}, {text: "Vote No"}],
     comments: [],
     counts: [50, 40],
   },
@@ -76,7 +76,7 @@ var pollData = [
         pending: 0,
         invalid: 0
     },
-    options: ["Yes, I'll buy BTC now"],
+    options: [{text: "Yes, I'll buy BTC now"}],
     comments: [],
     counts: [0],
   },
@@ -94,7 +94,7 @@ var pollData = [
         pending: 0,
         invalid: 0
     },
-    options: ["Yes, I can join", "Yes, I can join and bring my megaphone", "No, but good luck!", "No way. Swarm Rules!"],
+    options: [{text: "Yes, I can join"}, {text: "Yes, I can join and bring my megaphone"}, {text: "No, but good luck!"}, {text: "No way. Swarm Rules!"}],
     comments: [],
     counts: [0],
   },

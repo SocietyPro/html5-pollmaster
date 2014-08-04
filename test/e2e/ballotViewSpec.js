@@ -23,6 +23,15 @@ var FormControls = function () {
   this.allowComments = element(by.model('poll.allowComments'));
 };
 
+var selectDropdownbyNum = function ( element, optionNum ) {
+  if (optionNum){
+    var options = element.findElements(by.tagName('option'))   
+      .then(function(options){
+        options[optionNum].click();
+      });
+  }
+};
+
 describe("ballot view", function () {
 
   var ballotView, formControls;
@@ -37,10 +46,10 @@ describe("ballot view", function () {
   });
 
   it("displays the ballot title", function () {
-    formControls.pollEditType.sendKeys('Battle Ping');
     formControls.pollEditTitle.sendKeys('Join Operation Red Dawn!')
+    selectDropdownbyNum(formControls.pollEditType, 1);
     expect(ballotView.titleConcatenation.isDisplayed()).toBeTruthy();
-    expect(ballotView.titleConcatenation.getText()).toEqual('Battle Ping: Join Operation Red Dawn!')
+    expect(ballotView.titleConcatenation.getText()).toEqual('Eve Battle Ping: Join Operation Red Dawn!')
   });
 
   it("displays the originator line", function () {
@@ -90,10 +99,12 @@ describe("ballot view", function () {
     };
 
     var OptionsListElements = function () {
-      this.selectionInstructions = element(by.css('.selectInstructions'));
-      this.firstBallotViewOptionText = element.all(by.binding('option.text')).get(0);
-      this.secondBallotViewOptionText = element.all(by.binding('option.text')).get(1);
-      this.firstBallotViewOptionInput = element.all(by.css('input.optionInput')).get(0);
+      this.selectOne = element(by.id('selectOne'));
+      this.selectMultiple = element(by.id('selectMultiple'));
+      this.selectOneOptionOne = element.all(by.binding('option.text')).get(0);
+      this.selectOneOptionTwo = element.all(by.binding('option.text')).get(1);
+      this.selectMultipleOptionOne = element.all(by.binding('option.text')).get(2);
+      this.selectMultipleOptionTwo = element.all(by.binding('option.text')).get(3);
     };
 
     var CommentBoxElements = function () {
@@ -104,30 +115,24 @@ describe("ballot view", function () {
 
     var optionsFormElements, optionsListElements, commentBoxElements;
 
-    it("shows the poll options with checkboxes for 'choose multiple'", function () {
+    it("shows a multiple choice form if multiple selections are not allowed", function () {
       formControls.addNewOptionLink.click();
       optionsFormElements = new OptionsFormElements();
+      optionsListElements = new OptionsListElements();
       optionsFormElements.firstFormOptionText.sendKeys('Option1');
       optionsFormElements.secondFormOptionText.sendKeys('Option2');
-      optionsListElements = new OptionsListElements();
-      console.log(optionsListElements.firstBallotViewOptionText);
-      expect(optionsListElements.firstBallotViewOptionInput.getTagName()).toEqual('input');
-      expect(optionsListElements.firstBallotViewOptionInput.getAttribute('type')).toEqual('checkbox');
-      expect(optionsListElements.firstBallotViewOptionText.getText()).toEqual('Option1');
-      expect(optionsListElements.secondBallotViewOptionText.getText()).toEqual('Option2');
+      expect(optionsListElements.selectOne.isDisplayed()).toBeTruthy();
+      expect(optionsListElements.selectMultiple.isDisplayed()).toBeFalsy();
+      expect(optionsListElements.selectOneOptionOne.getText()).toEqual('Option1');
+      expect(optionsListElements.selectOneOptionTwo.getText()).toEqual('Option2');
     });
 
-    it("has a 'selection instructions' heading that changes with the type of poll", function () {
-      expect(optionsListElements.selectionInstructions.getText()).toEqual("Select One:");
+    it("shows a multiple selection form if multiple selections are allowed", function () {
       formControls.allowMultipleChoices.click();
-      optionsListElements = new OptionsListElements();
-      expect(optionsListElements.selectionInstructions.getText()).toEqual("Select One or More:");
-    });
-
-    it("shows the poll options with radio buttons for 'choose one'", function () {
-      formControls.allowMultipleChoices.click();
-      optionsListElements = new OptionsListElements();
-      expect(optionsListElements.firstBallotViewOptionInput.getAttribute('type')).toEqual('radio');
+      expect(optionsListElements.selectOne.isDisplayed()).toBeFalsy();
+      expect(optionsListElements.selectMultiple.isDisplayed()).toBeTruthy();
+      expect(optionsListElements.selectMultipleOptionOne.getText()).toEqual('Option1');
+      expect(optionsListElements.selectMultipleOptionTwo.getText()).toEqual('Option2');
     });
 
     it("has a comment box if 'allow comments' is enabled", function () {

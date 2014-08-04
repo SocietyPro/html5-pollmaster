@@ -41,8 +41,8 @@ describe("Customize poll/template screen", function () {
 
     it("has a place to edit the poll type", function () {
       expect(elements.pollEditType.isDisplayed()).toBeTruthy();
-      expect(elements.pollEditType.getTagName()).toEqual('input');
-      expect(elements.pollEditType.getAttribute('type')).toEqual('text');
+      expect(elements.pollEditType.getTagName()).toEqual('select');
+      expect(elements.pollEditType.getAttribute('type')).toEqual('select-one');
     });
 
     it("has a place to edit the poll description", function () {

@@ -1,6 +1,5 @@
 <!-- begin ballot view -->
 <div id="ballotView" class="cambrianAntiWell">
-  <h4>Ballot Options</h4>
   <div id="ballotTitle">
     <b>{{poll.type}}: {{poll.title}}</b>
   </div>
@@ -20,22 +19,22 @@
   <div ng-show="poll.options.length > 0">
     <h4>Respond to Ping:</h4>
     <div id="ballotOptions" class="modal-well">
-      <div class="selectInstructions" ng-hide="poll.allowMultipleChoices"><b>Select One:</b></div>
-      <div class="selectInstructions" ng-show="poll.allowMultipleChoices"><b>Select One or More:</b></div>
-      <form>
-        <div ng-repeat="option in poll.options" ng-show="poll.allowMultipleChoices">
-          <input class="optionInput" type="checkbox">
-            {{option.text}}
-        </div>
-        <div ng-repeat="option in poll.options" ng-hide="poll.allowMultipleChoices">
+      <div id="selectOne" ng-hide="poll.allowMultipleChoices"><b>Select One:</b>
+        <div ng-repeat="option in poll.options">
           <input class="optionInput" type="radio" value="{{option.text}}">
             {{option.text}}
         </div>
-        <div id="commentBoxContainer" style="margin-top: 10px;" class="form-group" ng-show="poll.allowComments">
-          <lable id="commentBoxLabel" for="comment">Send a note to {{poll.originator || "BallotCreator"}}:</lable>
-          <input id="commentBox" type="text" class="form-control">
+      </div>
+      <div id="selectMultiple" ng-show="poll.allowMultipleChoices"><b>Select One or More:</b>
+        <div ng-repeat="option in poll.options">
+          <input class="optionInput" type="checkbox">
+            {{option.text}}
         </div>
-      </form>   
+      </div>
+      <div id="commentBoxContainer" style="margin-top: 10px;" class="form-group" ng-show="poll.allowComments">
+        <lable id="commentBoxLabel" for="comment">Send a note to {{poll.originator || "BallotCreator"}}:</lable>
+        <input id="commentBox" type="text" class="form-control">
+      </div>  
     </div>
   </div>
   <div class="pull-right">
