@@ -1,1 +1,21 @@
-<div>Example templates go Here</div>
+<div id="exampleTemplatesContainer">
+  <div class="pollEntryContainer" ng-repeat="exampleTemplate in exampleTemplates">
+    <div class="col-md-8">
+      <div class="col-md-2">
+        <span class="label label-success">{{exampleTemplate.type == "" ? "Smart Ping" : exampleTemplate.type}}</span>
+      </div>
+      <div class="col-md-10">
+        <span>{{exampleTemplate.title}}</span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="pull-right">
+        <span class="forkTemplateButton" ng-click="forkTemplate(exampleTemplate)">
+          <i class="fa fa-copy"></i> 
+          Fork this Template
+        </span>
+      </div>
+    </div>
+    <div class="clearBoth"></div>
+  </div>
+</div>
