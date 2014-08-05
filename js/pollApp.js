@@ -47,6 +47,7 @@ pollApp.config(function($routeProvider){
 pollApp.controller("pollAppCtrl", function($scope, $location){
 
     $scope.polls = japi.polls.getList();
+    $scope.myTemplates = japi.polls.getTemplates();
 
 
     $scope.pollsListingShow = function () {

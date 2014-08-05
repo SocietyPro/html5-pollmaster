@@ -1,0 +1,61 @@
+var Cambrian = Cambrian || {};
+Cambrian.pollApp = Cambrian.pollApp || {};
+
+var templateData = [
+  { 
+    id: "UUID101",
+    type: "Battle Ping",
+    title: "Join Operation Red Dawn! Bring Ships!",
+    description: "We are going to burn the Russian Starbase. Scythe/Moa fleet is leaving at 21:00 from V-3.",
+    options: [{text: "I'll be there"}, {text: "I can't go"}],
+    allowMultipleChoices: false,
+    allowComments: false,
+    dismissText: "Dismiss",
+    submitText: "Submit",
+  },
+  { 
+    id: "UUID102",
+    type: "Poll",
+    title: "What is your favorite Snack?",
+    description: "We are about to restock the vending machine and want to know what y'all want in it.",
+    options: [{text: "Tortrix BBQ"}, {text: "Tortrix Crema Agria"}, {text: "Lays BBQ"}, {text: "Lays Original"}],
+    allowMultipleChoices: false,
+    allowComments: false,
+    dismissText: "Dismiss",
+    submitText: "Submit",
+  },
+  { 
+    id: "UUID103",
+    type: "Vote",
+    title: "Leonardo di Cambrian for President of the Organization",
+    description: "Vote for me, I promise I won't do anything evil.",
+    options: [{text: "Vote Yes"}, {text: "Vote No"}],
+    allowMultipleChoices: false,
+    allowComments: false,
+    dismissText: "Dismiss",
+    submitText: "Submit",
+  },
+  { 
+    id: "UUID104",
+    type: "LocalTrader",
+    title: "I have 2 BTC to sell immediately. Takers?",
+    description: "bitstamp +5%",
+    options: [{text: "Yes, I'll buy BTC now"}],
+    allowMultipleChoices: false,
+    allowComments: false,
+    dismissText: "Dismiss",
+    submitText: "Submit",
+  },
+  { 
+    id: "UUID105",
+    type: "Community",
+    title: "Swarm protest at 1pm. Can you join?",
+    description: "Location and slogans are opsec, we'll tell you if you commit to joining.",
+    options: [{text: "Yes, I can join"}, {text: "Yes, I can join and bring my megaphone"}, {text: "No, but good luck!"}, {text: "No way. Swarm Rules!"}],
+    allowMultipleChoices: false,
+    allowComments: false,
+    dismissText: "Dismiss",
+    submitText: "Submit",
+  },
+]
+Cambrian.pollApp.mockTemplates = templateData;

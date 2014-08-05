@@ -1,5 +1,5 @@
 var Cambrian = Cambrian || {};
-Cambrian.pollApp = {};
+Cambrian.pollApp = Cambrian.pollApp || {};
 
 var pollData = [
   { 

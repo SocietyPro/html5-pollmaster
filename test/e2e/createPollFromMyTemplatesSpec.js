@@ -27,7 +27,7 @@ describe("The list of recent polls", function () {
     });
 
     it("has poll title", function () {
-      expect(elements.firstPollTitle.getText()).toEqual('Join Operation Red Dawn!');
+      expect(elements.firstPollTitle.getText()).toEqual('Join Operation Red Dawn! Bring Ships!');
     });
 
     it("has an edit button", function () {

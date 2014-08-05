@@ -40,6 +40,8 @@ Cambrian.mockJAPI = function(){
     return mock;
   });
 
+  var listOfTemplates = Cambrian.pollApp.mockTemplates;
+  
   /* 
    * JAPI ME API
    * These functions give apps access to context about the current role
@@ -228,7 +230,7 @@ Cambrian.mockJAPI = function(){
     return listOfPolls;
   };
   japi.polls.getTemplates= function(){
-    return listOfPolls;
+    return listOfTemplates;
   };
   japi.polls.getPeerRecommended = function(){
     return listOfPolls;
