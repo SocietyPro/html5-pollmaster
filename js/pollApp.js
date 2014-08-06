@@ -81,6 +81,8 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
     };
 
     $scope.startCustomizing = function(pollObject){
+      console.log('before startCustomizing');
+      console.log($scope);
       // We won't modify or save this until save is clicked:
       $scope.pollToCustomize = pollObject; 
 
@@ -91,7 +93,8 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
     };
 
     $scope.savePollCustomization = function(){
-      $scope.pollToCustomize = $scope.poll;
+      //$scope.pollToCustomize = $scope.poll;
+      angular.copy($scope.poll, $scope.pollToCustomize);
       $scope.pollToCustomize.save();
     };
 
@@ -101,6 +104,8 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
 
     $scope.copyPoll = function(oldPoll){
       var newPoll = japi.polls.build(oldPoll);
+      console.log('Are they the same?');
+      console.log(newPoll == oldPoll);
       $scope.startCustomizing(newPoll);
     };
 
@@ -113,6 +118,12 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
       console.log(oldPoll);
       oldPoll.start();
     };
+
+    $scope.destroyPoll = function(oldPoll){
+      oldPoll.destroy();
+      console.log(oldPoll);
+    };
+
 
     $scope.newPollFromScratch = function(){
       var newPoll = japi.polls.build();

@@ -1,6 +1,6 @@
 var Cambrian = Cambrian || {}
 
-Cambrian.idSeed = 0;
+Cambrian.idSeed = 4;
 
 Cambrian.mockJAPI = function(){
   // Define some children objects, this is necessary because trying to set
@@ -37,6 +37,9 @@ Cambrian.mockJAPI = function(){
       mock.status = 'started';
       mock.dateStarted = new Date();
     };
+    mock.stop= function(){ this.status = 'stopped'};
+    mock.save= function(){ savePoll(this) };
+    mock.destroy= function(){ this.status = 'unsaved'};
     return mock;
   });
 
@@ -116,6 +119,17 @@ Cambrian.mockJAPI = function(){
    * JAPI POLLS API
    * japi.polls is a set of functions to create and use Poll objects.
    */
+  function savePoll (poll) {
+    if(poll.status == 'unsaved') { poll.status = 'unstarted' };
+    for (var i = 0; i < listOfPolls.length; i++) {
+      if (listOfPolls[i].id === poll.id) {
+        listOfPolls[i] = poll;
+        return undefined;
+      };
+      listOfPolls.push(poll);
+      return undefined;
+    }
+  };
 
   japi.polls.build = function(source, callback){
     // This might be called with one source argument, one callback argument, one
@@ -123,7 +137,7 @@ Cambrian.mockJAPI = function(){
     var mockPoll = {
         id: japi.utils.getUUID(), 
         title: "",
-        status: "deleted", 
+        status: "unsaved", 
         dateStarted: null,
         options: [],
         save: function(){
@@ -134,21 +148,11 @@ Cambrian.mockJAPI = function(){
           this.dateStarted = new Date();
           this.status = "started";
         },
-        stop: function(){},
+        stop: function(){ this.status = 'stopped'},
         getResults: function(){},
-        delete: function(){},
+        destroy: function(){ this.status = 'unsaved'},
       };
 
-    var savePoll = function (poll) {
-      for (var i = 0; i < listOfPolls.length; i++) {
-        if (listOfPolls[i].id === poll.id) {
-          listOfPolls[i] = poll;
-          return undefined;
-        };
-        listOfPolls.push(poll);
-        return undefined;
-      }
-    };
 
     function copyPoll(source){
       //  source might be a poll OR a template 
@@ -160,8 +164,11 @@ Cambrian.mockJAPI = function(){
         };
       };
       // override some properties with defaults:
-      tmp.id = japi.utils.getUUID;
-      tmp.status = "deleted";
+      tmp.id = japi.utils.getUUID();
+      tmp.status = "unsaved";
+
+      // get rid of $$hashKey property that breaks ng-repeat:
+      delete tmp.$$hashKey;
       listOfPolls.push(tmp);
       return tmp;
     };
