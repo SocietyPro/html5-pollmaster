@@ -1,15 +1,15 @@
 <div id="pollsFromExamplesContainer">
-  <div class="pollEntryContainer" ng-repeat="examplePoll in examplePolls">
+  <div class="pollEntryContainer" ng-repeat="exampleTemplate in exampleTemplates">
     <div class="col-md-9">
       <div class="col-md-4">
-        <span class="label label-success">{{examplePoll.type == "" ? "Smart Ping" : examplePoll.type}}</span>
+        <span class="label label-success">{{exampleTemplate.type == "" ? "Smart Ping" : exampleTemplate.type}}</span>
       </div>
       <div class="col-md-8">
-        <span>{{examplePoll.title}}</span>
+        <span>{{exampleTemplate.title}}</span>
       </div>
     </div>
     <div class="col-md-3">
-      <span class="copyPollButton pull-right" ng-click="copyPoll(examplePoll)">
+      <span class="copyPollButton pull-right" ng-click="copyPoll(exampleTemplate)">
         <i class="fa fa-copy"></i> 
         Copy
       </span>
