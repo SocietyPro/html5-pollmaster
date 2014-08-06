@@ -27,7 +27,7 @@
   <div id="pollsListHeader">
     <em>Polls</em>
   </div>
-  <div class="pollEntryContainer" ng-repeat="poll in polls">
+  <div class="pollEntryContainer" ng-repeat="poll in polls | orderBy:'-dateStarted'">
     <div class="row">
       <div class="col-md-9">
         <div class="row">
