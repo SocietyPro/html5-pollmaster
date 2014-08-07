@@ -41,7 +41,7 @@ describe("The list of my templates in the template manager", function () {
     expect(elements.firstTemplateForkButton.getText()).toEqual('Fork this Template')
   });
 
-  it("shows the edit template screen when 'for this template' is clicked", function () {
+  it("shows the edit template screen when 'fork this template' is clicked", function () {
     elements.firstTemplateForkButton.click();
     var customizePollContainer = element(by.id('customizePollContainer'));
     expect(customizePollContainer.isDisplayed()).toBeTruthy();
