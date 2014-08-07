@@ -1,5 +1,5 @@
 <div id="pollsFromRecentContainer">
-  <div class="pollEntryContainer" ng-repeat="recentPoll in recentPolls">
+  <div class="pollEntryContainer" ng-repeat="recentPoll in recentPolls | orderBy:'startDate'">
     <div class="col-md-9">
       <div class="col-md-4">
         <span class="label label-success">{{recentPoll.type == "" ? "Smart Ping" : recentPoll.type}}</span>

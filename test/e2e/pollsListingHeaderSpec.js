@@ -61,7 +61,8 @@ describe("polls listing header", function () {
 
 	it("shows the help screen when the help button is clicked", function () {
     element(by.id('helpButton')).click();
-		expect($("p.test").isDisplayed()).toBeTruthy();
+    var ballotHelpContainer = element(by.id('ballotHelpContainer'));
+    expect(ballotHelpContainer.isDisplayed()).toBeTruthy();
 	});
 });
 

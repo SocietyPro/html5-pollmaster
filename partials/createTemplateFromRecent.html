@@ -1,1 +1,19 @@
-<div>Recent polls go Here</div>
+<div id="templatesFromRecentContainer">
+  <div class="pollEntryContainer" ng-repeat="recentPoll in recentPolls | orderBy:'startDate'">
+    <div class="col-md-9">
+      <div class="col-md-4">
+        <span class="label label-success">{{recentPoll.type == "" ? "Smart Ping" : recentPoll.type}}</span>
+      </div>
+      <div class="col-md-8">
+        <span>{{recentPoll.title}}</span>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <span class="forkTemplateButton pull-right" ng-click="copyTemplate(recentPoll)">
+        <i class="fa fa-copy"></i> 
+        Fork this Template
+      </span>
+    </div>
+    <div class="clearBoth"></div>
+  </div>
+</div>

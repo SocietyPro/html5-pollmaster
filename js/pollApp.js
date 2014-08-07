@@ -154,6 +154,7 @@ pollApp.controller("peerListsCtrl", function ($scope){
 });
 
 pollApp.controller("manageTemplatesCtrl", function ($scope){
+  $scope.recentPolls = japi.polls.getList();
 });
 
 pollApp.controller("createPollCtrl", function ($scope){

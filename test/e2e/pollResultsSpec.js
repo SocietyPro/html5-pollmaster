@@ -82,8 +82,10 @@ describe("poll results header", function () {
 
 	it("shows the help screen when the help button is clicked", function () {
     pollResults.helpButton.click();
-		expect($("p.test").isDisplayed()).toBeTruthy();
-	});
+    var ballotHelpContainer = element(by.id('ballotHelpContainer'));
+    expect(ballotHelpContainer.isDisplayed()).toBeTruthy();
+  });
+  
 });
 
 describe("poll results", function () {

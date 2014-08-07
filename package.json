@@ -34,7 +34,7 @@
     "test-createpoll": "protractor test/protractor-conf.js --specs test/e2e/createPollFromRecentSpec.js,test/e2e/createPollSpec.js,test/e2e/createPollFromMyTemplatesSpec.js,test/e2e/createPollFromExamplesSpec.js,test/e2e/createPollFromPeerRecommendedSpec.js",
     "test-customize": "protractor test/protractor-conf.js --specs test/e2e/customizePollSpec.js,test/e2e/targetSelectionSpec.js,test/e2e/ballotViewSpec.js",
     "test-ballotview": "protractor test/protractor-conf.js --specs test/e2e/ballotViewSpec.js",
-    "test-templatemanager": "protractor test/protractor-conf.js --specs test/e2e/templateManagerSpec.js,test/e2e/createTemplateFromPeerRecommendedSpec.js,test/e2e/manageMyTemplatesSpec.js,test/e2e/manageExampleTemplates.js",
+    "test-templatemanager": "protractor test/protractor-conf.js --specs test/e2e/templateManagerSpec.js,test/e2e/createTemplateFromPeerRecommendedSpec.js,test/e2e/manageMyTemplatesSpec.js,test/e2e/manageExampleTemplates.js,test/e2e/createTemplateFromRecentSpec.js",
 
     "test-single-run": "karma start test/karma.conf.js  --single-run",
 
