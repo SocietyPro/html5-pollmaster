@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "moment": "~2.7.0"
+    "moment": "~2.7.0",
+    "html5-japi-tests": "git@github.com:SocietyPro/html5-japi-tests.git"
   }
 }
