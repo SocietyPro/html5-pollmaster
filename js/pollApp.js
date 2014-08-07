@@ -44,7 +44,7 @@ pollApp.config(function($routeProvider){
 
 });
   
-pollApp.controller("pollAppCtrl", function($scope, $location){
+pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
 
     $scope.polls = japi.polls.getList();
     $scope.myTemplates = japi.polls.templates.list();
@@ -79,7 +79,10 @@ pollApp.controller("pollAppCtrl", function($scope, $location){
     };
 
     $scope.helpShow = function(){
-      $location.path("/help");
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/help.html',
+        controller: "helpCtrl"
+      });
     };
 
     $scope.startCustomizing = function(pollObject){
@@ -248,7 +251,12 @@ pollApp.controller("customizePollCtrl", function ($scope, $location, $controller
 
 });
 
-pollApp.controller("helpCtrl", function($scope){
+pollApp.controller("helpCtrl", function ($scope, $modalInstance) {
+
+      $scope.close = function () {
+        $modalInstance.dismiss('close');
+      };
+
 });
 
 pollApp.directive('resultsChart', function () {
