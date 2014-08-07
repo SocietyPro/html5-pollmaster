@@ -1,4 +1,4 @@
-var Cambrian = Cambrian || {}
+var Cambrian = Cambrian || {isMockCambrian:true}
 
 Cambrian.idSeed = 0;
 
@@ -7,7 +7,6 @@ Cambrian.mockJAPI = function(){
   // more than one deep of an undefined object fails.
   // {}.foo=true works but {}.foo.bar=true doesn't: 
   // TypeError: Cannot set property 'bar' of undefined
-  console.log("Instantiating mockJAPI");
 
   var japi = {
     me: {

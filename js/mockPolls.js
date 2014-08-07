@@ -1,4 +1,4 @@
-var Cambrian = Cambrian || {};
+var Cambrian = Cambrian || {isMockCambrian:true}
 Cambrian.pollApp = Cambrian.pollApp || {};
 
 var pollData = [

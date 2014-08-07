@@ -1,8 +1,10 @@
 var japi;
 if(Cambrian.JAPI !== undefined){
+  console.log('Instantiating japi');
   japi = Cambrian.JAPI();
 } else {
   // use mocks
+  console.log('Instantiating mock japi');
   japi = Cambrian.mockJAPI();
 }
 
@@ -143,6 +145,13 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
       $scope.isTemplate = true;
       $scope.startCustomizing(newTemplate);
     };
+
+    $scope.editTemplate = function(oldTemplate){
+      $scope.isPoll = false;
+      $scope.isTemplate = true;
+      $scope.startCustomizing(oldTemplate);
+    };
+
    
     $scope.prettyJSON = function(obj){
       return JSON.stringify(obj, null, 2)
