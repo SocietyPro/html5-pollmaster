@@ -19,11 +19,11 @@ describe("The list of peer polls", function () {
   });
 
   it("has poll type", function () {
-    expect(elements.firstPollType.getText()).toEqual('Battle Ping');
+    expect(elements.firstPollType.getText()).toEqual('Opinion');
   });
 
   it("has poll title", function () {
-    expect(elements.firstPollTitle.getText()).toEqual('Join Operation Red Dawn!');
+    expect(elements.firstPollTitle.getText()).toEqual('Can the Product Owner keep up?');
   });
 
   it("has a copy button", function () {

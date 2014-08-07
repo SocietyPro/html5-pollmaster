@@ -1,5 +1,5 @@
 var Elements = function () {
-  this.templatesFromPeerRecommendedContainer = element(by.id('templatesFromPeerRecommendedContainer'));
+  this.templatesFromPeerRecommendedContainer = element(by.id('pollsFromPeerRecommendedContainer'));
   this.firstTemplate = element(by.repeater('peerPoll in peerPolls').row(0));
   this.firstTemplateType = this.firstTemplate.findElement(by.binding('peerPoll.type'));
   this.firstTemplateTitle = this.firstTemplate.findElement(by.binding('peerPoll.title'));
@@ -23,7 +23,7 @@ describe("The list of peer templates", function () {
   });
 
   it("has template title", function () {
-    expect(elements.firstTemplateTitle.getText()).toEqual('Can the product owner keep up?');
+    expect(elements.firstTemplateTitle.getText()).toEqual('Can the Product Owner keep up?');
   });
 
   it("has a 'fork this template' button", function () {
@@ -35,7 +35,7 @@ describe("The list of peer templates", function () {
     var customizePollContainer = element(by.id('customizePollContainer'));
     expect(customizePollContainer.isDisplayed()).toBeTruthy();
     var title = element(by.model('poll.title'));
-    expect(title.getAttribute('value')).toEqual("Can the product owner keep up?");
+    expect(title.getAttribute('value')).toEqual("Can the Product Owner keep up?");
     var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
     expect(pollSaveCheckTemplate.isSelected()).toBeTruthy();
   });
