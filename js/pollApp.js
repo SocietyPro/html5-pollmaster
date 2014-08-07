@@ -106,10 +106,14 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
 
     $scope.copyPoll = function(oldPoll){
       var newPoll = japi.polls.build(oldPoll);
+      $scope.isPoll = true;
+      $scope.isTemplate = false;
       $scope.startCustomizing(newPoll);
     };
 
     $scope.editPoll = function(oldPoll){
+      $scope.isPoll = true;
+      $scope.isTemplate = false;
       $scope.startCustomizing(oldPoll);
     };
 
@@ -121,12 +125,23 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
 
     $scope.newPollFromScratch = function(){
       var newPoll = japi.polls.build();
+      $scope.isPoll = true;
+      $scope.isTemplate = false;
       $scope.startCustomizing(newPoll);
     };
 
     $scope.newPollFromTemplate = function(template){
       var newPoll = japi.polls.build(template);
+      $scope.isPoll = true;
+      $scope.isTemplate = false;
       $scope.startCustomizing(newPoll);
+    };
+
+    $scope.newTemplateFromPoll = function (oldPoll) {
+      var newTemplate = japi.polls.build(oldPoll);
+      $scope.isPoll = false;
+      $scope.isTemplate = true;
+      $scope.startCustomizing(newTemplate);
     };
    
     $scope.prettyJSON = function(obj){
@@ -166,8 +181,6 @@ pollApp.controller("createPollCtrl", function ($scope){
 
 pollApp.controller("customizePollCtrl", function ($scope, $location, $controller){
   $controller("pollAppCtrl", {$scope: $scope});
-  $scope.isPoll = true;
-  $scope.isTemplate = false;
   $scope.saveButtonLabel = "Save";
 
   $scope.setPollSaveOptions = function(){

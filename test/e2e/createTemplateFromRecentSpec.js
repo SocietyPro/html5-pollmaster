@@ -31,4 +31,14 @@ describe("The list of recent polls in the template manager", function () {
     expect(elements.firstPollForkButton.getText()).toEqual('Fork this Template');
   });
 
+  it("shows the edit template screen when 'for this template' is clicked", function () {
+    elements.firstPollForkButton.click();
+    var customizePollContainer = element(by.id('customizePollContainer'));
+    expect(customizePollContainer.isDisplayed()).toBeTruthy;
+    var title = element(by.model('poll.title'));
+    expect(title.getText()).toEqual('Join Operation Red Dawn!');
+    var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
+    expect(pollSaveCheckTemplate.isSelected()).toBeTruthy();
+  });
+
 });
