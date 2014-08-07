@@ -28,8 +28,18 @@ describe("The list of peer templates", function () {
     expect(elements.firstTemplateTitle.getText()).toEqual('Join Operation Red Dawn!');
   });
 
-  it("has a copy button", function () {
+  it("has a 'fork this template' button", function () {
     expect(elements.firstTemplateForkButton.isDisplayed()).toBeTruthy();
+  });
+
+  it("shows the edit template screen when 'fork this template' is clicked", function () {
+    elements.firstTemplateForkButton.click();
+    var customizePollContainer = element(by.id('customizePollContainer'));
+    expect(customizePollContainer.isDisplayed()).toBeTruthy();
+    var title = element(by.model('poll.title'));
+    expect(title.getAttribute('value')).toEqual("Can the product owner keep up?");
+    var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
+    expect(pollSaveCheckTemplate.isSelected()).toBeTruthy();
   });
 
   */

@@ -25,9 +25,20 @@ describe("The list of example templates in the template manager", function () {
   it("has template title", function () {
     expect(elements.firstTemplateTitle.getText()).toEqual('Join Operation Red Dawn! Bring Ships!');
   });
+
   it("has a fork button", function () {
     expect(elements.firstTemplateForkButton.isDisplayed()).toBeTruthy();
     expect(elements.firstTemplateForkButton.getText()).toEqual('Fork this Template')
+  });
+
+  it("shows the edit template screen when 'for this template' is clicked", function () {
+    elements.firstTemplateForkButton.click();
+    var customizePollContainer = element(by.id('customizePollContainer'));
+    expect(customizePollContainer.isDisplayed()).toBeTruthy();
+    var title = element(by.model('poll.title'));
+    expect(title.getAttribute('value')).toEqual('Join Operation Red Dawn! Bring Ships!');
+    var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
+    expect(pollSaveCheckTemplate.isSelected()).toBeTruthy();
   });
 
 });

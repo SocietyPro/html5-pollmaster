@@ -128,5 +128,31 @@ var exampleTemplateData = [
   },
 ]
 
+var peerTemplateData = [
+  { 
+    id: "UUID301",
+    type: "Opinion",
+    title: "Can the Product Owner keep up?",
+    description: "We are burning through the backlog. Will there be enough work backlogged?",
+    options: [{text: "Yes, he'll add make-work stories."}, {text: "Yes, he'll quit playing 'Software Tycoon' and get to work."}, {text: "No."}],
+    allowMultipleChoices: false,
+    allowComments: false,
+    dismissText: "Dismiss",
+    submitText: "Submit",
+  },
+  { 
+    id: "UUID302",
+    type: "Vote",
+    title: "President of the Organization",
+    description: "Who should be made President for Life?",
+    options: [{text: "Voodoo"}, {text: "Hiro"}, {text: "Plato"}, {text: "Rafael"}, {text: "Dan"}, {text: "Ceasar"}],
+    allowMultipleChoices: false,
+    allowComments: false,
+    dismissText: "Dismiss",
+    submitText: "Submit",
+  },
+]
+
 Cambrian.pollApp.mockTemplates = templateData;
 Cambrian.pollApp.exampleTemplates = exampleTemplateData;
+Cambrian.pollApp.mockPeerTemplates = peerTemplateData;

@@ -152,6 +152,12 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
       $scope.startCustomizing(oldTemplate);
     };
 
+    $scope.forkTemplate = function (oldTemplate) {
+      var newTemplate = japi.polls.templates.build(oldTemplate);
+      $scope.isPoll = false;
+      $scope.isTemplate = true;
+      $scope.startCustomizing(newTemplate);
+    };
    
     $scope.prettyJSON = function(obj){
       return JSON.stringify(obj, null, 2)
@@ -192,6 +198,8 @@ pollApp.controller("customizePollCtrl", function ($scope, $location, $controller
   $controller("pollAppCtrl", {$scope: $scope});
   $scope.saveButtonLabel = "Save";
 
+  $scope.isPoll = $scope.isPoll  === undefined ? true : $scope.isPoll;
+  $scope.isTemplate = $scope.isTemplate === undefined ? false : $scope.isTemplate;
   $scope.setPollSaveOptions = function(){
     if($scope.isPoll == false){
       $scope.startPollAfterCustomizing = false; // Turn the Start Poll option off

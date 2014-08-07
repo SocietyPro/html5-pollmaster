@@ -34,9 +34,9 @@ describe("The list of recent polls in the template manager", function () {
   it("shows the edit template screen when 'for this template' is clicked", function () {
     elements.firstPollForkButton.click();
     var customizePollContainer = element(by.id('customizePollContainer'));
-    expect(customizePollContainer.isDisplayed()).toBeTruthy;
+    expect(customizePollContainer.isDisplayed()).toBeTruthy();
     var title = element(by.model('poll.title'));
-    expect(title.getText()).toEqual('Join Operation Red Dawn!');
+    expect(title.getAttribute('value')).toEqual('Join Operation Red Dawn!');
     var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
     expect(pollSaveCheckTemplate.isSelected()).toBeTruthy();
   });
