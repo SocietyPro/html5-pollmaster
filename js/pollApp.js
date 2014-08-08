@@ -140,6 +140,10 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
       $scope.startCustomizing(newPoll);
     };
 
+    $scope.destroyPoll = function (poll) {
+      poll.destroy();
+    };
+
     $scope.newTemplateFromPoll = function (oldPoll) {
       var newTemplate = japi.polls.build(oldPoll);
       $scope.isPoll = false;
@@ -175,7 +179,7 @@ pollApp.controller("pollResultsCtrl", function ($scope) {
     $scope.chartData = [];
     for (var i = 0; i < $scope.poll.options.length; i++) {
       $scope.chartData[i] = {
-        label: $scope.poll.options[i],
+        label: $scope.poll.options[i].text,
         data: $scope.poll.counts[i]
       }
     }

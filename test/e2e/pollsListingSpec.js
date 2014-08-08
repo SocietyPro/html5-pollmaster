@@ -97,6 +97,16 @@ describe("polls listing", function () {
       expect(pollsListPanel.completedDeleteButton.getText()).toEqual("Delete");
     });
 
+    describe("delete button", function () {
+
+      it("removes the associated poll from the polls listing", function () {
+        expect(pollsListPanel.entries.count()).toEqual(5);
+        pollsListPanel.completedDeleteButton.click();
+        expect(pollsListPanel.entries.count()).toEqual(4);
+      });
+
+    });
+
     describe("that is unstarted", function() {
 
       it("has an edit poll button", function () {
