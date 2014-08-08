@@ -104,7 +104,8 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
     };
 
     $scope.saveTemplateCustomization = function(){
-      return undefined;
+      $scope.templateToCustomize = $scope.poll;
+      $scope.templateToCustomize.save();
     };
 
     $scope.copyPoll = function(oldPoll){
@@ -141,6 +142,13 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
 
     $scope.destroyPoll = function (poll) {
       poll.destroy();
+    };
+
+    $scope.newTemplateFromScratch = function(){
+      var newTemplate = japi.polls.templates.build();
+      $scope.isPoll = false;
+      $scope.isTemplate = true;
+      $scope.startCustomizing(newTemplate);
     };
 
     $scope.newTemplateFromPoll = function (oldPoll) {
@@ -286,7 +294,11 @@ pollApp.controller("customizePollCtrl", function ($scope, $location, $controller
     // TODO: ASYNC
     delete $scope.poll;
     delete $scope.pollToCustomize;
-    $location.path('/');
+    if($scope.isTemplate && !$scope.isPoll) {
+      $location.path('/manageTemplates');
+    } else {
+     $location.path('/');
+    }
   };
 
 });

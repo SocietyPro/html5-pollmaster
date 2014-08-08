@@ -57,6 +57,20 @@ describe("templates manager page", function () {
       expect(elements.createTemplateFromScratchButton.isDisplayed()).toBeTruthy();
     });
 
+    describe("create a new template from scratch button", function () {
+
+      it("shows the customize poll screen with blanks and defaults when clicked", function () {
+        elements.createTemplateFromScratchButton.click();
+        var customizePollContainer = element(by.id('customizePollContainer'));
+        expect(customizePollContainer.isDisplayed()).toBeTruthy();
+        var title = element(by.model('poll.title'));
+        expect(title.getAttribute('value')).toEqual('');
+        var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
+        expect(pollSaveCheckTemplate.isSelected()).toBeTruthy();
+      });
+
+    });
+
   });
 
 });
