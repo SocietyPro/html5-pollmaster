@@ -68,9 +68,13 @@ button {
 	background-color: #fff;
 }
 
-.nav-tabs li {
+.nav-tabs li,
+.copyPollButton,
+.deletePollButton {
 	cursor: pointer;
 }
+
+
 
 /* Style some bootstrap labels to fill their columns: */
 #pollsFromRecentContainer .label,

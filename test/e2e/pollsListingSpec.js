@@ -76,7 +76,23 @@ describe("polls listing", function () {
       expect(pollsListPanel.completedCopyButton.getText()).toEqual("Copy");
     });
 
+    describe("copy button", function () {
+
+      it("switches to the 'edit poll' screen with a copy of the poll", function () {
+        pollsListPanel.completedCopyButton.click();
+        var customizePollContainer = element(by.id('customizePollContainer'));
+        expect(customizePollContainer.isDisplayed()).toBeTruthy();
+        var title = element(by.model('poll.title'));
+        expect(title.getAttribute('value')).toEqual("Join Operation Red Dawn!");
+        var pollSaveCheckPoll = element(by.id('pollSaveCheckPoll'));
+        expect(pollSaveCheckPoll.isSelected()).toBeTruthy();
+      });
+
+    });
+
     it("has a delete button", function () {
+      browser.get('default.htm');
+      pollsListPanel = new Elements();
       expect(pollsListPanel.completedDeleteButton.isDisplayed()).toBeTruthy();
       expect(pollsListPanel.completedDeleteButton.getText()).toEqual("Delete");
     });
