@@ -122,7 +122,6 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
 
     $scope.startPoll = function(oldPoll){
       console.log("Starting Poll:");
-      console.log(oldPoll);
       oldPoll.start();
     };
 
@@ -164,6 +163,10 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
       $scope.startCustomizing(newTemplate);
     };
    
+    $scope.destroyTemplate = function(template) {
+      template.destroy();
+    };
+
     $scope.prettyJSON = function(obj){
       return JSON.stringify(obj, null, 2)
     };

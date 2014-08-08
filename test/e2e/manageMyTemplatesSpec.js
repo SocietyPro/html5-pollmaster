@@ -1,5 +1,6 @@
 var Elements = function () {
   this.myTemplatesContainer = element(by.id('myTemplatesContainer'));
+  this.templates = element.all(by.repeater('myTemplate in myTemplates'));
   this.firstTemplate = element(by.repeater('myTemplate in myTemplates').row(0));
   this.firstTemplateType = this.firstTemplate.findElement(by.binding('myTemplate.type'));
   this.firstTemplateTitle = this.firstTemplate.findElement(by.binding('myTemplate.title'));
@@ -68,6 +69,12 @@ describe("the functionality of the buttons", function(){
     expect(title.getAttribute('value')).toEqual('Join Operation Red Dawn! Bring Ships!');
     var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
     expect(pollSaveCheckTemplate.isSelected()).toBeTruthy();
+  });
+
+  it("removes the associated template from the list when 'delete' is clicked", function () {
+    expect(elements.templates.count()).toEqual(5);
+    elements.firstTemplateDeleteButton.click();
+    expect(elements.templates.count()).toEqual(4);
   });
 
 
