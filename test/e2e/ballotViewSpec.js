@@ -39,7 +39,7 @@ describe("ballot view", function () {
   it("sets up the partial up for tests", function () {
     browser.get('default.htm');
     element(by.id('createPollButton')).click();
-    element(by.id('newTemplateFromScratchButton')).click();
+    element(by.id('newPollFromScratchButton')).click();
     ballotView = new Elements();
     formControls = new FormControls;
     expect(ballotView.partial.isDisplayed()).toBeTruthy();

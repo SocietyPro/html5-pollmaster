@@ -4,7 +4,7 @@ var Elements = function () {
   this.firstPollType = this.firstPoll.findElement(by.binding('myTemplate.type'));
   this.firstPollTitle = this.firstPoll.findElement(by.binding('myTemplate.title'));
   this.firstPollForkButton = this.firstPoll.findElement(by.css('.forkPollButton'));
-  this.newTemplateFromScratchButton = element(by.id("newTemplateFromScratchButton"));
+  this.newPollFromScratchButton = element(by.id("newPollFromScratchButton"));
 };
 
 var elements;
@@ -50,17 +50,23 @@ describe("The list of my templates", function () {
 
   });
 
-  describe("New Template From Scratch button", function(){
+  describe("New Poll From Scratch button", function(){
     it("is displayed", function(){    
       browser.get("default.htm#/createPoll");
       elements = new Elements();
       element(by.id("myTemplatesTab")).click();
-      expect(elements.newTemplateFromScratchButton.isDisplayed()).toBeTruthy();
+      expect(elements.newPollFromScratchButton.isDisplayed()).toBeTruthy();
     });
     it("navigates to the Create New Template / Create New Poll page when clicked", function(){
-      elements.newTemplateFromScratchButton.click();
+      elements.newPollFromScratchButton.click();
       var containerElement = element(by.id("customizePollContainer"));
       expect(containerElement.isDisplayed()).toBeTruthy();
+      var title = element(by.model('poll.title'));
+      expect(title.getAttribute('value')).toEqual('');
+      var pollSaveCheckPoll = element(by.id('pollSaveCheckPoll'));
+      var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
+      expect(pollSaveCheckPoll.isSelected()).toBeTruthy();
+      expect(pollSaveCheckTemplate.isSelected()).toBeFalsy();      
     });
   });
 
