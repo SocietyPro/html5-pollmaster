@@ -41,6 +41,25 @@ describe("The list of my templates in the template manager", function () {
     expect(elements.firstTemplateForkButton.getText()).toEqual('Fork this Template')
   });
 
+});
+
+describe("the functionality of the buttons", function(){
+  beforeEach(function(){
+    browser.get("default.htm#/manageTemplates");
+    elements = new Elements;
+    expect(elements.myTemplatesContainer.isDisplayed()).toBeTruthy();
+  });
+
+  it("shows the edit template screen when 'edit this template' is clicked", function () {
+    elements.firstTemplateEditButton.click();
+    var customizePollContainer = element(by.id('customizePollContainer'));
+    expect(customizePollContainer.isDisplayed()).toBeTruthy();
+    var title = element(by.model('poll.title'));
+    expect(title.getAttribute('value')).toEqual('Join Operation Red Dawn! Bring Ships!');
+    var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
+    expect(pollSaveCheckTemplate.isSelected()).toBeTruthy();
+  });
+
   it("shows the edit template screen when 'fork this template' is clicked", function () {
     elements.firstTemplateForkButton.click();
     var customizePollContainer = element(by.id('customizePollContainer'));
@@ -50,5 +69,6 @@ describe("The list of my templates in the template manager", function () {
     var pollSaveCheckTemplate = element(by.id('pollSaveCheckTemplate'));
     expect(pollSaveCheckTemplate.isSelected()).toBeTruthy();
   });
+
 
 });
