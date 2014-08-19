@@ -206,7 +206,7 @@ pollApp.controller("manageTemplatesCtrl", function ($scope){
 
 pollApp.controller("createPollCtrl", function ($scope){
   $scope.recentPolls = japi.polls.getList();
-  $scope.examplePolls = japi.polls.getExamples();
+  $scope.examplePolls = japi.polls.templates.listExamples();
   $scope.myTemplates = japi.polls.templates.list();
   $scope.peerPolls = japi.polls.templates.listPeerRecommended();
 });
