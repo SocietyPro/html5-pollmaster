@@ -51,7 +51,7 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
     $scope.polls = japi.polls.getList();
     $scope.myTemplates = japi.polls.templates.list();
     $scope.exampleTemplates = japi.polls.templates.listExamples();
-    $scope.peerRecommendedTemplates = japi.polls.getPeerRecommended();
+    $scope.peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
 
 
     $scope.pollsListingShow = function () {
@@ -201,14 +201,14 @@ pollApp.controller("peerListsCtrl", function ($scope){
 
 pollApp.controller("manageTemplatesCtrl", function ($scope){
   $scope.recentPolls = japi.polls.getList();
-  $scope.peerPolls = japi.polls.getPeerRecommended();
+  $scope.peerPolls = japi.polls.templates.listPeerRecommended();
 });
 
 pollApp.controller("createPollCtrl", function ($scope){
   $scope.recentPolls = japi.polls.getList();
   $scope.examplePolls = japi.polls.getExamples();
   $scope.myTemplates = japi.polls.templates.list();
-  $scope.peerPolls = japi.polls.getPeerRecommended();
+  $scope.peerPolls = japi.polls.templates.listPeerRecommended();
 });
 
 pollApp.controller("customizePollCtrl", function ($scope, $location, $controller){
