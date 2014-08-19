@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.templatesFromPeerRecommendedContainer = element(by.id('pollsFromPeerRecommendedContainer'));
   this.firstTemplate = element(by.repeater('peerPoll in peerPolls').row(0));
@@ -11,7 +12,7 @@ var elements;
 describe("The list of peer templates", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/manageTemplates");
+    browser.get(indexFile + "#/manageTemplates");
     element(by.id("peerRecommendedTab")).click();
 
     elements = new Elements();

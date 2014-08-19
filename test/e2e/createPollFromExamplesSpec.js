@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.pollsFromExamplesContainer = element(by.id('pollsFromExamplesContainer'));
   this.firstTemplate = element(by.repeater('exampleTemplate in exampleTemplate').row(0));
@@ -11,7 +12,7 @@ var elements;
 describe("The list of example polls", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/createPoll");
+    browser.get(indexFile + "#/createPoll");
     element(by.id("examplesTab")).click();
 
     elements = new Elements();

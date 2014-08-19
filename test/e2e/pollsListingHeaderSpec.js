@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
 	this.pollHeader = element(by.id('pollHeader'));
 	this.logo = element(by.css("img"));
@@ -11,7 +12,7 @@ describe("polls listing header", function () {
 	var pollsListHeader;
 
 	it("sets up the page for testing", function () {
-		browser.get("default.htm");
+		browser.get(indexFile);
 		pollsListHeader = new Elements();
 		expect(pollsListHeader.hasOwnProperty("pollHeader")).toEqual(true);
 	});
@@ -30,7 +31,7 @@ describe("polls listing header", function () {
 	});
 
 	it("has a manage templates button", function () {
-		browser.get("default.htm");
+		browser.get(indexFile);
 		pollsListHeader = new Elements();
 		expect(pollsListHeader.manageTemplates.getText()).toEqual("Manage Templates");
 	});
@@ -42,7 +43,7 @@ describe("polls listing header", function () {
 	});
 
 	it("has a create new poll button", function () {
-		browser.get("default.htm");
+		browser.get(indexFile);
 		pollsListHeader = new Elements();
 		expect(pollsListHeader.createPoll.getText()).toEqual("Create Poll");
 	});
@@ -54,7 +55,7 @@ describe("polls listing header", function () {
 	});
 
 	it("has a help button", function () {
-		browser.get("default.htm");
+		browser.get(indexFile);
 		pollsListHeader = new Elements();
     expect(pollsListHeader.help.isDisplayed()).toBeTruthy();
 	});

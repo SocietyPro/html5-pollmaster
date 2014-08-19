@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.templateManager = element(by.id('templateManager'));
   this.sectionTabs = element(by.id('sectionTabs'));
@@ -17,7 +18,7 @@ var elements;
 describe("templates manager page", function () {
 
   it("sets up the page for testing", function () {
-    browser.get('default.htm#/manageTemplates');
+    browser.get(indexFile + '#/manageTemplates');
     elements = new Elements();
     expect(elements.templateManager.isDisplayed()).toBeTruthy();
   });

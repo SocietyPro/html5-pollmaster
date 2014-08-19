@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.examplesTab = element(by.id('examplesTab'));
   this.exampleTemplatesContainer = element(by.id('exampleTemplatesContainer'));
@@ -12,7 +13,7 @@ var elements;
 describe("The list of example templates in the template manager", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/manageTemplates");
+    browser.get(indexFile + "#/manageTemplates");
     elements = new Elements();
     elements.examplesTab.click();
     expect(elements.exampleTemplatesContainer.isDisplayed()).toBeTruthy();

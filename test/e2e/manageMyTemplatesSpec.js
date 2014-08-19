@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.myTemplatesContainer = element(by.id('myTemplatesContainer'));
   this.templates = element.all(by.repeater('myTemplate in myTemplates'));
@@ -14,7 +15,7 @@ var elements;
 describe("The list of my templates in the template manager", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/manageTemplates");
+    browser.get(indexFile + "#/manageTemplates");
     elements = new Elements;
     expect(elements.myTemplatesContainer.isDisplayed()).toBeTruthy();
   });
@@ -46,7 +47,7 @@ describe("The list of my templates in the template manager", function () {
 
 describe("the functionality of the buttons", function(){
   beforeEach(function(){
-    browser.get("default.htm#/manageTemplates");
+    browser.get(indexFile + "#/manageTemplates");
     elements = new Elements;
     expect(elements.myTemplatesContainer.isDisplayed()).toBeTruthy();
   });

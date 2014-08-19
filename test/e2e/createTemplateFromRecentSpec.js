@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.recentPollsTab = element(by.id('recentPollsTab'));
   this.recentPollsContainer = element(by.id('templatesFromRecentContainer'));
@@ -12,7 +13,7 @@ var elements;
 describe("The list of recent polls in the template manager", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/manageTemplates");
+    browser.get(indexFile + "#/manageTemplates");
     elements = new Elements();
     elements.recentPollsTab.click();
     expect(elements.recentPollsContainer.isDisplayed()).toBeTruthy();
