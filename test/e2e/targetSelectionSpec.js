@@ -36,9 +36,7 @@ describe("Target Selection Partial", function () {
         expect(elements.targetTabs.get(0).isDisplayed()).toBeTruthy();
         expect(elements.targetTabs.get(0).getText()).toEqual('Peer');
         expect(elements.targetTabs.get(1).isDisplayed()).toBeTruthy();
-        expect(elements.targetTabs.get(1).getText()).toEqual('Group');
-        expect(elements.targetTabs.get(2).isDisplayed()).toBeTruthy();
-        expect(elements.targetTabs.get(2).getText()).toEqual('List');
+        expect(elements.targetTabs.get(1).getText()).toEqual('Broadcast List');
       });
 
       describe("target tabs", function(){
@@ -81,9 +79,7 @@ describe("Target Selection Partial", function () {
           elements.targetTabs.get(0).click();
           expect(elements.targetHint.getText()).toEqual("Choose one target Peer:");
           elements.targetTabs.get(1).click();
-          expect(elements.targetHint.getText()).toEqual("Choose one target Group:");
-          elements.targetTabs.get(2).click();
-          expect(elements.targetHint.getText()).toEqual("Choose one target Peer List:");
+          expect(elements.targetHint.getText()).toEqual("Choose one target Broadcast List:");
         });
       });
 
@@ -98,16 +94,10 @@ describe("Target Selection Partial", function () {
           expect(options.first().getText()).toEqual("plato");
         });
         
-        it("displays a list of groups after clicking the group tab", function(){
+        it("displays a list of broadcast lists after clicking the broadcast list tab", function(){
           elements.targetTabs.get(1).click();
           var options = element.all(by.css("#targetPaneList option"));
           expect(options.first().getText()).toEqual("Cambrian Devs");
-        });
-        
-        it("displays a list of peerLists after clicking the list tab", function(){
-          elements.targetTabs.get(2).click();
-          var options = element.all(by.css("#targetPaneList option"));
-          expect(options.first().getText()).toEqual("My Marketing List");
         });
 
         /* I think this needs to be a unit test so we can clear

@@ -10,7 +10,7 @@ pollApp.controller("targetSelectionCtrl", function($scope){
         break;
       case 'groups':
         targets = japi.me.groups;
-        hint = "Choose one target Group:"
+        hint = "Choose one target Broadcast List:"
         break;
       /*  
       case 'peerLists':
