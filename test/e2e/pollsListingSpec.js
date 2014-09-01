@@ -30,7 +30,7 @@ describe("polls listing", function () {
 
   var pollsListPanel; 
   it("sets up the second page for tests", function(){
-    browser.get('default.htm');
+    browser.get('index.html');
     pollsListPanel = new Elements();
     expect(pollsListPanel.hasOwnProperty("listContainer")).toEqual(true);    
   });
@@ -91,7 +91,7 @@ describe("polls listing", function () {
     });
 
     it("has a delete button", function () {
-      browser.get('default.htm');
+      browser.get('index.html');
       pollsListPanel = new Elements();
       expect(pollsListPanel.completedDeleteButton.isDisplayed()).toBeTruthy();
       expect(pollsListPanel.completedDeleteButton.getText()).toEqual("Delete");
@@ -126,7 +126,7 @@ describe("polls listing", function () {
 
       it("reloads the page to reset the newly started poll", function(){
         /* Reload, since later tests need a virgin, unstarted poll */
-        browser.get('default.htm');
+        browser.get('index.html');
         pollsListPanel = new Elements();
         expect(pollsListPanel.hasOwnProperty("listContainer")).toEqual(true);    
       });

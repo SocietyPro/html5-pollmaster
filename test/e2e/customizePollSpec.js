@@ -22,7 +22,7 @@ var elements;
 describe("Customize poll/template screen", function () {
 
   it("sets up the test page", function () {
-    browser.get('default.htm#/createPoll/customize');
+    browser.get('index.html#/createPoll/customize');
     elements = new Elements();
     expect(elements.customizePollContainer.isDisplayed()).toBeTruthy();
   });
@@ -130,7 +130,7 @@ describe("Customize poll/template screen", function () {
 
     describe("Checkboxes", function () {
       beforeEach(function(){
-        browser.get('default.htm#/createPoll/customize');
+        browser.get('index.html#/createPoll/customize');
         elements = new Elements();
         check1 = elements.pollSaveCheckboxes.get(0);
         check2 = elements.pollSaveCheckboxes.get(1);
@@ -214,7 +214,7 @@ describe("Customize poll/template screen", function () {
       });
 
       it("With Start Now selected, it sets the poll's status to 'started' when clicked", function(){
-        browser.get('default.htm#/createPoll/customize');
+        browser.get('index.html#/createPoll/customize');
         elements = new Elements();
         check3 = elements.pollSaveCheckboxes.get(2);
         check3.click();
@@ -223,7 +223,7 @@ describe("Customize poll/template screen", function () {
         var polls = element.all(by.repeater("poll in polls"));
         var unstartedStatus = polls.get(0).findElement(by.binding("poll.status"));
         expect(unstartedStatus.getText()).toEqual("started");
-        browser.get('default.htm#/createPoll/customize');
+        browser.get('index.html#/createPoll/customize');
         elements = new Elements();
       });
 

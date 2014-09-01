@@ -37,7 +37,7 @@ describe("ballot view", function () {
   var ballotView, formControls;
 
   it("sets up the partial up for tests", function () {
-    browser.get('default.htm');
+    browser.get('index.html');
     element(by.id('createPollButton')).click();
     element(by.id('newPollFromScratchButton')).click();
     ballotView = new Elements();

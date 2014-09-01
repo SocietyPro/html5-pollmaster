@@ -8,7 +8,7 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap"]) // array is required
+var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial"]) // array is required
 
 pollApp.config(function($routeProvider){
   
@@ -45,14 +45,51 @@ pollApp.config(function($routeProvider){
   });
 
 });
+
+pollApp.factory("menu", ['$rootScope', function ($rootScope) {
+  var self;
+  var filters = [{ filter: 'All', color: '#000000' }, 
+                 { filter: 'Votes', color: '#d19b9b' },
+                 { filter: 'Running', color: '#92e4c9' },
+                 { filter: 'Unstarted', color: '#ffffff' },
+                 { filter: 'Completed', color: '#c9d1ff' }];
+
+  return self = {
+    filters: filters,
+
+    selectFilter: function(filter) {
+      self.currentFilter = filter;
+      $rootScope.listContains = filter;
+    },
+    isFilterSelected: function (filter) {
+      return self.currentFilter === filter;
+    }
+  };
+}]);
   
-pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
+pollApp.controller("pollAppCtrl", function($scope, $location, $modal, $materialSidenav, menu){
+
+    $scope.menu = menu;
+    $scope.menu.selectFilter(menu.filters[0]);
 
     $scope.polls = japi.polls.getList();
     $scope.myTemplates = japi.polls.templates.list();
     $scope.exampleTemplates = japi.polls.templates.listExamples();
     $scope.peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
 
+    $scope.toggleMenu = function () {
+      $materialSidenav('left').toggle();
+    };
+
+    $scope.listView = "quilt";
+
+    $scope.streamView = function () {
+      $scope.listView = "stream";
+    };
+
+    $scope.quiltView = function () {
+      $scope.listView = "quilt";
+    };
 
     $scope.pollsListingShow = function () {
       $location.path("/");

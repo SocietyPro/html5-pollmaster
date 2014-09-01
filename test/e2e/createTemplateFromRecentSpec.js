@@ -12,7 +12,7 @@ var elements;
 describe("The list of recent polls in the template manager", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/manageTemplates");
+    browser.get("index.html#/manageTemplates");
     elements = new Elements();
     elements.recentPollsTab.click();
     expect(elements.recentPollsContainer.isDisplayed()).toBeTruthy();

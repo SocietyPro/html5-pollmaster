@@ -17,6 +17,9 @@
   ],
   "dependencies": {
     "moment": "~2.7.0",
-    "japi": "git@github.com:SocietyPro/japi.git"
+    "japi": "git@github.com:SocietyPro/japi.git",
+    "angular": "1.3.0-beta.19",
+    "angular-animate": "1.3.0-beta.19",
+    "angular-route": "1.3.0-beta.19"
   }
 }

@@ -17,7 +17,7 @@ var elements;
 describe("templates manager page", function () {
 
   it("sets up the page for testing", function () {
-    browser.get('default.htm#/manageTemplates');
+    browser.get('index.html#/manageTemplates');
     elements = new Elements();
     expect(elements.templateManager.isDisplayed()).toBeTruthy();
   });

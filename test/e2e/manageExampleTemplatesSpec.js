@@ -12,7 +12,7 @@ var elements;
 describe("The list of example templates in the template manager", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/manageTemplates");
+    browser.get("index.html#/manageTemplates");
     elements = new Elements();
     elements.examplesTab.click();
     expect(elements.exampleTemplatesContainer.isDisplayed()).toBeTruthy();

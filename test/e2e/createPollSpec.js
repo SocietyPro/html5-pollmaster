@@ -16,7 +16,7 @@ var pollTemplates;
 describe("new poll using a template page", function () {
 
     it("sets up the page for testing", function () {
-        browser.get('default.htm#/createPoll');
+        browser.get('index.html#/createPoll');
         pollTemplates = new Elements();
         expect(pollTemplates.templateManager.isDisplayed()).toBeTruthy();
     });

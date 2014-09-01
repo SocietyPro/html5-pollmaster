@@ -12,7 +12,7 @@ var elements;
 describe("The list of my templates", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/createPoll");
+    browser.get("index.html#/createPoll");
     elements = new Elements();
     element(by.id("myTemplatesTab")).click();
     expect(elements.pollsFromMyTemplatesContainer.isDisplayed()).toBeTruthy();
@@ -52,7 +52,7 @@ describe("The list of my templates", function () {
 
   describe("New Poll From Scratch button", function(){
     it("is displayed", function(){    
-      browser.get("default.htm#/createPoll");
+      browser.get("index.html#/createPoll");
       elements = new Elements();
       element(by.id("myTemplatesTab")).click();
       expect(elements.newPollFromScratchButton.isDisplayed()).toBeTruthy();

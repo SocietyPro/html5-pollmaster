@@ -11,7 +11,7 @@ var elements;
 describe("The list of peer templates", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/manageTemplates");
+    browser.get("index.html#/manageTemplates");
     element(by.id("peerRecommendedTab")).click();
 
     elements = new Elements();

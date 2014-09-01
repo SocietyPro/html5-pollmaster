@@ -303,3 +303,54 @@ button {
 .indent2 {
   margin-left: 50px;
 }
+
+/* Styles for material UX */
+.color-chip {
+  display: inline-block;
+  border: 1px solid grey;
+  min-width: 12px;
+  min-height: 12px;
+  margin: 2px;
+}
+
+.menu-icon {
+  top: 0;
+  cursor: pointer;
+}
+
+#viewButtons {
+  margin: 0 18px;
+}
+
+.content-padding {
+  padding: 20px;
+}
+
+#quickAddBox {
+  border: 1px solid lightgrey;
+  display: block;
+  position: relative;
+  max-width: 450px;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 8px;
+}
+
+#quickAddAdditional {
+  margin-top: 8px;
+}
+
+#quickAddButton {
+  float: right;
+}
+
+#pollsContainer {
+  height: 80vh;
+}
+
+/* Styles for Cards */
+material-card{
+  display: inline-block;
+  min-height: 100px;
+  min-width: 200px;
+}

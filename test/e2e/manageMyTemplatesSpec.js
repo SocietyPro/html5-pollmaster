@@ -14,7 +14,7 @@ var elements;
 describe("The list of my templates in the template manager", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/manageTemplates");
+    browser.get("index.html#/manageTemplates");
     elements = new Elements;
     expect(elements.myTemplatesContainer.isDisplayed()).toBeTruthy();
   });
@@ -46,7 +46,7 @@ describe("The list of my templates in the template manager", function () {
 
 describe("the functionality of the buttons", function(){
   beforeEach(function(){
-    browser.get("default.htm#/manageTemplates");
+    browser.get("index.html#/manageTemplates");
     elements = new Elements;
     expect(elements.myTemplatesContainer.isDisplayed()).toBeTruthy();
   });

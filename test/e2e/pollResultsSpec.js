@@ -1,6 +1,5 @@
 var Elements = function () {
 	this.pollHeader = element(by.id('pollHeader'));
-	this.logo = element(by.css("img"));
 	this.backButton = element(by.id("backButton"));
   this.helpButton = element(by.id("helpButton"));
   this.title = element(by.id("pollTitle"));
@@ -40,7 +39,7 @@ describe("javascript backend setup", function(){
   describe("pollResults, post-setup", function(){
     it("is not undefined", function(){
       /* SETUP HERE: */
-      browser.get("default.htm#/pollResults");
+      browser.get("index.html#/pollResults");
       pollResults = new Elements();
       expect(pollResults).toBeDefined();
     });
@@ -59,11 +58,6 @@ describe("javascript backend setup", function(){
 
 describe("poll results header", function () {
 
-		
-	it("has a logo on the far left", function () {
-		expect(pollResults.logo.isDisplayed()).toBeTruthy();
-	});
-
 	it("has a back to polls button", function () {
     expect(pollResults.backButton.getText()).toEqual("Back to Polls");
   });
@@ -75,7 +69,7 @@ describe("poll results header", function () {
   });
 
 	it("has a help button", function () {
-		browser.get("default.htm#/pollResults");
+		browser.get("index.html#/pollResults");
 		pollResults = new Elements();
     expect(pollResults.helpButton.isDisplayed()).toBeTruthy();
 	});
@@ -91,7 +85,7 @@ describe("poll results header", function () {
 describe("poll results", function () {
 
 	it("displays poll type", function () {
-		browser.get("default.htm#/pollResults");
+		browser.get("index.html#/pollResults");
 		pollResults = new Elements();
 		expect(pollResults.type.isDisplayed()).toBeTruthy();
 		expect(pollResults.type.getText()).toEqual("Battle Ping:")
@@ -138,19 +132,19 @@ describe("poll results", function () {
 		describe("comments table", function () {
 
 			it("has the commenter's name on the left", function () {
-        browser.get("default.htm#/pollResults");
+        browser.get("index.html#/pollResults");
         pollResults = new Elements();
 				expect(pollResults.commentName.getText()).toEqual("darlith");
 			});
       
       it("has the comment in the middle", function () {
-        browser.get("default.htm#/pollResults");
+        browser.get("index.html#/pollResults");
         pollResults = new Elements();
         expect(pollResults.commentComment.getText()).toEqual("I will be 10 minutes late.");
       });
 
       it("has a button to open a chat with this commenter on the right", function () {
-        browser.get("default.htm#/pollResults");
+        browser.get("index.html#/pollResults");
         pollResults = new Elements();
         expect(pollResults.commentChatButton.isDisplayed()).toBeTruthy;
         expect(pollResults.commentChatButton.getText()).toEqual("Chat");

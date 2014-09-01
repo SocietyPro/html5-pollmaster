@@ -11,7 +11,7 @@ var elements;
 describe("The list of example polls", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/createPoll");
+    browser.get("index.html#/createPoll");
     element(by.id("examplesTab")).click();
 
     elements = new Elements();
