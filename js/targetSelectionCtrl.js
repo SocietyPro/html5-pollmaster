@@ -5,17 +5,19 @@ pollApp.controller("targetSelectionCtrl", function($scope){
     var hint = null;
     switch(type){
       case 'peers': 
-        targets = japi.me.peers();
+        targets = japi.me.peers;
         hint = "Choose one target Peer:"
         break;
       case 'groups':
-        targets = japi.me.groups();
+        targets = japi.me.groups;
         hint = "Choose one target Group:"
         break;
+      /*  
       case 'peerLists':
         targets = japi.me.peerLists();
         hint = "Choose one target Peer List:"
         break;
+      */
     };
     $scope.targetCategory = type;
     $scope.targetHint = hint;
