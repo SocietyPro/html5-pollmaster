@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.pollsFromRecentContainer = element(by.id('pollsFromRecentContainer'));
   this.firstPoll = element(by.repeater('recentPoll in recentPolls').row(0));
@@ -11,7 +12,7 @@ var elements;
 describe("The list of recent polls", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/createPoll");
+    browser.get(indexFile + "#/createPoll");
     element(by.id("recentTab")).click();
     elements = new Elements();
     expect(elements.pollsFromRecentContainer.isDisplayed()).toBeTruthy();

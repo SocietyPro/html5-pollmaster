@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.pollsFromPeerRecommendedContainer = element(by.id('pollsFromPeerRecommendedContainer'));
   this.firstPoll = element(by.repeater('peerPoll in peerPolls').row(0));
@@ -11,7 +12,7 @@ var elements;
 describe("The list of peer polls", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/createPoll");
+    browser.get(indexFile + "#/createPoll");
     element(by.id("peerRecommendedTab")).click();
 
     elements = new Elements();

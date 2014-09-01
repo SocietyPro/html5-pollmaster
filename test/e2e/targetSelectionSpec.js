@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.targetSelectionContainer = element(by.id('targetSelectionContainer'));
   this.targetPaneTabs = element(by.id('targetPaneTabs')); // 
@@ -16,7 +17,7 @@ var elements;
 describe("Target Selection Partial", function () {
 
   it("sets up the test page", function () {
-    browser.get('default.htm#/createPoll/customize');
+    browser.get(indexFile + '#/createPoll/customize');
     elements = new Elements();
     expect(elements.targetSelectionContainer.isDisplayed()).toBeTruthy();
   });
@@ -42,7 +43,7 @@ describe("Target Selection Partial", function () {
       describe("target tabs", function(){
 
         it("applies .targeting to the first tab, Peer, on page load", function(){
-          browser.get('default.htm#/createPoll/customize');
+          browser.get(indexFile + '#/createPoll/customize');
           elements = new Elements();
           var targetingTabs = element.all(by.css('.targeting'));
           expect(targetingTabs.count()).toBe(1);

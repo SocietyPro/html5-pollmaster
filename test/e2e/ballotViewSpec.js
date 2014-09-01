@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.partial = element(by.id('ballotView'));
   this.titleConcatenation = element(by.binding('poll.title'));
@@ -37,7 +38,7 @@ describe("ballot view", function () {
   var ballotView, formControls;
 
   it("sets up the partial up for tests", function () {
-    browser.get('default.htm');
+    browser.get(indexFile);
     element(by.id('createPollButton')).click();
     element(by.id('newPollFromScratchButton')).click();
     ballotView = new Elements();

@@ -1,3 +1,4 @@
+var indexFile = "index.html";
 var Elements = function () {
   this.pollsFromMyTemplatesContainer = element(by.id('pollsFromMyTemplatesContainer'));
   this.firstPoll = element(by.repeater('myTemplate in myTemplates').row(0));
@@ -12,7 +13,7 @@ var elements;
 describe("The list of my templates", function () {
 
   it("sets up the tests", function () {
-    browser.get("default.htm#/createPoll");
+    browser.get(indexFile + "#/createPoll");
     elements = new Elements();
     element(by.id("myTemplatesTab")).click();
     expect(elements.pollsFromMyTemplatesContainer.isDisplayed()).toBeTruthy();
@@ -52,7 +53,7 @@ describe("The list of my templates", function () {
 
   describe("New Poll From Scratch button", function(){
     it("is displayed", function(){    
-      browser.get("default.htm#/createPoll");
+      browser.get(indexFile + "#/createPoll");
       elements = new Elements();
       element(by.id("myTemplatesTab")).click();
       expect(elements.newPollFromScratchButton.isDisplayed()).toBeTruthy();
