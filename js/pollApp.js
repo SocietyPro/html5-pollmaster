@@ -8,7 +8,7 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial"]) // array is required
+var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives']) // array is required
 
 pollApp.config(function($routeProvider){
   
@@ -77,6 +77,29 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal, $materialS
     $scope.exampleTemplates = japi.polls.templates.listExamples();
     $scope.peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
 
+    $scope.exampleData = [{
+      text: "One",
+      count: 5
+      }, {
+      text: "Two",
+      count: 2
+      }, {
+      text: "Three",
+      count: 9
+      }, {
+      text: "Four",
+      count: 7
+      }, {
+      text: "Five",
+      count: 4
+      }, {
+      text: "Six",
+      count: 3
+      }, {
+      text: "Seven",
+      count: 9
+    }];
+
     $scope.toggleMenu = function () {
       $materialSidenav('left').toggle();
     };
@@ -89,6 +112,10 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal, $materialS
 
     $scope.quiltView = function () {
       $scope.listView = "quilt";
+    };
+
+    $scope.overflowToggle = function (poll) {
+      poll.overflow = !poll.overflow;
     };
 
     $scope.pollsListingShow = function () {
@@ -132,7 +159,6 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal, $materialS
       // We will modify this during our WIP. See saveCustomization for where it
       // gets copied back.
       $scope.poll = angular.copy(pollObject);
-      $location.path("/createPoll/customize");
     };
 
     $scope.savePollCustomization = function(){
@@ -215,6 +241,24 @@ pollApp.controller("pollAppCtrl", function($scope, $location, $modal, $materialS
     $scope.prettyJSON = function(obj){
       return JSON.stringify(obj, null, 2)
     };
+
+    $scope.pieWidth = 100;
+    $scope.pieHeight = 100;
+    $scope.xFunction = function () {
+      return function (d) {
+        return d.text;
+      };
+    }
+    $scope.yFunction = function () {
+      return function (d) {
+        return d.count;
+      };
+    }
+    $scope.descriptionFunction = function () {
+      return function (d) {
+        return d.text;
+      };
+    }
 
 });
 
