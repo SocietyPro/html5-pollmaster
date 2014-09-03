@@ -436,6 +436,14 @@ div .cardMenuBar {
   cursor: pointer;
 }
 
+/* Card Zoom */
+.optionsLine {
+  line-height: 0.3;
+}
+.optionsInput {
+  display: inline-block !important;
+}
+
 /* Animations */
 .animate-show {
   line-height:20px;

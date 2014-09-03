@@ -245,7 +245,6 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
         targetEvent: e,
         controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
           $scope.poll = poll;
-          console.log(poll);
           $scope.close = function () {
             $hideDialog();
           };
@@ -254,6 +253,22 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             poll.save();
             poll.overflow = false;
             $hideDialog();
+          };
+
+          $scope.addOption = function () {
+            var newOption = { text: "", subgroup: "" };
+            if ($scope.temporaryPollOptions.defaultChatRoom) {
+              newOption.subgroup = $scope.temporaryPollOptions.defaultChatRoom;
+            }
+            $scope.poll.options.push(newOption);
+          };
+
+          $scope.removeOption = function (option) {
+            var index = $scope.poll.options.indexOf(option);
+
+            if (index > -1) {
+              $scope.poll.options.splice(index, 1);
+            }
           };
 
         }]

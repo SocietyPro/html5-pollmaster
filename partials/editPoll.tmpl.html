@@ -1,10 +1,19 @@
 <material-dialog>
   <div ng-show="poll.status === 'unstarted' || poll.status === 'deleted'">
     <div class="dialog-content">
-      <input ng-model="poll.title">
-      <p>
-        poll edit content go here
-      </p>
+      <material-input-group>
+        <label for="pollTitleInput">Poll Title</label>
+        <material-input name="pollTitleInput" type="text" ng-model="poll.title" flex></material-input>
+      </material-input-group>
+      <material-input-group>
+        <label for="pollDescriptionInput">Poll Description</label>
+        <material-input name="pollDescriptionInput" type="text" ng-model="poll.description" flex></material-input>
+      </material-input-group>
+      Options:
+      <div class="optionsLine" ng-repeat="option in poll.options">
+        <material-button ng-click="removeOption(option)" class="material-button-colored">X</material-button>
+        <material-input type="text" class="optionsInput" ng-model="option.text" flex></material-input>
+      </div>
     </div>
     <div class="dialog-actions" layout="horizontal" layout-end="end">
       <material-button ng-click="close()">
