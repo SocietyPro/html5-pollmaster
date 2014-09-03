@@ -1,6 +1,6 @@
 <div class="cardholder" ng-repeat="poll in polls" ng-mouseleave="poll.overflow = false">
   <material-card ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}" ng-mouseover="poll.menubar = true" ng-mouseleave="poll.menubar = false">
-    <div>
+    <div ng-click="editPoll($event, poll)">
       {{poll.id}}
       <h4>{{poll.title}}</h4>
       <div class="pollDetails">
@@ -46,6 +46,6 @@
   </material-card>
   <div class="overflowMenu animate-show" ng-show="poll.overflow">
     <a ng-click="destroyPoll(poll)">Delete</a><br />
-    <a ng-click="copyPoll(poll)">Make a Copy</a>
+    <a ng-click="copyPoll($event, poll)">Make a Copy</a>
   </div>
 </div>

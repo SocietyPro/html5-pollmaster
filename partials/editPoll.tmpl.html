@@ -1,0 +1,18 @@
+<material-dialog>
+  <div ng-show="poll.status === 'unstarted' || poll.status === 'deleted'">
+    <div class="dialog-content">
+      <input ng-model="poll.title">
+      <p>
+        poll edit content go here
+      </p>
+    </div>
+    <div class="dialog-actions" layout="horizontal" layout-end="end">
+      <material-button ng-click="close()">
+        Close
+      </material-button>
+      <material-button ng-click="save(poll)" class="material-button-colored">
+        Save
+      </material-button>
+    </div>
+  </div>
+</material-dialog>

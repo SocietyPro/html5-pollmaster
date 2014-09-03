@@ -308,6 +308,7 @@ button {
 material-sidenav {
   max-width: 175px;
   min-width: 175px;
+  overflow: hidden;
 }
 .color-chip {
   display: inline-block;
@@ -338,14 +339,14 @@ material-sidenav {
   border: 1px solid lightgrey;
   display: block;
   position: relative;
-  max-width: 450px;
+  max-width: 500px;
   margin: auto;
   box-sizing: border-box;
   padding: 8px;
 }
 
-#quickAddAdditional {
-  margin-top: 8px;
+#quickAddTitle {
+  display: inline-block;
 }
 
 #quickAddButton {
@@ -356,12 +357,21 @@ material-sidenav {
   height: 80vh;
 }
 
+material-button.material-button-fab.material-button-fab-bottom-right {
+      top: auto;
+      right: 56px;
+      bottom: 28px;
+      left: auto;
+      position: fixed; 
+}
+
 /* Styles for Cards */
 .cardholder {
   display: inline-block;
   vertical-align: top;
   position: relative;
 }
+
 material-card{
   display: inline-block;
   vertical-align: top;
@@ -424,4 +434,24 @@ div .cardMenuBar {
 
 .overflowMenu a {
   cursor: pointer;
+}
+
+/* Animations */
+.animate-show {
+  line-height:20px;
+  opacity:1;
+  padding:10px;
+  background:white;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+  line-height:0;
+  opacity:0;
+  padding:0 10px;
 }

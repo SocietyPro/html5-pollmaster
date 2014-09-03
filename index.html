@@ -67,15 +67,13 @@
             <form name="quickAddForm" style="padding-left:20px;">
               <material-input-group>
                 <label for="quickAddTitle">Add poll</label>
-                <material-input name="quickAddTitle" id="quickAddTitle" type="text" size="45" ng-model="newGroupTitle" flex>
+                <material-input name="quickAddTitle" id="quickAddTitle" type="text" size="45" ng-model="newPollTitle" flex>
               </material-input-group>
-              <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
-                <select ng-model="newGroupType" ng-options="groupType for groupType in groupTypes"></select>
-                <material-button id="quickAddButton" class="material-button-colored" ng-show="quickAddForm.$dirty" ng-click="newGroup()">
-                  SAVE
-                </material-button>
-              </div>
+              <material-button id="quickAddButton" class="material-button-colored" ng-show="quickAddForm.$dirty" ng-click="newPollFromScratch($event, newPollTitle)">
+                SAVE
+              </material-button>
             </form>
+            <div class="clearBoth"></div>
           </div>
           <!-- end Quick Add Box -->
 
@@ -84,6 +82,11 @@
               <ng-include src="'partials/pollCards.html'"></ng-include>
             </div>
 
+            <div>
+              <material-button class="material-button-fab material-button-fab-bottom-right material-theme-light-blue" ng-click="newPollFromScratch($event)">
+                <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png"></material-icon>
+              </material-button>
+            </div>
           </material-content>
 
         </div>
