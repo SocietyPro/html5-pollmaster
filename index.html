@@ -51,10 +51,10 @@
               <h2>Ballot</h2>
             </div>
             <div id="viewButtons" layout="horizontal">
-              <material-button class="material-button-icon" ng-click="streamView()">
+              <material-button class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_48dp.png"></material-icon>
               </material-button>
-              <material-button class="material-button-icon" ng-click="quiltView()">
+              <material-button class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_48dp.png"></material-icon>
               </material-button>
             </div>
@@ -81,8 +81,6 @@
             <div id="quilt" ng-show="listView === 'quilt'">
               <ng-include src="'partials/pollCards.html'"></ng-include>
             </div>
-
-            {{poll}}
 
             <div>
               <material-button class="material-button-fab material-button-fab-bottom-right material-theme-light-blue" ng-click="newPollFromScratch($event)">

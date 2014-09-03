@@ -304,6 +304,26 @@ button {
   margin-left: 50px;
 }
 
+/* Animations */
+.animate-show {
+  line-height:20px;
+  opacity:1;
+  padding:10px;
+  background:white;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+  line-height:0;
+  opacity:0;
+  padding:0 10px;
+}
+
 /* Styles for material UX */
 material-sidenav {
   max-width: 175px;
@@ -324,7 +344,19 @@ material-sidenav {
 }
 
 #viewButtons {
-  margin: 0 18px;
+  margin: 8px 18px 0px 18px;
+}
+
+.viewButton {
+  border: 1px solid rgba(0,0,0,0.2);
+  height: 48px;
+  width: 53px;
+}
+.viewButton.active {
+  background-color: rgba(0,0,0,0.1);
+}
+.viewButton.inactive {
+  opacity: 0.5;
 }
 
 #quilt {
@@ -372,7 +404,7 @@ material-button.material-button-fab.material-button-fab-bottom-right {
   position: relative;
 }
 
-material-card{
+.mainCard {
   display: inline-block;
   vertical-align: top;
   min-height: 100px;
@@ -423,17 +455,17 @@ div .cardMenuBar {
 }
 
 .overflowMenu {
-  z-index: 100;
   position: absolute;
   margin-right: 10px;
   margin-top: -10px;
-  border: 1px solid grey;
   right: 0;
   top: 100%;
+  padding: 16px 24px;
 }
 
 .overflowMenu a {
   cursor: pointer;
+  line-height: 32px;
 }
 
 /* Card Zoom */
@@ -444,22 +476,3 @@ div .cardMenuBar {
   display: inline-block !important;
 }
 
-/* Animations */
-.animate-show {
-  line-height:20px;
-  opacity:1;
-  padding:10px;
-  background:white;
-}
-
-.animate-show.ng-hide-add.ng-hide-add-active,
-.animate-show.ng-hide-remove.ng-hide-remove-active {
-  -webkit-transition:all linear 0.5s;
-  transition:all linear 0.5s;
-}
-
-.animate-show.ng-hide {
-  line-height:0;
-  opacity:0;
-  padding:0 10px;
-}

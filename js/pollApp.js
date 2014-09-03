@@ -66,7 +66,7 @@ pollApp.factory("menu", ['$rootScope', function ($rootScope) {
     }
   };
 }]);
-  
+
 pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu){
 
     $scope.menu = menu;
