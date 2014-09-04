@@ -384,6 +384,15 @@ material-sidenav {
   border-bottom: none;
 }
 
+#quickAddDescription {
+  display: inline-block;
+  border-bottom: none;
+}
+
+.bold {
+  font-weight: bold;
+}
+
 #quickAddButton {
   float: right;
 }

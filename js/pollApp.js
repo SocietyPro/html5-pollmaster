@@ -67,8 +67,9 @@ pollApp.factory("menu", ['$rootScope', function ($rootScope) {
   };
 }]);
 
-pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu){
+pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu, $window){
 
+    $scope.$window = $window;
     $scope.menu = menu;
     $scope.menu.selectFilter(menu.filters[0]);
 
@@ -76,6 +77,20 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     $scope.myTemplates = japi.polls.templates.list();
     $scope.exampleTemplates = japi.polls.templates.listExamples();
     $scope.peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
+
+    /*$scope.toggleNewPoll = function () {
+        $scope.newPoll = !$scope.newPoll;
+
+        if ($scope.newPoll) {
+            $scope.$window.onclick = function (event) {
+                closePollWhenClickingElsewhere(event, $scope.togglenewPoll);
+            };
+        } else {
+            $scope.newPoll = false;
+            $scope.$window.onclick = null;
+            $scope.$apply();
+        }
+    };*/
 
     $scope.toggleMenu = function () {
       $materialSidenav('left').toggle();
