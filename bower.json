@@ -17,6 +17,6 @@
   ],
   "dependencies": {
     "moment": "~2.7.0",
-    "japi": "git@github.com:SocietyPro/japi.git"
+    "japi": "https://github.com/SocietyPro/japi.git"
   }
 }
