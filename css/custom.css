@@ -454,7 +454,17 @@ material-button.material-button-fab.material-button-fab-bottom-right {
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   float: left;
-  max-width: 50%;
+  max-width: 60%;
+}
+
+.options table {
+  margin-bottom: 0;
+}
+
+.options table td {
+  padding: 3px 3px 3px 0;
+  border-top: none;
+  vertical-align: middle;
 }
 
 .pieChartContainer {

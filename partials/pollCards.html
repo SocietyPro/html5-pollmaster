@@ -10,10 +10,14 @@
       <div class="pollDetails">
 
         <div class="pollReturns" ng-show="poll.status === 'started' || poll.status === 'complete'">
-          <div class="floater"></div>
           <div class="optionCounts">
-            <div ng-repeat="(index, option) in poll.options">
-              {{option.count}} {{option.text}}
+            <div class="options">
+              <table>
+                <tr ng-repeat="option in poll.options">
+                  <td>{{option.count}}</td>
+                  <td>{{option.text}}</td>
+                </tr>
+              </table>
             </div>
           </div>
 
@@ -37,9 +41,14 @@
         </div>
 
         <div class="optionPreview" ng-show="poll.status === 'unstarted'">
-          VOTE
-          <div ng-repeat="option in poll.options">
-            <input type="checkbox" disabled> {{option.text}}
+          <div class="options">
+            <table>
+              <tr><td>VOTE</td></tr>
+              <tr ng-repeat="option in poll.options">  
+              <td><input type="checkbox" disabled></td>
+              <td>{{option.text}}</td>
+              </tr>
+            </table>
           </div>
           <div class="clearBoth"></div>
         </div>

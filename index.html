@@ -81,6 +81,8 @@
               <ng-include src="'partials/pollCards.html'"></ng-include>
             </div>
 
+            <pre>{{poll | json}}</pre>
+
             <div>
               <material-button class="material-button-fab material-button-fab-bottom-right material-theme-light-blue" ng-click="newPollFromScratch($event)">
                 <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png"></material-icon>
