@@ -368,6 +368,10 @@ material-sidenav {
   padding: 20px;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 #quickAddBox {
   border: 1px solid lightgrey;
   display: block;
@@ -391,6 +395,16 @@ material-sidenav {
 
 .bold {
   font-weight: bold;
+}
+
+input {
+  border-bottom: none;
+}
+
+textarea {
+  border-bottom: none;
+  width: 100%;
+  line-height: 1.2em;
 }
 
 #quickAddButton {
@@ -511,10 +525,11 @@ div .cardMenuBar {
 }
 
 /* Card Zoom */
-.optionsLine {
-  line-height: 0.3;
-}
 .optionsInput {
   display: inline-block !important;
+}
+
+material-checkbox {
+  margin: 1px;
 }
 

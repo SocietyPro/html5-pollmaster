@@ -2,16 +2,13 @@
   <div ng-show="poll.status === 'unstarted' || poll.status === 'unsaved'">
     <div class="dialog-content">
       <material-input-group>
-        <label for="pollTitleInput">Poll Title</label>
-        <material-input name="pollTitleInput" type="text" ng-model="poll.title" flex></material-input>
+        <material-input class="bold" name="pollTitleInput" type="text" ng-model="poll.title" size="45" flex placeholder="Poll Title (click to edit)"></material-input>
       </material-input-group>
       <material-input-group>
-        <label for="pollDescriptionInput">Poll Description</label>
-        <material-input name="pollDescriptionInput" type="text" ng-model="poll.description" flex></material-input>
+        <textarea name="pollDescriptionInput" ng-model="poll.description" flex placeholder="Poll Description (click to edit)"></textarea>
       </material-input-group>
-      Options:
-      <div class="optionsLine" ng-repeat="option in poll.options">
-        <material-button ng-click="removeOption(option)" class="material-button-colored">X</material-button>
+      <div class="optionsLine" ng-repeat="option in poll.options" layout="horizontal">
+        <material-checkbox ng-model="option.remove"></material-checkbox>
         <material-input type="text" class="optionsInput" ng-model="option.text" flex></material-input>
       </div>
     </div>
@@ -20,7 +17,7 @@
         Close
       </material-button>
       <material-button ng-click="save(poll)" class="material-button-colored">
-        Save
+        Next
       </material-button>
     </div>
   </div>
