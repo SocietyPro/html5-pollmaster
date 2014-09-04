@@ -340,6 +340,7 @@ material-sidenav {
 
 .menu-icon {
   top: 0;
+  margin-top: 10px;
   cursor: pointer;
 }
 
@@ -375,10 +376,12 @@ material-sidenav {
   margin: auto;
   box-sizing: border-box;
   padding: 8px;
+  line-height: 24px;
 }
 
 #quickAddTitle {
   display: inline-block;
+  border-bottom: none;
 }
 
 #quickAddButton {
@@ -410,6 +413,19 @@ material-button.material-button-fab.material-button-fab-bottom-right {
   min-height: 100px;
   min-width: 300px;
   max-width: 300px;
+  padding: 16px 24px;
+}
+
+.pollOriginatorLine {
+  margin: 7px 0 14px 0;
+}
+
+.pollTitleLine {
+  margin: 0 0 14px 0;
+}
+
+.cardContentContainer {
+  margin-bottom: 16px;
 }
 
 .votes {
@@ -428,13 +444,17 @@ material-button.material-button-fab.material-button-fab-bottom-right {
   font-size: 12px;
 }
 
-.optionPreview {
-  margin-bottom: 20px;
+.pollReturns {
+  height: 100px;
 }
 
 .optionCounts {
-  display: block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
   float: left;
+  max-width: 50%;
 }
 
 .pieChartContainer {
@@ -445,12 +465,15 @@ material-button.material-button-fab.material-button-fab-bottom-right {
 
 div .cardMenuBar {
   background-color: rgba(0, 0, 0, 0.3);
-  min-height: 28px;
-  margin: -10px;
+  min-height: 40px;
+  max-height: 40px;
+  margin: -24px -24px -16px -24px;
   padding: 5px; 
+  vertical-align: middle;
 }
 
 .overflowMenuButton {
+  margin-top: 6px;
   float: right; 
 }
 

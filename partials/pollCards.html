@@ -1,16 +1,16 @@
 <div class="cardholder" ng-repeat="poll in polls" ng-mouseleave="poll.overflow = false">
   <material-card class="mainCard" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}" ng-mouseover="poll.menubar = true" ng-mouseleave="poll.menubar = false">
-    <div ng-click="editPoll($event, poll)">
-      {{poll.id}}
-      <h4>{{poll.title}}</h4>
+    <div class="cardContentContainer" ng-click="editPoll($event, poll)">
+      <div class="pollOriginatorLine">
+        <em>{{poll.id}}</em>
+      </div>
+      <div class="pollTitleLine">
+        <b>{{poll.title}}</b>
+      </div>
       <div class="pollDetails">
-        <div class="optionPreview" ng-show="poll.status === 'unstarted'">
-          VOTE
-          <div ng-repeat="option in poll.options">
-            <input type="checkbox" disabled> {{option.text}}
-          </div>
-        </div>
-        <div ng-show="poll.status === 'started' || poll.status === 'complete'">
+
+        <div class="pollReturns" ng-show="poll.status === 'started' || poll.status === 'complete'">
+          <div class="floater"></div>
           <div class="optionCounts">
             <div ng-repeat="(index, option) in poll.options">
               {{option.count}} {{option.text}}
@@ -25,17 +25,26 @@
               y="yFunction()"
               width="{{ pieWidth }}"
               height="{{ pieHeight }}"
-              margin="{left: 20, top: 20, bottom: 20, right: 20}"
+              margin="{left: 15, top: 15, bottom: 15, right: 15}"
               showLabels="true"
               pieLabelsOutside="true"
               showValues="true"
-              labelType="percent"
+              labelType="value"
               tooltips="true">
               <svg></svg>
             </nvd3-pie-chart>
           </div>
+        </div>
+
+        <div class="optionPreview" ng-show="poll.status === 'unstarted'">
+          VOTE
+          <div ng-repeat="option in poll.options">
+            <input type="checkbox" disabled> {{option.text}}
+          </div>
           <div class="clearBoth"></div>
         </div>
+
+        <div class="clearBoth"></div>
       </div>
     </div>
     <div class="cardMenuBar animate-show" ng-show="poll.menubar">

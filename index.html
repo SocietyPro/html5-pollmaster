@@ -45,7 +45,7 @@
         <material-toolbar scroll-shrink class="material-theme-yellow">
           <div layout="horizontal">
             <div class="material-toolbar-tools">
-              <div class="menu-icon" ng-click="toggleMenu()" hide-md>
+              <div class="menu-icon" ng-click="toggleMenu()">
                 <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_48dp.png">
               </div>
               <h2>Ballot</h2>
@@ -66,8 +66,7 @@
           <div id="quickAddBox">
             <form name="quickAddForm" style="padding-left:20px;">
               <material-input-group>
-                <label for="quickAddTitle">Add poll</label>
-                <material-input name="quickAddTitle" id="quickAddTitle" type="text" size="45" ng-model="newPollTitle" flex>
+                <material-input name="quickAddTitle" placeholder="Add Poll" id="quickAddTitle" type="text" size="45" ng-model="newPollTitle" flex>
               </material-input-group>
               <material-button id="quickAddButton" class="material-button-colored" ng-show="quickAddForm.$dirty" ng-click="newPollFromScratch($event, newPollTitle)">
                 SAVE

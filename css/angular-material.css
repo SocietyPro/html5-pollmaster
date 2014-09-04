@@ -1977,7 +1977,7 @@ material-sidenav {
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
     z-index: 9; }
-
+/*
 @media (min-width: 960px) {
   material-sidenav {
     position: static;
@@ -1985,6 +1985,7 @@ material-sidenav {
     transform: translate3d(0, 0, 0) !important; }
   .material-sidenav-backdrop {
     display: none !important; } }
+*/
 
 label {
   display: block;
