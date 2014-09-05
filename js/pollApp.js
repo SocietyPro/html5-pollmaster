@@ -87,19 +87,17 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     $scope.exampleTemplates = japi.polls.templates.listExamples();
     $scope.peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
 
-    /*$scope.toggleNewPoll = function () {
-        $scope.newPoll = !$scope.newPoll;
-
-        if ($scope.newPoll) {
-            $scope.$window.onclick = function (event) {
-                closePollWhenClickingElsewhere(event, $scope.togglenewPoll);
-            };
-        } else {
-            $scope.newPoll = false;
-            $scope.$window.onclick = null;
-            $scope.$apply();
+    $(document).mouseup(function (e) {
+        var container = $("#quickAddBox");
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            var scope = angular.element($("#quickAddBox")).scope();
+            scope.$apply(function(){
+                scope.newPoll = false;
+            });        
         }
-    };*/
+    });
 
     $scope.toggleMenu = function () {
       $materialSidenav('left').toggle();

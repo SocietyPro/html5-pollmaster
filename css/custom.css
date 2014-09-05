@@ -396,15 +396,17 @@ material-sidenav {
 #quickAddTitle {
   display: inline-block;
   border-bottom: none;
-}
-
-#quickAddDescription {
-  display: inline-block;
-  border-bottom: none;
+  font-size: 14px;
 }
 
 .bold {
   font-weight: bold;
+  font-size: 17px;
+}
+#quickAddDescription {
+  display: inline-block;
+  border-bottom: none;
+  font-size: 14px;
 }
 
 input {
