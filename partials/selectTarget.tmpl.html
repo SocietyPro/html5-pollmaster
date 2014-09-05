@@ -1,0 +1,19 @@
+<material-dialog>
+  <div ng-show="poll.status === 'unstarted' || poll.status === 'unsaved'">
+    <div class="dialog-content">
+      <h2>Poll target selection</h2>
+      Group
+      <select ng-options="group.name for group in myGroups" ng-model="poll.target">
+        <option value="">-- Select a Group --</option>
+      </select>
+    </div>
+    <div class="dialog-actions" layout="horizontal" layout-align="end">
+      <material-button ng-click="close()">
+        Close
+      </material-button>
+      <material-button ng-click="save(poll)" class="material-button-colored">
+        Save
+      </material-button>
+    </div>
+  </div>
+</material-dialog>

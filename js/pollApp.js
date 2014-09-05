@@ -59,8 +59,17 @@ pollApp.factory("menu", ['$rootScope', function ($rootScope) {
 
     selectFilter: function(filter) {
       self.currentFilter = filter;
-      $rootScope.listContains = filter;
+      if (filter.filter === "All") {
+        $rootScope.pollFilter = undefined;
+      } else if (filter.filter === "Running") {
+        $rootScope.pollFilter = "started";
+      } else if (filter.filter === "Completed") {
+        $rootScope.pollFilter = "complete";
+      } else {
+        $rootScope.pollFilter = filter.filter.toLowerCase();
+      };
     },
+
     isFilterSelected: function (filter) {
       return self.currentFilter === filter;
     }
@@ -94,6 +103,14 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
     $scope.toggleMenu = function () {
       $materialSidenav('left').toggle();
+    };
+
+    $scope.filterPolls = function (filter) {
+      if (filter.filter === "All") {
+        $scope.pollFilter = {status: ''};
+      } else {
+        $scope.pollFilter = {status: filter.filter};
+      }
     };
 
     $scope.listView = "quilt";
@@ -151,7 +168,9 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       // We will modify this during our WIP. See saveCustomization for where it
       // gets copied back.
       $scope.poll = angular.copy(pollObject);
-      $scope.dialog(e, $scope.poll);
+      var dateTime = new Date();
+      $scope.poll.end
+      $scope.dialog(e, $scope.poll, $scope.isPoll, $scope.isTemplate);
     };
 
     $scope.savePollCustomization = function(){
@@ -182,11 +201,15 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       oldPoll.start();
     };
 
-    $scope.newPollFromScratch = function(e, title){
+    $scope.newPollFromScratch = function(e, title, description) {
       var newPoll = japi.polls.build();
       newPoll.title = title;
+      newPoll.description = description;
+      $scope.isPoll = true;
+      $scope.isTemplate = false;
       $scope.startCustomizing(e, newPoll);
       $scope.newPollTitle = "";
+      $scope.newPollDescription = "";
       $scope.quickAddForm.$setPristine();
     };
 
@@ -254,36 +277,69 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       };
     }
 
-    $scope.dialog = function (e, poll) {
+    $scope.dialog = function (e, poll, isPoll, isTemplate) {
       $materialDialog({
         templateUrl: 'partials/editPoll.tmpl.html',
         targetEvent: e,
         controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
           $scope.poll = poll;
+          $scope.isPoll = isPoll;
+          $scope.isTemplate = isTemplate;
+
           $scope.close = function () {
             $hideDialog();
           };
 
-          $scope.save = function (poll) {
-            poll.save();
-            poll.overflow = false;
-            $hideDialog();
-          };
-
           $scope.addOption = function () {
-            var newOption = { text: "", subgroup: "" };
+            var newOption = { text: "", subgroup: "", count: 0 };
+            /*
             if ($scope.temporaryPollOptions.defaultChatRoom) {
               newOption.subgroup = $scope.temporaryPollOptions.defaultChatRoom;
             }
+            */
             $scope.poll.options.push(newOption);
           };
 
-          $scope.removeOption = function (option) {
-            var index = $scope.poll.options.indexOf(option);
-
+          $scope.removeOptions = function () {
+            var index = -1;
+            for (var i = 0; i < $scope.poll.options.length; i++) {
+              if ($scope.poll.options[i].remove) {
+                index = i;
+                break
+              }
+            }
             if (index > -1) {
               $scope.poll.options.splice(index, 1);
+              $scope.removeOptions();
             }
+          };
+
+          $scope.nextDialog = function (e, poll, isPoll, isTemplate) {
+            $hideDialog();
+            $materialDialog({
+              templateUrl: 'partials/selectTarget.tmpl.html',
+              targetEvent: e,
+              controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+                $scope.poll = poll;
+                $scope.myGroups = japi.me.groups;
+                $scope.isPoll = isPoll;
+                $scope.isTemplate = isTemplate;
+
+                var myGroups = 
+
+                $scope.close = function () {
+                  $hideDialog();
+                };
+
+                $scope.save = function (poll) {
+                  poll.save();
+                  poll.overflow = false;
+                  $hideDialog();
+                };
+
+
+              }]
+            });
           };
 
         }]
