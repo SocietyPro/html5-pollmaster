@@ -3,6 +3,7 @@
   <head>
 
     <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="bower_components/angular/angular.js" type="text/javascript"></script>
     <script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
     <script src="bower_components/angular-route/angular-route.js" type="text/javascript"></script>
@@ -10,16 +11,20 @@
     <script src="bower_components/nvd3/nv.d3.js"></script>
     <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
     <script src="js/angular-material.js" type="text/javascript"></script>
-    <script src="js/ui-bootstrap-tpls-0.11.0.js"></script>
-
+    <script src="js/ui-bootstrap-tpls-0.11.0.js"></script>    
     <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
     <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
+    <script type="text/javascript" src="bower_components/jquery-timepicker-jt/jquery.timepicker.js"></script>
+    <script type="text/javascript" src="js/timepicker.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-date/src/date.js"></script>
     <script src="js/pollApp.js" type="text/javascript"></script>
     <script src="js/targetSelectionCtrl.js" type="text/javascript"></script>
-
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="bower_components/jquery-timepicker-jt/jquery.timepicker.css" />
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css"/>
     <link rel="stylesheet" type="text/css" href="bower_components/nvd3/nv.d3.css">
-    <link rel="stylesheet" type="text/css" href="css/angular-material.css">
     <link rel="stylesheet" type="text/css" href="css/docs.css">
+    <link rel="stylesheet" type="text/css" href="css/angular-material.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
   <body ng-controller="pollAppCtrl">
@@ -71,7 +76,7 @@
               <material-input-group>  
                 <material-input  name="quickAddDescription" placeholder="Add Description" id="quickAddDescription" type="text" size="45" ng-model="newPollDescription" flex ng-show="newPoll" click-anywhere-but-here="close()" is-active="isDropdownOpen()">
               </material-input-group>
-              <material-button id="quickAddButton" class="material-button-colored" ng-show="newPollTitle && quickAddForm.$dirty" ng-click="newPollFromScratch($event, newPollTitle, newPollDescription)">
+              <material-button id="quickAddButton" class="material-button-colored" ng-show="newPoll && newPollTitle && quickAddForm.$dirty" ng-click="newPollFromScratch($event, newPollTitle, newPollDescription)">
                 SAVE
               </material-button>
             </form>

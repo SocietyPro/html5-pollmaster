@@ -8,7 +8,7 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives']) // array is required
+var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.timepicker','ui.date']) // array is required
 
 pollApp.config(function($routeProvider){
   
@@ -76,9 +76,8 @@ pollApp.factory("menu", ['$rootScope', function ($rootScope) {
   };
 }]);
 
-pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu, $window){
+pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu){
 
-    $scope.$window = $window;
     $scope.menu = menu;
     $scope.menu.selectFilter(menu.filters[0]);
 
@@ -286,6 +285,10 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
           $scope.close = function () {
             $hideDialog();
+          };
+
+          $scope.getTime = function () {
+            $scope.poll.endTime = $scope.endTime.toTimeString().substring(0,5);
           };
 
           $scope.addOption = function () {
