@@ -26,11 +26,24 @@ var Elements = function () {
 };
 
 var EditCardElements = function () {
+  this.materialDialog = element(by.css('material-dialog'));
   this.pollTitleInput = element(by.inputName('pollTitleInput'));
   this.pollDescriptionInput = element(by.model('poll.description'));
   this.addOptionButton = element(by.id('addOptionButton'));
   this.removeOptionsButton = element(by.id('removeOptionsButton'));
   this.options = element.all(by.repeater('opt in poll.options'));
+  this.closeButton = element(by.id('closeButton'));
+  this.nextButton = element(by.id('nextButton'));
+  this.menuDrawerButton = element(by.css('.menuDrawerButton'));
+  this.ballotPreviewButton = element(by.css('.ballotPreviewButton'));
+  this.optionsMenu = element(by.id('optionsMenu'));
+  this.multipleSelectionsCheckbox = element(by.model('poll.allowMultipleChoices'));
+  this.commentsCheckbox = element(by.model('poll.allowComments'));
+  this.resultsOnBallotsCheckbox = element(by.model('poll.showResults'));
+  this.saveAsTemplateCheckbox = element(by.model('isTemplate'));
+  this.saveAsPollCheckbox = element(by.model('isPoll'));
+  this.pollEndsOptions = element(by.css('.dialog-options-poll-ends'));
+  this.ballotPreview = element(by.id('ballotPreview'));
 };  
 
 var elements;
@@ -50,6 +63,7 @@ describe("material polls listing", function () {
     })
   });
 
+  /*
   it("has a quick add poll form", function () {
     expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
     expect(elements.quickAddBox.isDisplayed()).toBeTruthy();
@@ -294,6 +308,7 @@ describe("material polls listing", function () {
     });
 
   });
+  */
 
   describe("poll editing card", function () {
     
@@ -334,6 +349,119 @@ describe("material polls listing", function () {
       firstOptionInput = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.text'));
       expect(editCardElements.options.count()).toEqual(1);
       expect(firstOptionInput.getAttribute('value')).toEqual("Option to save");
+    });
+
+    it("has a close dialog button", function () {
+      expect(editCardElements.materialDialog.isDisplayed()).toBeTruthy();
+      expect(editCardElements.closeButton.isDisplayed()).toBeTruthy();
+      editCardElements.closeButton.click();
+      expect(browser.isElementPresent(by.css('material-dialog'))).toBeFalsy();
+    });
+
+    it("has a next button", function () {
+      expect(browser.isElementPresent(by.model('poll.target'))).toBeFalsy();
+      expect(editCardElements.nextButton.isDisplayed()).toBeTruthy();
+      editCardElements.nextButton.click();
+      browser.sleep(500);
+      expect(browser.isElementPresent(by.model('poll.target'))).toBeTruthy();
+    });
+
+    describe("advanced options menu", function () {
+
+      it("is closed by default and opened and closed by the menuDrawerButton", function () {
+        expect(editCardElements.optionsMenu.isDisplayed()).toBeFalsy();
+        expect(editCardElements.menuDrawerButton.isDisplayed()).toBeTruthy();
+        editCardElements.menuDrawerButton.click();
+        browser.sleep(500);
+        expect(editCardElements.optionsMenu.isDisplayed()).toBeTruthy();
+        editCardElements.menuDrawerButton.click();
+        browser.sleep(500);
+        expect(editCardElements.optionsMenu.isDisplayed()).toBeFalsy();
+      });
+
+      describe("ballot options section", function () {
+
+        beforeEach(function () {        
+          editCardElements.menuDrawerButton.click();
+          browser.sleep(500);
+        });
+
+        it("has a checkbox and label for multiple selections", function () {
+          expect(editCardElements.multipleSelectionsCheckbox.isDisplayed()).toBeTruthy();
+          expect(editCardElements.multipleSelectionsCheckbox.getText()).toEqual('Multiple selections');
+          expect(editCardElements.multipleSelectionsCheckbox.getAttribute('aria-checked')).toEqual('false');
+          editCardElements.multipleSelectionsCheckbox.click();
+          expect(editCardElements.multipleSelectionsCheckbox.getAttribute('aria-checked')).toEqual('true');
+        });
+
+        it("has a checkbox and label for allowing commments", function () {
+          expect(editCardElements.commentsCheckbox.isDisplayed()).toBeTruthy();
+          expect(editCardElements.commentsCheckbox.getText()).toEqual('Comments');
+          expect(editCardElements.commentsCheckbox.getAttribute('aria-checked')).toEqual('false');
+          editCardElements.commentsCheckbox.click();
+          expect(editCardElements.commentsCheckbox.getAttribute('aria-checked')).toEqual('true');
+        });
+
+        it("has a checkbox and label for showing results on ballots", function () {
+          expect(editCardElements.resultsOnBallotsCheckbox.isDisplayed()).toBeTruthy();
+          expect(editCardElements.resultsOnBallotsCheckbox.getText()).toEqual('Show results on ballots');
+          expect(editCardElements.resultsOnBallotsCheckbox.getAttribute('aria-checked')).toEqual('false');
+          editCardElements.resultsOnBallotsCheckbox.click();
+          expect(editCardElements.resultsOnBallotsCheckbox.getAttribute('aria-checked')).toEqual('false');
+        });
+
+      });
+
+      describe("save options section", function () {
+
+        beforeEach(function () {        
+          editCardElements.menuDrawerButton.click();
+          browser.sleep(500);
+        });
+
+        it("has a checkbox and label for saving as a template", function () {
+          expect(editCardElements.saveAsTemplateCheckbox.isDisplayed()).toBeTruthy();
+          expect(editCardElements.saveAsTemplateCheckbox.getText()).toEqual('Save as Template');
+          expect(editCardElements.saveAsTemplateCheckbox.getAttribute('aria-checked')).toEqual('false');
+          editCardElements.saveAsTemplateCheckbox.click();
+          expect(editCardElements.saveAsTemplateCheckbox.getAttribute('aria-checked')).toEqual('true');
+        });
+
+        it("has a checkbox and label for saving as a poll", function () {
+          expect(editCardElements.saveAsPollCheckbox.isDisplayed()).toBeTruthy();
+          expect(editCardElements.saveAsPollCheckbox.getText()).toEqual('Save as Poll');
+          expect(editCardElements.saveAsPollCheckbox.getAttribute('aria-checked')).toEqual('true');
+          editCardElements.saveAsPollCheckbox.click();
+          expect(editCardElements.saveAsPollCheckbox.getAttribute('aria-checked')).toEqual('false');
+        });
+
+      });
+
+      describe("poll ends section", function () {
+
+        beforeEach(function () {        
+          editCardElements.menuDrawerButton.click();
+          browser.sleep(500);
+        });
+
+        it("has date and time inputs", function () {
+          expect(editCardElements.pollEndsOptions.isDisplayed()).toBeTruthy();
+        });
+
+      });
+      
+    });
+
+    describe("ballot preview", function () {
+
+      it("is closed by default and opened and closed with the ballot preview button", function () {
+        expect(editCardElements.ballotPreviewButton.isDisplayed()).toBeTruthy();
+        expect(editCardElements.ballotPreview.isDisplayed()).toBeFalsy();
+        editCardElements.ballotPreviewButton.click();
+        browser.sleep(500);
+        expect(editCardElements.ballotPreview.isDisplayed()).toBeTruthy();
+      });
+
     });
 
   });
