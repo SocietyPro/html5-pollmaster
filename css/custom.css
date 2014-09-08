@@ -538,7 +538,11 @@ div .cardMenuBar {
 }
 
 /* Card Zoom */
-.dialog-content {
+material-dialog {
+  width: 971px;
+}
+
+.material-dialog-container material-dialog .dialog-content {
   width: 671px;
   padding: 16px 24px 0px 24px;
   overflow: hidden;
@@ -564,7 +568,6 @@ material-checkbox {
 
 .dialog-menubar-actions {
   display: inline;
-  margin-left: 24px;
   float: left;
 }
 
@@ -667,4 +670,7 @@ material-checkbox {
 
 .small {
   font-size: 1em;
+}
+
+#ballotPreview {
 }
