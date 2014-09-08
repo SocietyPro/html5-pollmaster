@@ -609,38 +609,61 @@ material-checkbox {
   width: 34%;
 }
 
-.input-group {
-
-}
-
-/*.timepicker {
-  max-width: 100%;
-  background-color: transparent;
-  border-collapse: collapse;
-  border-spacing: 0;
-  font-size: 14px;
-}
-
-.timepicker tbody tr{
-  text-align: center;
-}
-
-.timepicker tbody tr td {
-  padding: 0;
-}
-
-.timepicker tbody tr td a {
-  border-color: transparent;
-  background-color: transparent;
+.custom-dropdown {
+  position: relative;
   display: inline-block;
-  border:1px solid transparent;
-  padding:6px 12px;
+  vertical-align: middle;
+  margin: 10px;
 }
 
-.timepicker tbody tr td a span {
-  position:relative;
-  top:1px;
-  font-family:'Glyphicons Halflings';
+.custom-dropdown select {
+  background-color: transparent;
+  color: #444;
+  font-size: inherit;
+  padding-right: 2.5em; 
+  border: none;
+  margin: 0;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  -webkit-appearance: button;
+  border-bottom: 2px solid #B1AFAF;  
+}
+.custom-dropdown::before,
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  padding-bottom: none;
+}
+
+.custom-dropdown::after {
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
   line-height: 1;
-  content: "\e113";
-}*/
+  right: 1.2em;
+  top: 50%;
+  margin-top: -.5em;
+}
+
+.custom-dropdown::before {
+  width: 2em;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+  border-bottom: 2px solid #B1AFAF;
+}
+
+.custom-dropdown::before {
+  background-color: transparent;
+}
+
+.custom-dropdown::after {
+  color: rgba(0,0,0,.4);
+}
+
+.small {
+  font-size: 1em;
+}

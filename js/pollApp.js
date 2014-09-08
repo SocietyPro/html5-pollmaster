@@ -326,8 +326,6 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
                 $scope.isPoll = isPoll;
                 $scope.isTemplate = isTemplate;
 
-                var myGroups = 
-
                 $scope.close = function () {
                   $hideDialog();
                 };
