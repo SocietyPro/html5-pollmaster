@@ -538,8 +538,7 @@ div .cardMenuBar {
 }
 
 /* Card Zoom */
-.dialog-content {
-  width: 671px;
+.dialog-content { 
   padding: 16px 24px 0px 24px;
   overflow: hidden;
 }

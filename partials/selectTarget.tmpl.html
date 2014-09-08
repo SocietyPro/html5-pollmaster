@@ -1,14 +1,21 @@
 <material-dialog>
   <div ng-show="poll.status === 'unstarted' || poll.status === 'unsaved'">
-    <div class="dialog-content">
-      <h2>Poll target selection {{poll.target.name}}</h2>
+    <div class="dialog-content" style="width:600px;">
+      <h2>Poll target selection</h2>
       <div layout="vertical">
         <div style="padding-left:13px;">Group</div>
+        <!--<div>
+          <div class="custom-dropdown small">
+              <select ng-options="group.name for group in myGroups" ng-model="poll.target">
+                  <option value="">-- Select a Group --</option>
+              </select>
+          </div>
+        </div>-->
         <div>
           <div class="custom-dropdown small">
               <select ng-model="poll.target">
                   <option value="">-- Select a Group --</option>
-                  <option ng-repeat="group in myGroups" value="group" ng-class="{selected:poll.target.name=group.name">{{group.name}}</option>
+                  <option ng-repeat="group in myGroups" value="{{group.id}}" ng-selected="group.id==poll.target">{{group.name}}</option>
               </select>
           </div>
         </div>

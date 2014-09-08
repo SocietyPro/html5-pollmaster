@@ -8,7 +8,7 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date']) // array is required
+var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker']) // array is required
 
 pollApp.config(function($routeProvider){
   
@@ -321,6 +321,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
           $scope.poll = poll;
           $scope.isPoll = isPoll;
           $scope.isTemplate = isTemplate;
+          $scope.ballotPreview = false;
 
           $scope.close = function () {
             $hideDialog();
@@ -364,6 +365,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
                 $scope.myGroups = japi.me.groups;
                 $scope.isPoll = isPoll;
                 $scope.isTemplate = isTemplate;
+                console.log($scope.ballotPreview);
 
                 $scope.close = function () {
                   $hideDialog();
