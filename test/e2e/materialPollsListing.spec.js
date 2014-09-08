@@ -1,0 +1,342 @@
+var Elements = function () {
+  this.quickAddBox = element(by.id('quickAddBox'));
+  this.quickAddTitle = element(by.id('quickAddTitle'));
+  this.quickAddDescription = element(by.id('quickAddDescription'));
+  this.quickAddButton = element(by.id('quickAddButton'));
+  this.fab = element(by.css('.material-button-fab'));
+  this.sidenav = element(by.css('material-sidenav'));
+  this.menuDrawerButton = element(by.id('menu-drawer-button'));
+  this.allFilterButton = element.all(by.css('.menu-sub-item')).get(0);
+  this.votesFilterButton = element.all(by.css('.menu-sub-item')).get(1);
+  this.runningFilterButton = element.all(by.css('.menu-sub-item')).get(2);
+  this.unstartedFilterButton = element.all(by.css('.menu-sub-item')).get(3);
+  this.completedFilterButton = element.all(by.css('.menu-sub-item')).get(4);
+  this.viewButtons = element(by.id('viewButtons'));
+  this.streamButton = element(by.id('streamButton'));
+  this.quiltButton = element(by.id('quiltButton'));
+  this.pollCards = element.all(by.css('.cardholder'));
+  this.materialPollCards = element.all(by.css('.mainCard'));
+  this.firstCard = element.all(by.css('.mainCard')).get(0);
+  this.firstCardTitle = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine'));
+  this.firstCardMenuBar = this.firstCard.findElement(by.css('.cardMenuBar'));
+  this.firstCardOverflowMenuButton = this.firstCardMenuBar.findElement(by.css('.overflowMenuButton'));
+  this.firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
+  this.firstCardDeleteAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.destroyAction'));
+  this.firstCardCopyAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.copyAction'));
+};
+
+var EditCardElements = function () {
+  this.pollTitleInput = element(by.inputName('pollTitleInput'));
+  this.pollDescriptionInput = element(by.model('poll.description'));
+  this.addOptionButton = element(by.id('addOptionButton'));
+  this.removeOptionsButton = element(by.id('removeOptionsButton'));
+  this.options = element.all(by.repeater('opt in poll.options'));
+};  
+
+var elements;
+
+describe("material polls listing", function () {
+
+  beforeEach(function () {
+    browser.get("index.html");
+    elements = new Elements();
+  });
+
+  by.addLocator('inputName', function (name) {
+    var using = document,
+        inputs = using.querySelectorAll('input');
+    return Array.prototype.filter.call(inputs, function (input) {
+      return input.name === name;
+    })
+  });
+
+  it("has a quick add poll form", function () {
+    expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
+    expect(elements.quickAddBox.isDisplayed()).toBeTruthy();
+    expect(elements.quickAddTitle.isDisplayed()).toBeTruthy();
+    expect(elements.quickAddDescription.isDisplayed()).toBeFalsy();
+    expect(elements.quickAddButton.isDisplayed()).toBeFalsy();
+    elements.quickAddTitle.click();
+    expect(elements.quickAddDescription.isDisplayed()).toBeTruthy();
+    elements.quickAddTitle.sendKeys('New Poll Title');
+    expect(elements.quickAddTitle.getCssValue('font-weight')).toEqual('bold');
+    expect(elements.quickAddButton.isDisplayed()).toBeTruthy();
+    elements.quickAddDescription.sendKeys('New Poll Description');
+    elements.quickAddButton.click();
+    expect(browser.isElementPresent(by.model('poll.title'))).toBeTruthy();
+    var newPollTitleInput = element(by.model('poll.title'));
+    var newPollDescriptionInput = element(by.model('poll.description'));
+    expect(newPollTitleInput.getAttribute('value')).toEqual('New Poll Title');
+    expect(newPollTitleInput.getCssValue('font-weight')).toEqual('bold');
+    expect(newPollDescriptionInput.getAttribute('value')).toEqual('New Poll Description');
+    expect(elements.quickAddTitle.isDisplayed()).toBeTruthy();
+    expect(elements.quickAddTitle.getAttribute('value')).toEqual('');
+    expect(elements.quickAddDescription.isDisplayed()).toBeFalsy();
+    expect(elements.quickAddButton.isDisplayed()).toBeFalsy();
+  });
+
+  it("has an add poll fab", function () {
+    expect(elements.fab.isDisplayed()).toBeTruthy();
+    expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
+    elements.fab.click();
+    expect(browser.isElementPresent(by.model('poll.title'))).toBeTruthy();
+  });
+
+  describe("sidenav menu", function () {
+
+    it("is closed by default", function () {
+      expect(elements.sidenav.isDisplayed()).toBeTruthy();
+      expect(elements.sidenav.getAttribute('class')).toEqual('material-sidenav-left material-whiteframe-z2 ng-isolate-scope');
+    });
+
+    it("can be opened with the menu drawer button", function () {
+      expect(elements.menuDrawerButton.isDisplayed()).toBeTruthy();
+      elements.menuDrawerButton.click();
+      expect(elements.sidenav.getAttribute('class')).toEqual('material-sidenav-left material-whiteframe-z2 ng-isolate-scope open');
+    });
+
+    it("has buttons for poll filters", function () {
+      expect(elements.allFilterButton.getText()).toEqual('All');
+      expect(elements.votesFilterButton.getText()).toEqual('Votes');
+      expect(elements.runningFilterButton.getText()).toEqual('Running');
+      expect(elements.unstartedFilterButton.getText()).toEqual('Unstarted');
+      expect(elements.completedFilterButton.getText()).toEqual('Completed');
+    });
+
+    it("filters the polls list when the poll filter buttons are clicked", function () {
+      elements.menuDrawerButton.click();
+      expect(elements.pollCards.count()).toEqual(5);
+      elements.runningFilterButton.click();
+      expect(elements.pollCards.count()).toEqual(2);
+      elements.unstartedFilterButton.click();
+      expect(elements.pollCards.count()).toEqual(2);
+      elements.completedFilterButton.click();
+      expect(elements.pollCards.count()).toEqual(1);
+    });
+
+  });
+
+  describe("top toolbar", function () {
+
+    it("has list view buttons", function() {
+      expect(elements.viewButtons.isDisplayed()).toBeTruthy();
+      expect(elements.streamButton.getAttribute('class')).toEqual('viewButton material-button-icon inactive');
+      expect(elements.quiltButton.getAttribute('class')).toEqual('viewButton material-button-icon active');
+      elements.streamButton.click();
+      expect(elements.streamButton.getAttribute('class')).toEqual('viewButton material-button-icon active');
+      expect(elements.quiltButton.getAttribute('class')).toEqual('viewButton material-button-icon inactive');
+    });
+
+  });
+
+  describe("default card", function () {
+
+    it("shows the action bar on hover", function () {
+      expect(elements.firstCardMenuBar.isDisplayed()).toBeFalsy();
+      browser.actions().
+        mouseMove(elements.firstCard).
+        perform();
+      expect(elements.firstCardMenuBar.isDisplayed()).toBeTruthy();
+      browser.actions().
+        mouseMove(elements.streamButton.find()).
+        perform();
+      expect(elements.firstCardMenuBar.isDisplayed()).toBeFalsy();
+    });
+
+    describe('overflow menu', function () {
+
+      it("is displayed when the overflow menu button is clicked", function () {
+        expect(elements.firstCardOverflowMenu.isDisplayed()).toBeFalsy();
+        browser.actions().
+          mouseMove(elements.firstCard).
+          perform();
+        elements.firstCardOverflowMenuButton.click();
+        expect(elements.firstCardOverflowMenu.isDisplayed()).toBeTruthy();
+        browser.actions().
+          mouseMove(elements.streamButton.find()).
+          perform();
+        expect(elements.firstCardOverflowMenu.isDisplayed()).toBeFalsy();
+      });
+
+      it("has a delete card action with confirmation dialog", function () {
+        browser.actions().
+          mouseMove(elements.firstCard).
+          perform();
+        elements.firstCardOverflowMenuButton.click();
+        expect(elements.firstCardDeleteAction.isDisplayed()).toBeTruthy();
+        expect(elements.firstCardDeleteAction.getText()).toEqual("Delete");
+        expect(elements.pollCards.count()).toEqual(5);
+        elements.firstCardDeleteAction.click();
+        var confirmationDialog = browser.switchTo().alert();
+        confirmationDialog.accept();
+        expect(elements.pollCards.count()).toEqual(4);
+      });
+
+      it("has a copy card action", function () {
+        var title = elements.firstCardTitle.getText();
+        expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
+        browser.actions().
+          mouseMove(elements.firstCard).
+          perform();
+        elements.firstCardOverflowMenuButton.click();
+        expect(elements.firstCardCopyAction.isDisplayed()).toBeTruthy();
+        expect(elements.firstCardCopyAction.getText()).toEqual("Make a Copy");
+        elements.firstCardCopyAction.click();
+        var dialogTitleInput = element(by.inputName('pollTitleInput'));
+        expect(dialogTitleInput.isDisplayed()).toBeTruthy();
+        expect(dialogTitleInput.getAttribute('value')).toEqual(title);
+      });
+
+    });
+
+  });
+
+  describe("card", function () {
+
+    describe("for a running poll", function () {
+
+      var firstRunningCard;
+
+      beforeEach(function () {
+        elements.menuDrawerButton.click();
+        browser.sleep(500);
+        elements.runningFilterButton.click();
+        firstRunningCard = element.all(by.css('material-card')).get(0);
+      });
+      
+
+      it("is green, displays the poll title, displays options and current counts, and displays a results pie chart", function () {
+        expect(firstRunningCard.getCssValue('background-color')).toEqual('rgba(146, 228, 201, 1)');
+        var pollTitle = firstRunningCard.findElement(by.css('.pollTitleLine'));
+        var optionCounts = firstRunningCard.findElement(by.css('.optionCounts'));
+        expect(optionCounts.isDisplayed()).toBeTruthy();
+        expect(pollTitle.isDisplayed()).toBeTruthy();
+        var pieChart = firstRunningCard.findElement(by.css('.pieChartContainer'));
+        expect(pieChart.isDisplayed()).toBeTruthy();
+      });
+
+      it("zooms to a zoomed poll card when clicked", function () {
+        var pollTitle = firstRunningCard.findElement(by.binding('{{poll.title}}')).getText();
+        element(by.css('material-backdrop')).click();
+        browser.sleep(500);
+        firstRunningCard.click();
+        var zoomedPollInformation = element(by.css('.pollInformation'));
+        expect(zoomedPollInformation.isDisplayed()).toBeTruthy();
+        var zoomedTitle = zoomedPollInformation.findElement(by.binding('{{poll.title}}'));
+        expect(zoomedTitle.getText()).toEqual(pollTitle);
+      });
+
+    });
+
+    describe("for an unstarted poll", function () {
+
+      var firstUnstartedCard;
+
+      beforeEach(function () {
+        elements.menuDrawerButton.click();
+        browser.sleep(500);
+        elements.unstartedFilterButton.click();
+        firstUnstartedCard = element.all(by.css('material-card')).get(0);
+      });
+      
+      it("is white, displays the poll title, and displays the poll options", function () {
+        expect(firstUnstartedCard.getCssValue('background-color')).toEqual('rgba(0, 0, 0, 0)');
+        var pollTitle = firstUnstartedCard.findElement(by.css('.pollTitleLine'));
+        expect(pollTitle.isDisplayed()).toBeTruthy();
+        var optionPreview = firstUnstartedCard.findElement(by.css('.optionPreview'));
+        expect(optionPreview.isDisplayed()).toBeTruthy();
+      });
+
+      it("zooms to a edit poll card when clicked", function () {
+        var pollTitle = firstUnstartedCard.findElement(by.binding('{{poll.title}}')).getText();
+        element(by.css('material-backdrop')).click();
+        browser.sleep(500);
+        firstUnstartedCard.click();
+        var dialogTitleInput = element(by.inputName('pollTitleInput'));
+        expect(dialogTitleInput.isDisplayed()).toBeTruthy();
+        expect(dialogTitleInput.getAttribute('value')).toEqual(pollTitle);
+      });
+
+    });
+
+    describe("for a completed poll", function () {
+      
+      var firstCompletedCard;
+      
+      beforeEach(function () {
+        elements.menuDrawerButton.click();
+        browser.sleep(500);
+        elements.completedFilterButton.click();
+        firstCompletedCard = element.all(by.css('material-card')).get(0);
+      });
+
+      it("is blue, displays the poll title, displays options and final counts, and displays a results pie chart", function () {
+        expect(firstCompletedCard.getCssValue('background-color')).toEqual('rgba(201, 209, 255, 1)');
+        var pollTitle = firstCompletedCard.findElement(by.css('.pollTitleLine'));
+        expect(pollTitle.isDisplayed()).toBeTruthy();
+        var optionCounts = firstCompletedCard.findElement(by.css('.optionCounts'));
+        expect(optionCounts.isDisplayed()).toBeTruthy();
+        var pieChart = firstCompletedCard.findElement(by.css('.pieChartContainer'));
+        expect(pieChart.isDisplayed()).toBeTruthy();
+      });
+
+      it("zooms to a zoomed poll card when clicked", function () {
+        var pollTitle = firstCompletedCard.findElement(by.binding('{{poll.title}}')).getText();
+        element(by.css('material-backdrop')).click();
+        browser.sleep(500);
+        firstCompletedCard.click();
+        var zoomedPollInformation = element(by.css('.pollInformation'));
+        expect(zoomedPollInformation.isDisplayed()).toBeTruthy();
+        var zoomedTitle = zoomedPollInformation.findElement(by.binding('{{poll.title}}'));
+        expect(zoomedTitle.getText()).toEqual(pollTitle);
+      });
+
+    });
+
+  });
+
+  describe("poll editing card", function () {
+    
+    var editCardElements;
+
+    beforeEach(function () {
+      elements.fab.click();
+      browser.sleep(500);
+      editCardElements = new EditCardElements();
+    });
+
+    it("has inputs for poll title and poll description", function () {
+      expect(editCardElements.pollTitleInput.isDisplayed()).toBeTruthy();
+      expect(editCardElements.pollDescriptionInput.isDisplayed()).toBeTruthy();
+    });
+
+    it("has a button to add options", function () {
+      expect(editCardElements.options.count()).toEqual(0);
+      editCardElements.addOptionButton.click();
+      expect(editCardElements.options.count()).toEqual(1);
+    });
+
+    it("has a button to remove options", function () {
+      editCardElements.addOptionButton.click();
+      editCardElements.addOptionButton.click();
+
+      var firstOptionInput = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.text'));
+      var firstOptionCheckbox = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.remove'));
+      var secondOptionInput = element.all(by.css('.optionsLine')).get(1).findElement(by.model('opt.text'));
+      var secondOptionCheckbox = element.all(by.css('.optionsLine')).get(1).findElement(by.model('opt.remove'));
+
+      firstOptionInput.sendKeys("Option to remove");
+      secondOptionInput.sendKeys("Option to save");
+      expect(editCardElements.options.count()).toEqual(2);
+      expect(firstOptionInput.getAttribute('value')).toEqual("Option to remove");
+      firstOptionCheckbox.click();
+      editCardElements.removeOptionsButton.click();
+      firstOptionInput = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.text'));
+      expect(editCardElements.options.count()).toEqual(1);
+      expect(firstOptionInput.getAttribute('value')).toEqual("Option to save");
+    });
+
+  });
+
+});
+

@@ -1,0 +1,22 @@
+<material-dialog>
+  <div ng-show="poll.status === 'started' || poll.status === 'complete'">
+    <div class="dialog-content">
+      <div class="pollInformation">
+        <h2>{{poll.title}}</h2>
+        <p>
+          {{poll.description}}
+        </p>
+        <div ng-repeat="option in poll.options">
+          {{option.count}} {{option.text}}
+        </div>
+     
+        <p>Other Poll Information Goes Here</p>
+      </div>
+    </div>
+    <div class="dialog-actions" layout="horizontal" layout-align="end">
+      <material-button ng-click="close()">
+        Close
+      </material-button>
+    </div>
+  </div>
+</material-dialog>

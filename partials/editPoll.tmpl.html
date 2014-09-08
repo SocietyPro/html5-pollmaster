@@ -8,9 +8,9 @@
         <material-input-group>
           <textarea name="pollDescriptionInput" ng-model="poll.description" flex placeholder="Poll Description (click to edit)"></textarea>
         </material-input-group>
-        <div class="optionsLine" ng-repeat="option in poll.options" layout="horizontal">
-          <material-checkbox ng-model="option.remove"></material-checkbox>
-          <material-input type="text" class="optionsInput" ng-model="option.text" flex placeholder="New Poll Option (click to edit)"></material-input>
+        <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal">
+          <material-checkbox ng-model="opt.remove"></material-checkbox>
+          <material-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"></material-input>
         </div>
         
         <hr>
@@ -24,7 +24,7 @@
         <div class="clearBoth"></div>
         <hr>
         
-      </div>
+      </div> 
       <div class="dialog-menubar-actions" layout="horizontal" layout-align="start">
         <material-button ng-click="optionsMenu = !optionsMenu" class="material-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}">
           <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">

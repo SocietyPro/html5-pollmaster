@@ -15,7 +15,6 @@
     <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
     <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
     <script type="text/javascript" src="bower_components/jquery-timepicker-jt/jquery.timepicker.js"></script>
-    <script type="text/javascript" src="js/timepicker.min.js"></script>
     <script type="text/javascript" src="bower_components/angular-ui-date/src/date.js"></script>
     <script src="js/pollApp.js" type="text/javascript"></script>
     <script src="js/targetSelectionCtrl.js" type="text/javascript"></script>
@@ -50,16 +49,16 @@
         <material-toolbar scroll-shrink class="material-theme-yellow">
           <div layout="horizontal">
             <div class="material-toolbar-tools">
-              <div class="menu-icon" ng-click="toggleMenu()">
+              <div id="menu-drawer-button" class="menu-icon" ng-click="toggleMenu()">
                 <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_48dp.png">
               </div>
               <h2>Ballot</h2>
             </div>
             <div id="viewButtons" layout="horizontal">
-              <material-button class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}">
+              <material-button id="streamButton" class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_48dp.png"></material-icon>
               </material-button>
-              <material-button class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}">
+              <material-button id="quiltButton" class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_48dp.png"></material-icon>
               </material-button>
             </div>

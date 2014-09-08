@@ -8,7 +8,7 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.timepicker','ui.date']) // array is required
+var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date']) // array is required
 
 pollApp.config(function($routeProvider){
   
@@ -74,6 +74,20 @@ pollApp.factory("menu", ['$rootScope', function ($rootScope) {
       return self.currentFilter === filter;
     }
   };
+}]);
+
+pollApp.directive('ngReallyClick', [function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind('click', function() {
+                var message = attrs.ngReallyMessage;
+                if (message && confirm(message)) {
+                    scope.$apply(attrs.ngReallyClick);
+                }
+            });
+        }
+    }
 }]);
 
 pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu){
@@ -181,6 +195,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     };
 
     $scope.copyPoll = function(e, oldPoll){
+      oldPoll.overflow = false;
       var newPoll = japi.polls.build(oldPoll);
       $scope.isPoll = true;
       $scope.isTemplate = false;
@@ -198,6 +213,29 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       oldPoll.start();
     };
 
+    $scope.zoomPoll = function (e, poll) {
+      if (poll.status === "unstarted") {
+        $scope.editPoll(e, poll);
+      } else {
+        showPoll(e, poll);
+      }
+    };
+
+    function showPoll (e, poll) {
+      $materialDialog({
+        templateUrl: 'partials/showPoll.tmpl.html',
+        targetEvent: e,
+        controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+          $scope.poll = poll;
+
+          $scope.close = function () {
+            $hideDialog();
+          };
+
+        }]
+      });
+    };
+
     $scope.newPollFromScratch = function(e, title, description) {
       var newPoll = japi.polls.build();
       newPoll.title = title;
@@ -207,6 +245,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       $scope.startCustomizing(e, newPoll);
       $scope.newPollTitle = "";
       $scope.newPollDescription = "";
+      $scope.newPoll = false;
       $scope.quickAddForm.$setPristine();
     };
 

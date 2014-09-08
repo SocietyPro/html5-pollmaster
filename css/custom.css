@@ -523,6 +523,7 @@ div .cardMenuBar {
 }
 
 .overflowMenu {
+  z-index: 2;
   position: absolute;
   margin-right: 10px;
   margin-top: -10px;
