@@ -335,7 +335,9 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
           $scope.keypressListener = function (event) {
             if (event.charCode == 13) {
-              $("#addOptionInput").focus();
+              $timeout(function () {
+                $("#addOptionInput").focus();
+              });
             }
           }
 
