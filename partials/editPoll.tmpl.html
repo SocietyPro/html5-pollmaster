@@ -43,7 +43,7 @@
         </material-button>
       </div>
 
-      <div id="optionsMenu" class="animate-show" ng-show="optionsMenu" layout="vertical" layout-align="start">
+      <div id="optionsMenu" class="animate-show" ng-if="optionsMenu" layout="vertical" layout-align="start">
         <div layout="horizontal" layout-align="start">
           <div flex="35">
             <div class="dialog-options-options">
@@ -75,7 +75,7 @@
 
     </div> <!-- end dialog-content -->
 
-    <material-card class="animate-show votes" id="ballotPreview" ng-show="ballotPreview">
+    <material-card class="animate-show votes" id="ballotPreview" ng-if="ballotPreview">
       <div class="pollOriginatorLine">
         <em>{{poll.id}}</em>
       </div>

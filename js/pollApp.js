@@ -322,6 +322,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
           $scope.isPoll = isPoll;
           $scope.isTemplate = isTemplate;
           $scope.ballotPreview = false;
+          $scope.optionsMenu = false;
 
           $scope.close = function () {
             $hideDialog();
@@ -365,7 +366,6 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
                 $scope.myGroups = japi.me.groups;
                 $scope.isPoll = isPoll;
                 $scope.isTemplate = isTemplate;
-                console.log($scope.ballotPreview);
 
                 $scope.close = function () {
                   $hideDialog();
