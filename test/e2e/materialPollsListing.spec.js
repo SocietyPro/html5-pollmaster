@@ -29,8 +29,7 @@ var EditCardElements = function () {
   this.materialDialog = element(by.css('material-dialog'));
   this.pollTitleInput = element(by.inputName('pollTitleInput'));
   this.pollDescriptionInput = element(by.model('poll.description'));
-  this.addOptionButton = element(by.id('addOptionButton'));
-  this.removeOptionsButton = element(by.id('removeOptionsButton'));
+  this.addOptionInput = element(by.id('addOptionInput'));
   this.options = element.all(by.repeater('opt in poll.options'));
   this.closeButton = element(by.id('closeButton'));
   this.nextButton = element(by.id('nextButton'));
@@ -325,28 +324,27 @@ describe("material polls listing", function () {
 
     it("has a button to add options", function () {
       expect(editCardElements.options.count()).toEqual(0);
-      editCardElements.addOptionButton.click();
+      editCardElements.addOptionInput.sendKeys('a');
       expect(editCardElements.options.count()).toEqual(1);
     });
 
     it("has a button to remove options", function () {
-      editCardElements.addOptionButton.click();
-      editCardElements.addOptionButton.click();
+      editCardElements.addOptionInput.sendKeys('a');
+      editCardElements.addOptionInput.sendKeys('b');
 
       var firstOptionInput = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.text'));
       var firstOptionCheckbox = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.remove'));
       var secondOptionInput = element.all(by.css('.optionsLine')).get(1).findElement(by.model('opt.text'));
       var secondOptionCheckbox = element.all(by.css('.optionsLine')).get(1).findElement(by.model('opt.remove'));
 
-      firstOptionInput.sendKeys("Option to remove");
-      secondOptionInput.sendKeys("Option to save");
+      firstOptionInput.sendKeys(" - Option to remove");
+      secondOptionInput.sendKeys(" - Option to save");
       expect(editCardElements.options.count()).toEqual(2);
-      expect(firstOptionInput.getAttribute('value')).toEqual("Option to remove");
-      firstOptionCheckbox.click();
-      editCardElements.removeOptionsButton.click();
+      expect(firstOptionInput.getAttribute('value')).toEqual("a - Option to remove");
+      firstOptionInput.clear();
       firstOptionInput = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.text'));
       expect(editCardElements.options.count()).toEqual(1);
-      expect(firstOptionInput.getAttribute('value')).toEqual("Option to save");
+      expect(firstOptionInput.getAttribute('value')).toEqual("b - Option to save");
     });
 
     it("has a close dialog button", function () {
@@ -367,14 +365,14 @@ describe("material polls listing", function () {
     describe("advanced options menu", function () {
 
       it("is closed by default and opened and closed by the menuDrawerButton", function () {
-        expect(editCardElements.optionsMenu.isDisplayed()).toBeFalsy();
+        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeFalsy();
         expect(editCardElements.menuDrawerButton.isDisplayed()).toBeTruthy();
         editCardElements.menuDrawerButton.click();
         browser.sleep(500);
-        expect(editCardElements.optionsMenu.isDisplayed()).toBeTruthy();
+        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeFalsy();
         editCardElements.menuDrawerButton.click();
         browser.sleep(500);
-        expect(editCardElements.optionsMenu.isDisplayed()).toBeFalsy();
+        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeFalsy();
       });
 
       describe("ballot options section", function () {
@@ -454,10 +452,10 @@ describe("material polls listing", function () {
 
       it("is closed by default and opened and closed with the ballot preview button", function () {
         expect(editCardElements.ballotPreviewButton.isDisplayed()).toBeTruthy();
-        expect(editCardElements.ballotPreview.isDisplayed()).toBeFalsy();
+        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeFalsy();
         editCardElements.ballotPreviewButton.click();
         browser.sleep(500);
-        expect(editCardElements.ballotPreview.isDisplayed()).toBeTruthy();
+        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeTruthy();
       });
 
     });
