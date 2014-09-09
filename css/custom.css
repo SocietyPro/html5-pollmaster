@@ -549,30 +549,42 @@ div .cardMenuBar {
   overflow: hidden;
 }
 
+.optionsLine.focused {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+
 .optionsInput {
   display: inline-block !important;
+}
+
+#addOptionInput {
+  line-height: 15px;
+  margin: 5px 0;
+}
+
+.newOptionWrapper {
+  margin: 16px 0;
+}
+
+.newOptionWrapper.focused {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
 }
 
 material-checkbox {
   margin: 1px;
 }
 
-#addOptionButton {
-  float: left;
-  cursor: pointer;
-}
-
-#removeOptionsButton {
-  float: right;
-  cursor: pointer;
+#addOptionInput {
+  background-image: url(../material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png);
+  background-repeat: no-repeat;
+  text-indent: 20px;
 }
 
 .dialog-menubar-actions {
   display: inline;
   float: left;
-}
-
-.dialog-actions {
 }
 
 .dialog-menubar-actions .material-button-icon {

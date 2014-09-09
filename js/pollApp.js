@@ -317,7 +317,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       $materialDialog({
         templateUrl: 'partials/editPoll.tmpl.html',
         targetEvent: e,
-        controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+        controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
           $scope.poll = poll;
           $scope.isPoll = isPoll;
           $scope.isTemplate = isTemplate;
@@ -333,13 +333,24 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
           };
 
           $scope.addOption = function () {
-            var newOption = { text: "", subgroup: "", count: 0 };
-            /*
-            if ($scope.temporaryPollOptions.defaultChatRoom) {
-              newOption.subgroup = $scope.temporaryPollOptions.defaultChatRoom;
-            }
-            */
+            var newOption = { text: $scope.newOptionText, subgroup: "", count: 0 };
             $scope.poll.options.push(newOption);
+            $scope.newOptionText = "";
+            var index = $scope.poll.options.length - 1;
+            $rootScope.$broadcast('focusedIndex', {focus: index});
+          };
+
+          $scope.checkForOptionDelete = function ($index) {
+            if($scope.poll.options[$index].text === '') {
+              $scope.poll.options.splice($index, 1);
+              var previousChild;
+              if ($index > 0) {
+                previousChild = $index - 1;
+              } else {
+                previousChild = 0;
+              }
+              $rootScope.$broadcast('focusedIndex', {focus: previousChild});
+            }
           };
 
           $scope.removeOptions = function () {
@@ -547,4 +558,18 @@ pollApp.directive('resultsChart', function () {
       });
     }
   }
+});
+
+pollApp.directive('focusThis', function () {
+  return {
+    link: function (scope, element, attrs) {
+      scope.$on('focusedIndex', function (event, args) {
+        if (args.focus == attrs['focusThis']) {
+          element.focus();
+        } else {
+          element.blur();
+        }
+      });
+    }
+  };
 });

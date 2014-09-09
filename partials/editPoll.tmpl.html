@@ -9,21 +9,15 @@
         <textarea name="pollDescriptionInput" ng-model="poll.description" flex placeholder="Poll Description (click to edit)"></textarea>
       </material-input-group>
 
-      <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal">
+      <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal"
+      ng-class="{focused: opt.hasFocus}">
         <material-checkbox ng-model="opt.remove"></material-checkbox>
-        <material-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"></material-input>
+        <material-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)" ng-change="checkForOptionDelete($index)" focus-this="{{$index}}" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false"></material-input>
       </div>
 
-      <hr>
-      <div id="addOptionButton" ng-click="addOption()">
-        <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png"> Add option
+      <div class="newOptionWrapper" ng-class="{focused: newOptionFocused}">
+        <material-input type="text" id="addOptionInput" ng-model="newOptionText" ng-change="addOption()" placeholder="Add option" ng-focus="newOptionFocused = true" ng-blur="newOptionFocused = false"></material-input>
       </div>
-      <div id="removeOptionsButton" ng-click="removeOptions()">
-        <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_remove_18dp.png"> 
-        Remove Selected Options
-      </div>
-      <div class="clearBoth"></div>
-      <hr>
 
       <div class="dialog-menubar-actions" layout="horizontal" layout-align="start">
         <material-button ng-click="optionsMenu = !optionsMenu" class="material-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}">
@@ -95,7 +89,8 @@
         <div class="options">
           <table>
             <tr ng-repeat="option in poll.options">  
-            <td><input type="checkbox" disabled></td>
+            <td ng-if="poll.allowMultipleChoices"><input type="checkbox" disabled></td>
+            <td ng-if="!poll.allowMultipleChoices"><input type="radio" disabled></td>
             <td>{{option.text}}</td>
             </tr>
           </table>
