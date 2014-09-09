@@ -329,6 +329,10 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             $scope.endTime.setMinutes(parseInt($scope.poll.endTime.substring(3,5)));
           }
 
+          $timeout(function () {
+            $("#addOptionInput").focus();
+          });
+
           $scope.keypressListener = function (event) {
             if (event.charCode == 13) {
               $("#addOptionInput").focus();
@@ -355,39 +359,32 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             });
           };
 
-          $scope.checkForOptionDelete = function ($index) {
-            if($scope.poll.options[$index].text === '') {
-              $scope.poll.options.splice($index, 1);
-              console.log($scope.poll.options);
-              var previousChild;
-              if ($index > 0) {
-                previousChild = $index - 1;
-              } else {
-                if ($scope.poll.options.length > 0) {
-                  previousChild = 0;
+          $scope.checkForOptionDelete = function ($event,$index) {
+            if($scope.poll.options[$index].text === '' && $event.keyCode === 8) {
+              if ($scope.poll.options[$index].empty != undefined && $scope.poll.options[$index].empty) {
+                $scope.poll.options.splice($index, 1);
+                var previousChild;
+                if ($index > 0) {
+                  previousChild = $index - 1;
                 } else {
-                  $scope.keypressListener({"charCode":13});
-                  return;
+                  if ($scope.poll.options.length > 0) {
+                    previousChild = 0;
+                  } else {
+                    $scope.keypressListener({"charCode":13});
+                    return;
+                  }
                 }
+                $timeout(function () {
+                  $rootScope.$broadcast('focusedIndex', {focus: previousChild});
+                });
+              } else {
+                $scope.poll.options[$index].empty = true;
               }
-              $timeout(function () {
-                $rootScope.$broadcast('focusedIndex', {focus: previousChild});
-              });
             }
           };
 
-          $scope.removeOptions = function () {
-            var index = -1;
-            for (var i = 0; i < $scope.poll.options.length; i++) {
-              if ($scope.poll.options[i].remove) {
-                index = i;
-                break
-              }
-            }
-            if (index > -1) {
-              $scope.poll.options.splice(index, 1);
-              $scope.removeOptions();
-            }
+          $scope.removeOption = function ($index) {
+            $scope.poll.options.splice($index, 1);
           };
 
           $scope.nextDialog = function (e, poll, isPoll, isTemplate) {
