@@ -673,9 +673,12 @@ material-checkbox {
 }
 
 #ballotPreview {
+  box-sizing: border-box;
+  min-width: 300px;
+  max-width: 300px;
   z-index: -1;
   position: absolute;
-  right: -355px;
+  right: -310px;
   top: 0;
   padding: 16px 24px;
 }

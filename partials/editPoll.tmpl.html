@@ -29,7 +29,7 @@
         <material-button ng-click="optionsMenu = !optionsMenu" class="material-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}">
           <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
         </material-button>
-        <material-button class="ballotPreviewButton" ng-click="ballotPreview = !ballotPreview" class="material-button-icon menuDrawerButton" ng-class="{active: ballotPreview === true}">
+        <material-button ng-click="ballotPreview = !ballotPreview" class="material-button-icon menuDrawerButton ballotPreviewButton" ng-class="{active: ballotPreview === true}">
           <img ng-src="assets/images/eye_inv_24px.png">
         </material-button>
       </div>
@@ -70,22 +70,30 @@
             <material-checkbox ng-model="isPoll" aria-label="Save as Poll">Save as Poll</material-checkbox>
           </div>
         </div>
+        <div class="clearBoth"></div>
       </div>
-      <div class="clearBoth"></div>
 
     </div> <!-- end dialog-content -->
 
-    <material-card class="animate-show" id="ballotPreview" ng-show="ballotPreview" class="animate-show">
+    <material-card class="animate-show votes" id="ballotPreview" ng-show="ballotPreview">
       <div class="pollOriginatorLine">
         <em>{{poll.id}}</em>
       </div>
       <div class="pollTitleLine">
         <b>{{poll.title}}</b>
       </div>
+      <div>
+        {{poll.description}}
+      </div>
+      <p ng-if="!poll.allowMultipleChoices">
+        Select one:
+      </p>
+      <p ng-if="poll.allowMultipleChoices">
+        Select one or more:
+      </p>
       <div class="optionPreview">
         <div class="options">
           <table>
-            <tr><td>VOTE</td></tr>
             <tr ng-repeat="option in poll.options">  
             <td><input type="checkbox" disabled></td>
             <td>{{option.text}}</td>
@@ -93,6 +101,13 @@
           </table>
         </div>
         <div class="clearBoth"></div>
+      </div>
+      <p ng-if="poll.allowComments">
+        <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png"> Add comment
+      </p>
+      <div>
+        <material-button>None of the Above</material-button>
+        <material-button class="material-button-colored">Send this Vote</material-button>
       </div>
     </material-card>
     
