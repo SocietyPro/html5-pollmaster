@@ -61,7 +61,7 @@ describe("material polls listing", function () {
       return input.name === name;
     })
   });
-
+  
   it("has a quick add poll form", function () {
     expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
     expect(elements.quickAddBox.isDisplayed()).toBeTruthy();
@@ -306,7 +306,7 @@ describe("material polls listing", function () {
     });
 
   });
-
+  
   describe("poll editing card", function () {
     
     var editCardElements;
@@ -342,6 +342,11 @@ describe("material polls listing", function () {
       expect(editCardElements.options.count()).toEqual(2);
       expect(firstOptionInput.getAttribute('value')).toEqual("a - Option to remove");
       firstOptionInput.clear();
+      expect(editCardElements.options.count()).toEqual(2);
+      expect(firstOptionInput.getAttribute('value')).toEqual("");
+      firstOptionInput.sendKeys(protractor.Key.BACK_SPACE);
+      firstOptionInput.sendKeys(protractor.Key.BACK_SPACE);
+      browser.sleep(500);
       firstOptionInput = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.text'));
       expect(editCardElements.options.count()).toEqual(1);
       expect(firstOptionInput.getAttribute('value')).toEqual("b - Option to save");
@@ -361,7 +366,7 @@ describe("material polls listing", function () {
       browser.sleep(500);
       expect(browser.isElementPresent(by.model('poll.target'))).toBeTruthy();
     });
-
+    
     describe("advanced options menu", function () {
 
       it("is closed by default and opened and closed by the menuDrawerButton", function () {
@@ -459,7 +464,7 @@ describe("material polls listing", function () {
       });
 
     });
-
+    
   });
 
   describe("target selection dialog", function () {
@@ -493,6 +498,6 @@ describe("material polls listing", function () {
     });
 
   });
-
+  
 });
 
