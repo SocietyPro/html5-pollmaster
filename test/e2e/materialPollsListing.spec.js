@@ -322,13 +322,13 @@ describe("material polls listing", function () {
       expect(editCardElements.pollDescriptionInput.isDisplayed()).toBeTruthy();
     });
 
-    it("has a button to add options", function () {
+    it("has an input to add options", function () {
       expect(editCardElements.options.count()).toEqual(0);
       editCardElements.addOptionInput.sendKeys('a');
       expect(editCardElements.options.count()).toEqual(1);
     });
 
-    it("has a button to remove options", function () {
+    it("removes options when all text is deleted", function () {
       editCardElements.addOptionInput.sendKeys('a');
       editCardElements.addOptionInput.sendKeys('b');
 
