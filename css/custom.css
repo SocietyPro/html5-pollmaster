@@ -538,13 +538,10 @@ div .cardMenuBar {
 }
 
 /* Card Zoom */
-material-dialog {
-  width: 971px;
-}
 
 .material-dialog-container material-dialog .dialog-content {
   width: 671px;
-  padding: 16px 24px 0px 24px;
+  padding: 16px 24px;
   overflow: hidden;
 }
 
@@ -572,7 +569,6 @@ material-checkbox {
 }
 
 .dialog-actions {
-  margin-right: 24px;
 }
 
 .dialog-menubar-actions .material-button-icon {
@@ -673,4 +669,5 @@ material-checkbox {
 }
 
 #ballotPreview {
+  padding: 16px 24px;
 }

@@ -1,49 +1,48 @@
 <material-dialog>
   <div layout="horizontal">
-    <div class="dialog-content">
-      <div ng-show="poll.status === 'unstarted' || poll.status === 'unsaved'">
-        <div>  
-          <material-input-group>
-            <material-input class="bold" name="pollTitleInput" type="text" ng-model="poll.title" size="45" flex placeholder="Poll Title (click to edit)"></material-input>
-          </material-input-group>
-          <material-input-group>
-            <textarea name="pollDescriptionInput" ng-model="poll.description" flex placeholder="Poll Description (click to edit)"></textarea>
-          </material-input-group>
-          <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal">
-            <material-checkbox ng-model="opt.remove"></material-checkbox>
-            <material-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"></material-input>
-          </div>
-          
-          <hr>
-          <div id="addOptionButton" ng-click="addOption()">
-            <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png"> Add option
-          </div>
-          <div id="removeOptionsButton" ng-click="removeOptions()">
-            <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_remove_18dp.png"> 
-            Remove Selected Options
-          </div>
-          <div class="clearBoth"></div>
-          <hr>
-          
-        </div> 
-        <div class="dialog-menubar-actions" layout="horizontal" layout-align="start">
-          <material-button ng-click="optionsMenu = !optionsMenu" class="material-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}">
-            <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
-          </material-button>
-          <material-button ng-click="ballotPreview = !ballotPreview" class="material-button-icon menuDrawerButton" ng-class="{active: ballotPreview === true}">
-            <img ng-src="assets/images/eye_inv_24px.png">
-          </material-button>
-        </div>
-        <div layout="horizontal" layout-align="end">
-          <material-button ng-click="close()">
-            Close
-          </material-button>
-          <material-button ng-click="nextDialog($event, poll)" class="material-button-colored">
-            Next
-          </material-button>
-        </div>
+    <div class="dialog-content" ng-show="poll.status === 'unstarted' || poll.status === 'unsaved'">
+
+      <material-input-group>
+        <material-input class="bold" name="pollTitleInput" type="text" ng-model="poll.title" size="45" flex placeholder="Poll Title (click to edit)"></material-input>
+      </material-input-group>
+      <material-input-group>
+        <textarea name="pollDescriptionInput" ng-model="poll.description" flex placeholder="Poll Description (click to edit)"></textarea>
+      </material-input-group>
+
+      <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal">
+        <material-checkbox ng-model="opt.remove"></material-checkbox>
+        <material-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"></material-input>
       </div>
-      <br>
+
+      <hr>
+      <div id="addOptionButton" ng-click="addOption()">
+        <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png"> Add option
+      </div>
+      <div id="removeOptionsButton" ng-click="removeOptions()">
+        <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_remove_18dp.png"> 
+        Remove Selected Options
+      </div>
+      <div class="clearBoth"></div>
+      <hr>
+
+      <div class="dialog-menubar-actions" layout="horizontal" layout-align="start">
+        <material-button ng-click="optionsMenu = !optionsMenu" class="material-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}">
+          <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
+        </material-button>
+        <material-button ng-click="ballotPreview = !ballotPreview" class="material-button-icon menuDrawerButton" ng-class="{active: ballotPreview === true}">
+          <img ng-src="assets/images/eye_inv_24px.png">
+        </material-button>
+      </div>
+
+      <div class="dialog-actions" layout="horizontal" layout-align="end">
+        <material-button ng-click="close()">
+          Close
+        </material-button>
+        <material-button ng-click="nextDialog($event, poll)" class="material-button-colored">
+          Next
+        </material-button>
+      </div>
+
       <div class="animate-show" ng-show="optionsMenu" layout="vertical" layout-align="start">
         <div layout="horizontal" layout-align="start">
           <div flex="35">
@@ -69,10 +68,13 @@
           <div class="dialog-options-container">
             <material-checkbox ng-model="isTemplate" aria-label="Save as Template">Save as Template</material-checkbox>
             <material-checkbox ng-model="isPoll" aria-label="Save as Poll">Save as Poll</material-checkbox>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
+      <div class="clearBoth"></div>
+
+    </div> <!-- end dialog-content -->
+
     <div id="ballotPreview" ng-show="ballotPreview" class="animate-show">
       <div class="pollOriginatorLine">
         <em>{{poll.id}}</em>
@@ -93,5 +95,6 @@
         <div class="clearBoth"></div>
       </div>
     </div>
+
   </div>
 </material-dialog>
