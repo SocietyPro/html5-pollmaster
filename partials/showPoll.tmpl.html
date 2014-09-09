@@ -1,5 +1,5 @@
 <material-dialog>
-  <div ng-show="poll.status === 'started' || poll.status === 'complete'">
+  <div ng-show="poll.status === 'started' || poll.status === 'complete'" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}">
     <div class="dialog-content">
       <div class="pollInformation">
         <h2>{{poll.title}}</h2>
