@@ -582,6 +582,10 @@ material-checkbox {
   text-indent: 20px;
 }
 
+material-checkbox[disabled] {
+  opacity: 0.3;
+}
+
 .dialog-menubar-actions {
   display: inline;
   float: left;

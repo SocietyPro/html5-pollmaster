@@ -108,7 +108,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             var scope = angular.element($("#quickAddBox")).scope();
             scope.$apply(function(){
                 scope.newPoll = false;
-            });        
+            });       
         }
     });
 
@@ -317,7 +317,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       $materialDialog({
         templateUrl: 'partials/editPoll.tmpl.html',
         targetEvent: e,
-        controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
+        controller: ['$scope', '$hideDialog', '$rootScope', '$timeout', function ($scope, $hideDialog, $rootScope, $timeout) {
           $scope.poll = poll;
           $scope.isPoll = isPoll;
           $scope.isTemplate = isTemplate;
@@ -350,7 +350,9 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             $scope.poll.options.push(newOption);
             $scope.newOptionText = "";
             var index = $scope.poll.options.length - 1;
-            $rootScope.$broadcast('focusedIndex', {focus: index});
+            $timeout(function () {
+              $rootScope.$broadcast('focusedIndex', {focus: index});
+            });
           };
 
           $scope.checkForOptionDelete = function ($index) {
@@ -368,7 +370,9 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
                   return;
                 }
               }
-              $rootScope.$broadcast('focusedIndex', {focus: previousChild});
+              $timeout(function () {
+                $rootScope.$broadcast('focusedIndex', {focus: previousChild});
+              });
             }
           };
 
