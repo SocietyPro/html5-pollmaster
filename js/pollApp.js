@@ -323,13 +323,26 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
           $scope.isTemplate = isTemplate;
           $scope.ballotPreview = false;
           $scope.optionsMenu = false;
+          if ($scope.poll.endTime) {
+            $scope.endTime = new Date();
+            $scope.endTime.setHours(parseInt($scope.poll.endTime.substring(0,2)));
+            $scope.endTime.setMinutes(parseInt($scope.poll.endTime.substring(3,5)));
+          }
+
+          $scope.keypressListener = function (event) {
+            if (event.charCode == 13) {
+              $("#addOptionInput").focus();
+            }
+          }
 
           $scope.close = function () {
             $hideDialog();
           };
 
-          $scope.getTime = function () {
-            $scope.poll.endTime = $scope.endTime.toTimeString().substring(0,5);
+          $scope.getTime = function (et) {
+            if (et) {
+              $scope.poll.endTime = et.toTimeString().substring(0,5);
+            }
           };
 
           $scope.addOption = function () {
@@ -343,11 +356,17 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
           $scope.checkForOptionDelete = function ($index) {
             if($scope.poll.options[$index].text === '') {
               $scope.poll.options.splice($index, 1);
+              console.log($scope.poll.options);
               var previousChild;
               if ($index > 0) {
                 previousChild = $index - 1;
               } else {
-                previousChild = 0;
+                if ($scope.poll.options.length > 0) {
+                  previousChild = 0;
+                } else {
+                  $scope.keypressListener({"charCode":13});
+                  return;
+                }
               }
               $rootScope.$broadcast('focusedIndex', {focus: previousChild});
             }
