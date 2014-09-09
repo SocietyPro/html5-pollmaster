@@ -63,7 +63,6 @@ describe("material polls listing", function () {
     })
   });
 
-  /*
   it("has a quick add poll form", function () {
     expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
     expect(elements.quickAddBox.isDisplayed()).toBeTruthy();
@@ -308,7 +307,6 @@ describe("material polls listing", function () {
     });
 
   });
-  */
 
   describe("poll editing card", function () {
     
@@ -462,6 +460,38 @@ describe("material polls listing", function () {
         expect(editCardElements.ballotPreview.isDisplayed()).toBeTruthy();
       });
 
+    });
+
+  });
+
+  describe("target selection dialog", function () {
+
+    beforeEach(function () {
+      elements.fab.click();
+      browser.sleep(500);
+      element(by.id('nextButton')).click();
+      browser.sleep(500);
+    });
+
+    it("has a target selection dropdown", function () {
+      var targetSelect = element(by.model('poll.target'));
+      expect(targetSelect.isDisplayed()).toBeTruthy();
+    });
+
+    it("has a close button", function () {
+      var closeButton = element(by.id('closeButton'));
+      expect(elements.pollCards.count()).toEqual(5);
+      closeButton.click();
+      browser.sleep(500);
+      expect(elements.pollCards.count()).toEqual(5);
+    });
+
+    it("has a save button", function () {
+      var saveButton = element(by.id('saveButton'));
+      expect(elements.pollCards.count()).toEqual(5);
+      saveButton.click();
+      browser.sleep(500);
+      expect(elements.pollCards.count()).toEqual(6);
     });
 
   });

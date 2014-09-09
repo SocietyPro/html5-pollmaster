@@ -1,5 +1,5 @@
 <material-dialog>
-  <div layout="horizontal">
+  <div id="dialogLayout" layout="horizontal">
     <div class="dialog-content" ng-show="poll.status === 'unstarted' || poll.status === 'unsaved'">
 
       <material-input-group>
@@ -29,21 +29,21 @@
         <material-button ng-click="optionsMenu = !optionsMenu" class="material-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}">
           <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
         </material-button>
-        <material-button ng-click="ballotPreview = !ballotPreview" class="material-button-icon menuDrawerButton" ng-class="{active: ballotPreview === true}">
+        <material-button class="ballotPreviewButton" ng-click="ballotPreview = !ballotPreview" class="material-button-icon menuDrawerButton" ng-class="{active: ballotPreview === true}">
           <img ng-src="assets/images/eye_inv_24px.png">
         </material-button>
       </div>
 
       <div class="dialog-actions" layout="horizontal" layout-align="end">
-        <material-button ng-click="close()">
+        <material-button id="closeButton" ng-click="close()">
           Close
         </material-button>
-        <material-button ng-click="nextDialog($event, poll)" class="material-button-colored">
+        <material-button id="nextButton" ng-click="nextDialog($event, poll)" class="material-button-colored">
           Next
         </material-button>
       </div>
 
-      <div class="animate-show" ng-show="optionsMenu" layout="vertical" layout-align="start">
+      <div id="optionsMenu" class="animate-show" ng-show="optionsMenu" layout="vertical" layout-align="start">
         <div layout="horizontal" layout-align="start">
           <div flex="35">
             <div class="dialog-options-options">
@@ -75,7 +75,7 @@
 
     </div> <!-- end dialog-content -->
 
-    <div id="ballotPreview" ng-show="ballotPreview" class="animate-show">
+    <material-card class="animate-show" id="ballotPreview" ng-show="ballotPreview" class="animate-show">
       <div class="pollOriginatorLine">
         <em>{{poll.id}}</em>
       </div>
@@ -94,7 +94,8 @@
         </div>
         <div class="clearBoth"></div>
       </div>
-    </div>
+    </material-card>
+    
 
   </div>
 </material-dialog>
