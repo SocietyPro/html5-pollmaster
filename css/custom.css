@@ -702,15 +702,13 @@ material-checkbox[disabled] {
 /* Results Card Styles */
 #statsBox {
   float: left;
-  width: 30%;
+  width: 27%;
   border-right: 1px solid grey;
-  padding: 16px;
 }
 
 #resultsBox {
   float: right;
   width: 70%;
-  padding: 16px;
 }
 
 .tableTitle {
@@ -718,9 +716,22 @@ material-checkbox[disabled] {
 }
 
 #pollResultsTable {
-  width: 50%;
+  width: 100%;
+  font-size: 12px;
+}
+
+#pollStatsTable {
+  width: 75%;
+  font-size: 12px;
+}
+
+.bigPieChartContainer {
+  height: 200px;
+  width: 200px;
+  float: right;
 }
 
 material-dialog div .cardMenuBar {
   margin: 0;
+  line-height: 17px;
 }

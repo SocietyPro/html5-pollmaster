@@ -1,5 +1,5 @@
 <material-dialog>
-  <div ng-show="poll.status === 'started' || poll.status === 'complete'" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+  <div id="materialDialogContainer" ng-show="poll.status === 'started' || poll.status === 'complete'" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
     <div class="dialog-content">
       <div class="pollInformation">
         <div layout="horizontal" layout-align="space-between">
@@ -35,8 +35,8 @@
           </table>
         </div>
 
-        <div id="resultsBox" layout="horizontal">
-          <div> 
+        <div id="resultsBox" layout="horizontal" layout-align="space-between">
+          <div style="width:50%"> 
             <span class="tableTitle"><b>Poll Results:</b></span>
             <table id="pollResultsTable">
               <tr ng-repeat="option in poll.options">
@@ -47,7 +47,7 @@
 
           </div>
 
-          <div class="pieChartContainer">
+          <div class="bigPieChartContainer">
             <nvd3-pie-chart
               id="{{poll.id}}big"
               data="poll.options"
@@ -74,10 +74,18 @@
       </material-button>
     </div>
 
-    <div id="actionMenuBar" class="cardMenuBar animate-show" ng-show="dialog.menubar">
-      <material-button ng-if="poll.allowComments" class="material-button-icon" ng-click="showComments(e, poll)">
-        <img id="showCommentsButton" ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_chat_wht_18dp.png">
-      </material-button>
+    <div id="actionMenuBar" class="cardMenuBar animate-show" ng-show="dialog.menubar" style="display:block !important;">
+      <div class="dialog-menubar-actions">
+        <material-button ng-if="poll.allowComments" class="material-button-icon" ng-click="showComments(e, poll)" title="Show Poll Comments">
+          <img id="showCommentsButton" ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_chat_wht_18dp.png">
+        </material-button>
+        <material-button class="material-button-icon" ng-click="copyPoll(e, poll)" title="Copy This Poll">
+          <img id="copyPollButton" ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_content_copy_wht_18dp.png">
+        </material-button>
+        <material-button class="material-button-icon" ng-click="deletePoll(e, poll)" title="Delete This Poll">
+          <img id="deletePollButton" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_delete_wht_18dp.png">
+        </material-button>
+      </div>
     </div>
 
   </div>

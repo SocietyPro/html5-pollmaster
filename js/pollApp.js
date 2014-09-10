@@ -233,8 +233,8 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             $hideDialog();
           };
 
-          $scope.pieWidth = 100;
-          $scope.pieHeight = 100;
+          $scope.pieWidth = 200;
+          $scope.pieHeight = 200;
           $scope.xFunction = function () {
             return function (d) {
               return d.text;

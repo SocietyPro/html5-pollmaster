@@ -62,7 +62,6 @@ describe("material polls listing", function () {
     })
   });
   
-  /*
   it("has a quick add poll form", function () {
     expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
     expect(elements.quickAddBox.isDisplayed()).toBeTruthy();
@@ -505,7 +504,6 @@ describe("material polls listing", function () {
     });
 
   });
-  */
 
   describe('poll results card', function () {
 
@@ -522,10 +520,14 @@ describe("material polls listing", function () {
         this.nvd3PieChart = element(by.css('material-dialog')).element(by.css('nvd3-pie-chart'));
         this.actionMenuBar = element(by.css('material-dialog')).element(by.id('actionMenuBar'));
         this.showCommentsButton = element(by.css('material-dialog')).element(by.id('showCommentsButton'));
+        this.copyPollButton = element(by.css('material-dialog')).element(by.id('copyPollButton'));
+        this.deletePollButton = element(by.css('material-dialog')).element(by.id('deletePollButton'));
         this.closeButton = element(by.css('material-dialog')).element(by.id('closeButton'));
       };
 
       var runningResultsElements;
+      var firstCard;
+      var secondCard;
 
       beforeEach(function () {
         elements.menuDrawerButton.click();
@@ -533,41 +535,55 @@ describe("material polls listing", function () {
         elements.runningFilterButton.click();
         element(by.css('material-backdrop')).click();
         browser.sleep(500);
-        firstRunningCard = element.all(by.css('material-card')).get(0);
-        firstRunningCard.click();
-        runningResultsElements = new RunningResultsElements();
+        firstCard = element.all(by.css('material-card')).get(0);
+        secondCard = element.all(by.css('material-card')).get(2);
       });
 
-      /*
       it('has the poll ending time and date', function () {
+        firstCard.click();
+        runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.pollEndDate.isDisplayed()).toBeTruthy();
       });
 
       it('displays the poll originator', function () {
+        firstCard.click();
+        runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.pollOriginator.isDisplayed()).toBeTruthy();
       });
 
       it('displays the poll title', function () {
+        firstCard.click();
+        runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.pollTitle.isDisplayed()).toBeTruthy();
       });
 
       it('displays the poll description', function () {
+        firstCard.click();
+        runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.pollDescription.isDisplayed()).toBeTruthy();
       });
 
       it('displays the poll response stats', function () {
+        firstCard.click();
+        runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.pollStatsTable.isDisplayed()).toBeTruthy();
       });
 
       it('displays the poll options and counts', function () {
+        firstCard.click();
+        runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.pollResultsTable.isDisplayed()).toBeTruthy();
       });
 
       it('displays a results pie chart', function () {
+        firstCard.click();
+        runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.nvd3PieChart.isDisplayed()).toBeTruthy();
       });
 
       it('displays an action menu on hover', function () {
+        firstCard.click();
+        runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.actionMenuBar.isDisplayed()).toBeFalsy();
         browser.actions().
         mouseMove(runningResultsElements.materialDialogContent.find()).
@@ -578,34 +594,43 @@ describe("material polls listing", function () {
         perform();
         expect(runningResultsElements.actionMenuBar.isDisplayed()).toBeFalsy();
       });
-      */
+      
       describe('action menu', function () {
 
-        beforeEach(function () {        
+        it('has a view comments button if the poll allows comments', function () {
+          firstCard.click();
+          runningResultsElements = new RunningResultsElements();        
           browser.actions().
           mouseMove(runningResultsElements.materialDialogContent.find()).
           perform();
+          expect(runningResultsElements.showCommentsButton.isDisplayed()).toBeTruthy();
         });
 
-        it('has a view comments button if the poll allows comments', function () {
-          expect(runningResultsElements.showCommentsButton.isDisplayed()).toBeTruthy();
-          runningResultsElements.closeButton.click();
-          browser.sleep(1000);
-          var secondRunningCard = element.all(by.css('material-card')).get(1);
-          secondRunningCard.click();
-          runningResultsElements = new RunningResultsElements();
+        it('does not have a view comments button if the poll does not allow comments', function () {
+          secondCard.click();
+          runningResultsElements = new RunningResultsElements();        
           browser.actions().
           mouseMove(runningResultsElements.materialDialogContent.find()).
           perform();
           expect(browser.isElementPresent(by.id('showCommentsButton'))).toBeFalsy();
         });
 
-        xit('has a copy poll button', function () {
-
+        it('has a copy poll button', function () {
+          firstCard.click();
+          runningResultsElements = new RunningResultsElements();        
+          browser.actions().
+          mouseMove(runningResultsElements.materialDialogContent.find()).
+          perform();
+          expect(runningResultsElements.copyPollButton.isDisplayed()).toBeTruthy();
         });
 
-        xit('has a delete poll button', function () {
-
+        it('has a delete poll button', function () {
+          firstCard.click();
+          runningResultsElements = new RunningResultsElements();        
+          browser.actions().
+          mouseMove(runningResultsElements.materialDialogContent.find()).
+          perform();
+          expect(runningResultsElements.deletePollButton.isDisplayed()).toBeTruthy();
         });
       });
 
