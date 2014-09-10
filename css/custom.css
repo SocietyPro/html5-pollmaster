@@ -701,6 +701,43 @@ material-checkbox[disabled] {
   padding: 16px 24px;
 }
 
+/* Results Card Styles */
+#statsBox {
+  float: left;
+  width: 27%;
+  border-right: 1px solid grey;
+}
+
+#resultsBox {
+  float: right;
+  width: 70%;
+}
+
+.tableTitle {
+  font-size: 14px;
+}
+
+#pollResultsTable {
+  width: 100%;
+  font-size: 12px;
+}
+
+#pollStatsTable {
+  width: 75%;
+  font-size: 12px;
+}
+
+.bigPieChartContainer {
+  height: 200px;
+  width: 200px;
+  float: right;
+}
+
+material-dialog div .cardMenuBar {
+  margin: 0;
+  line-height: 17px;
+}
+
 /*.pollEndsDate {
   padding-top: 5px;
   border-style: dotted;

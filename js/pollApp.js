@@ -227,9 +227,28 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
         targetEvent: e,
         controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
           $scope.poll = poll;
+          $scope.dialog = {};
 
           $scope.close = function () {
             $hideDialog();
+          };
+
+          $scope.pieWidth = 200;
+          $scope.pieHeight = 200;
+          $scope.xFunction = function () {
+            return function (d) {
+              return d.text;
+            };
+          }
+          $scope.yFunction = function () {
+            return function (d) {
+              return d.count;
+            };
+          }
+          $scope.descriptionFunction = function () {
+            return function (d) {
+              return d.text;
+            };
           };
 
         }]
