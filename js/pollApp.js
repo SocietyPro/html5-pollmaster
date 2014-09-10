@@ -331,7 +331,17 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
           $timeout(function () {
             $("#addOptionInput").focus();
-          });
+          });          
+
+          $scope.checkHeight = function () {
+            var dialogHeight = $('.dialog-content').height();
+            var curHeight = $('#content').height();            
+            if (dialogHeight < curHeight) {
+               $('.dialog-content').css("overflow","auto");
+            } else {
+              $('.dialog-content').css("overflow","hidden");
+            }
+          }
 
           $scope.keypressListener = function (event) {
             if (event.charCode == 13) {
@@ -405,6 +415,12 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
                 };
 
                 $scope.save = function (poll) {
+                  for (var i = 0; i<poll.options.length; i++) {
+                    if (!poll.options[i].text) {
+                      poll.options.splice(i,1);
+                    }
+                  }
+
                   poll.save();
                   poll.overflow = false;
                   $hideDialog();

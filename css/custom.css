@@ -461,6 +461,8 @@ material-button.material-button-fab.material-button-fab-bottom-right {
 
 .cardContentContainer {
   margin-bottom: 30px;
+  max-height:300px;
+  overflow:hidden;
 }
 
 .votes {
@@ -698,3 +700,12 @@ material-checkbox[disabled] {
   top: 0;
   padding: 16px 24px;
 }
+
+/*.pollEndsDate {
+  padding-top: 5px;
+  border-style: dotted;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  border-width: thin;
+}*/
