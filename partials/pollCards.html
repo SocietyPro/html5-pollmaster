@@ -2,7 +2,7 @@
   <material-card class="mainCard" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}" ng-mouseover="poll.menubar = true" ng-mouseleave="poll.menubar = false">
     <div class="cardContentContainer" ng-click="zoomPoll($event, poll)">
       <div class="pollOriginatorLine">
-        <em>{{poll.id}}</em>
+        <em>{{poll.originator}}</em>
       </div>
       <div class="pollTitleLine">
         <b>{{poll.title}}</b>

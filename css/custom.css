@@ -698,3 +698,29 @@ material-checkbox[disabled] {
   top: 0;
   padding: 16px 24px;
 }
+
+/* Results Card Styles */
+#statsBox {
+  float: left;
+  width: 30%;
+  border-right: 1px solid grey;
+  padding: 16px;
+}
+
+#resultsBox {
+  float: right;
+  width: 70%;
+  padding: 16px;
+}
+
+.tableTitle {
+  font-size: 14px;
+}
+
+#pollResultsTable {
+  width: 50%;
+}
+
+material-dialog div .cardMenuBar {
+  margin: 0;
+}
