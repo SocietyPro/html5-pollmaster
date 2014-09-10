@@ -112,6 +112,10 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
         }
     });
 
+    $scope.getDate = function (endDate, endTime) {
+      return (new Date(endDate + ' ' +endTime).toTimeString().substring(0,5))+', '+(new Date(endDate + ' ' +endTime).toDateString());
+    }
+
     $scope.toggleMenu = function () {
       $materialSidenav('left').toggle();
     };
