@@ -76,14 +76,14 @@
 
     <div id="actionMenuBar" class="cardMenuBar animate-show" ng-show="dialog.menubar" style="display:block !important;">
       <div class="dialog-menubar-actions">
-        <material-button ng-if="poll.allowComments" class="material-button-icon" ng-click="showComments(e, poll)" title="Show Poll Comments">
-          <img id="showCommentsButton" ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_chat_wht_18dp.png">
+        <material-button id="showCommentsButton" ng-if="poll.allowComments" class="material-button-icon" ng-click="showComments($event, poll)" title="Show Poll Comments">
+          <img ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_chat_wht_18dp.png">
         </material-button>
-        <material-button class="material-button-icon" ng-click="copyPoll(e, poll)" title="Copy This Poll">
-          <img id="copyPollButton" ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_content_copy_wht_18dp.png">
+        <material-button id="copyPollButton" class="material-button-icon" ng-click="copyPoll($event, poll)" title="Copy This Poll">
+          <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_content_copy_wht_18dp.png">
         </material-button>
-        <material-button class="material-button-icon" ng-click="deletePoll(e, poll)" title="Delete This Poll">
-          <img id="deletePollButton" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_delete_wht_18dp.png">
+        <material-button id="deletePollButton" class="material-button-icon" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyPoll(poll)" title="Delete This Poll">
+          <img ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_delete_wht_18dp.png">
         </material-button>
       </div>
     </div>

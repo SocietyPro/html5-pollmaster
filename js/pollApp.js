@@ -229,11 +229,21 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       $materialDialog({
         templateUrl: 'partials/showPoll.tmpl.html',
         targetEvent: e,
-        controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+        controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
           $scope.poll = poll;
           $scope.dialog = {};
 
           $scope.close = function () {
+            $hideDialog();
+          };
+
+          $scope.copyPoll = function (e, poll) {
+            $hideDialog();
+            $rootScope.$broadcast('zoomedCopyPoll', {event: e, poll: poll});
+          };
+
+          $scope.destroyPoll = function (poll) {
+            poll.destroy();
             $hideDialog();
           };
 
@@ -255,9 +265,39 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             };
           };
 
+          $scope.showComments = function (e, poll) {
+            $hideDialog();
+            $materialDialog({
+              templateUrl: 'partials/showComments.tmpl.html',
+              targetEvent: e,
+              controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+                $scope.poll = poll;
+                $scope.dialog = {};
+
+                $scope.close = function () {
+                  $hideDialog();
+                };
+
+                $scope.showPoll = function (e, poll) {
+                  $hideDialog();
+                  $rootScope.$broadcast('showPollResults', {event: e, poll: poll});
+                };
+
+              }]
+            });
+          };
+
         }]
       });
     };
+
+    $scope.$on('showPollResults', function (scope, args) {
+      showPoll(args.event, args.poll);
+    });
+
+    $scope.$on('zoomedCopyPoll', function (scope, args) {
+      $scope.copyPoll(args.event, args.poll);
+    });
 
     $scope.newPollFromScratch = function(e, title, description) {
       var newPoll = japi.polls.build();

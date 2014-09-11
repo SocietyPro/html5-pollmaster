@@ -727,6 +727,19 @@ material-checkbox[disabled] {
   font-size: 12px;
 }
 
+#pollCommentsTable table {
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+.chatCell {
+  width: 80px;
+}
+
+#backToResultsButton {
+  margin-left: 16px;
+}
+
 .bigPieChartContainer {
   height: 200px;
   width: 200px;

@@ -546,15 +546,19 @@ describe("material polls listing", function () {
       });
 
       it('displays the poll originator', function () {
+        var originator = element.all(by.css('.mainCard')).get(0).findElement(by.binding('poll.originator')).getText();
         firstCard.click();
         runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.pollOriginator.isDisplayed()).toBeTruthy();
+        expect(runningResultsElements.pollOriginator.getText()).toEqual(originator);
       });
 
       it('displays the poll title', function () {
+        var title = element.all(by.css('.mainCard')).get(0).findElement(by.binding('poll.title')).getText();
         firstCard.click();
         runningResultsElements = new RunningResultsElements();
         expect(runningResultsElements.pollTitle.isDisplayed()).toBeTruthy();
+        expect(runningResultsElements.pollTitle.getText()).toEqual(title);
       });
 
       it('displays the poll description', function () {
@@ -603,7 +607,11 @@ describe("material polls listing", function () {
           browser.actions().
           mouseMove(runningResultsElements.materialDialogContent.find()).
           perform();
+          expect(browser.isElementPresent(by.id('pollCommentsTable'))).toBeFalsy();
           expect(runningResultsElements.showCommentsButton.isDisplayed()).toBeTruthy();
+          runningResultsElements.showCommentsButton.click();
+          browser.sleep(200);
+          expect(browser.isElementPresent(by.id('pollCommentsTable'))).toBeTruthy();
         });
 
         it('does not have a view comments button if the poll does not allow comments', function () {
@@ -622,6 +630,12 @@ describe("material polls listing", function () {
           mouseMove(runningResultsElements.materialDialogContent.find()).
           perform();
           expect(runningResultsElements.copyPollButton.isDisplayed()).toBeTruthy();
+          var title = runningResultsElements.pollTitle.getText();
+          runningResultsElements.copyPollButton.click();
+          expect(browser.isElementPresent(by.css('material-dialog'))).toBeTruthy();
+          var titleInput = element(by.css('material-dialog')).element(by.model('poll.title'));
+          expect(titleInput.isDisplayed()).toBeTruthy();
+          expect(titleInput.getAttribute('value')).toEqual(title);
         });
 
         it('has a delete poll button', function () {
@@ -631,7 +645,62 @@ describe("material polls listing", function () {
           mouseMove(runningResultsElements.materialDialogContent.find()).
           perform();
           expect(runningResultsElements.deletePollButton.isDisplayed()).toBeTruthy();
+          expect(elements.pollCards.count()).toEqual(2);
+          runningResultsElements.deletePollButton.click();        
+          var confirmationDialog = browser.switchTo().alert();
+          confirmationDialog.accept();
+          expect(elements.pollCards.count()).toEqual(1);
+          expect(browser.isElementPresent(by.css('material-dialog'))).toBeFalsy();
         });
+
+      });
+
+      describe('comments dialog', function () {
+
+        var RunningCommentsElements = function () {
+          this.pollEndDate = element(by.css('material-dialog')).element(by.binding('poll.endTime'));
+          this.pollOriginator = element(by.css('material-dialog')).element(by.binding('poll.originator'));
+          this.pollTitle = element(by.css('material-dialog')).element(by.binding('poll.title'));
+          this.pollDescription = element(by.css('material-dialog')).element(by.binding('poll.description'));
+          this.pollCommentsTable = element(by.css('material-dialog')).element(by.id('pollCommentsTable'));
+          this.backToResultsButton = element(by.css('material-dialog')).element(by.id('backToResultsButton'));
+          this.closeButton = element(by.css('material-dialog')).element(by.id('closeButton'));
+        };
+
+        beforeEach(function () {
+          firstCard.click();
+          browser.sleep(500);
+          runningResultsElements.showCommentsButton.click();
+          runningCommentsElements = new RunningCommentsElements();
+        });
+
+        it('displays the poll end time, originator, title, and description', function () {
+          expect(runningCommentsElements.pollEndDate.isDisplayed()).toBeTruthy();
+          expect(runningCommentsElements.pollOriginator.isDisplayed()).toBeTruthy();
+          expect(runningCommentsElements.pollTitle.isDisplayed()).toBeTruthy();
+          expect(runningCommentsElements.pollDescription.isDisplayed()).toBeTruthy();
+        });
+
+        it('displays the comments for the poll', function () {
+          expect(runningCommentsElements.pollCommentsTable.isDisplayed()).toBeTruthy();
+        });
+
+        it('displays a button to return to poll results', function () {
+          expect(runningCommentsElements.backToResultsButton.isDisplayed()).toBeTruthy();
+          expect(browser.isElementPresent(by.id('pollStatsTable'))).toBeFalsy();
+          runningCommentsElements.backToResultsButton.click();
+          browser.sleep(500);
+          expect(browser.isElementPresent(by.id('pollStatsTable'))).toBeTruthy();
+        });
+
+        it('displays a close dialog button', function () {
+          expect(runningCommentsElements.closeButton.isDisplayed()).toBeTruthy();
+          expect(browser.isElementPresent(by.css('material-dialog'))).toBeTruthy();
+          runningCommentsElements.closeButton.click();
+          browser.sleep(500);
+          expect(browser.isElementPresent(by.css('material-dialog'))).toBeFalsy();
+        });
+
       });
 
     });

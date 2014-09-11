@@ -1,0 +1,48 @@
+<material-dialog>
+  <div id="materialDialogContainer" ng-show="poll.status === 'started' || poll.status === 'complete'" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+    
+    <div class="dialog-content">
+      
+      <div layout="horizontal" layout-align="space-between">
+        <span>
+          Poll ends at {{poll.endTime}} on {{poll.endDate | date : 'MM/dd/yy'}}
+        </span>
+        <span>{{poll.originator}}</span>
+      </div>
+      <h2>{{poll.title}}</h2>
+      <p>
+        {{poll.description}}
+      </p>
+
+      <div id="pollCommentsTable">
+
+        <table>
+          <tr ng-repeat="comment in poll.comments">
+            <td><em>{{comment[0]}}</em></td>
+            <td>{{comment[1]}}</td>
+            <td class="chatCell">
+              <img ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_forum_18dp.png"> 
+              Chat
+            </td>
+          </tr>
+        </table>
+
+      </div>
+
+    </div>
+
+    <div class="dialog-menubar-actions">
+      <material-button id="backToResultsButton" ng-click="showPoll($event, poll)">
+        <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_18dp.png">
+        Back to Poll Results
+      </material-button>
+    </div>
+
+    <div class="dialog-actions" layout="horizontal" layout-align="space-between">
+      <material-button id="closeButton" ng-click="close()">
+        Close
+      </material-button>
+    </div>
+
+  </div>
+</material-dialog>
