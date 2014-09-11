@@ -51,7 +51,7 @@
             <div class="dialog-options-poll-ends">
               Poll ends:
               <div class="dialog-options-container" layout="horizontal" layout-align="start center">
-                <material-input ng-model="poll.endDate" ui-date ui-date-format="mm/dd/yy" placeholder="mm/dd/yy" flex="40"></material-input><div style="margin-right:25px;">at</div><material-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker class="ui-timepicker-input" placeholder="HH:MM" flex="40"></material-input>
+                <material-input ng-model="endDate" ng-change="getDate(endDate)" ui-date ui-date-format="mm/dd/yy" placeholder="mm/dd/yy" flex="40"></material-input><div style="margin-right:25px;">at</div><material-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker class="ui-timepicker-input" placeholder="HH:MM" flex="40"></material-input>
               </div>
             </div>
           </div>
