@@ -257,18 +257,13 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     });
 
     $scope.newItemFromScratch = function(e, quickAddForm, isPoll) {
-      console.log(quickAddForm);
       var newPoll = japi.polls.build();
-      newPoll.title = $scope.newTitle;
-      newPoll.description = $scope.newDescription;
+      newPoll.title = quickAddForm.quickAddTitle.$modelValue;
+      newPoll.description = quickAddForm.quickAddDescription.$modelValue;
       $scope.isPoll = isPoll;
       $scope.isTemplate = !isPoll;
       $scope.startCustomizing(e, newPoll);
-      $scope.newTitle = "";
-      $scope.newDescription = "";
-      $scope.newItem = false;
       $scope.$broadcast('resetQuickAddForm');
-      quickAddForm.$setPristine();
     };
 
     $scope.newPollFromTemplate = function(template){
@@ -634,6 +629,18 @@ pollApp.controller("customizePollCtrl", function ($scope, $location, $controller
      $location.path('/');
     }
   };
+
+});
+
+pollApp.controller('quickAddCtrl', function ($scope) {
+
+  $scope.$on('resetQuickAddForm', function () {
+    console.log('received reset broadcast');
+    $scope.newTitle = '';
+    $scope.newDescription = '';
+    $scope.newItem = false;
+    $scope.quickAddForm.$setPristine();
+  });
 
 });
 

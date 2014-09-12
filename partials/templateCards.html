@@ -2,14 +2,14 @@
   <div ng-show="selectedIndex == 0">
     <!-- Quick Add Box -->
     <div id="quickAddBox">
-      <form name="quickAddForm" style="padding-left:20px;" ng-init="newItem=false">
+      <form name="quickAddForm" style="padding-left:20px;" ng-init="newItem=false" ng-controller="quickAddCtrl">
         <material-input-group>
           <material-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
         </material-input-group>
         <material-input-group>  
           <material-input  name="quickAddDescription" placeholder="{{addDescriptionPlaceholder}}" id="quickAddDescription" type="text" size="45" ng-model="newDescription" flex ng-show="newItem" click-anywhere-but-here="close()" is-active="isDropdownOpen()">
         </material-input-group>
-        <material-button id="quickAddButton" class="material-button-colored" ng-show="newItem && newTitle && quickAddForm.$dirty" ng-click="newItemFromScratch($event, quickAddForm, false)">
+        <material-button id="quickAddButton" class="material-button-colored" ng-show="newItem && newTitle && quickAddForm.$dirty" ng-click="newItemFromScratch($event, quickAddForm, false); quickAddForm.$setPristine()">
           SAVE
         </material-button>
       </form>
@@ -17,7 +17,6 @@
     </div>
     <!-- end Quick Add Box -->
   </div>
-   {{quickAddForm.$dirty}} - {{newTitle}}
   <div class="cardholder" ng-repeat="template in templates" ng-mouseleave="template.overflow = false">
     <material-card class="mainCard" ng-mouseover="template.menubar = true" ng-mouseleave="template.menubar = false">
       <div class="cardContentContainer" ng-click="zoomTemplate($event, template)">
@@ -55,3 +54,5 @@
     <a class="forkAction" ng-click="copyPoll($event, template)">Fork this Template</a>
   </material-card>
 </div>
+
+<pre>{{quickAddForm | json}}</pre>
