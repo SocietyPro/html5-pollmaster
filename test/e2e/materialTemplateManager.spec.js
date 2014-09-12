@@ -71,15 +71,18 @@ describe('template manager', function () {
       });
 
       var templates = element.all(by.css('.mainCard'));
+      var firstCard = templates.get(0);
+      var firstCardMenuBar = firstCard.findElement(by.css('.cardMenuBar'));
+      var firstCardOverflowMenuButton = firstCardMenuBar.findElement(by.css('.overflowMenuButton'));
+      var firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
+      var firstCardDeleteAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.destroyAction'));
 
       it ('should show my templates', function () {
-        var title = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine'));
+        var title = firstCard.findElement(by.css('.pollTitleLine'));
         expect(title.getText()).toEqual('Join Operation Red Dawn! Bring Many Ships!');
       });
 
       it("shows the action bar on hover", function () {
-        var firstCard = element.all(by.css('.mainCard')).get(0);
-        var firstCardMenuBar = element.all(by.css('.mainCard')).get(0).findElement(by.css('.cardMenuBar'));
         expect(firstCardMenuBar.isDisplayed()).toBeFalsy();
         browser.actions().
           mouseMove(firstCard).
@@ -94,10 +97,6 @@ describe('template manager', function () {
       describe('overflow menu', function () {
         
         it("is displayed when the overflow menu button is clicked", function () {
-          var firstCard = element.all(by.css('.mainCard')).get(0);
-          var firstCardMenuBar = element.all(by.css('.mainCard')).get(0).findElement(by.css('.cardMenuBar'));
-          var firstCardOverflowMenuButton = firstCardMenuBar.findElement(by.css('.overflowMenuButton'));
-          var firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
           expect(firstCardOverflowMenu.isDisplayed()).toBeFalsy();
           browser.actions().
             mouseMove(firstCard).
@@ -111,11 +110,6 @@ describe('template manager', function () {
         });
 
         it("has a delete card action with confirmation dialog", function () {
-          var firstCard = element.all(by.css('.mainCard')).get(0);
-          var firstCardMenuBar = element.all(by.css('.mainCard')).get(0).findElement(by.css('.cardMenuBar'));
-          var firstCardOverflowMenuButton = firstCardMenuBar.findElement(by.css('.overflowMenuButton'));
-          var firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
-          var firstCardDeleteAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.destroyAction'));
           browser.actions().
             mouseMove(firstCard).
             perform();
@@ -130,12 +124,7 @@ describe('template manager', function () {
         });
 
         it("has a fork card action", function () {
-          var firstCard = element.all(by.css('.mainCard')).get(0);
-          var firstCardMenuBar = element.all(by.css('.mainCard')).get(0).findElement(by.css('.cardMenuBar'));
-          var firstCardOverflowMenuButton = firstCardMenuBar.findElement(by.css('.overflowMenuButton'));
-          var firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
-          var firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
-          var title = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine')).getText();
+          var title = firstCard.findElement(by.css('.pollTitleLine')).getText();
           browser.actions().
             mouseMove(firstCard).
             perform();
