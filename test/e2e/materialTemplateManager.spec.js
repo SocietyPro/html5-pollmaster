@@ -62,186 +62,138 @@ describe('template manager', function () {
       expect(elements.tabs.get(2).getAttribute('label')).toEqual('Copy From Examples');
       expect(elements.tabs.get(3).getAttribute('label')).toEqual('Copy From Peer Recommended');      
     });
+  
+  });
 
-    describe('My Templates Tab',function(){
+  describe('tab for my templates',function(){
 
-      it('should be default tab', function(){
-        var firstTabLabel = element.all(by.css('material-tab-label')).get(0);
-        expect(firstTabLabel.getAttribute("class")).toEqual('active');
-      });
-
-      var templates = element.all(by.css('.mainCard'));
-      var firstCard = templates.get(0);
-      var firstCardMenuBar = firstCard.findElement(by.css('.cardMenuBar'));
-      var firstCardOverflowMenuButton = firstCardMenuBar.findElement(by.css('.overflowMenuButton'));
-      var firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
-      var firstCardDeleteAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.destroyAction'));
-
-      it ('should show my templates', function () {
-        var title = firstCard.findElement(by.css('.pollTitleLine'));
-        expect(title.getText()).toEqual('Join Operation Red Dawn! Bring Many Ships!');
-      });
-
-      it("shows the action bar on hover", function () {
-        expect(firstCardMenuBar.isDisplayed()).toBeFalsy();
-        browser.actions().
-          mouseMove(firstCard).
-          perform();
-        expect(firstCardMenuBar.isDisplayed()).toBeTruthy();
-        browser.actions().
-          mouseMove(elements.streamButton.find()).
-          perform();
-        expect(firstCardMenuBar.isDisplayed()).toBeFalsy();
-      });
-
-      describe('overflow menu', function () {
-        
-        it("is displayed when the overflow menu button is clicked", function () {
-          expect(firstCardOverflowMenu.isDisplayed()).toBeFalsy();
-          browser.actions().
-            mouseMove(firstCard).
-            perform();
-          firstCardOverflowMenuButton.click();
-          expect(firstCardOverflowMenu.isDisplayed()).toBeTruthy();
-          browser.actions().
-            mouseMove(elements.streamButton.find()).
-            perform();
-          expect(firstCardOverflowMenu.isDisplayed()).toBeFalsy();
-        });
-
-        it("has a delete card action with confirmation dialog", function () {
-          browser.actions().
-            mouseMove(firstCard).
-            perform();
-          firstCardOverflowMenuButton.click();
-          expect(firstCardDeleteAction.isDisplayed()).toBeTruthy();
-          expect(firstCardDeleteAction.getText()).toEqual("Delete");
-          expect(templates.count()).toEqual(5);
-          firstCardDeleteAction.click();
-          var confirmationDialog = browser.switchTo().alert();
-          confirmationDialog.accept();
-          expect(templates.count()).toEqual(4);
-        });
-
-        it("has a fork card action", function () {
-          var title = firstCard.findElement(by.css('.pollTitleLine')).getText();
-          browser.actions().
-            mouseMove(firstCard).
-            perform();
-          firstCardOverflowMenuButton.click();
-          expect(firstCardForkAction.isDisplayed()).toBeTruthy();
-          expect(firstCardForkAction.getText()).toEqual("Fork this Template");
-          firstCardForkAction.click();
-          var dialogTitleInput = element(by.inputName('pollTitleInput'));
-          expect(dialogTitleInput.isDisplayed()).toBeTruthy();
-          expect(dialogTitleInput.getAttribute('value')).toEqual(title);
-        });
-
-      });
-
-    });
-    
-    describe('Copy from Recent Polls', function () {
-      
-      beforeEach(function () {      
-        elements.tabs.get(1).click();
-        browser.sleep(500);
-      });
-    
-      it ('should show my recent polls', function () {
-        var title = element.all(by.css('.mainCard')).get(1).findElement(by.css('.pollTitleLine')).getText();
-        expect(title).toEqual('What is your favorite Snack?');
-      });
-    
-      it("has a fork card action", function () {
-        var firstCard = element.all(by.css('.mainCard')).get(0);
-        var firstCardMenuBar = firstCard.findElement(by.css('.cardMenuBar'));
-        var firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
-        browser.actions().
-          mouseMove(firstCard).
-          perform();
-        firstCardOverflowMenuButton.click();
-        expect(firstCardForkAction.isDisplayed()).toBeTruthy();
-        expect(firstCardForkAction.getText()).toEqual("Fork this Template");
-        firstCardForkAction.click();
-        var dialogTitleInput = element(by.inputName('pollTitleInput'));
-        expect(dialogTitleInput.isDisplayed()).toBeTruthy();
-        expect(dialogTitleInput.getAttribute('value')).toEqual(title);
-      });
-    
+    it('is the default tab', function(){
+      var firstTabLabel = element.all(by.css('material-tab-label')).get(0);
+      expect(firstTabLabel.getAttribute("class")).toEqual('active');
     });
 
-    describe('Copy from Examples', function() {
-      
-      beforeEach(function () {
-        elements.tabs.get(2).click();
-        browser.sleep(500);        
-      });
-
-      it ('should show my examples templates', function () {
-        var title = element.all(by.css('.mainCard')).get(1).findElement(by.css('.pollTitleLine')).getText();
-        expect(title).toEqual('President of the Organization');
-      });
-
-      it("has a fork card action", function () {
-        var firstCard = element.all(by.css('.mainCard')).get(0);
-        var firstCardMenuBar = firstCard.findElement(by.css('.cardMenuBar'));
-        var firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
-        browser.actions().
-          mouseMove(firstCard).
-          perform();
-        firstCardOverflowMenuButton.click();
-        expect(firstCardForkAction.isDisplayed()).toBeTruthy();
-        expect(firstCardForkAction.getText()).toEqual("Fork this Template");
-        firstCardForkAction.click();
-        var dialogTitleInput = element(by.inputName('pollTitleInput'));
-        expect(dialogTitleInput.isDisplayed()).toBeTruthy();
-        expect(dialogTitleInput.getAttribute('value')).toEqual(title);
-      });
-
-    });
-
-    describe('Copy from Peer Recommended', function() {
-
-      beforeEach(function () {
-        elements.tabs.get(3).click();
-        browser.sleep(500);
-      });
-
-      it ('should show peer recommendations', function () {
-        var title = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine')).getText();
-        expect(title).toEqual('Can the Product Owner keep up?');
-      });
-
-      it("has a fork card action", function () {
-        var firstCard = element.all(by.css('.mainCard')).get(0);
-        var firstCardMenuBar = firstCard.findElement(by.css('.cardMenuBar'));
-        var firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
-        browser.actions().
-          mouseMove(firstCard).
-          perform();
-        firstCardOverflowMenuButton.click();
-        expect(firstCardForkAction.isDisplayed()).toBeTruthy();
-        expect(firstCardForkAction.getText()).toEqual("Fork this Template");
-        firstCardForkAction.click();
-        var dialogTitleInput = element(by.inputName('pollTitleInput'));
-        expect(dialogTitleInput.isDisplayed()).toBeTruthy();
-        expect(dialogTitleInput.getAttribute('value')).toEqual(title);
-      });
-
+    it ('shows my templates', function () {
+      var title = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine'));
+      expect(title.getText()).toEqual('Join Operation Red Dawn! Bring Many Ships!');
     });
 
   });
   
-  describe("top toolbar", function () {
+  describe('tab for Copy from Recent Polls', function () {
+      
+    it ('shows my recent polls', function () {    
+      elements.tabs.get(1).click();
+      browser.sleep(500);
+      var title = element.all(by.css('.mainCard')).get(1).findElement(by.css('.pollTitleLine')).getText();
+      expect(title).toEqual('What is your favorite Snack?');
+    });
   
-    it("has list view buttons", function() {
-      expect(elements.viewButtons.isDisplayed()).toBeTruthy();
-      expect(elements.streamButton.getAttribute('class')).toEqual('viewButton material-button-icon inactive');
-      expect(elements.quiltButton.getAttribute('class')).toEqual('viewButton material-button-icon active');
-      elements.streamButton.click();
-      expect(elements.streamButton.getAttribute('class')).toEqual('viewButton material-button-icon active');
-      expect(elements.quiltButton.getAttribute('class')).toEqual('viewButton material-button-icon inactive');
+  });
+
+  describe('tab for Copy from Examples', function() {
+
+    it ('shows my examples templates', function () {
+      elements.tabs.get(2).click();
+      browser.sleep(500);  
+      var title = element.all(by.css('.mainCard')).get(1).findElement(by.css('.pollTitleLine')).getText();
+      expect(title).toEqual('President of the Organization');
+    });
+
+  });
+
+  describe('tab for Copy from Peer Recommended', function() {
+
+    it ('shows peer recommendations', function () {
+      elements.tabs.get(3).click();
+      browser.sleep(500);
+      var title = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine')).getText();
+      expect(title).toEqual('Can the Product Owner keep up?');
+    });
+
+  });
+
+  describe('template card', function () {
+
+    var TemplateCardElements = function () {
+      this.firstCard = element.all(by.css('.mainCard')).get(0);
+      this.firstCardMenuBar = this.firstCard.findElement(by.css('.cardMenuBar'));
+      this.firstCardOverflowMenuButton = this.firstCardMenuBar.findElement(by.css('.overflowMenuButton'));
+      this.firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
+      this.firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
+    }
+
+    var templateCardElements;
+
+    beforeEach(function () {
+      templateCardElements = new TemplateCardElements();
+    });
+
+    it("shows the action bar on hover", function () {
+      expect(templateCardElements.firstCardMenuBar.isDisplayed()).toBeFalsy();
+      browser.actions().
+        mouseMove(templateCardElements.firstCard).
+        perform();
+      expect(templateCardElements.firstCardMenuBar.isDisplayed()).toBeTruthy();
+      browser.actions().
+        mouseMove(elements.streamButton.find()).
+        perform();
+      expect(templateCardElements.firstCardMenuBar.isDisplayed()).toBeFalsy();
+    });
+
+    describe('overflow menu', function () {
+      
+      it("is displayed when the overflow menu button is clicked", function () {
+        expect(templateCardElements.firstCardOverflowMenu.isDisplayed()).toBeFalsy();
+        browser.actions().
+          mouseMove(templateCardElements.firstCard).
+          perform();
+        templateCardElements.firstCardOverflowMenuButton.click();
+        expect(templateCardElements.firstCardOverflowMenu.isDisplayed()).toBeTruthy();
+        browser.actions().
+          mouseMove(elements.streamButton.find()).
+          perform();
+        expect(templateCardElements.firstCardOverflowMenu.isDisplayed()).toBeFalsy();
+      });
+
+      it("does not have a delete card action if the card is not for one of my templates", function () {
+        element.all(by.css('material-tab')).get(1).click();
+        var templateCardElements = new TemplateCardElements();
+        browser.actions().
+          mouseMove(templateCardElements.firstCard).
+          perform();
+        templateCardElements.firstCardOverflowMenuButton.click();
+        expect(browser.isElementPresent(by.css('.destroyAction'))).toBeFalsy();
+      });
+
+      it("has a delete card action with confirmation dialog if the card is for one of my templates", function () {
+        browser.actions().
+          mouseMove(templateCardElements.firstCard).
+          perform();
+        templateCardElements.firstCardOverflowMenuButton.click();
+        var firstCardDeleteAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.destroyAction'));
+        expect(firstCardDeleteAction.isDisplayed()).toBeTruthy();
+        expect(firstCardDeleteAction.getText()).toEqual("Delete");
+        expect(element.all(by.css('.mainCard')).count()).toEqual(5);
+        firstCardDeleteAction.click();
+        var confirmationDialog = browser.switchTo().alert();
+        confirmationDialog.accept();
+        expect(element.all(by.css('.mainCard')).count()).toEqual(4);
+      });
+
+      it("has a fork card action", function () {
+        var title = templateCardElements.firstCard.findElement(by.css('.pollTitleLine')).getText();
+        browser.actions().
+          mouseMove(templateCardElements.firstCard).
+          perform();
+        templateCardElements.firstCardOverflowMenuButton.click();
+        expect(templateCardElements.firstCardForkAction.isDisplayed()).toBeTruthy();
+        expect(templateCardElements.firstCardForkAction.getText()).toEqual("Fork this Template");
+        templateCardElements.firstCardForkAction.click();
+        var dialogTitleInput = element(by.inputName('pollTitleInput'));
+        expect(dialogTitleInput.isDisplayed()).toBeTruthy();
+        expect(dialogTitleInput.getAttribute('value')).toEqual(title);
+      });
+
     });
 
   });
