@@ -1,13 +1,13 @@
 <!-- Quick Add Box -->
 <div id="quickAddBox">
-  <form name="quickAddForm" style="padding-left:20px;" ng-init="newPoll=false">
+  <form name="quickAddForm" style="padding-left:20px;" ng-init="newItem=false" ng-controller="quickAddCtrl">
     <material-input-group>
-      <material-input ng-class="{bold:newPoll}" name="quickAddTitle" placeholder="Add Poll" id="quickAddTitle" type="text" size="45" ng-model="newPollTitle" flex ng-click="newPoll = true">
+      <material-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
     </material-input-group>
     <material-input-group>  
-      <material-input  name="quickAddDescription" placeholder="Add Description" id="quickAddDescription" type="text" size="45" ng-model="newPollDescription" flex ng-show="newPoll" click-anywhere-but-here="close()" is-active="isDropdownOpen()">
+      <material-input  name="quickAddDescription" placeholder="{{addDescriptionPlaceholder}}" id="quickAddDescription" type="text" size="45" ng-model="newDescription" flex ng-show="newItem" click-anywhere-but-here="close()" is-active="isDropdownOpen()">
     </material-input-group>
-    <material-button id="quickAddButton" class="material-button-colored" ng-show="newPoll && newPollTitle && quickAddForm.$dirty" ng-click="newPollFromScratch($event, newPollTitle, newPollDescription)">
+    <material-button id="quickAddButton" class="material-button-colored" ng-show="newItem && newTitle && quickAddForm.$dirty" ng-click="newItemFromScratch($event, quickAddForm, true)">
       SAVE
     </material-button>
   </form>

@@ -79,16 +79,6 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     $scope.menu = menu;
     $scope.menu.selectFilter(menu.filters[0]);
 
-    $scope.polls = japi.polls.getList();
-    $scope.myTemplates = japi.polls.templates.list();
-    $scope.exampleTemplates = japi.polls.templates.listExamples();
-    $scope.peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
-
-    $scope.newTitle = "";
-    $scope.newDescription = "";
-    $scope.newItem = false;
-
-
     $(document).mouseup(function (e) {
         var container = $("#quickAddBox");
         if (!container.is(e.target) // if the target of the click isn't the container...
@@ -96,7 +86,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
         {
             var scope = angular.element($("#quickAddBox")).scope();
             scope.$apply(function(){
-                scope.newPoll = false;
+                scope.newItem = false;
             });       
         }
     });
@@ -105,13 +95,6 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       $materialSidenav('left').toggle();
     };
 
-    $scope.filterPolls = function (filter) {
-      if (filter.filter === "All") {
-        $scope.pollFilter = {status: ''};
-      } else {
-        $scope.pollFilter = {status: filter.filter};
-      }
-    };
 
     $scope.listView = "quilt";
 
@@ -123,8 +106,8 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       $scope.listView = "quilt";
     };
 
-    $scope.overflowToggle = function (poll) {
-      poll.overflow = !poll.overflow;
+    $scope.overflowToggle = function (item) {
+      item.overflow = !item.overflow;
     };
 
     $scope.pollsShow = function () {
@@ -135,13 +118,13 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       $location.path("/templates");
     };
 
-    $scope.startCustomizing = function(e, pollObject){
+    $scope.startCustomizing = function(e, itemObject){
       // We won't modify or save this until save is clicked:
-      $scope.pollToCustomize = pollObject; 
+      $scope.itemToCustomize = itemObject; 
 
       // We will modify this during our WIP. See saveCustomization for where it
       // gets copied back.
-      $scope.poll = angular.copy(pollObject);
+      $scope.poll = angular.copy(itemObject);
       $scope.dialog(e, $scope.poll, $scope.isPoll, $scope.isTemplate);
     };
 
@@ -420,15 +403,14 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             $scope.poll.options.splice($index, 1);
           };
 
-          $scope.save = function (poll) {
-            for (var i = 0; i<poll.options.length; i++) {
-              if (!poll.options[i].text) {
-                poll.options.splice(i,1);
+          $scope.save = function (item) {
+            for (var i = 0; i<item.options.length; i++) {
+              if (!item.options[i].text) {
+                item.options.splice(i,1);
               }
             }
-
-            poll.save();
-            poll.overflow = false;
+            item.save();
+            item.overflow = false;
             $hideDialog();
           };
 
@@ -447,15 +429,15 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
                   $hideDialog();
                 };
 
-                $scope.save = function (poll) {
-                  for (var i = 0; i<poll.options.length; i++) {
-                    if (!poll.options[i].text) {
-                      poll.options.splice(i,1);
+                $scope.save = function (item) {
+                  for (var i = 0; i<item.options.length; i++) {
+                    if (!item.options[i].text) {
+                      item.options.splice(i,1);
                     }
                   }
 
-                  poll.save();
-                  poll.overflow = false;
+                  item.save();
+                  item.overflow = false;
                   $hideDialog();
                 };
 
@@ -471,6 +453,19 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 });
 
 pollApp.controller("pollsCtrl", function ($scope) {
+
+  $scope.polls = japi.polls.getList();
+  $scope.addTitlePlaceholder = "Add Poll";
+  $scope.addDescriptionPlaceholder = "Add Description";
+
+  $scope.filterPolls = function (filter) {
+    if (filter.filter === "All") {
+      $scope.pollFilter = {status: ''};
+    } else {
+      $scope.pollFilter = {status: filter.filter};
+    }
+  };
+
 });
 
 
@@ -484,32 +479,6 @@ pollApp.controller("templatesCtrl", function ($scope){
   $scope.templates = templates;
   $scope.addTitlePlaceholder = "Add Template";
   $scope.addDescriptionPlaceholder = "Add Description";
-
-
-  $(document).mouseup(function (e) {
-      var container = $("#quickAddBox");
-      if (!container.is(e.target) // if the target of the click isn't the container...
-          && container.has(e.target).length === 0) // ... nor a descendant of the container
-      {
-          var scope = angular.element($("#quickAddBox")).scope();
-          scope.$apply(function(){
-              scope.newTemplate = false;
-          });       
-      }
-  });
-
-  $scope.newTemplateFromScratch = function (e, newTitle, newDescription){
-    var newTemplate = japi.polls.templates.build();
-    newTemplate.title = newTitle;
-    newTemplate.description = newDescription;
-    $scope.isPoll = false;
-    $scope.isTemplate = true;
-    $scope.startCustomizing(e, newTemplate);
-    $scope.newTemplateTitle = "";
-    $scope.newTemplateDescription = "";
-    $scope.newTemplate = false;
-    $scope.quickAddForm.$setPristine();
-  };
 
   $scope.collectionChange = function () {
     $scope.selectedIndex = this.$index;
@@ -532,11 +501,6 @@ pollApp.controller("templatesCtrl", function ($scope){
     templateToEdit.status = "unsaved";
     $scope.dialog(e, templateToEdit, isPoll, isTemplate);
   };
-
-  $scope.$on('resetQuickAddForm', function () {
-    console.log($scope.newTitle);
-    console.log($scope.newDescription);
-  });
 
 });
 

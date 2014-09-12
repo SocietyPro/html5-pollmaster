@@ -1,4 +1,3 @@
-/*
 var Elements = function () {
   this.quickAddBox = element(by.id('quickAddBox'));
   this.quickAddTitle = element(by.id('quickAddTitle'));
@@ -709,4 +708,3 @@ describe("material polls listing", function () {
   });
   
 });
-*/
