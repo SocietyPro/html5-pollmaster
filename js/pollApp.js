@@ -12,33 +12,17 @@ var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial"
 
 pollApp.config(function($routeProvider){
   
-  $routeProvider.when("/peerLists", {
-    templateUrl: "partials/peerLists.html",
-    controller: "peerListsCtrl"
+  $routeProvider.when("/polls", {
+    templateUrl: "partials/polls.tmpl.html",
+    controller: "pollsCtrl"
   }).
-  when("/manageTemplates", {
-    templateUrl: "partials/manageTemplates.html",
-    controller: "manageTemplatesCtrl"
-  }).
-  when("/createPoll", {
-    templateUrl: "partials/createPoll.html",
-    controller: "createPollCtrl"
-  }).
-  when("/createPoll/customize", {
-    templateUrl: "partials/customizePoll.html",
-    controller: "customizePollCtrl"
-  }).
-  when("/help", {
-    templateUrl: "partials/help.html",
-    controller: "helpCtrl"
-  }).
-  when("/pollResults", {
-    templateUrl: "partials/pollResults.html",
-    controller: "pollResultsCtrl"
+  when("/templates", {
+    templateUrl: "partials/templateManager.tmpl.html",
+    controller: "templatesCtrl"
   }).
   when("/", {
-    templateUrl: "partials/pollsListing.html",
-    controller: "pollsListingCtrl"
+    templateUrl: "partials/polls.tmpl.html",
+    controller: "pollsCtrl"
   }).
   otherwise({
     redirectTo: "/"
@@ -138,38 +122,12 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       poll.overflow = !poll.overflow;
     };
 
-    $scope.pollsListingShow = function () {
-      $location.path("/");
+    $scope.pollsShow = function () {
+      $location.path("/polls");
     };
 
-    $scope.pollResultsShow = function (poll) {
-      $scope.poll = poll;
-      $location.path("/pollResults")
-    };
-
-    $scope.peerListsShow = function(){
-      $location.path("/peerLists");
-    };
-
-    $scope.manageTemplatesShow = function(){
-      $location.path("/manageTemplates");
-    };
-
-	  $scope.createPollShow = function(){
-      $location.path("/createPoll");
-    };
-
-    $scope.customizePollShow = function (poll) {
-      $scope.pollToCustomize = poll;
-      $scope.poll = angular.copy(poll);
-      $location.path("/createPoll/customize");
-    };
-
-    $scope.helpShow = function(){
-      var modalInstance = $modal.open({
-        templateUrl: 'partials/help.html',
-        controller: "helpCtrl"
-      });
+    $scope.templatesShow = function () {
+      $location.path("/templates");
     };
 
     $scope.startCustomizing = function(e, pollObject){
@@ -179,8 +137,6 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       // We will modify this during our WIP. See saveCustomization for where it
       // gets copied back.
       $scope.poll = angular.copy(pollObject);
-      var dateTime = new Date();
-      $scope.poll.end
       $scope.dialog(e, $scope.poll, $scope.isPoll, $scope.isTemplate);
     };
 
@@ -462,6 +418,18 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             $scope.poll.options.splice($index, 1);
           };
 
+          $scope.save = function (poll) {
+            for (var i = 0; i<poll.options.length; i++) {
+              if (!poll.options[i].text) {
+                poll.options.splice(i,1);
+              }
+            }
+
+            poll.save();
+            poll.overflow = false;
+            $hideDialog();
+          };
+
           $scope.nextDialog = function (e, poll, isPoll, isTemplate) {
             $hideDialog();
             $materialDialog({
@@ -500,34 +468,67 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
 });
 
-pollApp.controller("pollsListingCtrl", function ($scope) {
+pollApp.controller("pollsCtrl", function ($scope) {
 });
 
-pollApp.controller("pollResultsCtrl", function ($scope) {
 
-    $scope.poll = $scope.poll || $scope.polls[0];
-    $scope.chartData = [];
-    for (var i = 0; i < $scope.poll.options.length; i++) {
-      $scope.chartData[i] = {
-        label: $scope.poll.options[i].text,
-        data: $scope.poll.counts[i]
+pollApp.controller("templatesCtrl", function ($scope){
+ 
+  $scope.selectedIndex = 0;
+  var recentPolls = japi.polls.getList();
+  var templates = japi.polls.templates.list();
+  var exampleTemplates = japi.polls.templates.listExamples();
+  var peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
+  $scope.templates = templates;
+
+
+  $(document).mouseup(function (e) {
+      var container = $("#quickAddBox");
+      if (!container.is(e.target) // if the target of the click isn't the container...
+          && container.has(e.target).length === 0) // ... nor a descendant of the container
+      {
+          var scope = angular.element($("#quickAddBox")).scope();
+          scope.$apply(function(){
+              scope.newTemplate = false;
+          });       
       }
-    }
-});
+  });
 
-pollApp.controller("peerListsCtrl", function ($scope){
-});
+  $scope.newTemplateFromScratch = function (e){
+    var newTemplate = japi.polls.templates.build();
+    newTemplate.title = $scope.newTemplateTitle;
+    newTemplate.description = $scope.newTemplateDescription;
+    $scope.isPoll = false;
+    $scope.isTemplate = true;
+    $scope.startCustomizing(e, newTemplate);
+    $scope.newTemplateTitle = "";
+    $scope.newTemplateDescription = "";
+    $scope.newTemplate = false;
+    $scope.quickAddForm.$setPristine();
+  };
 
-pollApp.controller("manageTemplatesCtrl", function ($scope){
-  $scope.recentPolls = japi.polls.getList();
-  $scope.peerPolls = japi.polls.templates.listPeerRecommended();
-});
+  $scope.collectionChange = function () {
+    $scope.selectedIndex = this.$index;
+    
+    if ($scope.selectedIndex === 0) {
+      $scope.templates = templates;
+    } else if ($scope.selectedIndex === 1) {
+      $scope.templates = recentPolls;
+    } else if ($scope.selectedIndex === 2) {
+      $scope.templates = exampleTemplates;
+    } else if ($scope.selectedIndex === 3) {
+      $scope.templates = peerRecommendedTemplates;
+    };
+  };
 
-pollApp.controller("createPollCtrl", function ($scope){
-  $scope.recentPolls = japi.polls.getList();
-  $scope.examplePolls = japi.polls.templates.listExamples();
-  $scope.myTemplates = japi.polls.templates.list();
-  $scope.peerPolls = japi.polls.templates.listPeerRecommended();
+  $scope.zoomTemplate = function (e, template) {
+    var isPoll = false;
+    var isTemplate = true;
+    var templateToEdit = angular.copy(template);
+    templateToEdit.status = "unsaved";
+    $scope.dialog(e, templateToEdit, isPoll, isTemplate);
+  };
+
 });
 
 pollApp.controller("customizePollCtrl", function ($scope, $location, $controller){

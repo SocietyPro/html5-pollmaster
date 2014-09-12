@@ -43,7 +43,7 @@
         <div class="optionPreview" ng-show="poll.status === 'unstarted'">
           <div class="options">
             <table>
-              <tr><td>VOTE</td></tr>
+              <tr><td colspan="2">VOTE</td></tr>
               <tr ng-repeat="option in poll.options">  
               <td><input type="checkbox" disabled></td>
               <td>{{option.text}}</td>

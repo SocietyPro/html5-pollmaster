@@ -31,8 +31,11 @@
           <material-button id="closeButton" ng-click="close()">
             Close
           </material-button>
-          <material-button id="nextButton" ng-click="nextDialog($event, poll)" class="material-button-colored">
+          <material-button ng-if="isPoll" id="nextButton" ng-click="nextDialog($event, poll)" class="material-button-colored">
             Next
+          </material-button>
+          <material-button ng-if="isTemplate && !isPoll" ng-click="save(poll)" class="material-button-colored">
+            Save
           </material-button>
         </div>
 

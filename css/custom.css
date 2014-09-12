@@ -427,6 +427,10 @@ textarea {
   height: 80vh;
 }
 
+#templatesContainer {
+  height: 80vh;
+}
+
 material-button.material-button-fab.material-button-fab-bottom-right {
       top: auto;
       right: 56px;
@@ -499,7 +503,7 @@ material-button.material-button-fab.material-button-fab-bottom-right {
 }
 
 .options table td {
-  padding: 3px 3px 3px 0;
+  padding: 3px 0;
   border-top: none;
   vertical-align: middle;
 }
@@ -762,4 +766,50 @@ material-dialog div .cardMenuBar {
   margin-bottom:30px;
   font-size: 0.7em;
   opacity: 0.7;
+}
+
+/* Styles for Material Tabs */
+.tabs-content .material-view {
+    background-color: #fff;
+    height: 100%;
+}
+
+div.infoBar input {
+    display: inline-block;
+}
+
+div.infoBar {
+    margin-left: 20px;
+    height: 75px;
+    font-size: .8em;
+}
+
+material-tabs {
+  width: auto;
+  margin: -20px -20px 0 -20px;
+}
+material-tabs .tabs-header .tabs-header-items {
+  background-color: #ffeb3b;
+}
+
+material-tab material-tab-label {
+  color: #000;
+  opacity: 0.5;
+}
+
+material-tab material-tab-label.active {
+  color: #000;
+  opacity: 1.0;
+}
+
+material-ink-bar {
+  background: #000;
+}
+
+material-tabs .tabs-content {
+    height: 100%;
+}
+
+material-card {
+  margin-top: 16px;
 }
