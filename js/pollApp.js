@@ -84,6 +84,11 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     $scope.exampleTemplates = japi.polls.templates.listExamples();
     $scope.peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
 
+    $scope.newTitle = "";
+    $scope.newDescription = "";
+    $scope.newItem = false;
+
+
     $(document).mouseup(function (e) {
         var container = $("#quickAddBox");
         if (!container.is(e.target) // if the target of the click isn't the container...
@@ -251,17 +256,17 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       $scope.copyPoll(args.event, args.poll);
     });
 
-    $scope.newPollFromScratch = function(e, title, description) {
+    $scope.newPollFromScratch = function(e, title, description, isPoll) {
       var newPoll = japi.polls.build();
       newPoll.title = title;
       newPoll.description = description;
-      $scope.isPoll = true;
-      $scope.isTemplate = false;
+      $scope.isPoll = isPoll;
+      $scope.isTemplate = !isPoll;
       $scope.startCustomizing(e, newPoll);
       $scope.newPollTitle = "";
       $scope.newPollDescription = "";
       $scope.newPoll = false;
-      $scope.quickAddForm.$setPristine();
+      $scope.$broadcast('resetQuickAddForm');
     };
 
     $scope.newPollFromTemplate = function(template){
@@ -480,6 +485,8 @@ pollApp.controller("templatesCtrl", function ($scope){
   var exampleTemplates = japi.polls.templates.listExamples();
   var peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
   $scope.templates = templates;
+  $scope.addTitlePlaceholder = "Add Template";
+  $scope.addDescriptionPlaceholder = "Add Description";
 
 
   $(document).mouseup(function (e) {
@@ -528,6 +535,10 @@ pollApp.controller("templatesCtrl", function ($scope){
     templateToEdit.status = "unsaved";
     $scope.dialog(e, templateToEdit, isPoll, isTemplate);
   };
+
+  $scope.$on('resetQuickAddForm', function () {
+    $scope.quickAddForm.$setPristine();
+  });
 
 });
 
