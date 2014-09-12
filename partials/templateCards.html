@@ -9,7 +9,7 @@
         <material-input-group>  
           <material-input  name="quickAddDescription" placeholder="Add Description" id="quickAddDescription" type="text" size="45" ng-model="newTemplateDescription" flex ng-show="newTemplate" click-anywhere-but-here="close()" is-active="isDropdownOpen()">
         </material-input-group>
-        <material-button id="quickAddButton" class="material-button-colored" ng-show="newTemplate && newTemplateTitle && quickAddForm.$dirty" ng-click="newTemplateFromScratch($event)">
+        <material-button id="quickAddButton" class="material-button-colored" ng-show="newTemplate && newTemplateTitle && quickAddForm.$dirty" ng-click="newTemplateFromScratch($event, newTemplateTitle, newTemplateDescription)">
           SAVE
         </material-button>
       </form>
@@ -17,6 +17,7 @@
     </div>
     <!-- end Quick Add Box -->
   </div>
+   {{quickAddForm.$dirty}} - {{newTemplateTitle}}
   <div class="cardholder" ng-repeat="template in templates" ng-mouseleave="template.overflow = false">
     <material-card class="mainCard" ng-mouseover="template.menubar = true" ng-mouseleave="template.menubar = false">
       <div class="cardContentContainer" ng-click="zoomTemplate($event, template)">

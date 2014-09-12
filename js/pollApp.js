@@ -494,10 +494,10 @@ pollApp.controller("templatesCtrl", function ($scope){
       }
   });
 
-  $scope.newTemplateFromScratch = function (e){
+  $scope.newTemplateFromScratch = function (e, newTitle, newDescription){
     var newTemplate = japi.polls.templates.build();
-    newTemplate.title = $scope.newTemplateTitle;
-    newTemplate.description = $scope.newTemplateDescription;
+    newTemplate.title = newTitle;
+    newTemplate.description = newDescription;
     $scope.isPoll = false;
     $scope.isTemplate = true;
     $scope.startCustomizing(e, newTemplate);
