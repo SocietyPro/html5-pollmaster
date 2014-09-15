@@ -8,298 +8,558 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap"]) // array is required
+var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker']) // array is required
+var saveMatrix = [];
 
 pollApp.config(function($routeProvider){
   
-  $routeProvider.when("/peerLists", {
-    templateUrl: "partials/peerLists.html",
-    controller: "peerListsCtrl"
+  $routeProvider.when("/polls", {
+    templateUrl: "partials/polls.tmpl.html",
+    controller: "pollsCtrl"
   }).
-  when("/manageTemplates", {
-    templateUrl: "partials/manageTemplates.html",
-    controller: "manageTemplatesCtrl"
-  }).
-  when("/createPoll", {
-    templateUrl: "partials/createPoll.html",
-    controller: "createPollCtrl"
-  }).
-  when("/createPoll/customize", {
-    templateUrl: "partials/customizePoll.html",
-    controller: "customizePollCtrl"
-  }).
-  when("/help", {
-    templateUrl: "partials/help.html",
-    controller: "helpCtrl"
-  }).
-  when("/pollResults", {
-    templateUrl: "partials/pollResults.html",
-    controller: "pollResultsCtrl"
+  when("/templates", {
+    templateUrl: "partials/templateManager.tmpl.html",
+    controller: "templatesCtrl"
   }).
   when("/", {
-    templateUrl: "partials/pollsListing.html",
-    controller: "pollsListingCtrl"
+    templateUrl: "partials/polls.tmpl.html",
+    controller: "pollsCtrl"
   }).
   otherwise({
     redirectTo: "/"
   });
 
 });
-  
-pollApp.controller("pollAppCtrl", function($scope, $location, $modal){
 
-    $scope.polls = japi.polls.getList();
-    $scope.myTemplates = japi.polls.templates.list();
-    $scope.exampleTemplates = japi.polls.templates.listExamples();
-    $scope.peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
+pollApp.factory("menu", ['$rootScope', function ($rootScope) {
+  var self;
+  var filters = [{ filter: 'All', color: '#000000' }, 
+                 { filter: 'Votes', color: '#d19b9b' },
+                 { filter: 'Running', color: '#92e4c9' },
+                 { filter: 'Unstarted', color: '#ffffff' },
+                 { filter: 'Completed', color: '#c9d1ff' }];
 
+  return self = {
+    filters: filters,
 
-    $scope.pollsListingShow = function () {
-      $location.path("/");
-    };
+    selectFilter: function(filter) {
+      self.currentFilter = filter;
+      if (filter.filter === "All") {
+        $rootScope.pollFilter = undefined;
+      } else if (filter.filter === "Running") {
+        $rootScope.pollFilter = "started";
+      } else if (filter.filter === "Completed") {
+        $rootScope.pollFilter = "complete";
+      } else {
+        $rootScope.pollFilter = filter.filter.toLowerCase();
+      };
+    },
 
-    $scope.pollResultsShow = function (poll) {
-      $scope.poll = poll;
-      $location.path("/pollResults")
-    };
+    isFilterSelected: function (filter) {
+      return self.currentFilter === filter;
+    }
+  };
+}]);
 
-    $scope.peerListsShow = function(){
-      $location.path("/peerLists");
-    };
+pollApp.directive('ngReallyClick', [function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind('click', function() {
+                var message = attrs.ngReallyMessage;
+                if (message && confirm(message)) {
+                    scope.$apply(attrs.ngReallyClick);
+                }
+            });
+        }
+    }
+}]);
 
-    $scope.manageTemplatesShow = function(){
-      $location.path("/manageTemplates");
-    };
-
-	  $scope.createPollShow = function(){
-      $location.path("/createPoll");
-    };
-
-    $scope.customizePollShow = function (poll) {
-      $scope.pollToCustomize = poll;
-      $scope.poll = angular.copy(poll);
-      $location.path("/createPoll/customize");
-    };
-
-    $scope.helpShow = function(){
-      var modalInstance = $modal.open({
-        templateUrl: 'partials/help.html',
-        controller: "helpCtrl"
+pollApp.directive('focusThis', function () {
+  return {
+    link: function (scope, element, attrs) {
+      scope.$on('focusedIndex', function (event, args) {
+        if (args.focus == attrs['focusThis']) {
+          element.focus();
+        } else {
+          element.blur();
+        }
       });
+    }
+  };
+});
+
+pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu){
+
+    $scope.menu = menu;
+    $scope.menu.selectFilter(menu.filters[0]);
+
+    $(document).mouseup(function (e) {
+        var container = $("#quickAddBox");
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            var scope = angular.element($("#quickAddBox")).scope();
+            scope.$apply(function(){
+                scope.newItem = false;
+            });       
+        }
+    });
+
+    $scope.toggleMenu = function () {
+      $materialSidenav('left').toggle();
     };
 
-    $scope.startCustomizing = function(pollObject){
+    $scope.listView = "quilt";
+
+    $scope.streamView = function () {
+      $scope.listView = "stream";
+    };
+
+    $scope.quiltView = function () {
+      $scope.listView = "quilt";
+    };
+
+    $scope.overflowToggle = function (item) {
+      item.overflow = !item.overflow;
+    };
+
+    $scope.pollsShow = function () {
+      $location.path("/polls");
+    };
+
+    $scope.templatesShow = function () {
+      $location.path("/templates");
+    };
+
+    $scope.startCustomizing = function(e, itemObject, saveMatrix){
       // We won't modify or save this until save is clicked:
-      $scope.pollToCustomize = pollObject; 
+      $scope.itemToCustomize = itemObject; 
 
       // We will modify this during our WIP. See saveCustomization for where it
       // gets copied back.
-      $scope.poll = angular.copy(pollObject);
-      $location.path("/createPoll/customize");
+      $scope.poll = angular.copy(itemObject);
+      $scope.dialog(e, $scope.poll, saveMatrix);
     };
 
-    $scope.savePollCustomization = function(){
-      $scope.pollToCustomize = $scope.poll;
-      $scope.pollToCustomize.save();
+    $scope.newItemFromScratch = function(e, isPoll, quickAddForm, newTitle, newDescription) {
+      if (isPoll) {var newItem = japi.polls.build()};
+      if (!isPoll) {var newItem = japi.polls.templates.build()};
+      newItem.title = newTitle;
+      newItem.description = newDescription;
+      saveMatrix[0] = saveMatrix[1] = isPoll;
+      saveMatrix[2] = saveMatrix[3] = !isPoll;
+      $scope.startCustomizing(e, newItem, saveMatrix);
+      $scope.$broadcast('resetQuickAddForm');
     };
 
-    $scope.saveTemplateCustomization = function(){
-      $scope.templateToCustomize = $scope.poll;
-      $scope.templateToCustomize.save();
+    $scope.dialog = function (e, poll, saveMatrix) {
+      $materialDialog({
+        templateUrl: 'partials/editPoll.tmpl.html',
+        targetEvent: e,
+        controller: ['$scope', '$hideDialog', '$rootScope', '$timeout', function ($scope, $hideDialog, $rootScope, $timeout) {
+          $scope.poll = poll;
+          $scope.saveMatrix = saveMatrix;
+          $scope.ballotPreview = false;
+          $scope.optionsMenu = false;
+          if ($scope.poll.endTime) {
+            $scope.endTime = new Date();
+            $scope.endTime.setHours(parseInt($scope.poll.endTime.substring(0,2)));
+            $scope.endTime.setMinutes(parseInt($scope.poll.endTime.substring(3,5)));
+          }
+
+          $timeout(function () {
+            $("#addOptionInput").focus();
+          });          
+
+          $scope.checkHeight = function () {
+            var dialogHeight = $('.dialog-content').height();
+            var curHeight = $('#content').height();            
+            if (dialogHeight < curHeight) {
+               $('.dialog-content').css("overflow","auto");
+            } else {
+              $('.dialog-content').css("overflow","hidden");
+            }
+          }
+
+          $scope.keypressListener = function (event) {
+            if (event.charCode == 13) {
+              $timeout(function () {
+                $("#addOptionInput").focus();
+              });
+            }
+          }
+
+          $scope.close = function () {
+            $hideDialog();
+          };
+
+          $scope.getTime = function (et) {
+            if (et) {
+              $scope.poll.endTime = et.toTimeString().substring(0,5);
+            }
+          };
+
+          $scope.getDate = function (ed) {
+            $scope.poll.endDate = new Date(ed);
+          }
+
+          $scope.addOption = function () {
+            var newOption = { text: $scope.newOptionText, subgroup: "", count: 0 };
+            $scope.poll.options.push(newOption);
+            $scope.newOptionText = "";
+            var index = $scope.poll.options.length - 1;
+            $timeout(function () {
+              $rootScope.$broadcast('focusedIndex', {focus: index});
+            });
+          };
+
+          $scope.checkForOptionDelete = function ($event,$index) {
+            if($scope.poll.options[$index].text === '' && $event.keyCode === 8) {
+              if ($scope.poll.options[$index].empty != undefined && $scope.poll.options[$index].empty) {
+                $scope.poll.options.splice($index, 1);
+                var previousChild;
+                if ($index > 0) {
+                  previousChild = $index - 1;
+                } else {
+                  if ($scope.poll.options.length > 0) {
+                    previousChild = 0;
+                  } else {
+                    $scope.keypressListener({"charCode":13});
+                    return;
+                  }
+                }
+                $timeout(function () {
+                  $rootScope.$broadcast('focusedIndex', {focus: previousChild});
+                });
+              } else {
+                $scope.poll.options[$index].empty = true;
+              }
+            }
+          };
+
+          $scope.removeOption = function ($index) {
+            $scope.poll.options.splice($index, 1);
+          };
+
+          $scope.save = function (item, saveMatrix) {
+            saveItem(item, saveMatrix);
+            item.overflow = false;
+            $hideDialog();
+          };
+
+          $scope.nextDialog = function (e, poll, saveMatrix) {
+            $hideDialog();
+            $materialDialog({
+              templateUrl: 'partials/selectTarget.tmpl.html',
+              targetEvent: e,
+              controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+                $scope.poll = poll;
+                $scope.myGroups = japi.me.groups;
+                $scope.saveMatrix = saveMatrix;
+
+                $scope.close = function () {
+                  $hideDialog();
+                };
+
+                $scope.save = function (item, saveMatrix) {
+                  saveItem(item, saveMatrix);
+                  item.overflow = false;
+                  $hideDialog();
+                };
+
+
+              }]
+            });
+          };
+
+        }]
+      });
     };
 
-    $scope.copyPoll = function(oldPoll){
-      var newPoll = japi.polls.build(oldPoll);
-      $scope.isPoll = true;
-      $scope.isTemplate = false;
-      $scope.startCustomizing(newPoll);
-    };
+    function saveItem (item, saveMatrix) {
 
-    $scope.editPoll = function(oldPoll){
-      $scope.isPoll = true;
-      $scope.isTemplate = false;
-      $scope.startCustomizing(oldPoll);
-    };
-
-    $scope.startPoll = function(oldPoll){
-      console.log("Starting Poll:");
-      oldPoll.start();
-    };
-
-    $scope.newPollFromScratch = function(){
-      var newPoll = japi.polls.build();
-      $scope.isPoll = true;
-      $scope.isTemplate = false;
-      $scope.startCustomizing(newPoll);
-    };
-
-    $scope.newPollFromTemplate = function(template){
-      var newPoll = japi.polls.build(template);
-      $scope.isPoll = true;
-      $scope.isTemplate = false;
-      $scope.startCustomizing(newPoll);
-    };
-
-    $scope.destroyPoll = function (poll) {
-      poll.destroy();
-    };
-
-    $scope.newTemplateFromScratch = function(){
-      var newTemplate = japi.polls.templates.build();
-      $scope.isPoll = false;
-      $scope.isTemplate = true;
-      $scope.startCustomizing(newTemplate);
-    };
-
-    $scope.newTemplateFromPoll = function (oldPoll) {
-      var newTemplate = japi.polls.build(oldPoll);
-      $scope.isPoll = false;
-      $scope.isTemplate = true;
-      $scope.startCustomizing(newTemplate);
-    };
-
-    $scope.editTemplate = function(oldTemplate){
-      $scope.isPoll = false;
-      $scope.isTemplate = true;
-      $scope.startCustomizing(oldTemplate);
-    };
-
-    $scope.forkTemplate = function (oldTemplate) {
-      var newTemplate = japi.polls.templates.build(oldTemplate);
-      $scope.isPoll = false;
-      $scope.isTemplate = true;
-      $scope.startCustomizing(newTemplate);
-    };
-   
-    $scope.destroyTemplate = function(template) {
-      template.destroy();
-    };
-
-    $scope.prettyJSON = function(obj){
-      return JSON.stringify(obj, null, 2)
-    };
-
-});
-
-pollApp.controller("pollsListingCtrl", function ($scope) {
-});
-
-pollApp.controller("pollResultsCtrl", function ($scope) {
-
-    $scope.poll = $scope.poll || $scope.polls[0];
-    $scope.chartData = [];
-    for (var i = 0; i < $scope.poll.options.length; i++) {
-      $scope.chartData[i] = {
-        label: $scope.poll.options[i].text,
-        data: $scope.poll.counts[i]
+      for (var i = 0; i<item.options.length; i++) {
+        if (!item.options[i].text) {
+          item.options.splice(i,1);
+        }
       }
-    }
-});
+      item.overflow = false;
 
-pollApp.controller("peerListsCtrl", function ($scope){
-});
+      if (!saveMatrix[0] && saveMatrix[1]) {
+        buildAndSave(item, 'poll');
+      } else if (saveMatrix[0] && saveMatrix[1]) {
+        save(item);
+      };
 
-pollApp.controller("manageTemplatesCtrl", function ($scope){
-  $scope.recentPolls = japi.polls.getList();
-  $scope.peerPolls = japi.polls.templates.listPeerRecommended();
-});
+      if (!saveMatrix[2] && saveMatrix[3]) {
+        buildAndSave(item, 'template');
+      } else if (saveMatrix[2] && saveMatrix[3]) {
+        save(item);
+      };
 
-pollApp.controller("createPollCtrl", function ($scope){
-  $scope.recentPolls = japi.polls.getList();
-  $scope.examplePolls = japi.polls.templates.listExamples();
-  $scope.myTemplates = japi.polls.templates.list();
-  $scope.peerPolls = japi.polls.templates.listPeerRecommended();
-});
-
-pollApp.controller("customizePollCtrl", function ($scope, $location, $controller){
-  $controller("pollAppCtrl", {$scope: $scope});
-  $scope.saveButtonLabel = "Save";
-
-  $scope.isPoll = $scope.isPoll  === undefined ? true : $scope.isPoll;
-  $scope.isTemplate = $scope.isTemplate === undefined ? false : $scope.isTemplate;
-  $scope.setPollSaveOptions = function(){
-    if($scope.isPoll == false){
-      $scope.startPollAfterCustomizing = false; // Turn the Start Poll option off
     };
-    if($scope.isPoll && $scope.startPollAfterCustomizing){
-      $scope.saveButtonLabel = "Save and Start";
-    } else {
-      $scope.saveButtonLabel = "Save";
+
+    function save (item) {
+      item.save();
     };
-  };
 
-  $scope.poll = $scope.poll || japi.polls.build();
-
-  $scope.temporaryPollOptions = {};
-
-  $scope.poll.dateStarted = $scope.poll.dateStarted || new Date();
-  $scope.pollTypes = ["Eve Battle Ping", "Vote", "Opinion"];
-  $scope.units = ["Minutes", "Hours", "Days", "Weeks", "Months", "Years"];
-
-  $scope.addOption = function () {
-    var newOption = { text: "", subgroup: "" };
-    if ($scope.temporaryPollOptions.defaultChatRoom) {
-      newOption.subgroup = $scope.temporaryPollOptions.defaultChatRoom;
-    }
-    $scope.poll.options.push(newOption);
-  };
-
-  $scope.removeOption = function (option) {
-    var index = $scope.poll.options.indexOf(option);
-
-    if (index > -1) {
-      $scope.poll.options.splice(index, 1);
-    }
-  };
-
-  $scope.convertTimeToSeconds = function (length, units) {
-    switch(units) {
-      case "Minutes":
-        $scope.poll.pollTimeLength = length * 60;
-        break;
-      case "Hours":
-        $scope.poll.pollTimeLength = length * 3600;
-        break;
-      case "Days":
-        $scope.poll.pollTimeLength = length * 86400;
-        break;
-      case "Weeks":
-        $scope.poll.pollTimeLength = length * 604800;
-        break;
-      case "Months":
-        $scope.poll.pollTimeLength = length * 2592000;
-        break;
-      case "Years":
-        $scope.poll.pollTimeLength = length * 31536000;
-        break;
-    }
-  };
-
-  $scope.saveCustomization = function(){
-    // Called upon user clicking Save in poll customization screen.
-    $scope.convertTimeToSeconds($scope.temporaryPollOptions.lifespan, $scope.temporaryPollOptions.timeUnits);
-    $scope.poll.status = "unstarted";
-    //$scope.skeletonPoll = $scope.poll;
-
-    if($scope.isTemplate){
-      $scope.saveTemplateCustomization();
-    };
-    if($scope.isPoll){
-      $scope.savePollCustomization();
-      if($scope.startPollAfterCustomizing){
-        //$scope.poll.start();
-        $scope.startPoll($scope.poll);
+    function buildAndSave (item, itemType) {
+      if (itemType === 'poll') {
+        var poll = japi.polls.build(item);
+        poll.save();
+      } else if (itemType === 'template') {
+        var template = japi.polls.templates.build(item);
+        template.save();
       };
     };
-    // TODO: ASYNC
-    delete $scope.poll;
-    delete $scope.pollToCustomize;
-    if($scope.isTemplate && !$scope.isPoll) {
-      $location.path('/manageTemplates');
+
+});
+
+pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
+
+  $scope.polls = japi.polls.getList();
+  $scope.addTitlePlaceholder = "Add Poll";
+  $scope.addDescriptionPlaceholder = "Add Description";
+
+  $scope.filterPolls = function (filter) {
+    if (filter.filter === "All") {
+      $scope.pollFilter = {status: ''};
     } else {
-     $location.path('/');
+      $scope.pollFilter = {status: filter.filter};
     }
   };
+
+  $scope.zoomPoll = function (e, poll) {
+    if (poll.status === "unstarted") {
+      $scope.editPoll(e, poll);
+    } else {
+      showPoll(e, poll);
+    }
+  };
+
+  $scope.copyPoll = function(e, oldPoll){
+    oldPoll.overflow = false;
+    var newPoll = japi.polls.build(oldPoll);
+    saveMatrix = [true, true, false, false];
+    $scope.startCustomizing(e, newPoll, saveMatrix);
+  };
+
+  $scope.editPoll = function(e, oldPoll){
+    saveMatrix = [true, true, false, false];
+    $scope.startCustomizing(e, oldPoll, saveMatrix);
+  };
+
+  $scope.destroyPoll = function (poll) {
+    poll.destroy();
+  };
+
+  $scope.startPoll = function(oldPoll){
+    oldPoll.start();
+  };
+
+  $scope.newTemplateFromPoll = function (e, poll) {
+    var newTemplate = japi.polls.templates.build(poll);
+    saveMatrix = [false, false, true, true];
+    $scope.startCustomizing(e, newTemplate, saveMatrix);
+  };
+
+  $scope.pieWidth = 100;
+  $scope.pieHeight = 100;
+  $scope.xFunction = function () {
+    return function (d) {
+      return d.text;
+    };
+  }
+  $scope.yFunction = function () {
+    return function (d) {
+      return d.count;
+    };
+  }
+  $scope.descriptionFunction = function () {
+    return function (d) {
+      return d.text;
+    };
+  }
+
+  $scope.$on('showPollResults', function (scope, args) {
+    showPoll(args.event, args.poll);
+  });
+
+  $scope.$on('zoomedCopyPoll', function (scope, args) {
+    $scope.copyPoll(args.event, args.poll);
+  });
+
+  function showPoll (e, poll) {
+    $materialDialog({
+      templateUrl: 'partials/showPoll.tmpl.html',
+      targetEvent: e,
+      controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
+        $scope.poll = poll;
+        $scope.dialog = {};
+
+        $scope.close = function () {
+          $hideDialog();
+        };
+
+        $scope.copyPoll = function (e, poll) {
+          $hideDialog();
+          $rootScope.$broadcast('zoomedCopyPoll', {event: e, poll: poll});
+        };
+
+        $scope.destroyPoll = function (poll) {
+          poll.destroy();
+          $hideDialog();
+        };
+
+        $scope.pieWidth = 200;
+        $scope.pieHeight = 200;
+        $scope.xFunction = function () {
+          return function (d) {
+            return d.text;
+          };
+        }
+        $scope.yFunction = function () {
+          return function (d) {
+            return d.count;
+          };
+        }
+        $scope.descriptionFunction = function () {
+          return function (d) {
+            return d.text;
+          };
+        };
+
+        $scope.showComments = function (e, poll) {
+          $hideDialog();
+          $materialDialog({
+            templateUrl: 'partials/showComments.tmpl.html',
+            targetEvent: e,
+            controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+              $scope.poll = poll;
+              $scope.dialog = {};
+
+              $scope.close = function () {
+                $hideDialog();
+              };
+
+              $scope.showPoll = function (e, poll) {
+                $hideDialog();
+                $rootScope.$broadcast('showPollResults', {event: e, poll: poll});
+              };
+
+            }]
+          });
+        };
+
+      }]
+    });
+  };
+
+});
+
+pollApp.controller("templatesCtrl", function ($scope, $materialDialog){
+ 
+  $scope.selectedIndex = 0;
+  var recentPolls = japi.polls.getList();
+  var templates = japi.polls.templates.list();
+  var exampleTemplates = japi.polls.templates.listExamples();
+  var peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
+  $scope.templates = templates;
+  $scope.addTitlePlaceholder = "Add Template";
+  $scope.addDescriptionPlaceholder = "Add Description";
+
+  $scope.collectionChange = function () {
+    $scope.selectedIndex = this.$index;
+    
+    if ($scope.selectedIndex === 0) {
+      $scope.templates = templates;
+    } else if ($scope.selectedIndex === 1) {
+      $scope.templates = recentPolls;
+    } else if ($scope.selectedIndex === 2) {
+      $scope.templates = exampleTemplates;
+    } else if ($scope.selectedIndex === 3) {
+      $scope.templates = peerRecommendedTemplates;
+    };
+  };
+
+  $scope.editTemplate = function(e, template){
+    saveMatrix = [false, false, true, true];
+    $scope.startCustomizing(e, template, saveMatrix);
+  };
+
+  $scope.forkTemplate = function (e, template) {
+    var newTemplate = japi.polls.templates.build(template);
+    saveMatrix = [false, false, true, true];
+    $scope.startCustomizing(e, newTemplate, saveMatrix);
+  };
+ 
+  $scope.destroyTemplate = function(template) {
+    template.destroy();
+  };
+
+  $scope.zoomTemplate = function (e, template) {
+    saveMatrix = [false, false, true, true];
+    if($scope.selectedIndex == 0) {
+      var templateToEdit = angular.copy(template);
+      templateToEdit.status = "unsaved";
+      $scope.dialog(e, templateToEdit, saveMatrix);
+    } else {
+      showTemplate(e, template, $scope.selectedIndex);
+    };
+  };
+
+  $scope.newPollFromTemplate = function(e, template){
+    var newPoll = japi.polls.build(template);
+    saveMatrix = [true, true, false, false];
+    $scope.startCustomizing(e, newPoll, saveMatrix);
+  };
+
+  $scope.$on('zoomedForkTemplate', function (scope, args) {
+    $scope.forkTemplate(args.event, args.template);
+  });
+
+  $scope.$on('zoomedPollFromTemplate', function (scope, args) {
+    $scope.newPollFromTemplate(args.event, args.template);
+  });
+
+  function showTemplate (e, template, selectedIndex) {
+    $materialDialog({
+      templateUrl: 'partials/showTemplate.tmpl.html',
+      targetEvent: e,
+      controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
+        $scope.template = template;
+        $scope.dialog = {};
+        $scope.selectedIndex = selectedIndex;
+
+        $scope.close = function () {
+          $hideDialog();
+        };
+
+        $scope.forkTemplate = function (e, template) {
+          $hideDialog();
+          $rootScope.$broadcast('zoomedForkTemplate', {event: e, template: template});
+        };
+
+        $scope.newPollFromTemplate = function(e, template){
+          $hideDialog();
+          $rootScope.$broadcast('zoomedPollFromTemplate', {event: e, template: template});
+        };
+
+      }]
+    });
+  };
+
+});
+
+pollApp.controller('quickAddCtrl', function ($scope) {
+
+  $scope.$on('resetQuickAddForm', function () {
+    $scope.newTitle = '';
+    $scope.newDescription = '';
+    $scope.newItem = false;
+    $scope.quickAddForm.$setPristine();
+  });
 
 });
 
@@ -309,35 +569,4 @@ pollApp.controller("helpCtrl", function ($scope, $modalInstance) {
         $modalInstance.dismiss('close');
       };
 
-});
-
-pollApp.directive('resultsChart', function () {
-  return {
-    restrict: 'E',
-    link: function (scope, element, attrs) {
-
-      var chart = null,
-          opts = {
-            series: {
-              pie: {
-                show: true
-              }
-            },
-            legend: {
-              show: false
-            },
-            colors: ["red", "orange", "green", "blue", "purple"]
-          }
-
-      scope.$watch(attrs.ngmodel, function (v) {
-        if (!chart){
-          chart = $.plot(element, v, opts);
-          element.show();
-        } else {
-          chart.setData(v);
-          chart.draw();
-        }
-      });
-    }
-  }
 });

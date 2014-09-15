@@ -1,0 +1,22 @@
+<material-tabs selected="selectedIndex" noink>
+  <material-tab on-select="collectionChange()" label="My Templates"></material-tab>
+  <material-tab on-select="collectionChange()" label="Copy From Recent Polls"></material-tab>
+  <material-tab on-select="collectionChange()" label="Copy From Examples"></material-tab>
+  <material-tab on-select="collectionChange()" label="Copy From Peer Recommended"></material-tab>
+</material-tabs>
+
+<material-content id="templatesContainer" class="material-content-padding" scroll-y>
+
+
+  <div id="quilt" ng-show="listView === 'quilt'">
+    <ng-include src="'partials/templateCards.html'"></ng-include>
+  </div>
+
+  <pre>{{poll | json}}</pre>
+
+  <div>
+    <material-button class="material-button-fab material-button-fab-bottom-right material-theme-light-blue" ng-click="newItemFromScratch($event, false)">
+      <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png"></material-icon>
+    </material-button>
+  </div>
+</material-content>

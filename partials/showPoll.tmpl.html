@@ -1,0 +1,92 @@
+<material-dialog>
+  <div id="materialDialogContainer" ng-show="poll.status === 'started' || poll.status === 'complete'" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+    <div class="dialog-content">
+      <div class="pollInformation">
+        <div layout="horizontal" layout-align="space-between">
+          <span>
+            Poll ends at {{poll.endTime}} on {{poll.endDate | date : 'MM/dd/yy'}}
+          </span>
+          <span>{{poll.originator}}</span>
+        </div>
+        <h2>{{poll.title}}</h2>
+        <p>
+          {{poll.description}}
+        </p>
+
+        <div id="statsBox">
+          <span class="tableTitle"><b>Poll Stats:</b></span>
+          <table id="pollStatsTable">
+            <tr>
+              <td>Sent</td>
+              <td>{{poll.stats.sent}}</td>
+            </tr>
+            <tr>
+              <td>Responded</td>
+              <td>{{poll.stats.responded}}</td>
+            </tr>
+            <tr>
+              <td>Pending</td>
+              <td>{{poll.stats.pending}}</td>
+            </tr>
+            <tr>
+              <td>Invalid</td>
+              <td>{{poll.stats.invalid}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="resultsBox" layout="horizontal" layout-align="space-between">
+          <div style="width:50%"> 
+            <span class="tableTitle"><b>Poll Results:</b></span>
+            <table id="pollResultsTable">
+              <tr ng-repeat="option in poll.options">
+                <td>{{option.text}}</td>
+                <td>{{option.count}}</td>
+              </tr>
+            </table>
+
+          </div>
+
+          <div class="bigPieChartContainer">
+            <nvd3-pie-chart
+              id="{{poll.id}}big"
+              data="poll.options"
+              x="xFunction()"
+              y="yFunction()"
+              width="{{ pieWidth }}"
+              height="{{ pieHeight }}"
+              margin="{left: 15, top: 15, bottom: 15, right: 15}"
+              showLabels="true"
+              pieLabelsOutside="true"
+              showValues="true"
+              labelType="value"
+              tooltips="true">
+              <svg></svg>
+            </nvd3-pie-chart>
+          </div>
+        </div>
+        <div class="clearBoth"></div>
+      </div>
+    </div>
+    <div class="dialog-actions" layout="horizontal" layout-align="end">
+      <material-button id="closeButton" ng-click="close()">
+        Close
+      </material-button>
+    </div>
+
+    <div id="actionMenuBar" class="cardMenuBar animate-show" ng-show="dialog.menubar" style="display:block !important;">
+      <div class="dialog-menubar-actions">
+        <material-button id="showCommentsButton" ng-if="poll.allowComments" class="material-button-icon" ng-click="showComments($event, poll)" title="Show Poll Comments">
+          <img ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_chat_wht_18dp.png">
+        </material-button>
+        <material-button id="copyPollButton" class="material-button-icon" ng-click="copyPoll($event, poll)" title="Copy This Poll">
+          <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_content_copy_wht_18dp.png">
+        </material-button>
+        <material-button id="deletePollButton" class="material-button-icon" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyPoll(poll)" title="Delete This Poll">
+          <img ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_delete_wht_18dp.png">
+        </material-button>
+      </div>
+    </div>
+
+  </div>
+</material-dialog>

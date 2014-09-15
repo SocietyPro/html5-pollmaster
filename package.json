@@ -7,6 +7,7 @@
     "bower": "^1.3.1",
     "grunt": "~0.4.5",
     "http-server": "^0.6.1",
+    "jasmine-spec-reporter": "^0.6.0",
     "karma": "^0.12.19",
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
@@ -21,13 +22,10 @@
   },
   "scripts": {
     "postinstall": "bower install; bower update;",
-
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000",
-
     "pretest": "npm install; npm run update-webdriver",
     "test": "protractor test/protractor-conf.js",
-
     "test-results": "protractor test/protractor-conf.js --specs test/e2e/pollResultsSpec.js",
     "test-header": "protractor test/protractor-conf.js --specs test/e2e/pollsListingHeaderSpec.js",
     "test-pollslist": "protractor test/protractor-conf.js --specs test/e2e/pollsListingSpec.js",
@@ -35,16 +33,11 @@
     "test-customize": "protractor test/protractor-conf.js --specs test/e2e/customizePollSpec.js,test/e2e/targetSelectionSpec.js,test/e2e/ballotViewSpec.js",
     "test-ballotview": "protractor test/protractor-conf.js --specs test/e2e/ballotViewSpec.js",
     "test-templatemanager": "protractor test/protractor-conf.js --specs test/e2e/templateManagerSpec.js,test/e2e/createTemplateFromPeerRecommendedSpec.js,test/e2e/manageMyTemplatesSpec.js,test/e2e/manageExampleTemplatesSpec.js,test/e2e/createTemplateFromRecentSpec.js",
-
     "test-single-run": "karma start test/karma.conf.js  --single-run",
-
     "update-webdriver": "webdriver-manager update",
-
     "preprotractor": "npm run update-webdriver",
-
     "karma-init": "karma init test/karma.conf.js",
     "karma": "karma start test/karma.conf.js",
-
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
   },
   "repository": {
@@ -52,7 +45,8 @@
     "url": "https://github.com/SocietyPro/html5-pollmaster.git"
   },
   "keywords": [
-    "cambrian", "societypro"
+    "cambrian",
+    "societypro"
   ],
   "author": "CambrianExp",
   "license": "MIT",

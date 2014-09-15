@@ -303,3 +303,518 @@ button {
 .indent2 {
   margin-left: 50px;
 }
+
+/* Animations */
+.animate-show {
+  line-height:20px;
+  opacity:1;
+  padding: 10px 0px 0px 0px;
+  background:white;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+  line-height:0;
+  opacity:0;
+  padding:0 10px;
+}
+
+/* Styles for material UX */
+material-sidenav {
+  max-width: 175px;
+  min-width: 175px;
+  overflow: hidden;
+}
+.color-chip {
+  display: inline-block;
+  border: 1px solid grey;
+  min-width: 12px;
+  min-height: 12px;
+  margin: 2px;
+}
+
+.menu-icon {
+  top: 0;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+#viewButtons {
+  margin: 8px 18px 0px 18px;
+}
+
+.viewButton {
+  border: 1px solid rgba(0,0,0,0.2);
+  height: 48px;
+  width: 53px;
+}
+.viewButton.active {
+  background-color: rgba(0,0,0,0.1);
+}
+.viewButton.inactive {
+  opacity: 0.5;
+}
+
+.menuDrawerButton {
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.menuDrawerButton.active {
+  background-color: rgba(0,0,0,0.1);
+}
+.menuDrawerButton.inactive {
+  opacity: 0.5;
+}
+
+#quilt {
+  vertical-align: top;
+}
+
+.content-padding {
+  padding: 20px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+#quickAddBox {
+  border: 1px solid lightgrey;
+  display: block;
+  position: relative;
+  max-width: 500px;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 8px;
+  line-height: 24px;
+}
+
+#quickAddTitle {
+  display: inline-block;
+  border-bottom: none;
+  font-size: 14px;
+}
+
+.bold {
+  font-weight: bold;
+  font-size: 17px;
+}
+#quickAddDescription {
+  display: inline-block;
+  border-bottom: none;
+  font-size: 14px;
+}
+
+input {
+  border-bottom: none;
+}
+
+textarea {
+  border-bottom: none;
+  width: 100%;
+  line-height: 1.2em;
+}
+
+#quickAddButton {
+  float: right;
+}
+
+#pollsContainer {
+  height: 80vh;
+}
+
+#templatesContainer {
+  height: 80vh;
+}
+
+material-button.material-button-fab.material-button-fab-bottom-right {
+      top: auto;
+      right: 56px;
+      bottom: 28px;
+      left: auto;
+      position: fixed; 
+}
+
+/* Styles for Cards */
+.cardholder {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+.mainCard {
+  display: inline-block;
+  vertical-align: top;
+  min-height: 100px;
+  min-width: 300px;
+  max-width: 300px;
+  padding: 16px 24px;
+}
+
+.pollOriginatorLine {
+  margin: 7px 0 14px 0;
+}
+
+.pollTitleLine {
+  margin: 0 0 14px 0;
+}
+
+.cardContentContainer {
+  margin-bottom: 30px;
+  max-height:300px;
+  overflow:hidden;
+}
+
+.votes {
+  background-color: #d19b9b;
+}
+
+.running {
+  background-color: #92e4c9;
+}
+
+.completed {
+  background-color: #c9d1ff;
+}
+
+.unstarted {
+  background-color: #ffffff;
+}
+
+.pollDetails {
+  font-size: 12px;
+}
+
+.pollReturns {
+  height: 100px;
+}
+
+.optionCounts {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  float: left;
+  max-width: 60%;
+}
+
+.options table {
+  margin-bottom: 0;
+}
+
+.options table td {
+  padding: 3px 0;
+  border-top: none;
+  vertical-align: middle;
+}
+
+.pieChartContainer {
+  height: 100px;
+  width: 100px;
+  float: right;
+}
+
+div .cardMenuBar {
+  background-color: rgba(0, 0, 0, 0.3);
+  min-height: 40px;
+  max-height: 40px;
+  margin: -24px -24px -16px -24px;
+  padding: 5px; 
+  vertical-align: middle;
+}
+
+.overflowMenuButton {
+  margin-top: 6px;
+  float: right; 
+}
+
+.overflowMenu {
+  z-index: 2;
+  position: absolute;
+  margin-right: 10px;
+  margin-top: -10px;
+  right: 0;
+  top: 100%;
+  padding: 16px 24px;
+}
+
+.overflowMenu a {
+  cursor: pointer;
+  line-height: 32px;
+}
+
+/* Card Zoom */
+#dialogLayout {
+  position: relative;
+}
+
+.material-dialog-container material-dialog .dialog-content {
+  min-width: 671px;
+  max-width: 671px;
+  padding: 16px 24px;
+  overflow: hidden;
+}
+
+.optionsLine.focused {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+
+.optionsInput {
+  display: inline-block !important;
+}
+
+#addOptionInput {
+  line-height: 15px;
+  margin: 5px 0;
+}
+
+.newOptionWrapper {
+  margin: 16px 0;
+}
+
+.newOptionWrapper.focused {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+
+material-checkbox {
+  margin: 1px;
+}
+
+#addOptionInput {
+  background-image: url(../material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png);
+  background-repeat: no-repeat;
+  text-indent: 20px;
+}
+
+material-checkbox[disabled] {
+  opacity: 0.3;
+}
+
+.dialog-menubar-actions {
+  display: inline;
+  float: left;
+}
+
+.dialog-menubar-actions .material-button-icon {
+  height: 32px;
+  width: 32px;
+  line-height: 43px;
+}
+
+.dialog-options-container {
+  border: 1px solid grey;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.dialog-options-container input {
+  display: inline;
+  color: #444;
+  font-family: 'RobotoDraft', 'Helvetica Neue', Helvetica, Arial;
+  height: 100%; 
+  border: none;
+}
+
+.dialog-options-options {
+  margin-right: 7px;
+  float: left;
+}
+
+.dialog-options-poll-ends {
+  margin-left: 7px;
+  margin-right: 14px;
+  float: right;
+}
+
+.dialog-options-save-options {
+  margin-top: 7px;
+  margin-bottom: 6px;
+  float: left;
+  width: 34%;
+}
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10px;
+}
+
+.custom-dropdown select {
+  background-color: transparent;
+  color: #444;
+  font-size: inherit;
+  padding-right: 2.5em; 
+  border: none;
+  margin: 0;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  -webkit-appearance: button;
+  border-bottom: 2px solid #B1AFAF;  
+}
+.custom-dropdown::before,
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  padding-bottom: none;
+}
+
+.custom-dropdown::after {
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  right: 1.2em;
+  top: 50%;
+  margin-top: -.5em;
+}
+
+.custom-dropdown::before {
+  width: 2em;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+  border-bottom: 2px solid #B1AFAF;
+}
+
+.custom-dropdown::before {
+  background-color: transparent;
+}
+
+.custom-dropdown::after {
+  color: rgba(0,0,0,.4);
+}
+
+.small {
+  font-size: 1em;
+}
+
+#ballotPreview {
+  box-sizing: border-box;
+  min-width: 300px;
+  max-width: 300px;
+  z-index: -1;
+  position: absolute;
+  right: -310px;
+  top: 0;
+  padding: 16px 24px;
+}
+
+/* Results Card Styles */
+#statsBox {
+  float: left;
+  width: 27%;
+  border-right: 1px solid grey;
+}
+
+#resultsBox {
+  float: right;
+  width: 70%;
+}
+
+.tableTitle {
+  font-size: 14px;
+}
+
+#pollResultsTable {
+  width: 100%;
+  font-size: 12px;
+}
+
+#pollStatsTable {
+  width: 75%;
+  font-size: 12px;
+}
+
+#pollCommentsTable table {
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+.chatCell {
+  width: 80px;
+}
+
+#backToResultsButton {
+  margin-left: 16px;
+}
+
+.bigPieChartContainer {
+  height: 200px;
+  width: 200px;
+  float: right;
+}
+
+material-dialog div .cardMenuBar {
+  margin: 0;
+  line-height: 17px;
+}
+
+.pollEndsDate {
+  padding-top: 5px;
+  border-style: dotted;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  border-width: thin;
+  margin-top: -25px;
+  margin-bottom:30px;
+  font-size: 0.7em;
+  opacity: 0.7;
+}
+
+/* Styles for Material Tabs */
+.tabs-content .material-view {
+    background-color: #fff;
+    height: 100%;
+}
+
+div.infoBar input {
+    display: inline-block;
+}
+
+div.infoBar {
+    margin-left: 20px;
+    height: 75px;
+    font-size: .8em;
+}
+
+material-tabs {
+  width: auto;
+  margin: -20px -20px 0 -20px;
+}
+material-tabs .tabs-header .tabs-header-items {
+  background-color: #ffeb3b;
+}
+
+material-tab material-tab-label {
+  color: #000;
+  opacity: 0.5;
+}
+
+material-tab material-tab-label.active {
+  color: #000;
+  opacity: 1.0;
+}
+
+material-ink-bar {
+  background: #000;
+}
+
+material-tabs .tabs-content {
+    height: 100%;
+}
+
+material-card {
+  margin-top: 16px;
+  background-color: #ffff8d;
+}

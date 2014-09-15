@@ -4,7 +4,8 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
-    'e2e/*.js'
+    'e2e/*.js',
+    'util/reporter-hack.js'
   ],
 
   capabilities: {
@@ -20,15 +21,13 @@ exports.config = {
   framework: 'jasmine',
 
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 5000,
+    defaultTimeoutInterval: 10000,
     showColors: true,
     realtimeFailure: true,
   },
 
   onPrepare: function() {
-    jasmine.getEnv().addReporter(new HtmlReporter({
-      baseDirectory: '/tmp/screenshots'
-      , docTitle: 'Pantheon Ping Application Test Results'
-    }));
+    require('jasmine-spec-reporter');
+    jasmine.getEnv().addReporter(new jasmine.SpecReporter({displayStacktrace: true}));
   }
 };

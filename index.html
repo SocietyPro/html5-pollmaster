@@ -3,44 +3,85 @@
   <head>
 
     <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <script src="assets/plugins/flot/jquery.flot.min.js"></script>
-    <script src="assets/plugins/flot/jquery.flot.resize.min.js"></script>
-    <script src="assets/plugins/flot/jquery.flot.pie.min.js"></script>
-    <script src="assets/plugins/flot/jquery.flot.stack.min.js"></script>
-    <script src="assets/plugins/flot/jquery.flot.crosshair.min.js"></script>
-    <script src="assets/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
-    <!-- END PAGE LEVEL PLUGINS -->
-    <script src="js/angular.js" type="text/javascript"></script>
-    <script src="js/angular-route.js" type="text/javascript"></script>
-    <script src="js/ui-bootstrap-tpls-0.11.0.js"></script>
-    <script src="bower_components/moment/moment.js"></script>
-
+    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/angular/angular.js" type="text/javascript"></script>
+    <script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
+    <script src="bower_components/angular-route/angular-route.js" type="text/javascript"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/nvd3/nv.d3.js"></script>
+    <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+    <script src="js/angular-material.js" type="text/javascript"></script>
+    <script src="js/ui-bootstrap-tpls-0.11.0.js"></script>    
     <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
     <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
+    <script type="text/javascript" src="bower_components/jquery-timepicker-jt/jquery.timepicker.js"></script>
+    <script src="js/timepicker.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-date/src/date.js"></script>
     <script src="js/pollApp.js" type="text/javascript"></script>
     <script src="js/targetSelectionCtrl.js" type="text/javascript"></script>
 
-    <script src="assets/scripts/core/app.js"></script>
-    <script src="js/charts.js"></script>
-
-    <link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="css/style-metronic.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="bower_components/jquery-timepicker-jt/jquery.timepicker.css" />
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="bower_components/nvd3/nv.d3.css">
+    <link rel="stylesheet" type="text/css" href="css/angular-material.css"> 
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
-  <body class="page-header-fixed" ng-controller="pollAppCtrl">
-    <div class="container">
-      <div ng-view>
-      </div>
+  <body ng-controller="pollAppCtrl">
+    <div id="applicationContainer" layout="horizontal">
+
+      <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left">
+        <material-toolbar class="material-theme-yellow">
+          <h1 class="material-toolbar-tools">Society Pro</h1>
+          <span flex></span>
+        </material-toolbar>
+        <material-content flex>
+          <div>
+            <button class="menu-item menu-sub-item" ng-repeat="filter in menu.filters" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="menu.selectFilter(filter); $event.stopImmediatePropogation()">
+              <span class="color-chip" style='background-color: {{filter.color}};'></span>
+              <span ng-bind="filter.filter"></span>
+              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+            </button>
+          </div>
+          <div>
+            <button id="pollsButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation()">
+              Polls
+              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+            </button>
+            <button id="templatesButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation()">
+              Templates
+              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+            </button>
+          </div>
+        </material-content>
+      </material-sidenav>
+
+      <div layout="vertical" layout-fill>
+        <material-toolbar scroll-shrink class="material-theme-yellow">
+          <div layout="horizontal">
+            <div class="material-toolbar-tools">
+              <div id="menu-drawer-button" class="menu-icon" ng-click="toggleMenu()">
+                <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_48dp.png">
+              </div>
+              <h2>Ballot</h2>
+            </div>
+            <div id="viewButtons" layout="horizontal">
+              <material-button id="streamButton" class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}">
+                <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_48dp.png"></material-icon>
+              </material-button>
+              <material-button id="quiltButton" class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}">
+                <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_48dp.png"></material-icon>
+              </material-button>
+            </div>
+          </div>
+        </material-toolbar>
+        <div class="content-padding">
+
+        <ng-view></ng-view>
+
+        </div>
+      </div>    
     </div>
-    <script>
-    jQuery(document).ready(function () {
-      App.init();
-      Charts.init();
-    });
-    </script>
   </body>
 </html>

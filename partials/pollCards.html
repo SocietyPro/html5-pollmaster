@@ -1,0 +1,78 @@
+<div class="cardholder" ng-repeat="poll in polls | filter:pollFilter:true" ng-mouseleave="poll.overflow = false">
+  <material-card class="mainCard" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete', unstarted: poll.status === 'unstarted'}" ng-mouseover="poll.menubar = true" ng-mouseleave="poll.menubar = false">
+    <div class="cardContentContainer" ng-click="zoomPoll($event, poll)">
+      <div class="pollOriginatorLine">
+        <em>{{poll.originator}}</em>
+      </div>
+      <div class="pollTitleLine">
+        <b>{{poll.title}}</b>
+      </div>
+      <div class="pollDetails">
+
+        <div class="pollReturns" ng-show="poll.status === 'started' || poll.status === 'complete'">
+          <div class="optionCounts">
+            <div class="options">
+              <table>
+                <tr ng-repeat="option in poll.options">
+                  <td>{{option.count}}</td>
+                  <td>{{option.text}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="pieChartContainer">
+            <nvd3-pie-chart
+              id="{{poll.id}}"
+              data="poll.options"
+              x="xFunction()"
+              y="yFunction()"
+              width="{{ pieWidth }}"
+              height="{{ pieHeight }}"
+              margin="{left: 15, top: 15, bottom: 15, right: 15}"
+              showLabels="true"
+              pieLabelsOutside="true"
+              showValues="true"
+              labelType="value"
+              tooltips="true">
+              <svg></svg>
+            </nvd3-pie-chart>
+          </div>
+        </div>
+
+        <div class="optionPreview" ng-show="poll.status === 'unstarted'">
+          <div class="options">
+            <table>
+              <tr><td colspan="2">VOTE</td></tr>
+              <tr ng-repeat="option in poll.options">  
+              <td><input type="checkbox" disabled></td>
+              <td>{{option.text}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="clearBoth"></div>
+        </div>
+
+        <div class="clearBoth"></div>
+      </div>
+    </div>
+    <div>
+      <div ng-if="poll.endDate && poll.endTime && poll.status === 'complete'" class="pollEndsDate" align="center">
+        Poll Ended At {{poll.endTime}} on {{poll.endDate | date : 'MM/dd/yy'}} 
+      </div>
+      <div ng-if="poll.endDate && poll.endTime && (poll.status === 'unstarted' || poll.status === 'vote' || poll.status === 'started')" class="pollEndsDate" align="center">
+        Poll Ends At {{poll.endTime}} on {{poll.endDate | date : 'MM/dd/yy'}}
+      </div>
+    <div class="cardMenuBar animate-show" ng-show="poll.menubar">
+      <material-button class="material-button-icon overflowMenuButton" ng-click="overflowToggle(poll)" layout="vertical" layout-align="end end">
+        <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
+      </material-button>
+    </div>
+  </material-card>
+</div>
+  <material-card class="overflowMenu animate-show" ng-show="poll.overflow">
+    <a class="destroyAction" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyPoll(poll)">Delete</a><br />
+    <a class="copyAction" ng-click="copyPoll($event, poll)">Make a Copy</a>
+    <!-- <a class="forkAction" ng-click="newTemplateFromPoll($event, poll)">Fork as a Template</a> -->
+  </material-card>
+</div>
