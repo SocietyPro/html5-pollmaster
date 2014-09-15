@@ -481,6 +481,10 @@ material-button.material-button-fab.material-button-fab-bottom-right {
   background-color: #c9d1ff;
 }
 
+.unstarted {
+  background-color: #ffffff;
+}
+
 .pollDetails {
   font-size: 12px;
 }
@@ -812,4 +816,5 @@ material-tabs .tabs-content {
 
 material-card {
   margin-top: 16px;
+  background-color: #ffff8d;
 }

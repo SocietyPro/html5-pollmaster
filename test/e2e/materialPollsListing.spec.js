@@ -11,6 +11,8 @@ var Elements = function () {
   this.runningFilterButton = element.all(by.css('.menu-sub-item')).get(2);
   this.unstartedFilterButton = element.all(by.css('.menu-sub-item')).get(3);
   this.completedFilterButton = element.all(by.css('.menu-sub-item')).get(4);
+  this.pollsButton = element(by.id('pollsButton'));
+  this.templatesButton = element(by.id('templatesButton'));
   this.viewButtons = element(by.id('viewButtons'));
   this.streamButton = element(by.id('streamButton'));
   this.quiltButton = element(by.id('quiltButton'));
@@ -23,27 +25,8 @@ var Elements = function () {
   this.firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
   this.firstCardDeleteAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.destroyAction'));
   this.firstCardCopyAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.copyAction'));
+  //this.firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
 };
-
-var EditCardElements = function () {
-  this.materialDialog = element(by.css('material-dialog'));
-  this.pollTitleInput = element(by.inputName('pollTitleInput'));
-  this.pollDescriptionInput = element(by.model('poll.description'));
-  this.addOptionInput = element(by.id('addOptionInput'));
-  this.options = element.all(by.repeater('opt in poll.options'));
-  this.closeButton = element(by.id('closeButton'));
-  this.nextButton = element(by.id('nextButton'));
-  this.menuDrawerButton = element(by.css('.menuDrawerButton'));
-  this.ballotPreviewButton = element(by.css('.ballotPreviewButton'));
-  this.optionsMenu = element(by.id('optionsMenu'));
-  this.multipleSelectionsCheckbox = element(by.model('poll.allowMultipleChoices'));
-  this.commentsCheckbox = element(by.model('poll.allowComments'));
-  this.resultsOnBallotsCheckbox = element(by.model('poll.showResults'));
-  this.saveAsTemplateCheckbox = element(by.model('isTemplate'));
-  this.saveAsPollCheckbox = element(by.model('isPoll'));
-  this.pollEndsOptions = element(by.css('.dialog-options-poll-ends'));
-  this.ballotPreview = element(by.id('ballotPreview'));
-};  
 
 var elements;
 
@@ -87,11 +70,129 @@ describe("material polls listing", function () {
     expect(elements.quickAddButton.isDisplayed()).toBeFalsy();
   });
 
+  describe("quick add poll form", function () {
+
+    it("starts the dialog sequence of making a new poll", function () {
+      expect(elements.pollCards.count()).toEqual(5);
+      elements.quickAddTitle.click();
+      elements.quickAddTitle.sendKeys('New Poll Title');
+      elements.quickAddDescription.sendKeys('New Poll Description');
+      elements.quickAddButton.click();
+      browser.sleep(500);
+      element(by.id('nextButton')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.pollCards.count()).toEqual(6);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.templatesButton.click();
+      var templateCards = element.all(by.css('.mainCard'));
+      expect(templateCards.count()).toEqual(5);
+    });
+
+    it("starts the dialog sequence of making a new poll and template", function () {
+      expect(elements.pollCards.count()).toEqual(5);
+      elements.quickAddTitle.click();
+      elements.quickAddTitle.sendKeys('New Poll Title');
+      elements.quickAddDescription.sendKeys('New Poll Description');
+      elements.quickAddButton.click();
+      browser.sleep(500);
+      element(by.css('.menuDrawerButton')).click();
+      element(by.model('saveMatrix[3]')).click();
+      element(by.id('nextButton')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.pollCards.count()).toEqual(6);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.templatesButton.click();
+      var templateCards = element.all(by.css('.mainCard'));
+      expect(templateCards.count()).toEqual(6);
+    });
+
+    it("starts the dialog sequence of making a new template", function () {
+      expect(elements.pollCards.count()).toEqual(5);
+      elements.quickAddTitle.click();
+      elements.quickAddTitle.sendKeys('New Poll Title');
+      elements.quickAddDescription.sendKeys('New Poll Description');
+      elements.quickAddButton.click();
+      browser.sleep(500);
+      element(by.css('.menuDrawerButton')).click();
+      element(by.model('saveMatrix[3]')).click();
+      element(by.model('saveMatrix[1]')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.pollCards.count()).toEqual(5);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.templatesButton.click();
+      var templateCards = element.all(by.css('.mainCard'));
+      expect(templateCards.count()).toEqual(6);
+    });
+
+  });
+
   it("has an add poll fab", function () {
     expect(elements.fab.isDisplayed()).toBeTruthy();
     expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
     elements.fab.click();
     expect(browser.isElementPresent(by.model('poll.title'))).toBeTruthy();
+  });
+
+  describe("add poll fab", function () {
+
+    it("starts the dialog sequence of making a new poll", function () {
+      expect(elements.pollCards.count()).toEqual(5);
+      elements.fab.click();    
+      var newPollTitleInput = element(by.model('poll.title'));
+      var newPollDescriptionInput = element(by.model('poll.description'));
+      newPollTitleInput.sendKeys('New Poll Title');
+      newPollDescriptionInput.sendKeys('New Poll Description');
+      element(by.id('nextButton')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.pollCards.count()).toEqual(6);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.templatesButton.click();
+      var templateCards = element.all(by.css('.mainCard'));
+      expect(templateCards.count()).toEqual(5);
+    });
+
+    it("starts the dialog sequence of making a new poll and template", function () {
+      expect(elements.pollCards.count()).toEqual(5);
+      elements.fab.click();    
+      var newPollTitleInput = element(by.model('poll.title'));
+      var newPollDescriptionInput = element(by.model('poll.description'));
+      newPollTitleInput.sendKeys('New Poll Title');
+      newPollDescriptionInput.sendKeys('New Poll Description');
+      element(by.css('.menuDrawerButton')).click();
+      element(by.model('saveMatrix[3]')).click();
+      element(by.id('nextButton')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.pollCards.count()).toEqual(6);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.templatesButton.click();
+      var templateCards = element.all(by.css('.mainCard'));
+      expect(templateCards.count()).toEqual(6);
+    });
+
+    it("starts the dialog sequence of making a new template", function () {
+      expect(elements.pollCards.count()).toEqual(5);
+      elements.fab.click();    
+      var newPollTitleInput = element(by.model('poll.title'));
+      var newPollDescriptionInput = element(by.model('poll.description'));
+      newPollTitleInput.sendKeys('New Poll Title');
+      newPollDescriptionInput.sendKeys('New Poll Description');
+      element(by.css('.menuDrawerButton')).click();
+      element(by.model('saveMatrix[3]')).click();
+      element(by.model('saveMatrix[1]')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.pollCards.count()).toEqual(5);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.templatesButton.click();
+      var templateCards = element.all(by.css('.mainCard'));
+      expect(templateCards.count()).toEqual(6);
+    });
+
   });
 
   describe("sidenav menu", function () {
@@ -185,6 +286,7 @@ describe("material polls listing", function () {
       });
 
       it("has a copy card action", function () {
+        expect(elements.pollCards.count()).toEqual(5);
         var title = elements.firstCardTitle.getText();
         expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
         browser.actions().
@@ -197,6 +299,35 @@ describe("material polls listing", function () {
         var dialogTitleInput = element(by.inputName('pollTitleInput'));
         expect(dialogTitleInput.isDisplayed()).toBeTruthy();
         expect(dialogTitleInput.getAttribute('value')).toEqual(title);
+        element(by.id('nextButton')).click();
+        browser.sleep(500);
+        element(by.id('saveButton')).click();
+        expect(elements.pollCards.count()).toEqual(6);
+      });
+
+      xit("has a fork as template action", function () {
+        elements.menuDrawerButton.click();
+        browser.sleep(500);
+        elements.templatesButton.click();    
+        var templateCards = element.all(by.css('.maincard'));
+        expect(templateCards.count()).toEqual(5);
+        elements.pollsButton.click();
+        element(by.css('material-backdrop')).click();
+        elements = new Elements();
+        browser.actions().
+          mouseMove(elements.firstCard).
+          perform();
+        elements.firstCardOverflowMenuButton.click();
+        expect(elements.firstCardForkAction.isDisplayed()).toBeTruthy();
+        expect(elements.firstCardForkAction.getText()).toEqual("Fork as a Template");
+        firstCardForkAction.click();
+        browser.sleep(500);
+        element(by.id('saveButton')).click();
+        elements.menuDrawerButton.click();
+        browser.sleep(500);
+        elements.templatesButton.click();    
+        templateCards = element.all(by.css('.maincard'));
+        expect(templateCards.count()).toEqual(6);
       });
 
     });
@@ -254,7 +385,7 @@ describe("material polls listing", function () {
       });
       
       it("is white, displays the poll title, and displays the poll options", function () {
-        expect(firstUnstartedCard.getCssValue('background-color')).toEqual('rgba(0, 0, 0, 0)');
+        expect(firstUnstartedCard.getCssValue('background-color')).toEqual('rgba(255, 255, 255, 1)');
         var pollTitle = firstUnstartedCard.findElement(by.css('.pollTitleLine'));
         var pollOriginator = firstUnstartedCard.findElement(by.css('.pollOriginatorLine'));
         expect(pollOriginator.isDisplayed()).toBeTruthy();
@@ -312,399 +443,5 @@ describe("material polls listing", function () {
     });
 
   });
-  
-  describe("poll editing card", function () {
     
-    var editCardElements;
-
-    beforeEach(function () {
-      elements.fab.click();
-      browser.sleep(500);
-      editCardElements = new EditCardElements();
-    });
-
-    it("has inputs for poll title and poll description", function () {
-      expect(editCardElements.pollTitleInput.isDisplayed()).toBeTruthy();
-      expect(editCardElements.pollDescriptionInput.isDisplayed()).toBeTruthy();
-    });
-
-    it("has an input to add options", function () {
-      expect(editCardElements.options.count()).toEqual(0);
-      editCardElements.addOptionInput.sendKeys('a');
-      expect(editCardElements.options.count()).toEqual(1);
-    });
-
-    it("removes options when all text is deleted", function () {
-      editCardElements.addOptionInput.sendKeys('a');
-      editCardElements.addOptionInput.sendKeys('b');
-
-      var firstOptionInput = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.text'));
-      var firstOptionCheckbox = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.remove'));
-      var secondOptionInput = element.all(by.css('.optionsLine')).get(1).findElement(by.model('opt.text'));
-      var secondOptionCheckbox = element.all(by.css('.optionsLine')).get(1).findElement(by.model('opt.remove'));
-
-      firstOptionInput.sendKeys(" - Option to remove");
-      secondOptionInput.sendKeys(" - Option to save");
-      expect(editCardElements.options.count()).toEqual(2);
-      expect(firstOptionInput.getAttribute('value')).toEqual("a - Option to remove");
-      firstOptionInput.clear();
-      expect(editCardElements.options.count()).toEqual(2);
-      expect(firstOptionInput.getAttribute('value')).toEqual("");
-      firstOptionInput.sendKeys(protractor.Key.BACK_SPACE);
-      firstOptionInput.sendKeys(protractor.Key.BACK_SPACE);
-      browser.sleep(500);
-      firstOptionInput = element.all(by.css('.optionsLine')).get(0).findElement(by.model('opt.text'));
-      expect(editCardElements.options.count()).toEqual(1);
-      expect(firstOptionInput.getAttribute('value')).toEqual("b - Option to save");
-    });
-
-    it("has a close dialog button", function () {
-      expect(editCardElements.materialDialog.isDisplayed()).toBeTruthy();
-      expect(editCardElements.closeButton.isDisplayed()).toBeTruthy();
-      editCardElements.closeButton.click();
-      expect(browser.isElementPresent(by.css('material-dialog'))).toBeFalsy();
-    });
-
-    it("has a next button", function () {
-      expect(browser.isElementPresent(by.model('poll.target'))).toBeFalsy();
-      expect(editCardElements.nextButton.isDisplayed()).toBeTruthy();
-      editCardElements.nextButton.click();
-      browser.sleep(500);
-      expect(browser.isElementPresent(by.model('poll.target'))).toBeTruthy();
-    });
-    
-    describe("advanced options menu", function () {
-
-      it("is closed by default and opened and closed by the menuDrawerButton", function () {
-        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeFalsy();
-        expect(editCardElements.menuDrawerButton.isDisplayed()).toBeTruthy();
-        editCardElements.menuDrawerButton.click();
-        browser.sleep(500);
-        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeFalsy();
-        editCardElements.menuDrawerButton.click();
-        browser.sleep(500);
-        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeFalsy();
-      });
-
-      describe("ballot options section", function () {
-
-        beforeEach(function () {        
-          editCardElements.menuDrawerButton.click();
-          browser.sleep(500);
-        });
-
-        it("has a checkbox and label for multiple selections", function () {
-          expect(editCardElements.multipleSelectionsCheckbox.isDisplayed()).toBeTruthy();
-          expect(editCardElements.multipleSelectionsCheckbox.getText()).toEqual('Multiple selections');
-          expect(editCardElements.multipleSelectionsCheckbox.getAttribute('aria-checked')).toEqual('false');
-          editCardElements.multipleSelectionsCheckbox.click();
-          expect(editCardElements.multipleSelectionsCheckbox.getAttribute('aria-checked')).toEqual('true');
-        });
-
-        it("has a checkbox and label for allowing commments", function () {
-          expect(editCardElements.commentsCheckbox.isDisplayed()).toBeTruthy();
-          expect(editCardElements.commentsCheckbox.getText()).toEqual('Comments');
-          expect(editCardElements.commentsCheckbox.getAttribute('aria-checked')).toEqual('false');
-          editCardElements.commentsCheckbox.click();
-          expect(editCardElements.commentsCheckbox.getAttribute('aria-checked')).toEqual('true');
-        });
-
-        it("has a checkbox and label for showing results on ballots", function () {
-          expect(editCardElements.resultsOnBallotsCheckbox.isDisplayed()).toBeTruthy();
-          expect(editCardElements.resultsOnBallotsCheckbox.getText()).toEqual('Show results on ballots');
-          expect(editCardElements.resultsOnBallotsCheckbox.getAttribute('aria-checked')).toEqual('false');
-          editCardElements.resultsOnBallotsCheckbox.click();
-          expect(editCardElements.resultsOnBallotsCheckbox.getAttribute('aria-checked')).toEqual('false');
-        });
-
-      });
-
-      describe("save options section", function () {
-
-        beforeEach(function () {        
-          editCardElements.menuDrawerButton.click();
-          browser.sleep(500);
-        });
-
-        it("has a checkbox and label for saving as a template", function () {
-          expect(editCardElements.saveAsTemplateCheckbox.isDisplayed()).toBeTruthy();
-          expect(editCardElements.saveAsTemplateCheckbox.getText()).toEqual('Save as Template');
-          expect(editCardElements.saveAsTemplateCheckbox.getAttribute('aria-checked')).toEqual('false');
-          editCardElements.saveAsTemplateCheckbox.click();
-          expect(editCardElements.saveAsTemplateCheckbox.getAttribute('aria-checked')).toEqual('true');
-        });
-
-        it("has a checkbox and label for saving as a poll", function () {
-          expect(editCardElements.saveAsPollCheckbox.isDisplayed()).toBeTruthy();
-          expect(editCardElements.saveAsPollCheckbox.getText()).toEqual('Save as Poll');
-          expect(editCardElements.saveAsPollCheckbox.getAttribute('aria-checked')).toEqual('true');
-          editCardElements.saveAsPollCheckbox.click();
-          expect(editCardElements.saveAsPollCheckbox.getAttribute('aria-checked')).toEqual('false');
-        });
-
-      });
-
-      describe("poll ends section", function () {
-
-        beforeEach(function () {        
-          editCardElements.menuDrawerButton.click();
-          browser.sleep(500);
-        });
-
-        it("has date and time inputs", function () {
-          expect(editCardElements.pollEndsOptions.isDisplayed()).toBeTruthy();
-        });
-
-      });
-      
-    });
-
-    describe("ballot preview", function () {
-
-      it("is closed by default and opened and closed with the ballot preview button", function () {
-        expect(editCardElements.ballotPreviewButton.isDisplayed()).toBeTruthy();
-        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeFalsy();
-        editCardElements.ballotPreviewButton.click();
-        browser.sleep(500);
-        expect(browser.isElementPresent(by.id('ballotPreview'))).toBeTruthy();
-      });
-
-    });
-    
-  });
-
-  describe("target selection dialog", function () {
-
-    beforeEach(function () {
-      elements.fab.click();
-      browser.sleep(500);
-      element(by.id('nextButton')).click();
-      browser.sleep(500);
-    });
-
-    it("has a target selection dropdown", function () {
-      var targetSelect = element(by.model('poll.target'));
-      expect(targetSelect.isDisplayed()).toBeTruthy();
-    });
-
-    it("has a close button", function () {
-      var closeButton = element(by.id('closeButton'));
-      expect(elements.pollCards.count()).toEqual(5);
-      closeButton.click();
-      browser.sleep(500);
-      expect(elements.pollCards.count()).toEqual(5);
-    });
-
-    it("has a save button", function () {
-      var saveButton = element(by.id('saveButton'));
-      expect(elements.pollCards.count()).toEqual(5);
-      saveButton.click();
-      browser.sleep(500);
-      expect(elements.pollCards.count()).toEqual(6);
-    });
-
-  });
-
-  describe('poll results card', function () {
-
-    describe('for a running poll', function () {
-
-      var RunningResultsElements = function () {
-        this.materialDialogContent = element(by.css('.dialog-content'));
-        this.pollEndDate = element(by.css('material-dialog')).element(by.binding('poll.endTime'));
-        this.pollOriginator = element(by.css('material-dialog')).element(by.binding('poll.originator'));
-        this.pollTitle = element(by.css('material-dialog')).element(by.binding('poll.title'));
-        this.pollDescription = element(by.css('material-dialog')).element(by.binding('poll.description'));
-        this.pollStatsTable = element(by.css('material-dialog')).element(by.id('pollStatsTable'));
-        this.pollResultsTable = element(by.css('material-dialog')).element(by.id('pollResultsTable'));
-        this.nvd3PieChart = element(by.css('material-dialog')).element(by.css('nvd3-pie-chart'));
-        this.actionMenuBar = element(by.css('material-dialog')).element(by.id('actionMenuBar'));
-        this.showCommentsButton = element(by.css('material-dialog')).element(by.id('showCommentsButton'));
-        this.copyPollButton = element(by.css('material-dialog')).element(by.id('copyPollButton'));
-        this.deletePollButton = element(by.css('material-dialog')).element(by.id('deletePollButton'));
-        this.closeButton = element(by.css('material-dialog')).element(by.id('closeButton'));
-      };
-
-      var runningResultsElements;
-      var firstCard;
-      var secondCard;
-
-      beforeEach(function () {
-        elements.menuDrawerButton.click();
-        browser.sleep(500);
-        elements.runningFilterButton.click();
-        element(by.css('material-backdrop')).click();
-        browser.sleep(500);
-        firstCard = element.all(by.css('material-card')).get(0);
-        secondCard = element.all(by.css('material-card')).get(2);
-      });
-
-      it('has the poll ending time and date', function () {
-        firstCard.click();
-        runningResultsElements = new RunningResultsElements();
-        expect(runningResultsElements.pollEndDate.isDisplayed()).toBeTruthy();
-      });
-
-      it('displays the poll originator', function () {
-        var originator = element.all(by.css('.mainCard')).get(0).findElement(by.binding('poll.originator')).getText();
-        firstCard.click();
-        runningResultsElements = new RunningResultsElements();
-        expect(runningResultsElements.pollOriginator.isDisplayed()).toBeTruthy();
-        expect(runningResultsElements.pollOriginator.getText()).toEqual(originator);
-      });
-
-      it('displays the poll title', function () {
-        var title = element.all(by.css('.mainCard')).get(0).findElement(by.binding('poll.title')).getText();
-        firstCard.click();
-        runningResultsElements = new RunningResultsElements();
-        expect(runningResultsElements.pollTitle.isDisplayed()).toBeTruthy();
-        expect(runningResultsElements.pollTitle.getText()).toEqual(title);
-      });
-
-      it('displays the poll description', function () {
-        firstCard.click();
-        runningResultsElements = new RunningResultsElements();
-        expect(runningResultsElements.pollDescription.isDisplayed()).toBeTruthy();
-      });
-
-      it('displays the poll response stats', function () {
-        firstCard.click();
-        runningResultsElements = new RunningResultsElements();
-        expect(runningResultsElements.pollStatsTable.isDisplayed()).toBeTruthy();
-      });
-
-      it('displays the poll options and counts', function () {
-        firstCard.click();
-        runningResultsElements = new RunningResultsElements();
-        expect(runningResultsElements.pollResultsTable.isDisplayed()).toBeTruthy();
-      });
-
-      it('displays a results pie chart', function () {
-        firstCard.click();
-        runningResultsElements = new RunningResultsElements();
-        expect(runningResultsElements.nvd3PieChart.isDisplayed()).toBeTruthy();
-      });
-
-      it('displays an action menu on hover', function () {
-        firstCard.click();
-        runningResultsElements = new RunningResultsElements();
-        expect(runningResultsElements.actionMenuBar.isDisplayed()).toBeFalsy();
-        browser.actions().
-        mouseMove(runningResultsElements.materialDialogContent.find()).
-        perform();
-        expect(runningResultsElements.actionMenuBar.isDisplayed()).toBeTruthy();
-        browser.actions().
-        mouseMove(elements.streamButton.find()).
-        perform();
-        expect(runningResultsElements.actionMenuBar.isDisplayed()).toBeFalsy();
-      });
-      
-      describe('action menu', function () {
-
-        it('has a view comments button if the poll allows comments', function () {
-          firstCard.click();
-          runningResultsElements = new RunningResultsElements();        
-          browser.actions().
-          mouseMove(runningResultsElements.materialDialogContent.find()).
-          perform();
-          expect(browser.isElementPresent(by.id('pollCommentsTable'))).toBeFalsy();
-          expect(runningResultsElements.showCommentsButton.isDisplayed()).toBeTruthy();
-          runningResultsElements.showCommentsButton.click();
-          browser.sleep(200);
-          expect(browser.isElementPresent(by.id('pollCommentsTable'))).toBeTruthy();
-        });
-
-        it('does not have a view comments button if the poll does not allow comments', function () {
-          secondCard.click();
-          runningResultsElements = new RunningResultsElements();        
-          browser.actions().
-          mouseMove(runningResultsElements.materialDialogContent.find()).
-          perform();
-          expect(browser.isElementPresent(by.id('showCommentsButton'))).toBeFalsy();
-        });
-
-        it('has a copy poll button', function () {
-          firstCard.click();
-          runningResultsElements = new RunningResultsElements();        
-          browser.actions().
-          mouseMove(runningResultsElements.materialDialogContent.find()).
-          perform();
-          expect(runningResultsElements.copyPollButton.isDisplayed()).toBeTruthy();
-          var title = runningResultsElements.pollTitle.getText();
-          runningResultsElements.copyPollButton.click();
-          expect(browser.isElementPresent(by.css('material-dialog'))).toBeTruthy();
-          var titleInput = element(by.css('material-dialog')).element(by.model('poll.title'));
-          expect(titleInput.isDisplayed()).toBeTruthy();
-          expect(titleInput.getAttribute('value')).toEqual(title);
-        });
-
-        it('has a delete poll button', function () {
-          firstCard.click();
-          runningResultsElements = new RunningResultsElements();        
-          browser.actions().
-          mouseMove(runningResultsElements.materialDialogContent.find()).
-          perform();
-          expect(runningResultsElements.deletePollButton.isDisplayed()).toBeTruthy();
-          expect(elements.pollCards.count()).toEqual(2);
-          runningResultsElements.deletePollButton.click();        
-          var confirmationDialog = browser.switchTo().alert();
-          confirmationDialog.accept();
-          expect(elements.pollCards.count()).toEqual(1);
-          expect(browser.isElementPresent(by.css('material-dialog'))).toBeFalsy();
-        });
-
-      });
-
-      describe('comments dialog', function () {
-
-        var RunningCommentsElements = function () {
-          this.pollEndDate = element(by.css('material-dialog')).element(by.binding('poll.endTime'));
-          this.pollOriginator = element(by.css('material-dialog')).element(by.binding('poll.originator'));
-          this.pollTitle = element(by.css('material-dialog')).element(by.binding('poll.title'));
-          this.pollDescription = element(by.css('material-dialog')).element(by.binding('poll.description'));
-          this.pollCommentsTable = element(by.css('material-dialog')).element(by.id('pollCommentsTable'));
-          this.backToResultsButton = element(by.css('material-dialog')).element(by.id('backToResultsButton'));
-          this.closeButton = element(by.css('material-dialog')).element(by.id('closeButton'));
-        };
-
-        beforeEach(function () {
-          firstCard.click();
-          browser.sleep(500);
-          runningResultsElements.showCommentsButton.click();
-          runningCommentsElements = new RunningCommentsElements();
-        });
-
-        it('displays the poll end time, originator, title, and description', function () {
-          expect(runningCommentsElements.pollEndDate.isDisplayed()).toBeTruthy();
-          expect(runningCommentsElements.pollOriginator.isDisplayed()).toBeTruthy();
-          expect(runningCommentsElements.pollTitle.isDisplayed()).toBeTruthy();
-          expect(runningCommentsElements.pollDescription.isDisplayed()).toBeTruthy();
-        });
-
-        it('displays the comments for the poll', function () {
-          expect(runningCommentsElements.pollCommentsTable.isDisplayed()).toBeTruthy();
-        });
-
-        it('displays a button to return to poll results', function () {
-          expect(runningCommentsElements.backToResultsButton.isDisplayed()).toBeTruthy();
-          expect(browser.isElementPresent(by.id('pollStatsTable'))).toBeFalsy();
-          runningCommentsElements.backToResultsButton.click();
-          browser.sleep(500);
-          expect(browser.isElementPresent(by.id('pollStatsTable'))).toBeTruthy();
-        });
-
-        it('displays a close dialog button', function () {
-          expect(runningCommentsElements.closeButton.isDisplayed()).toBeTruthy();
-          expect(browser.isElementPresent(by.css('material-dialog'))).toBeTruthy();
-          runningCommentsElements.closeButton.click();
-          browser.sleep(500);
-          expect(browser.isElementPresent(by.css('material-dialog'))).toBeFalsy();
-        });
-
-      });
-
-    });
-
-  });
-  
 });

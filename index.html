@@ -44,6 +44,16 @@
               <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
             </button>
           </div>
+          <div>
+            <button id="pollsButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation()">
+              Polls
+              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+            </button>
+            <button id="templatesButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation()">
+              Templates
+              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+            </button>
+          </div>
         </material-content>
       </material-sidenav>
 

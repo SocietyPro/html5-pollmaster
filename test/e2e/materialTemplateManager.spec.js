@@ -1,8 +1,13 @@
 var Elements = function () {
+  this.menuDrawerButton = element(by.id('menu-drawer-button'));
+  this.pollsButton = element(by.id('pollsButton'));
+  this.templatesButton = element(by.id('templatesButton'));
   this.quickAddBox = element(by.id('quickAddBox'));
   this.quickAddTitle = element(by.id('quickAddTitle'));
   this.quickAddDescription = element(by.id('quickAddDescription'));
   this.quickAddButton = element(by.id('quickAddButton'));
+  this.fab = element(by.css('.material-button-fab'));
+  this.templateCards = element.all(by.css('.mainCard'));
   this.tabs = element.all(by.tagName('material-tab'));
   this.viewButtons = element(by.id('viewButtons'));
   this.streamButton = element(by.id('streamButton'));
@@ -52,6 +57,131 @@ describe('template manager', function () {
     expect(elements.quickAddButton.isDisplayed()).toBeFalsy();
   });
 
+  describe("quick add template form", function () {
+
+    it("starts the dialog sequence of making a new template", function () {
+      expect(elements.templateCards.count()).toEqual(5);
+      elements.quickAddTitle.click();
+      elements.quickAddTitle.sendKeys('New Template Title');
+      elements.quickAddDescription.sendKeys('New Template Description');
+      elements.quickAddButton.click();
+      browser.sleep(500);
+      element(by.id('saveButton')).click();
+      expect(elements.templateCards.count()).toEqual(6);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.pollsButton.click();
+      var pollCards = element.all(by.css('.mainCard'));
+      expect(pollCards.count()).toEqual(5);
+    });
+
+    it("starts the dialog sequence of making a new poll and template", function () {
+      expect(elements.templateCards.count()).toEqual(5);
+      elements.quickAddTitle.click();
+      elements.quickAddTitle.sendKeys('New Template Title');
+      elements.quickAddDescription.sendKeys('New Template Description');
+      elements.quickAddButton.click();
+      browser.sleep(500);
+      element(by.css('.menuDrawerButton')).click();
+      element(by.model('saveMatrix[1]')).click();
+      element(by.id('nextButton')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.templateCards.count()).toEqual(6);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.pollsButton.click();
+      var pollCards = element.all(by.css('.mainCard'));
+      expect(pollCards.count()).toEqual(6);
+    });
+
+    it("starts the dialog sequence of making a new poll", function () {
+      expect(elements.templateCards.count()).toEqual(5);
+      elements.quickAddTitle.click();
+      elements.quickAddTitle.sendKeys('New Template Title');
+      elements.quickAddDescription.sendKeys('New Template Description');
+      elements.quickAddButton.click();
+      browser.sleep(500);
+      element(by.css('.menuDrawerButton')).click();
+      element(by.model('saveMatrix[3]')).click();
+      element(by.model('saveMatrix[1]')).click();
+      element(by.id('nextButton')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.templateCards.count()).toEqual(5);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.pollsButton.click();
+      var pollCards = element.all(by.css('.mainCard'));
+      expect(pollCards.count()).toEqual(6);
+    });
+
+  });
+
+  it("has an add template fab", function () {
+    expect(elements.fab.isDisplayed()).toBeTruthy();
+    expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
+    elements.fab.click();
+    expect(browser.isElementPresent(by.model('poll.title'))).toBeTruthy();
+  });
+
+  describe("add template fab", function () {
+
+    it("starts the dialog sequence of making a new template", function () {
+      expect(elements.templateCards.count()).toEqual(5);
+      elements.fab.click();    
+      var newPollTitleInput = element(by.model('poll.title'));
+      var newPollDescriptionInput = element(by.model('poll.description'));
+      newPollTitleInput.sendKeys('New Template Title');
+      newPollDescriptionInput.sendKeys('New Template Description');
+      element(by.id('saveButton')).click();
+      expect(elements.templateCards.count()).toEqual(6);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.pollsButton.click();
+      var pollCards = element.all(by.css('.mainCard'));
+      expect(pollCards.count()).toEqual(5);
+    });
+
+    it("starts the dialog sequence of making a new poll and template", function () {
+      expect(elements.templateCards.count()).toEqual(5);
+      elements.fab.click();    
+      var newPollTitleInput = element(by.model('poll.title'));
+      var newPollDescriptionInput = element(by.model('poll.description'));
+      newPollTitleInput.sendKeys('New Template Title');
+      newPollDescriptionInput.sendKeys('New Template Description');
+      element(by.css('.menuDrawerButton')).click();
+      element(by.model('saveMatrix[1]')).click();
+      element(by.id('nextButton')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.templateCards.count()).toEqual(6);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.pollsButton.click();
+      var pollCards = element.all(by.css('.mainCard'));
+      expect(pollCards.count()).toEqual(6);
+    });
+
+    it("starts the dialog sequence of making a new poll", function () {
+      expect(elements.templateCards.count()).toEqual(5);
+      elements.fab.click();    
+      var newPollTitleInput = element(by.model('poll.title'));
+      var newPollDescriptionInput = element(by.model('poll.description'));
+      newPollTitleInput.sendKeys('New Template Title');
+      newPollDescriptionInput.sendKeys('New Template Description');
+      element(by.css('.menuDrawerButton')).click();
+      element(by.model('saveMatrix[3]')).click();
+      element(by.model('saveMatrix[1]')).click();
+      element(by.id('nextButton')).click();
+      element(by.id('saveButton')).click();
+      expect(elements.templateCards.count()).toEqual(5);
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.pollsButton.click();
+      var pollCards = element.all(by.css('.mainCard'));
+      expect(pollCards.count()).toEqual(6);
+    });
+
+  });
+
   describe('Tabs',function() {
 
     it('are displayed',function() {
@@ -73,8 +203,9 @@ describe('template manager', function () {
     });
 
     it ('shows my templates', function () {
+      var expectedTitle = "Join Operation Red Dawn! Bring Ships!";
       var title = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine'));
-      expect(title.getText()).toEqual('Join Operation Red Dawn! Bring Many Ships!');
+      expect(title.getText()).toEqual(expectedTitle);
     });
 
   });
@@ -82,10 +213,11 @@ describe('template manager', function () {
   describe('tab for Copy from Recent Polls', function () {
       
     it ('shows my recent polls', function () {    
+      var expectedTitle = "What is your favorite Snack?";
       elements.tabs.get(1).click();
       browser.sleep(500);
       var title = element.all(by.css('.mainCard')).get(1).findElement(by.css('.pollTitleLine')).getText();
-      expect(title).toEqual('What is your favorite Snack?');
+      expect(title).toEqual(expectedTitle);
     });
   
   });
@@ -93,10 +225,11 @@ describe('template manager', function () {
   describe('tab for Copy from Examples', function() {
 
     it ('shows my examples templates', function () {
+      var expectedTitle = "President of the Organization";
       elements.tabs.get(2).click();
       browser.sleep(500);  
       var title = element.all(by.css('.mainCard')).get(1).findElement(by.css('.pollTitleLine')).getText();
-      expect(title).toEqual('President of the Organization');
+      expect(title).toEqual(expectedTitle);
     });
 
   });
@@ -104,10 +237,11 @@ describe('template manager', function () {
   describe('tab for Copy from Peer Recommended', function() {
 
     it ('shows peer recommendations', function () {
+      var expectedTitle = "Can the Product Owner keep up?";
       elements.tabs.get(3).click();
       browser.sleep(500);
       var title = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine')).getText();
-      expect(title).toEqual('Can the Product Owner keep up?');
+      expect(title).toEqual(expectedTitle);
     });
 
   });
@@ -194,6 +328,19 @@ describe('template manager', function () {
         expect(dialogTitleInput.getAttribute('value')).toEqual(title);
       });
 
+    });
+    
+    it("zooms to the template edit dialog if the card is for one of my templates", function () {
+      expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
+      templateCardElements.firstCard.click();
+      expect(browser.isElementPresent(by.model('poll.title'))).toBeTruthy();      
+    });
+
+    it("zooms to the template details card if the card is not for one of my templates", function () {
+      element.all(by.css('material-tab')).get(1).click();
+      var templateCardElements = new TemplateCardElements();
+      templateCardElements.firstCard.click();
+      expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
     });
 
   });
