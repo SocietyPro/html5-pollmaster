@@ -18,6 +18,7 @@ var EXCLUDED_ICONS = [
   "material-icons/icons/system_icons/content/res/1x_web/ic_filter_48dp.png ",
   "material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_18dp.png",
   "material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png",
+  "material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_48dp.png",
   "material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png",
 ];
 
