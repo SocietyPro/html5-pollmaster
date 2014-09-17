@@ -806,6 +806,11 @@ material-tab material-tab-label.active {
   opacity: 1.0;
 }
 
+a .active {
+  color: #000;
+  opacity: 1.0; 
+}
+
 material-ink-bar {
   background: #000;
 }

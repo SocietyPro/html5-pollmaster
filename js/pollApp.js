@@ -288,25 +288,31 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     };
 
     function saveItem (item, saveMatrix) {
-      console.log(saveMatrix);
       for (var i = 0; i<item.options.length; i++) {
         if (!item.options[i].text) {
           item.options.splice(i,1);
         }
       }
       item.overflow = false;
-
-      if (!saveMatrix[0] && saveMatrix[1]) {
-        buildAndSave(item, 'poll');
-      } else if (saveMatrix[0] && saveMatrix[1]) {
-        save(item);
-      };
-
-      if (!saveMatrix[2] && saveMatrix[3]) {
-        buildAndSave(item, 'template');
-      } else if (saveMatrix[2] && saveMatrix[3]) {
-        save(item);
-      };
+      if (saveMatrix[0]) {
+        if (saveMatrix[1] && !saveMatrix[3])
+          save(item);
+        if (!saveMatrix[1] && saveMatrix[3]) {
+          buildAndSave(item, 'template');
+        }
+        if (saveMatrix[1] && saveMatrix[3]) {
+          buildAndSave(item, 'template');
+        }   
+      } else {
+        if (saveMatrix[1] && !saveMatrix[3])
+          save(item);
+        if (!saveMatrix[1] && saveMatrix[3]) {
+          buildAndSave(item, 'poll');
+        }
+        if (saveMatrix[1] && saveMatrix[3]) {
+          buildAndSave(item, 'poll');
+        }
+      }
 
     };
 
@@ -318,7 +324,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       if (itemType === 'poll') {
         var poll = japi.polls.build(item);
         poll.save();
-      } else if (itemType === 'template') {
+      } else {
         var template = japi.polls.templates.build(item);
         template.save();
       };

@@ -6,11 +6,11 @@ var Elements = function () {
   this.fab = element(by.css('.material-button-fab'));
   this.sidenav = element(by.css('material-sidenav'));
   this.menuDrawerButton = element(by.id('menu-drawer-button'));
-  this.allFilterButton = element.all(by.css('.menu-sub-item')).get(0);
-  this.votesFilterButton = element.all(by.css('.menu-sub-item')).get(1);
-  this.runningFilterButton = element.all(by.css('.menu-sub-item')).get(2);
-  this.unstartedFilterButton = element.all(by.css('.menu-sub-item')).get(3);
-  this.completedFilterButton = element.all(by.css('.menu-sub-item')).get(4);
+  this.allFilterButton = element.all(by.css('.menu-sub-item')).get(2);
+  this.votesFilterButton = element.all(by.css('.menu-sub-item')).get(3);
+  this.runningFilterButton = element.all(by.css('.menu-sub-item')).get(4);
+  this.unstartedFilterButton = element.all(by.css('.menu-sub-item')).get(5);
+  this.completedFilterButton = element.all(by.css('.menu-sub-item')).get(6);
   this.pollsButton = element(by.id('pollsButton'));
   this.templatesButton = element(by.id('templatesButton'));
   this.viewButtons = element(by.id('viewButtons'));
@@ -45,7 +45,7 @@ describe("material polls listing", function () {
       return input.name === name;
     })
   });
-  
+ /* 
   it("has a quick add poll form", function () {
     expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
     expect(elements.quickAddBox.isDisplayed()).toBeTruthy();
@@ -120,7 +120,7 @@ describe("material polls listing", function () {
       element(by.model('saveMatrix[3]')).click();
       element(by.model('saveMatrix[1]')).click();
       element(by.id('saveButton')).click();
-      expect(elements.pollCards.count()).toEqual(5);
+      expect(elements.pollCards.count()).toEqual(6);
       elements.menuDrawerButton.click();
       browser.sleep(500);
       elements.templatesButton.click();
@@ -186,7 +186,7 @@ describe("material polls listing", function () {
       element(by.model('saveMatrix[3]')).click();
       element(by.model('saveMatrix[1]')).click();
       element(by.id('saveButton')).click();
-      expect(elements.pollCards.count()).toEqual(5);
+      expect(elements.pollCards.count()).toEqual(6);
       elements.menuDrawerButton.click();
       browser.sleep(500);
       elements.templatesButton.click();
@@ -215,19 +215,21 @@ describe("material polls listing", function () {
     });
 
     it("changes to polls when clicking Polls button", function () {
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
       elements.pollsButton.click();
       expect(elements.pollCards.count()).toEqual(5);
     });
 
     it("changes to templates when clicking templates button", function () {
-      elements.templatesButton.click();
-      var firstCardTitle = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine'));
-      expect(firstCardTitle).toEqual("Join Operation Red Dawn! Bring Ships!");
       elements.menuDrawerButton.click();
-      elements.pollsButton.click();
+      browser.sleep(500);
+      elements.templatesButton.click();
+      var firstCardTitle = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine')).getText();
+      expect(firstCardTitle).toEqual("Join Operation Red Dawn! Bring Ships!");
     });
 
-  });
+  });*/
 
   describe("top toolbar", function () {
 
@@ -245,13 +247,17 @@ describe("material polls listing", function () {
     });
 
     it("filters the polls list when the poll filter buttons are clicked", function () {
-      browser.actions().
-        mouseMove(elements.firstCard).
-        perform();
+      elements.filterButton.click();
+      browser.sleep(500);
       elements.runningFilterButton.click();
+      browser.sleep(500);
       expect(elements.pollCards.count()).toEqual(2);
+      elements.filterButton.click();
+      browser.sleep(500);
       elements.unstartedFilterButton.click();
       expect(elements.pollCards.count()).toEqual(2);
+      elements.filterButton.click();
+      browser.sleep(500);
       elements.completedFilterButton.click();
       expect(elements.pollCards.count()).toEqual(1);
     });
@@ -378,9 +384,9 @@ describe("material polls listing", function () {
       });
 
       it("zooms to a zoomed poll card when clicked", function () {
-        var pollTitle = firstRunningCard.findElement(by.binding('{{poll.title}}')).getText();
-        element(by.css('material-backdrop')).click();
-        browser.sleep(500);
+        var pollTitle = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine')).getText();
+        //element(by.css('material-backdrop')).click();
+        //browser.sleep(500);
         firstRunningCard.click();
         var zoomedPollInformation = element(by.css('.pollInformation'));
         expect(zoomedPollInformation.isDisplayed()).toBeTruthy();
@@ -414,8 +420,8 @@ describe("material polls listing", function () {
 
       it("zooms to a edit poll card when clicked", function () {
         var pollTitle = firstUnstartedCard.findElement(by.binding('{{poll.title}}')).getText();
-        element(by.css('material-backdrop')).click();
-        browser.sleep(500);
+        //element(by.css('material-backdrop')).click();
+        //browser.sleep(500);
         firstUnstartedCard.click();
         var dialogTitleInput = element(by.inputName('pollTitleInput'));
         expect(dialogTitleInput.isDisplayed()).toBeTruthy();
@@ -450,8 +456,8 @@ describe("material polls listing", function () {
 
       it("zooms to a zoomed poll card when clicked", function () {
         var pollTitle = firstCompletedCard.findElement(by.binding('{{poll.title}}')).getText();
-        element(by.css('material-backdrop')).click();
-        browser.sleep(500);
+        //element(by.css('material-backdrop')).click();
+        //browser.sleep(500);
         firstCompletedCard.click();
         var zoomedPollInformation = element(by.css('.pollInformation'));
         expect(zoomedPollInformation.isDisplayed()).toBeTruthy();
