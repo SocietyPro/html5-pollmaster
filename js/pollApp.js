@@ -89,11 +89,11 @@ pollApp.directive('focusThis', function () {
   };
 });
 
-pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu){
+pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu, $timeout){
 
     $scope.menu = menu;
     $scope.menu.selectFilter(menu.filters[0]);
-
+    $scope.view=true;
     $(document).mouseup(function (e) {
         var container = $("#quickAddBox");
         if (!container.is(e.target) // if the target of the click isn't the container...
@@ -130,6 +130,16 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
     $scope.templatesShow = function () {
       $location.path("/templates");
+    };
+
+    $scope.checkView = function () {
+      var path = $location.path().substring(1,$location.path().length);
+      if (path == "polls" || path == "") {
+        return true;
+      } else {
+        return false;
+      }
+
     };
 
     $scope.startCustomizing = function(e, itemObject, saveMatrix){
@@ -278,7 +288,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     };
 
     function saveItem (item, saveMatrix) {
-
+      console.log(saveMatrix);
       for (var i = 0; i<item.options.length; i++) {
         if (!item.options[i].text) {
           item.options.splice(i,1);
@@ -321,6 +331,34 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
   $scope.polls = japi.polls.getList();
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
+
+  $("#cssmenu>ul>li").click(function() {
+        element = $(this);
+        var w = element.width();
+        if ($(this).hasClass('has-sub'))
+        {
+            leftPos = element.position().left + w/2 - 12;
+        }
+        else {
+            leftPos = element.position().left + w/2 - 6;
+        }
+        if ($("#cssmenu>ul>li>ul").css('left') == "auto") {
+            $("#cssmenu>ul>li>ul").css('opacity',0);
+            $("#cssmenu>ul>li>ul").css('left',"-9999px");;
+        } else {
+
+        $("#cssmenu>ul>li>ul").css('left',"auto");
+        $("#cssmenu>ul>li>ul").css('opacity',1);   
+        }
+    });
+    $(document).mouseup(function (e) {
+        var container = $("#cssmenu>ul>li");
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) { // ... nor a descendant of the container
+            $("#cssmenu>ul>li>ul").css('opacity',0);
+            $("#cssmenu>ul>li>ul").css('left',"-9999px");       
+        }
+    });
 
   $scope.filterPolls = function (filter) {
     if (filter.filter === "All") {

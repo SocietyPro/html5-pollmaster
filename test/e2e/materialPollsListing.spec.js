@@ -16,6 +16,7 @@ var Elements = function () {
   this.viewButtons = element(by.id('viewButtons'));
   this.streamButton = element(by.id('streamButton'));
   this.quiltButton = element(by.id('quiltButton'));
+  this.filterButton = element(by.id('filterButton'));
   this.pollCards = element.all(by.css('.cardholder'));
   this.materialPollCards = element.all(by.css('.mainCard'));
   this.firstCard = element.all(by.css('.mainCard')).get(0);
@@ -208,23 +209,22 @@ describe("material polls listing", function () {
       expect(elements.sidenav.getAttribute('class')).toEqual('material-sidenav-left material-whiteframe-z2 ng-isolate-scope open');
     });
 
-    it("has buttons for poll filters", function () {
-      expect(elements.allFilterButton.getText()).toEqual('All');
-      expect(elements.votesFilterButton.getText()).toEqual('Votes');
-      expect(elements.runningFilterButton.getText()).toEqual('Running');
-      expect(elements.unstartedFilterButton.getText()).toEqual('Unstarted');
-      expect(elements.completedFilterButton.getText()).toEqual('Completed');
+    it("has buttons for polls and templates view", function () {
+      expect(elements.pollsButton.getText()).toEqual('Polls');
+      expect(elements.templatesButton.getText()).toEqual('Templates');
     });
 
-    it("filters the polls list when the poll filter buttons are clicked", function () {
-      elements.menuDrawerButton.click();
+    it("changes to polls when clicking Polls button", function () {
+      elements.pollsButton.click();
       expect(elements.pollCards.count()).toEqual(5);
-      elements.runningFilterButton.click();
-      expect(elements.pollCards.count()).toEqual(2);
-      elements.unstartedFilterButton.click();
-      expect(elements.pollCards.count()).toEqual(2);
-      elements.completedFilterButton.click();
-      expect(elements.pollCards.count()).toEqual(1);
+    });
+
+    it("changes to templates when clicking templates button", function () {
+      elements.templatesButton.click();
+      var firstCardTitle = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine'));
+      expect(firstCardTitle).toEqual("Join Operation Red Dawn! Bring Ships!");
+      elements.menuDrawerButton.click();
+      elements.pollsButton.click();
     });
 
   });
@@ -238,6 +238,22 @@ describe("material polls listing", function () {
       elements.streamButton.click();
       expect(elements.streamButton.getAttribute('class')).toEqual('viewButton material-button-icon active');
       expect(elements.quiltButton.getAttribute('class')).toEqual('viewButton material-button-icon inactive');
+    });
+
+    it("has button for poll filters", function () {
+      expect(elements.filterButton.isDisplayed()).toBeTruthy();
+    });
+
+    it("filters the polls list when the poll filter buttons are clicked", function () {
+      browser.actions().
+        mouseMove(elements.firstCard).
+        perform();
+      elements.runningFilterButton.click();
+      expect(elements.pollCards.count()).toEqual(2);
+      elements.unstartedFilterButton.click();
+      expect(elements.pollCards.count()).toEqual(2);
+      elements.completedFilterButton.click();
+      expect(elements.pollCards.count()).toEqual(1);
     });
 
   });
@@ -305,7 +321,7 @@ describe("material polls listing", function () {
         expect(elements.pollCards.count()).toEqual(6);
       });
 
-      xit("has a fork as template action", function () {
+      /*xit("has a fork as template action", function () {
         elements.menuDrawerButton.click();
         browser.sleep(500);
         elements.templatesButton.click();    
@@ -328,7 +344,7 @@ describe("material polls listing", function () {
         elements.templatesButton.click();    
         templateCards = element.all(by.css('.maincard'));
         expect(templateCards.count()).toEqual(6);
-      });
+      });*/
 
     });
 
@@ -341,9 +357,10 @@ describe("material polls listing", function () {
       var firstRunningCard;
 
       beforeEach(function () {
-        elements.menuDrawerButton.click();
+        elements.filterButton.click();
         browser.sleep(500);
         elements.runningFilterButton.click();
+        browser.sleep(500);
         firstRunningCard = element.all(by.css('material-card')).get(0);
       });
       
@@ -378,9 +395,10 @@ describe("material polls listing", function () {
       var firstUnstartedCard;
 
       beforeEach(function () {
-        elements.menuDrawerButton.click();
+        elements.filterButton.click();
         browser.sleep(500);
         elements.unstartedFilterButton.click();
+        browser.sleep(500);
         firstUnstartedCard = element.all(by.css('material-card')).get(0);
       });
       
@@ -411,9 +429,10 @@ describe("material polls listing", function () {
       var firstCompletedCard;
       
       beforeEach(function () {
-        elements.menuDrawerButton.click();
+        elements.filterButton.click();
         browser.sleep(500);
         elements.completedFilterButton.click();
+        browser.sleep(100);
         firstCompletedCard = element.all(by.css('material-card')).get(0);
       });
 

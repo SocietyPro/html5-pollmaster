@@ -818,3 +818,10 @@ material-card {
   margin-top: 16px;
   background-color: #ffff8d;
 }
+.filterDropdown {
+  margin-right: 30zpx;
+}
+
+ul#filters {
+  display:none;
+}
