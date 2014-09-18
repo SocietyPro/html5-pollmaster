@@ -44,8 +44,7 @@ describe("material polls listing", function () {
     return Array.prototype.filter.call(inputs, function (input) {
       return input.name === name;
     })
-  });
- /* 
+  }); 
   it("has a quick add poll form", function () {
     expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
     expect(elements.quickAddBox.isDisplayed()).toBeTruthy();
@@ -229,7 +228,7 @@ describe("material polls listing", function () {
       expect(firstCardTitle).toEqual("Join Operation Red Dawn! Bring Ships!");
     });
 
-  });*/
+  });
 
   describe("top toolbar", function () {
 
@@ -286,6 +285,7 @@ describe("material polls listing", function () {
           mouseMove(elements.firstCard).
           perform();
         elements.firstCardOverflowMenuButton.click();
+        browser.sleep(500);
         expect(elements.firstCardOverflowMenu.isDisplayed()).toBeTruthy();
         browser.actions().
           mouseMove(elements.streamButton.find()).

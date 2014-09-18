@@ -154,9 +154,11 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
     $scope.newItemFromScratch = function(e, isPoll, quickAddForm, newTitle, newDescription) {
       if (isPoll) {var newItem = japi.polls.build()};
-      if (!isPoll) {var newItem = japi.polls.templates.build()};
+      if (!isPoll) {var newItem = japi.polls.templates.build()
+                    newItem.status = "unsaved";};
       newItem.title = newTitle;
       newItem.description = newDescription;
+      console.log(newItem);
       saveMatrix[0] = saveMatrix[1] = isPoll;
       saveMatrix[2] = saveMatrix[3] = !isPoll;
       $scope.startCustomizing(e, newItem, saveMatrix);
@@ -293,7 +295,9 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
           item.options.splice(i,1);
         }
       }
+      console.log(item);
       item.overflow = false;
+      item.status = "unsaved";
       if (saveMatrix[0]) {
         if (saveMatrix[1] && !saveMatrix[3])
           save(item);
@@ -305,12 +309,13 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
         }   
       } else {
         if (saveMatrix[1] && !saveMatrix[3])
-          save(item);
-        if (!saveMatrix[1] && saveMatrix[3]) {
           buildAndSave(item, 'poll');
+        if (!saveMatrix[1] && saveMatrix[3]) {
+          save(item);
         }
         if (saveMatrix[1] && saveMatrix[3]) {
           buildAndSave(item, 'poll');
+          save(item);
         }
       }
 
@@ -322,10 +327,21 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
     function buildAndSave (item, itemType) {
       if (itemType === 'poll') {
-        var poll = japi.polls.build(item);
+        var poll = japi.polls.build();
+        poll.title=item.title;
+        poll.description=item.description;
+        poll.allowComments=item.allowComments;
+        poll.dateStarted=item.dateStarted;
+        poll.options = item.options;
+        poll.allowMultipleChoices = item.allowMultipleChoices;
+        poll.endDate = item.endDate;
+        poll.endTime = item.endTime;
+        poll.target = item.target;
         poll.save();
-      } else {
+      } 
+      if (itemType === 'template') {
         var template = japi.polls.templates.build(item);
+        template.status = "unsaved";
         template.save();
       };
     };
@@ -533,7 +549,13 @@ pollApp.controller("templatesCtrl", function ($scope, $materialDialog){
   };
 
   $scope.forkTemplate = function (e, template) {
-    var newTemplate = japi.polls.templates.build(template);
+    var newTemplate = japi.polls.templates.build();
+    newTemplate.status = "unsaved";
+    newTemplate.title = template.title;
+    newTemplate.description = template.description;
+    newTemplate.allowComments=template.allowComments;
+    newTemplate.options = template.options;
+    newTemplate.allowMultipleChoices = template.allowMultipleChoices;
     saveMatrix = [false, false, true, true];
     $scope.startCustomizing(e, newTemplate, saveMatrix);
   };
