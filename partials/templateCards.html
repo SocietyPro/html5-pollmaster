@@ -2,7 +2,7 @@
   <div ng-show="selectedIndex == 0">
     <!-- Quick Add Box -->
     <div id="quickAddBox">
-      <form name="quickAddForm" style="padding-left:20px;" ng-init="newItem=false" ng-controller="quickAddCtrl">
+      <form name="quickAddForm" style="padding-left:20px;" ng-controller="quickAddCtrl">
         <material-input-group>
           <material-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
         </material-input-group>
