@@ -265,30 +265,6 @@ button {
 	width: 70px;
 }
 
-/* Styles for ballotView */
-
-#ballotTitle {
-	border: 1px solid black;
-	background-color: #ccc;
-	padding: 5px;
-	margin-bottom: 10px;
-}
-
-#ballotDescription {
-	border: 1px solid black;
-	padding: 8px;
-}
-
-#ballotOptions {
-	border: 1px solid black;
-	padding: 8px;
-	margin-bottom: 10px;
-}
-
-.ballot-table {
-  width: 100%;
-}
-
 /* Styles for Help Modal */
 
 .help-label {
@@ -829,4 +805,26 @@ material-card {
 
 ul#filters {
   display:none;
+}
+
+/* Styles for Material Voting Booth */
+#ballotCard {
+  max-width: 300px;
+  min-width: 300px;
+}
+
+#ballotTitle {
+  margin: 14px 0 10px 0;
+}
+
+#ballotOptionsContainer {
+  margin-bottom: 14px;
+}
+
+.ballotOption {
+  line-height: 48px;
+}
+
+#commentInput {
+  background-color: #fff;
 }

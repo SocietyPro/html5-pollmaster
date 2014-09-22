@@ -21,6 +21,10 @@ pollApp.config(function($routeProvider){
     templateUrl: "partials/templateManager.tmpl.html",
     controller: "templatesCtrl"
   }).
+  when("/votingbooth/:pollID", {
+    templateUrl: "partials/votingBooth.tmpl.html",
+    controller: "votingBoothCtrl"
+  }).
   when("/", {
     templateUrl: "partials/polls.tmpl.html",
     controller: "pollsCtrl"
@@ -95,15 +99,18 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     $scope.menu.selectFilter(menu.filters[0]);
     $scope.view=true;
     $(document).mouseup(function (e) {
-        var container = $("#quickAddBox");
-        if (!container.is(e.target) // if the target of the click isn't the container...
-            && container.has(e.target).length === 0) // ... nor a descendant of the container
-        {
-            var scope = angular.element($("#quickAddBox")).scope();
-            scope.$apply(function(){
-                scope.newItem = false;
-            });       
+      var container = $("#quickAddBox");
+      if (!container.is(e.target) // if the target of the click isn't the container...
+          && container.has(e.target).length === 0) // ... nor a descendant of the container
+      {
+        var exists = ($('#quickAddBox').length === 1)
+        if (exists) {
+          var scope = angular.element($("#quickAddBox")).scope();
+          scope.$apply(function(){
+              scope.newItem = false;
+          });       
         }
+      }
     });
 
     $scope.toggleMenu = function () {
@@ -626,6 +633,40 @@ pollApp.controller('quickAddCtrl', function ($scope) {
     $scope.newItem = false;
     $scope.quickAddForm.$setPristine();
   });
+
+});
+
+pollApp.controller('votingBoothCtrl', function ($scope, $routeParams, $location) {
+  var pollID = $routeParams.pollID;
+  var requestedPoll = japi.polls.get(pollID);
+  
+  if (requestedPoll.status === "started") {
+    $scope.poll = requestedPoll;
+    $scope.ballot = {};
+    $scope.ballot.selectedOption = $scope.poll.options[0].text;
+  } else {
+    $location.path("/polls");
+  }
+
+  $scope.dismiss = function () {
+    console.log("Ballot " + $scope.poll.id + " dismissed.");
+    $scope.poll.status = "complete";
+    $scope.poll.save();
+    $location.path("/polls");
+  };
+
+  $scope.submit = function () {
+    console.log("Ballot submitted with selection: " + $scope.selectedOption);
+    console.log($scope.ballot.ballotComment);
+    if ($scope.poll.allowComments && $scope.ballot.ballotComment) {
+      console.log("Ballot submitted with comment: " + $scope.ballot.ballotComment);
+      comment = ["user1", $scope.ballot.ballotComment, new Date()];
+      $scope.poll.comments.push(comment);
+    }
+    $scope.poll.status = "complete";
+    $scope.poll.save();
+    $location.path("/polls");
+  };
 
 });
 
