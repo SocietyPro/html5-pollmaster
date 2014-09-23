@@ -12,7 +12,7 @@
           ng-class="{focused: opt.hasFocus}" ng-mouseover="opt.menubar = true" ng-mouseleave="opt.menubar = false">
             <material-checkbox ng-model="opt.remove"></material-checkbox>
             <material-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"  focus-this="{{$index}}" ng-keypress="keypressListener($event)" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false" ng-keyup="checkForOptionDelete($event,$index)" ></material-input>
-            <material-button ng-show="opt.menubar" ng-click="removeOption($index)"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
+            <material-button ng-show="opt.menubar" ng-click="removeOption($index)" title="Remove Option"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
           </div>
         <div class="newOptionWrapper" ng-class="{focused: newOptionFocused}">
           <material-input type="text" id="addOptionInput" ng-model="newOptionText" ng-change="addOption()" placeholder="Add option" ng-focus="newOptionFocused = true" ng-blur="newOptionFocused = false"></material-input>

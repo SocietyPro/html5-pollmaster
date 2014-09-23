@@ -64,7 +64,10 @@
         Poll Ends At {{poll.endTime}} on {{poll.endDate | date : 'MM/dd/yy'}}
       </div>
     <div class="cardMenuBar animate-show" ng-show="poll.menubar">
-      <material-button class="material-button-icon overflowMenuButton" ng-click="overflowToggle(poll)" layout="vertical" layout-align="end end">
+      <material-button ng-if="poll.status === 'unstarted'" class="material-button-icon startPollButton" ng-click="startPoll(poll)" title="Start Poll">
+        <img class="startPollIcon" ng-src="material-icons/icons/system_icons/av/res/1x_web/ic_play_arrow_wht_18dp.png">
+      </material-button>
+      <material-button class="material-button-icon overflowMenuButton" ng-click="overflowToggle(poll)" layout="vertical" layout-align="end end" title="Overflow Menu">
         <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
       </material-button>
     </div>

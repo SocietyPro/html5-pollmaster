@@ -428,6 +428,23 @@ describe("material polls listing", function () {
         expect(dialogTitleInput.getAttribute('value')).toEqual(pollTitle);
       });
 
+      describe("action bar", function () {
+
+        it("has a 'start poll' icon on the far right", function () {
+          var startPollButton = element(by.css('.startPollButton'));
+          expect(startPollButton.isDisplayed()).toBeFalsy();      
+          browser.actions().
+            mouseMove(firstUnstartedCard).
+            perform();
+          expect(startPollButton.isDisplayed()).toBeTruthy();
+          var cards = element.all(by.css('.mainCard'));
+          expect(cards.count()).toEqual(2);
+          startPollButton.click();
+          expect(cards.count()).toEqual(1);     
+        });
+
+      });
+
     });
 
     describe("for a completed poll", function () {

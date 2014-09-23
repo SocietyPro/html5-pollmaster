@@ -272,7 +272,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             $materialDialog({
               templateUrl: 'partials/selectTarget.tmpl.html',
               targetEvent: e,
-              controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+              controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
                 $scope.poll = poll;
                 $scope.myGroups = japi.me.groups;
                 $scope.saveMatrix = saveMatrix;
@@ -283,7 +283,11 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
                 $scope.save = function (item, saveMatrix) {
                   saveItem(item, saveMatrix);
+                  if ($scope.startNow && item.target) {
+                    $rootScope.$broadcast('startNow', {poll: item});
+                  }
                   item.overflow = false;
+                  $scope.startNow = false;
                   $hideDialog();
                 };
 
@@ -455,6 +459,10 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
 
   $scope.$on('zoomedCopyPoll', function (scope, args) {
     $scope.copyPoll(args.event, args.poll);
+  });
+
+  $scope.$on('startNow', function (scope, args) {
+    $scope.startPoll(args.poll);
   });
 
   function showPoll (e, poll) {

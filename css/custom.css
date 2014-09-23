@@ -503,6 +503,10 @@ div .cardMenuBar {
   vertical-align: middle;
 }
 
+.startPollButton {
+  margin-top: 6px;
+}
+
 .overflowMenuButton {
   margin-top: 6px;
   float: right; 

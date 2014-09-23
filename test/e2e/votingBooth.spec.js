@@ -12,7 +12,7 @@ var Elements  = function () {
 
 var elements;
 
-ddescribe("voting booth", function () {
+describe("voting booth", function () {
 
   beforeEach(function () {
     browser.get('index.html#/votingbooth/UUID1001');

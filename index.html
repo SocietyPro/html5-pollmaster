@@ -65,7 +65,7 @@
               <div id='cssmenu' ng-if="checkView()">
                 <ul>
                    <li class='active has-sub last' id="filterButton">
-                      <material-button class="clicker material-button-icon">
+                      <material-button class="clicker material-button-icon" title="Filter Polls">
                         <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_48dp.png"></material-icon>
                       </material-button></a>
                       <ul>
@@ -80,10 +80,10 @@
                    </li>
                 </ul>
               </div>
-              <material-button id="streamButton" class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}">
+              <material-button id="streamButton" class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" title="Show as Stream">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_48dp.png"></material-icon>
               </material-button>
-              <material-button id="quiltButton" class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}">
+              <material-button id="quiltButton" class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" title="Show as Quilt">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_48dp.png"></material-icon>
               </material-button>
             </div>

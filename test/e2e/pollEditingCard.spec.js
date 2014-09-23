@@ -192,7 +192,7 @@ describe("poll editing card", function () {
   
 });
 
-describe("target selection dialog", function () {
+ddescribe("target selection dialog", function () {
 
   beforeEach(function () {
     browser.get('index.html');
@@ -200,15 +200,24 @@ describe("target selection dialog", function () {
     browser.sleep(500);
     element(by.id('nextButton')).click();
     browser.sleep(500);
+    var targetSelect = element(by.model('poll.target'));
+    var startImmediatelyCheckbox = element(by.id('startImmediatelyCheckbox'));
+    var closeButton = element(by.id('closeButton'));
+    var saveButton = element(by.id('saveButton'));
   });
 
   it("has a target selection dropdown", function () {
-    var targetSelect = element(by.model('poll.target'));
     expect(targetSelect.isDisplayed()).toBeTruthy();
   });
 
+  it("has a 'start immediately' option", function () {
+    expect(startImmediatelyCheckbox.isDisplayed()).toBeTruthy();
+    expect(startImmediatelyCheckbox.getAttribute('disabled')).toBeTruthy();
+    targetSelect.select[0];
+    expect(startImmediatelyCheckbox.getAttribute('disabled')).toBeFalsy();
+  });
+
   it("has a close button", function () {
-    var closeButton = element(by.id('closeButton'));
     expect(elements.pollCards.count()).toEqual(5);
     closeButton.click();
     browser.sleep(500);
@@ -216,7 +225,6 @@ describe("target selection dialog", function () {
   });
 
   it("has a save button", function () {
-    var saveButton = element(by.id('saveButton'));
     expect(elements.pollCards.count()).toEqual(5);
     saveButton.click();
     browser.sleep(500);
