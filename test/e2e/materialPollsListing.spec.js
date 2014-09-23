@@ -430,17 +430,25 @@ describe("material polls listing", function () {
 
       describe("action bar", function () {
 
-        it("has a 'start poll' icon on the far right", function () {
-          var startPollButton = element(by.css('.startPollButton'));
-          expect(startPollButton.isDisplayed()).toBeFalsy();      
+        it("has a 'start poll' icon on the far left if the poll has a target", function () {
+          expect(browser.isElementPresent(by.css('.startPollButton'))).toBeFalsy();      
           browser.actions().
             mouseMove(firstUnstartedCard).
             perform();
-          expect(startPollButton.isDisplayed()).toBeTruthy();
+          expect(browser.isElementPresent(by.css('.startPollButton'))).toBeFalsy();
+          elements.fab.click();
+          element(by.id('nextButton')).click();
+          element.all(by.css('option')).get(1).click();
+          element(by.id('saveButton')).click();
           var cards = element.all(by.css('.mainCard'));
-          expect(cards.count()).toEqual(2);
-          startPollButton.click();
-          expect(cards.count()).toEqual(1);     
+          expect(cards.count()).toEqual(3);
+          var lastCard = element.all(by.css('.mainCard')).last();      
+          browser.actions().
+            mouseMove(lastCard).
+            perform();
+          expect(browser.isElementPresent(by.css('.startPollButton'))).toBeTruthy();
+          element(by.css('.startPollButton')).click();
+          expect(cards.count()).toEqual(2);     
         });
 
       });

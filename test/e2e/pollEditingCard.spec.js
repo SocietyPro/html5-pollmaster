@@ -192,41 +192,52 @@ describe("poll editing card", function () {
   
 });
 
-ddescribe("target selection dialog", function () {
+describe("target selection dialog", function () {
+
+  var TargetSelectionElements = function () {
+    this.targetSelect = element(by.model('poll.target'));
+    this.startImmediatelyCheckbox = element(by.id('startImmediatelyCheckbox'));
+    this.closeButton = element(by.id('closeButton'));
+    this.saveButton = element(by.id('saveButton'));
+  };
+
+  var targetSelectionElements;
 
   beforeEach(function () {
     browser.get('index.html');
+    elements = new Elements();
     elements.fab.click();
     browser.sleep(500);
     element(by.id('nextButton')).click();
     browser.sleep(500);
-    var targetSelect = element(by.model('poll.target'));
-    var startImmediatelyCheckbox = element(by.id('startImmediatelyCheckbox'));
-    var closeButton = element(by.id('closeButton'));
-    var saveButton = element(by.id('saveButton'));
+    targetSelectionElements = new TargetSelectionElements();
   });
 
   it("has a target selection dropdown", function () {
-    expect(targetSelect.isDisplayed()).toBeTruthy();
+    expect(targetSelectionElements.targetSelect.isDisplayed()).toBeTruthy();
   });
 
   it("has a 'start immediately' option", function () {
-    expect(startImmediatelyCheckbox.isDisplayed()).toBeTruthy();
-    expect(startImmediatelyCheckbox.getAttribute('disabled')).toBeTruthy();
-    targetSelect.select[0];
-    expect(startImmediatelyCheckbox.getAttribute('disabled')).toBeFalsy();
+    expect(targetSelectionElements.startImmediatelyCheckbox.isDisplayed()).toBeTruthy();
+    expect(targetSelectionElements.startImmediatelyCheckbox.getAttribute('disabled')).toBeTruthy();
+    element.all(by.css('option')).get(1).click();
+    expect(targetSelectionElements.startImmediatelyCheckbox.getAttribute('disabled')).toBeFalsy();
+    targetSelectionElements.startImmediatelyCheckbox.click();
+    targetSelectionElements.saveButton.click();
+    var lastCard = element.all(by.css('.mainCard')).last();
+    expect(lastCard.getAttribute('class')).toEqual('mainCard running');
   });
 
   it("has a close button", function () {
     expect(elements.pollCards.count()).toEqual(5);
-    closeButton.click();
+    targetSelectionElements.closeButton.click();
     browser.sleep(500);
     expect(elements.pollCards.count()).toEqual(5);
   });
 
   it("has a save button", function () {
     expect(elements.pollCards.count()).toEqual(5);
-    saveButton.click();
+    targetSelectionElements.saveButton.click();
     browser.sleep(500);
     expect(elements.pollCards.count()).toEqual(6);
   });
