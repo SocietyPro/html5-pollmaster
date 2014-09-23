@@ -26,7 +26,7 @@ var Elements = function () {
   this.firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
   this.firstCardDeleteAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.destroyAction'));
   this.firstCardCopyAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.copyAction'));
-  //this.firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
+  this.firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
 };
 
 var elements;
@@ -119,7 +119,7 @@ describe("material polls listing", function () {
       element(by.model('saveMatrix[3]')).click();
       element(by.model('saveMatrix[1]')).click();
       element(by.id('saveButton')).click();
-      expect(elements.pollCards.count()).toEqual(6);
+      expect(elements.pollCards.count()).toEqual(5);
       elements.menuDrawerButton.click();
       browser.sleep(500);
       elements.templatesButton.click();
@@ -185,7 +185,7 @@ describe("material polls listing", function () {
       element(by.model('saveMatrix[3]')).click();
       element(by.model('saveMatrix[1]')).click();
       element(by.id('saveButton')).click();
-      expect(elements.pollCards.count()).toEqual(6);
+      expect(elements.pollCards.count()).toEqual(5);
       elements.menuDrawerButton.click();
       browser.sleep(500);
       elements.templatesButton.click();
@@ -327,11 +327,11 @@ describe("material polls listing", function () {
         expect(elements.pollCards.count()).toEqual(6);
       });
 
-      /*xit("has a fork as template action", function () {
+      it("has a fork as template action", function () {
         elements.menuDrawerButton.click();
         browser.sleep(500);
         elements.templatesButton.click();    
-        var templateCards = element.all(by.css('.maincard'));
+        var templateCards = element.all(by.css('.mainCard'));
         expect(templateCards.count()).toEqual(5);
         elements.pollsButton.click();
         element(by.css('material-backdrop')).click();
@@ -342,15 +342,15 @@ describe("material polls listing", function () {
         elements.firstCardOverflowMenuButton.click();
         expect(elements.firstCardForkAction.isDisplayed()).toBeTruthy();
         expect(elements.firstCardForkAction.getText()).toEqual("Fork as a Template");
-        firstCardForkAction.click();
+        elements.firstCardForkAction.click();
         browser.sleep(500);
         element(by.id('saveButton')).click();
         elements.menuDrawerButton.click();
         browser.sleep(500);
         elements.templatesButton.click();    
-        templateCards = element.all(by.css('.maincard'));
+        templateCards = element.all(by.css('.mainCard'));
         expect(templateCards.count()).toEqual(6);
-      });*/
+      });
 
     });
 
@@ -385,8 +385,6 @@ describe("material polls listing", function () {
 
       it("zooms to a zoomed poll card when clicked", function () {
         var pollTitle = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine')).getText();
-        //element(by.css('material-backdrop')).click();
-        //browser.sleep(500);
         firstRunningCard.click();
         var zoomedPollInformation = element(by.css('.pollInformation'));
         expect(zoomedPollInformation.isDisplayed()).toBeTruthy();
@@ -420,8 +418,6 @@ describe("material polls listing", function () {
 
       it("zooms to a edit poll card when clicked", function () {
         var pollTitle = firstUnstartedCard.findElement(by.binding('{{poll.title}}')).getText();
-        //element(by.css('material-backdrop')).click();
-        //browser.sleep(500);
         firstUnstartedCard.click();
         var dialogTitleInput = element(by.inputName('pollTitleInput'));
         expect(dialogTitleInput.isDisplayed()).toBeTruthy();
@@ -481,8 +477,6 @@ describe("material polls listing", function () {
 
       it("zooms to a zoomed poll card when clicked", function () {
         var pollTitle = firstCompletedCard.findElement(by.binding('{{poll.title}}')).getText();
-        //element(by.css('material-backdrop')).click();
-        //browser.sleep(500);
         firstCompletedCard.click();
         var zoomedPollInformation = element(by.css('.pollInformation'));
         expect(zoomedPollInformation.isDisplayed()).toBeTruthy();

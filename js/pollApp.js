@@ -165,7 +165,6 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
                     newItem.status = "unsaved";};
       newItem.title = newTitle;
       newItem.description = newDescription;
-      console.log(newItem);
       saveMatrix[0] = saveMatrix[1] = isPoll;
       saveMatrix[2] = saveMatrix[3] = !isPoll;
       $scope.startCustomizing(e, newItem, saveMatrix);
@@ -306,26 +305,20 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
           item.options.splice(i,1);
         }
       }
-      console.log(item);
       item.overflow = false;
       item.status = "unsaved";
       if (saveMatrix[0]) {
-        if (saveMatrix[1] && !saveMatrix[3])
+        if (saveMatrix[1]) {
           save(item);
-        if (!saveMatrix[1] && saveMatrix[3]) {
+        }
+        if (saveMatrix[3]) {
           buildAndSave(item, 'template');
         }
-        if (saveMatrix[1] && saveMatrix[3]) {
-          buildAndSave(item, 'template');
-        }   
       } else {
-        if (saveMatrix[1] && !saveMatrix[3])
+        if (saveMatrix[1]) {
           buildAndSave(item, 'poll');
-        if (!saveMatrix[1] && saveMatrix[3]) {
-          save(item);
         }
-        if (saveMatrix[1] && saveMatrix[3]) {
-          buildAndSave(item, 'poll');
+        if (saveMatrix[3]) {
           save(item);
         }
       }
@@ -338,7 +331,8 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
     function buildAndSave (item, itemType) {
       if (itemType === 'poll') {
-        var poll = japi.polls.build();
+        var poll = japi.polls.build(item);
+        /*
         poll.title=item.title;
         poll.description=item.description;
         poll.allowComments=item.allowComments;
@@ -348,6 +342,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
         poll.endDate = item.endDate;
         poll.endTime = item.endTime;
         poll.target = item.target;
+        */
         poll.save();
       } 
       if (itemType === 'template') {
@@ -431,6 +426,7 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
 
   $scope.newTemplateFromPoll = function (e, poll) {
     var newTemplate = japi.polls.templates.build(poll);
+    newTemplate.status = "unsaved";
     saveMatrix = [false, false, true, true];
     $scope.startCustomizing(e, newTemplate, saveMatrix);
   };
