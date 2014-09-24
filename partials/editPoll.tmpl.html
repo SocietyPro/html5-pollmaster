@@ -59,11 +59,24 @@
             </div>
           </div>
           <div class="clearBoth"></div>
-          <div class="dialog-options-save-options">
-            Save Options:
-            <div class="dialog-options-container">
-              <material-checkbox ng-model="saveMatrix[3]" aria-label="Save as Template">Save as Template</material-checkbox>
-              <material-checkbox ng-model="saveMatrix[1]" aria-label="Save as Poll">Save as Poll</material-checkbox>
+          <div layout="horizontal" layout-align="start">  
+            <div flex="35">  
+              <div class="dialog-options-save-options">
+                Save Options:
+                <div class="dialog-options-container">
+                  <material-checkbox ng-model="saveMatrix[3]" aria-label="Save as Template">Save as Template</material-checkbox>
+                  <material-checkbox ng-model="saveMatrix[1]" aria-label="Save as Poll">Save as Poll</material-checkbox>
+                </div>
+              </div>
+            </div>
+            <div class="dialog-options-button-options">
+              Customize Buttons:
+              <div class="dialog-options-container">
+                <label for="dismissTextInput">Dismiss Button Label: </label>
+                <material-input id="dismissTextInput" type="text" ng-model="poll.dismissText" placeholder="dismiss"></material-input>
+                <label for="submitTextInput">Submit ButtonLabel: </label>
+                <material-input id="submitTextInput" type="text" ng-model="poll.submitText" placeholder="submit"></material-input>
+              </div>
             </div>
           </div>
           <div class="clearBoth"></div>
@@ -102,9 +115,9 @@
       <p ng-if="poll.allowComments">
         <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png"> Add comment
       </p>
-      <div>
-        <material-button>None of the Above</material-button>
-        <material-button class="material-button-colored">Send this Vote</material-button>
+      <div layout="horizontal" layout-align="end">
+        <material-button id="dismissButton">{{poll.dismissText || "dismiss"}}</material-button>
+        <material-button id="submitButton" class="material-button-colored">{{poll.submitText || "submit"}}</material-button>
       </div>
     </material-card>
     

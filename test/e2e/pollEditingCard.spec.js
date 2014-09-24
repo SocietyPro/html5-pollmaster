@@ -20,6 +20,8 @@ var EditCardElements = function () {
   this.saveAsTemplateCheckbox = element(by.model('saveMatrix[3]'));
   this.saveAsPollCheckbox = element(by.model('saveMatrix[1]'));
   this.pollEndsOptions = element(by.css('.dialog-options-poll-ends'));
+  this.dismissTextInput = element(by.id('dismissTextInput'));
+  this.submitTextInput = element(by.id('submitTextInput'));
   this.ballotPreview = element(by.id('ballotPreview'));
 };  
 
@@ -172,6 +174,32 @@ describe("poll editing card", function () {
 
       it("has date and time inputs", function () {
         expect(editCardElements.pollEndsOptions.isDisplayed()).toBeTruthy();
+      });
+
+    });
+
+    describe("customize buttons section", function () {
+
+      beforeEach(function () {      
+        editCardElements.ballotPreviewButton.click();  
+        editCardElements.menuDrawerButton.click();
+        browser.sleep(500);
+      });
+
+      it("has an input for custom submit button text", function () {
+        var submitButton = element(by.id('submitButton'));
+        expect(submitButton.getText()).toEqual('');
+        expect(editCardElements.submitTextInput.isDisplayed()).toBeTruthy();
+        editCardElements.submitTextInput.sendKeys("Sure");
+        expect(submitButton.getText()).toEqual('');
+      });
+
+      it("has an input for custom dismiss button text", function () {
+        var dismissButton = element(by.id('dismissButton'));
+        expect(dismissButton.getText()).toEqual('DISMISS');
+        expect(editCardElements.dismissTextInput.isDisplayed()).toBeTruthy();
+        editCardElements.dismissTextInput.sendKeys("No, Thanks");
+        expect(dismissButton.getText()).toEqual('NO, THANKS');
       });
 
     });

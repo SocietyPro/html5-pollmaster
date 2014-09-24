@@ -616,7 +616,15 @@ material-checkbox[disabled] {
   margin-top: 7px;
   margin-bottom: 6px;
   float: left;
-  width: 34%;
+}
+
+.dialog-options-button-options {
+  margin-top: 7px;
+  margin-left: 7px;
+}
+
+.dialog-options-button-options label {
+  display: inline-block;
 }
 
 .custom-dropdown {
