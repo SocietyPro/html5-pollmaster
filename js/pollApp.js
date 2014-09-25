@@ -113,6 +113,17 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       }
     });
 
+    $scope.safeApply = function(fn) {
+      var phase = this.$root.$$phase;
+      if(phase == '$apply' || phase == '$digest') {
+        if(fn && (typeof(fn) === 'function')) {
+          fn();
+        }
+      } else {
+        this.$apply(fn);
+      }
+    };
+
     $scope.toggleMenu = function () {
       $materialSidenav('left').toggle();
     };
@@ -155,7 +166,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
       // We will modify this during our WIP. See saveCustomization for where it
       // gets copied back.
-      $scope.poll = angular.copy(itemObject);
+      $scope.poll = itemObject;
       $scope.dialog(e, $scope.poll, saveMatrix);
     };
 
@@ -356,6 +367,9 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
 pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
 
+  Cambrian.polls.onPollSaved.connect(getPollsList);
+  Cambrian.polls.onPollDestroyed.connect(getPollsList);
+  console.log('registered listeners ' + Cambrian.polls.pointer); 
   $scope.polls = japi.polls.getList();
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
@@ -460,6 +474,13 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
   $scope.$on('startNow', function (scope, args) {
     $scope.startPoll(args.poll);
   });
+
+  function getPollsList() {
+    console.log('refreshing polls list');
+    $scope.safeApply(function () {
+      $scope.polls = Cambrian.polls.getList();
+    });
+  }; 
 
   function showPoll (e, poll) {
     $materialDialog({
