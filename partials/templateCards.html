@@ -1,5 +1,5 @@
 <div> 
-  <div ng-show="selectedIndex == 0">
+  <div ng-if="selectedIndex == 0">
     <!-- Quick Add Box -->
     <div id="quickAddBox">
       <form name="quickAddForm" style="padding-left:20px;" ng-controller="quickAddCtrl">
@@ -30,8 +30,8 @@
               <table>
                 <tr><td colspan="2">OPTIONS</td></tr>
                 <tr ng-repeat="option in template.options">  
-                <td class="previewCheckbox"><input type="checkbox" disabled></td>
-                <td>{{option.text}}</td>
+                <!--<td class="previewCheckbox"><input type="checkbox" disabled></td>-->
+                <!--<td>{{option.text}}</td>-->
                 </tr>
               </table>
             </div>
@@ -58,4 +58,3 @@
   </material-card>
 </div>
 
-<pre>{{quickAddForm | json}}</pre>

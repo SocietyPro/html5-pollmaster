@@ -98,6 +98,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     $scope.menu = menu;
     $scope.menu.selectFilter(menu.filters[0]);
     $scope.view=true;
+    
     $(document).mouseup(function (e) {
       var container = $("#quickAddBox");
       if (!container.is(e.target) // if the target of the click isn't the container...
@@ -171,9 +172,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     };
 
     $scope.newItemFromScratch = function(e, isPoll, quickAddForm, newTitle, newDescription) {
-      if (isPoll) {var newItem = japi.polls.build()};
-      if (!isPoll) {var newItem = japi.polls.templates.build()
-                    newItem.status = "unsaved";};
+      var newItem = japi.polls.build();
       newItem.title = newTitle;
       newItem.description = newDescription;
       saveMatrix[0] = saveMatrix[1] = isPoll;
@@ -235,7 +234,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
           $scope.addOption = function () {
             var newOption = { text: $scope.newOptionText, subgroup: "", count: 0 };
-            $scope.poll.options.push(newOption);
+            //$scope.poll.options.push(newOption);
             $scope.newOptionText = "";
             var index = $scope.poll.options.length - 1;
             $timeout(function () {
@@ -318,59 +317,39 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       }
       item.overflow = false;
       item.status = "unsaved";
-      if (saveMatrix[0]) {
-        if (saveMatrix[1]) {
-          save(item);
+
+      if (saveMatrix[1]) {
+        if (saveMatrix[0]) {
+          item.isTemplate = false;
+          item.save("save from save poll branch of saveItem() in pollAppCtrl");
+        } else {
+          var newItem = japi.polls.build(item);
+          newItem.isTemplate = false;
+          newItem.save("save from build and save poll branch of saveItem() in pollAppCtrl");
         }
-        if (saveMatrix[3]) {
-          buildAndSave(item, 'template');
-        }
-      } else {
-        if (saveMatrix[1]) {
-          buildAndSave(item, 'poll');
-        }
-        if (saveMatrix[3]) {
-          save(item);
+      }
+
+      if (saveMatrix[3]) {
+        if (saveMatrix[2]) {
+          item.isTemplate = true;
+          item.save("save from save template branch of saveItem() in pollAppCtrl");
+        } else {
+          var newItem = japi.polls.build(item);
+          newItem.isTemplate = true;
+          newItem.save("save from build and save template branch of saveItem() in pollAppCtrl");
         }
       }
 
     };
 
-    function save (item) {
-      item.save();
-    };
-
-    function buildAndSave (item, itemType) {
-      if (itemType === 'poll') {
-        var poll = japi.polls.build(item);
-        /*
-        poll.title=item.title;
-        poll.description=item.description;
-        poll.allowComments=item.allowComments;
-        poll.dateStarted=item.dateStarted;
-        poll.options = item.options;
-        poll.allowMultipleChoices = item.allowMultipleChoices;
-        poll.endDate = item.endDate;
-        poll.endTime = item.endTime;
-        poll.target = item.target;
-        */
-        poll.save();
-      } 
-      if (itemType === 'template') {
-        var template = japi.polls.templates.build(item);
-        template.status = "unsaved";
-        template.save();
-      };
-    };
-
 });
 
-pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
+pollApp.controller("pollsCtrl", function ($scope, $materialDialog, $filter) {
 
   Cambrian.polls.onPollSaved.connect(getPollsList);
   Cambrian.polls.onPollDestroyed.connect(getPollsList);
   console.log('registered listeners ' + Cambrian.polls.pointer); 
-  $scope.polls = japi.polls.getList();
+  $scope.polls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
 
@@ -431,7 +410,7 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
   };
 
   $scope.destroyPoll = function (poll) {
-    poll.destroy();
+    poll.destroy("destroyed from destroyPoll() in pollAppCtrl");
   };
 
   $scope.startPoll = function(oldPoll){
@@ -478,7 +457,7 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
   function getPollsList() {
     console.log('refreshing polls list');
     $scope.safeApply(function () {
-      $scope.polls = Cambrian.polls.getList();
+      $scope.polls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
     });
   }; 
 
@@ -500,7 +479,7 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
         };
 
         $scope.destroyPoll = function (poll) {
-          poll.destroy();
+          poll.destroy("destroy from destroyPoll() in showPoll() in pollsCtrl");
           $hideDialog();
         };
 
@@ -550,13 +529,17 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog) {
 
 });
 
-pollApp.controller("templatesCtrl", function ($scope, $materialDialog){
- 
-  $scope.selectedIndex = 0;
-  var recentPolls = japi.polls.getList();
-  var templates = japi.polls.templates.list();
+pollApp.controller("templatesCtrl", function ($scope, $materialDialog, $filter){
+
+  var recentPolls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
+  var templates = $filter('filter')(japi.polls.getList(), {isTemplate: true});
   var exampleTemplates = japi.polls.templates.listExamples();
   var peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
+
+  Cambrian.polls.onPollSaved.connect(refreshTemplates);
+  Cambrian.polls.onPollDestroyed.connect(refreshTemplates);
+
+  $scope.selectedIndex = 0;
   $scope.templates = templates;
   $scope.addTitlePlaceholder = "Add Template";
   $scope.addDescriptionPlaceholder = "Add Description";
@@ -581,27 +564,19 @@ pollApp.controller("templatesCtrl", function ($scope, $materialDialog){
   };
 
   $scope.forkTemplate = function (e, template) {
-    var newTemplate = japi.polls.templates.build();
-    newTemplate.status = "unsaved";
-    newTemplate.title = template.title;
-    newTemplate.description = template.description;
-    newTemplate.allowComments=template.allowComments;
-    newTemplate.options = template.options;
-    newTemplate.allowMultipleChoices = template.allowMultipleChoices;
+    var newTemplate = japi.polls.build(template);
     saveMatrix = [false, false, true, true];
     $scope.startCustomizing(e, newTemplate, saveMatrix);
   };
  
   $scope.destroyTemplate = function(template) {
-    template.destroy();
+    template.destroy("destroy from destroyTemplate() in templatesCtrl");
   };
 
   $scope.zoomTemplate = function (e, template) {
     saveMatrix = [false, false, true, true];
     if($scope.selectedIndex == 0) {
-      var templateToEdit = angular.copy(template);
-      templateToEdit.status = "unsaved";
-      $scope.dialog(e, templateToEdit, saveMatrix);
+      $scope.startCustomizing(e, template, saveMatrix);
     } else {
       showTemplate(e, template, $scope.selectedIndex);
     };
@@ -620,6 +595,19 @@ pollApp.controller("templatesCtrl", function ($scope, $materialDialog){
   $scope.$on('zoomedPollFromTemplate', function (scope, args) {
     $scope.newPollFromTemplate(args.event, args.template);
   });
+
+  function refreshTemplates () {
+    recentPolls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
+    templates = $filter('filter')(japi.polls.getList(), {isTemplate: true});
+    $scope.safeApply(function () {
+      if ($scope.selectedIndex == 0) {
+        $scope.templates = templates;
+      } else if ($scope.selectedIndex == 1) {
+        $scope.templates = recentPolls;
+      }
+    });
+    
+  };
 
   function showTemplate (e, template, selectedIndex) {
     $materialDialog({
@@ -676,7 +664,7 @@ pollApp.controller('votingBoothCtrl', function ($scope, $routeParams, $location)
   $scope.dismiss = function () {
     console.log("Ballot " + $scope.poll.id + " dismissed.");
     $scope.poll.status = "complete";
-    $scope.poll.save();
+    $scope.poll.save("save from $scope.dismiss() in votingBoothCtrl");
     $location.path("/polls");
   };
 
@@ -689,7 +677,7 @@ pollApp.controller('votingBoothCtrl', function ($scope, $routeParams, $location)
       $scope.poll.comments.push(comment);
     }
     $scope.poll.status = "complete";
-    $scope.poll.save();
+    $scope.poll.save("save from $scope.submit() in votingBoothCtrl");
     $location.path("/polls");
   };
 
