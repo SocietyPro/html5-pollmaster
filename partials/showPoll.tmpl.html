@@ -1,5 +1,5 @@
 <material-dialog>
-  <div id="materialDialogContainer" ng-show="poll.status === 'started' || poll.status === 'stopped'" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'stopped'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+  <div id="materialDialogContainer" ng-show="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'unvoted'" ng-class="{votes: poll.status === 'unvoted', running: poll.status === 'started', completed: poll.status === 'stopped'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
     <div class="dialog-content">
       <div class="pollInformation">
         <div layout="horizontal" layout-align="space-between">

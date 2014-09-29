@@ -451,7 +451,8 @@ material-button.material-button-fab.material-button-fab-bottom-right {
   background-color: #92e4c9;
 }
 
-.completed {
+.completed,
+.voted {
   background-color: #c9d1ff;
 }
 

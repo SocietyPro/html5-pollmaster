@@ -377,6 +377,7 @@ app.controller("pollsCtrl", function ($scope,
 
   Cambrian.polls.onPollSaved.connect(getPollsList);
   Cambrian.polls.onPollDestroyed.connect(getPollsList);
+  Cambrian.polls.onEventBallotReceived.connect(getPollsList);
   $scope.polls = pollAll();
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
@@ -578,6 +579,7 @@ app.controller("templatesCtrl", function ($scope,
 
   Cambrian.polls.onPollSaved.connect(refreshTemplates);
   Cambrian.polls.onPollDestroyed.connect(refreshTemplates);
+  Cambrian.polls.onEventBallotReceived.connect(refreshTemplates);
 
   $scope.selectedIndex = 0;
   $scope.templates = templates;
