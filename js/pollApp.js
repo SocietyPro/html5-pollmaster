@@ -8,10 +8,10 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var pollApp = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker']) // array is required
-var saveMatrix = [];
+var app = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker']) // array is required
+var saveMatrix = {poll: false, template: false};
 
-pollApp.config(function($routeProvider){
+app.config(function($routeProvider){
   
   $routeProvider.when("/polls", {
     templateUrl: "partials/polls.tmpl.html",
@@ -35,7 +35,7 @@ pollApp.config(function($routeProvider){
 
 });
 
-pollApp.factory("menu", ['$rootScope', function ($rootScope) {
+app.factory("menu", ['$rootScope', function ($rootScope) {
   var self;
   var filters = [{ filter: 'All', color: '#000000' }, 
                  { filter: 'Votes', color: '#d19b9b' },
@@ -53,7 +53,7 @@ pollApp.factory("menu", ['$rootScope', function ($rootScope) {
       } else if (filter.filter === "Running") {
         $rootScope.pollFilter = "started";
       } else if (filter.filter === "Completed") {
-        $rootScope.pollFilter = "complete";
+        $rootScope.pollFilter = "stopped";
       } else {
         $rootScope.pollFilter = filter.filter.toLowerCase();
       };
@@ -65,7 +65,7 @@ pollApp.factory("menu", ['$rootScope', function ($rootScope) {
   };
 }]);
 
-pollApp.directive('ngReallyClick', [function() {
+app.directive('ngReallyClick', [function() {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -79,7 +79,7 @@ pollApp.directive('ngReallyClick', [function() {
     }
 }]);
 
-pollApp.directive('focusThis', function () {
+app.directive('focusThis', function () {
   return {
     link: function (scope, element, attrs) {
       scope.$on('focusedIndex', function (event, args) {
@@ -93,7 +93,16 @@ pollApp.directive('focusThis', function () {
   };
 });
 
-pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $materialDialog, $materialSidenav, menu, $timeout){
+app.controller("pollAppCtrl", function ($scope, 
+                                        $location, 
+                                        $modal, 
+                                        $materialDialog, 
+                                        $materialSidenav, 
+                                        $timeout,  
+                                        menu,
+                                        pollNew, 
+                                        pollCreateOrUpdate,
+                                        groupAll){
 
     $scope.menu = menu;
     $scope.menu.selectFilter(menu.filters[0]);
@@ -162,21 +171,15 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
     };
 
     $scope.startCustomizing = function(e, itemObject, saveMatrix){
-      // We won't modify or save this until save is clicked:
-      $scope.itemToCustomize = itemObject; 
-
-      // We will modify this during our WIP. See saveCustomization for where it
-      // gets copied back.
       $scope.poll = itemObject;
       $scope.dialog(e, $scope.poll, saveMatrix);
     };
 
     $scope.newItemFromScratch = function(e, isPoll, quickAddForm, newTitle, newDescription) {
-      var newItem = japi.polls.build();
+      var newItem = pollNew();
       newItem.title = newTitle;
       newItem.description = newDescription;
-      saveMatrix[0] = saveMatrix[1] = isPoll;
-      saveMatrix[2] = saveMatrix[3] = !isPoll;
+      saveMatrix = {poll: isPoll, template: !isPoll};
       $scope.startCustomizing(e, newItem, saveMatrix);
       $scope.$broadcast('resetQuickAddForm');
     };
@@ -187,6 +190,9 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
         targetEvent: e,
         controller: ['$scope', '$hideDialog', '$rootScope', '$timeout', function ($scope, $hideDialog, $rootScope, $timeout) {
           $scope.poll = poll;
+          $scope.poll.pollTimeLength = $scope.poll.pollTimeLength || 86400;
+          $scope.units = ["Minutes", "Hours", "Days", "Weeks", "Months", "Years"];
+          $scope.pollLength = {numeral: $scope.poll.pollTimeLength / 60, units: "Minutes"};
           $scope.saveMatrix = saveMatrix;
           $scope.ballotPreview = false;
           $scope.optionsMenu = false;
@@ -234,7 +240,7 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
 
           $scope.addOption = function () {
             var newOption = { text: $scope.newOptionText, subgroup: "", count: 0 };
-            //$scope.poll.options.push(newOption);
+            $scope.poll.options.push(newOption);
             $scope.newOptionText = "";
             var index = $scope.poll.options.length - 1;
             $timeout(function () {
@@ -276,23 +282,25 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
             $hideDialog();
           };
 
-          $scope.nextDialog = function (e, poll, saveMatrix) {
+          $scope.nextDialog = function (e, poll, saveMatrix, pollLength) {
             $hideDialog();
             $materialDialog({
               templateUrl: 'partials/selectTarget.tmpl.html',
               targetEvent: e,
               controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
                 $scope.poll = poll;
-                $scope.myGroups = japi.me.groups;
+                $scope.myGroups = groupAll();
                 $scope.saveMatrix = saveMatrix;
+                $scope.pollLength = pollLength;
 
                 $scope.close = function () {
                   $hideDialog();
                 };
 
                 $scope.save = function (item, saveMatrix) {
+                  item.pollTimeLength = convertTimeToSeconds($scope.pollLength.numeral, $scope.pollLength.units);
                   saveItem(item, saveMatrix);
-                  if ($scope.startNow && item.target) {
+                  if ($scope.startNow && item.pollTargetId) {
                     $rootScope.$broadcast('startNow', {poll: item});
                   }
                   item.overflow = false;
@@ -318,38 +326,58 @@ pollApp.controller("pollAppCtrl", function ($scope, $location, $modal, $material
       item.overflow = false;
       item.status = "unsaved";
 
-      if (saveMatrix[1]) {
-        if (saveMatrix[0]) {
-          item.isTemplate = false;
-          item.save("save from save poll branch of saveItem() in pollAppCtrl");
-        } else {
-          var newItem = japi.polls.build(item);
-          newItem.isTemplate = false;
-          newItem.save("save from build and save poll branch of saveItem() in pollAppCtrl");
-        }
+      if (saveMatrix.poll) {
+        item.isTemplate = false;
+        pollCreateOrUpdate(item);
       }
 
-      if (saveMatrix[3]) {
-        if (saveMatrix[2]) {
-          item.isTemplate = true;
-          item.save("save from save template branch of saveItem() in pollAppCtrl");
-        } else {
-          var newItem = japi.polls.build(item);
-          newItem.isTemplate = true;
-          newItem.save("save from build and save template branch of saveItem() in pollAppCtrl");
-        }
+      if (saveMatrix.template) {
+        item.isTemplate = true;
+        item.pollTargetId = "";
+        item.dateStarted = null;
+        item.dataStopped = null;
+        pollCreateOrUpdate(item);
       }
 
     };
 
+    function convertTimeToSeconds (length, units) {
+      switch(units) {
+        case "Minutes":
+          return length * 60;
+          break;
+        case "Hours":
+          return length * 3600;
+          break;
+        case "Days":
+          return length * 86400;
+          break;
+        case "Weeks":
+          return length * 604800;
+          break;
+        case "Months":
+          return length * 2592000;
+          break;
+        case "Years":
+          return length * 31536000;
+          break;
+      }
+    };
+
 });
 
-pollApp.controller("pollsCtrl", function ($scope, $materialDialog, $filter) {
+app.controller("pollsCtrl", function ($scope, 
+                                      $materialDialog, 
+                                      $filter, 
+                                      pollAll, 
+                                      pollNew, 
+                                      pollDestroy, 
+                                      pollStart,
+                                      pollStop) {
 
   Cambrian.polls.onPollSaved.connect(getPollsList);
   Cambrian.polls.onPollDestroyed.connect(getPollsList);
-  console.log('registered listeners ' + Cambrian.polls.pointer); 
-  $scope.polls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
+  $scope.polls = pollAll();
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
 
@@ -399,28 +427,34 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog, $filter) {
 
   $scope.copyPoll = function(e, oldPoll){
     oldPoll.overflow = false;
-    var newPoll = japi.polls.build(oldPoll);
-    saveMatrix = [true, true, false, false];
+    var newPoll = pollNew(oldPoll);
+    saveMatrix = {poll: true, template: false};;
     $scope.startCustomizing(e, newPoll, saveMatrix);
   };
 
   $scope.editPoll = function(e, oldPoll){
-    saveMatrix = [true, true, false, false];
+    saveMatrix = {poll: true, template: false};
     $scope.startCustomizing(e, oldPoll, saveMatrix);
   };
 
   $scope.destroyPoll = function (poll) {
-    poll.destroy("destroyed from destroyPoll() in pollAppCtrl");
+    pollDestroy(poll);
   };
 
-  $scope.startPoll = function(oldPoll){
-    oldPoll.start();
+  $scope.startPoll = function(poll){
+    pollStart(poll);
+    getPollsList();
+  };
+
+  $scope.stopPoll = function(poll) {
+    pollStop(poll);
+    getPollsList();
   };
 
   $scope.newTemplateFromPoll = function (e, poll) {
-    var newTemplate = japi.polls.templates.build(poll);
+    var newTemplate = pollNew(poll);
     newTemplate.status = "unsaved";
-    saveMatrix = [false, false, true, true];
+    saveMatrix = {poll: false, template: true};
     $scope.startCustomizing(e, newTemplate, saveMatrix);
   };
 
@@ -457,7 +491,7 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog, $filter) {
   function getPollsList() {
     console.log('refreshing polls list');
     $scope.safeApply(function () {
-      $scope.polls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
+      $scope.polls = pollAll();
     });
   }; 
 
@@ -479,7 +513,7 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog, $filter) {
         };
 
         $scope.destroyPoll = function (poll) {
-          poll.destroy("destroy from destroyPoll() in showPoll() in pollsCtrl");
+          pollDestroy(poll);
           $hideDialog();
         };
 
@@ -529,10 +563,16 @@ pollApp.controller("pollsCtrl", function ($scope, $materialDialog, $filter) {
 
 });
 
-pollApp.controller("templatesCtrl", function ($scope, $materialDialog, $filter){
+app.controller("templatesCtrl", function ($scope, 
+                                          $materialDialog, 
+                                          $filter, 
+                                          pollAll, 
+                                          pollNew, 
+                                          pollDestroy,
+                                          templateAll){
 
-  var recentPolls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
-  var templates = $filter('filter')(japi.polls.getList(), {isTemplate: true});
+  var recentPolls = pollAll();
+  var templates = templateAll();
   var exampleTemplates = japi.polls.templates.listExamples();
   var peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
 
@@ -559,22 +599,22 @@ pollApp.controller("templatesCtrl", function ($scope, $materialDialog, $filter){
   };
 
   $scope.editTemplate = function(e, template){
-    saveMatrix = [false, false, true, true];
+    saveMatrix = {poll: false, template: true};
     $scope.startCustomizing(e, template, saveMatrix);
   };
 
   $scope.forkTemplate = function (e, template) {
-    var newTemplate = japi.polls.build(template);
-    saveMatrix = [false, false, true, true];
+    var newTemplate = pollNew(template);
+    saveMatrix = {poll: false, template: true};
     $scope.startCustomizing(e, newTemplate, saveMatrix);
   };
  
   $scope.destroyTemplate = function(template) {
-    template.destroy("destroy from destroyTemplate() in templatesCtrl");
+    pollDestroy(template);
   };
 
   $scope.zoomTemplate = function (e, template) {
-    saveMatrix = [false, false, true, true];
+    saveMatrix = {poll: false, template: true};
     if($scope.selectedIndex == 0) {
       $scope.startCustomizing(e, template, saveMatrix);
     } else {
@@ -583,8 +623,8 @@ pollApp.controller("templatesCtrl", function ($scope, $materialDialog, $filter){
   };
 
   $scope.newPollFromTemplate = function(e, template){
-    var newPoll = japi.polls.build(template);
-    saveMatrix = [true, true, false, false];
+    var newPoll = pollNew(template);
+    saveMatrix = {poll: true, template: false};
     $scope.startCustomizing(e, newPoll, saveMatrix);
   };
 
@@ -597,8 +637,8 @@ pollApp.controller("templatesCtrl", function ($scope, $materialDialog, $filter){
   });
 
   function refreshTemplates () {
-    recentPolls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
-    templates = $filter('filter')(japi.polls.getList(), {isTemplate: true});
+    recentPolls = pollAll();
+    templates = templateAll();
     $scope.safeApply(function () {
       if ($scope.selectedIndex == 0) {
         $scope.templates = templates;
@@ -638,7 +678,7 @@ pollApp.controller("templatesCtrl", function ($scope, $materialDialog, $filter){
 
 });
 
-pollApp.controller('quickAddCtrl', function ($scope) {
+app.controller('quickAddCtrl', function ($scope) {
 
   $scope.$on('resetQuickAddForm', function () {
     $scope.newTitle = '';
@@ -649,7 +689,7 @@ pollApp.controller('quickAddCtrl', function ($scope) {
 
 });
 
-pollApp.controller('votingBoothCtrl', function ($scope, $routeParams, $location) {
+app.controller('votingBoothCtrl', function ($scope, $routeParams, $location) {
   var pollID = $routeParams.pollID;
   var requestedPoll = japi.polls.get(pollID);
   
@@ -683,7 +723,7 @@ pollApp.controller('votingBoothCtrl', function ($scope, $routeParams, $location)
 
 });
 
-pollApp.controller("helpCtrl", function ($scope, $modalInstance) {
+app.controller("helpCtrl", function ($scope, $modalInstance) {
 
       $scope.close = function () {
         $modalInstance.dismiss('close');

@@ -399,13 +399,6 @@ textarea {
   float: right;
 }
 
-#pollsContainer {
-  height: 80vh;
-}
-
-#templatesContainer {
-  height: 80vh;
-}
 
 material-button.material-button-fab.material-button-fab-bottom-right {
       top: auto;
@@ -413,6 +406,11 @@ material-button.material-button-fab.material-button-fab-bottom-right {
       bottom: 28px;
       left: auto;
       position: fixed; 
+}
+
+#templatesContainer > .material-content,
+#pollsContainer > .material-content {
+  height: 80vh;
 }
 
 /* Styles for Cards */
@@ -483,9 +481,13 @@ material-button.material-button-fab.material-button-fab-bottom-right {
 }
 
 .options table td {
-  padding: 3px 0;
+  padding: 3px;
   border-top: none;
   vertical-align: middle;
+}
+
+.previewCheckbox {
+  width: 30px;
 }
 
 .pieChartContainer {
@@ -503,7 +505,8 @@ div .cardMenuBar {
   vertical-align: middle;
 }
 
-.startPollButton {
+.startPollButton,
+.stopPollButton {
   margin-top: 6px;
 }
 

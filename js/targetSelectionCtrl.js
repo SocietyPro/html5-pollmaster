@@ -1,4 +1,4 @@
-pollApp.controller("targetSelectionCtrl", function($scope){
+app.controller("targetSelectionCtrl", function($scope){
   $scope.chooseTarget = function(type){
     console.log('Choosing',type);
     var targets = null;
