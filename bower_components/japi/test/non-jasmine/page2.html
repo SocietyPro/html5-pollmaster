@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title>Page 2</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+	<h1>Pomodoro / Page 2</h1>
+	
+	<p><a href="page3.html" >Page 3</a></p>
+	<p><a href="../test.html" >Jasmine tests</a></p>
+
+	<h4>CAPI tests</h4>
+	<ul>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.back()">CAPI: capi.tab.back( )</a>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.forward()">CAPI: capi.tab.forward( )</a>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.reload()">CAPI: capi.tab.reload( )</a> <span id="loadDate"></span>
+		</li>
+	</ul>
+
+	<br>
+
+	<img src="feather.png"/>
+	
+</body>
+<script type="text/javascript">
+document.getElementById("loadDate").innerHTML = (new Date()).toLocaleTimeString();
+</script>
+</html>

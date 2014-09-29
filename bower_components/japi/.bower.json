@@ -1,0 +1,14 @@
+{
+  "name": "japi",
+  "homepage": "https://github.com/SocietyPro/japi",
+  "version": "0.1.1",
+  "_release": "0.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.1",
+    "commit": "8762caeef931a730d0a1a28993461dcb6a722f94"
+  },
+  "_source": "https://github.com/SocietyPro/japi.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/SocietyPro/japi.git"
+}

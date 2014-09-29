@@ -1,0 +1,33 @@
+.titlebarBox {
+  border: 1px solid lightgrey;
+  position: relative;
+  width: 500px;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 8px;
+  line-height: 24px;
+}
+
+sopro-titlebar form.ng-pristine material-button,
+sopro-titlebar form.ng-pristine div[ng-transclude] {
+  display: none;
+}
+
+sopro-titlebar input[type="text"],
+sopro-titlebar input[type="textarea"] {
+  border-bottom: none;
+}
+
+.addTitle {
+  display: inline-block;
+  font-weight: bold;
+}
+
+.titlebarAddButton {
+  float: right;
+}
+
+.clearBoth {
+  clear: both;
+}
+

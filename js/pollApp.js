@@ -289,6 +289,7 @@ app.controller("pollAppCtrl", function ($scope,
               targetEvent: e,
               controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
                 $scope.poll = poll;
+                console.log(poll);
                 $scope.myGroups = groupAll();
                 $scope.saveMatrix = saveMatrix;
                 $scope.pollLength = pollLength;
@@ -325,7 +326,6 @@ app.controller("pollAppCtrl", function ($scope,
       }
       item.overflow = false;
       item.status = "unsaved";
-
       if (saveMatrix.poll) {
         item.isTemplate = false;
         pollCreateOrUpdate(item);

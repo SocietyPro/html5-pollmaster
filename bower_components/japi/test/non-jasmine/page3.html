@@ -1,0 +1,84 @@
+<html>
+<head>
+	<title>Page 3</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+	<h1>Pomodoro / Page 3</h1>
+	
+	<p><a href="page4.html" >Page 4</a></p>
+	<p><a href="../test.html" >Jasmine tests</a></p>
+
+	<h4>CAPI tests</h4>
+	<ul>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.back()">CAPI: capi.tab.back( )</a>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.forward()">CAPI: capi.tab.forward( )</a>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.reload()">CAPI: capi.tab.reload( )</a> <span id="loadDate"></span>
+		</li>
+	</ul>
+
+	<h4>capi.tab.location(APPNAME) Applications</h4>
+	<ul>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.locationx('navshell peers')"> Navshell peers </a> <span id="loadDate"></span>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.location('Navshell Sidebar')"> Navshell Sidebar </a> <span id="loadDate"></span>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.location('Navshell Header')"> Navshell Header </a> <span id="loadDate"></span>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.location('Office Kingpin')"> Office Kingpin </a> <span id="loadDate"></span>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.location('Pomodoro')"> Pomodoro </a> <span id="loadDate"></span>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.location('japi Tests')"> JAPI Tests </a> <span id="loadDate"></span>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.location('Scratch')"> Scratch </a> <span id="loadDate"></span>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.location('HTML5 xik')"> HTML5 xik </a> <span id="loadDate"></span>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.location('Group Manager')"> Group Manager </a> <span id="loadDate"></span>
+		</li>
+		<li>
+			<a href="javascript:Cambrian.capi.tab.location('ballotmaster')"> Ballotmaster </a> <span id="loadDate"></span>
+		</li>
+	</ul>
+
+	<h4>CAPI tab.go(url)</h4>
+	<ul>
+		<li>
+			<br/>
+			<a href="javascript:Cambrian.capi.tab.location('http://youtube.com')"> Youtube </a> <span id="loadDate"></span>
+		</li>
+	</ul>
+
+	<h4>JAPI Ballotmaser go</h4>
+	<ul>
+		<li>
+			<a href="javascript:Cambrian.apps.ballotmaster.open();">Open Ballotmaster</a>
+		</li>
+	</ul>
+
+
+
+
+	<br>
+	<img src="tree.png"/>
+
+</body>
+<script type="text/javascript">
+document.getElementById("loadDate").innerHTML = (new Date()).toLocaleTimeString();
+</script>
+</html>
