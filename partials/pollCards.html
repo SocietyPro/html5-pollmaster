@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <div class="pieChartContainer">
+          <div class="pieChartContainer" ng-if="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'">>
             <nvd3-pie-chart
               id="{{poll.id}}"
               data="poll.options"
