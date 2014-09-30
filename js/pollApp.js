@@ -378,6 +378,7 @@ app.controller("pollsCtrl", function ($scope,
   Cambrian.polls.onPollSaved.connect(getPollsList);
   Cambrian.polls.onPollDestroyed.connect(getPollsList);
   Cambrian.polls.onEventBallotReceived.connect(getPollsList);
+  Cambrian.polls.onEventVoteReceived.connect(getPollsList);
   $scope.polls = pollAll();
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
@@ -554,6 +555,7 @@ app.controller("pollsCtrl", function ($scope,
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
       controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
+        Cambrian.polls.onEventVoteReceived.connect(refreshPoll);
         $scope.poll = poll;
         $scope.dialog = {};
 
@@ -609,6 +611,12 @@ app.controller("pollsCtrl", function ($scope,
 
             }]
           });
+        };
+
+        function refreshPoll (id) {
+          if ($scope.poll.id === id) {
+            pollFind($scope.poll.id);
+          }
         };
 
       }]
