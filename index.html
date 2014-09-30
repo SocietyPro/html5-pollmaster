@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html ng-app="pollApp">
   <head>
-
-    <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <title>Ballot</title>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <!--<script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>-->
     <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="bower_components/angular/angular.js" type="text/javascript"></script>
     <script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
     <script src="bower_components/angular-route/angular-route.js" type="text/javascript"></script>
-    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/d3/d3.js" charset="utf-8"></script>
     <script src="bower_components/nvd3/nv.d3.js"></script>
     <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
     <script src="js/angular-material.js" type="text/javascript"></script>
@@ -18,15 +19,17 @@
     <script src="js/timepicker.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="bower_components/angular-ui-date/src/date.js"></script>
     <script src="js/pollApp.js" type="text/javascript"></script>
+    <script src="js/pollJapi.js" type="text/javascript"></script>
     <script src="js/targetSelectionCtrl.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/dropdown.js"></script>
 
-    
     <link rel="stylesheet" type="text/css" media="screen" href="bower_components/jquery-timepicker-jt/jquery.timepicker.css" />
     <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css"/>
     <link rel="stylesheet" type="text/css" href="bower_components/nvd3/nv.d3.css">
     <link rel="stylesheet" type="text/css" href="css/angular-material.css"> 
     <link rel="stylesheet" type="text/css" href="css/docs.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/dropdown.css">
   </head>
   <body ng-controller="pollAppCtrl">
     <div id="applicationContainer" layout="horizontal">
@@ -38,18 +41,11 @@
         </material-toolbar>
         <material-content flex>
           <div>
-            <button class="menu-item menu-sub-item" ng-repeat="filter in menu.filters" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="menu.selectFilter(filter); $event.stopImmediatePropogation()">
-              <span class="color-chip" style='background-color: {{filter.color}};'></span>
-              <span ng-bind="filter.filter"></span>
-              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
-            </button>
-          </div>
-          <div>
-            <button id="pollsButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation()">
+            <button id="pollsButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation();">
               Polls
               <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
             </button>
-            <button id="templatesButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation()">
+            <button id="templatesButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation();">
               Templates
               <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
             </button>
@@ -66,11 +62,29 @@
               </div>
               <h2>Ballot</h2>
             </div>
-            <div id="viewButtons" layout="horizontal">
-              <material-button id="streamButton" class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}">
+            <div id="viewButtons" layout="horizontal" flex="25" layout-align="end">
+              <div id='cssmenu' ng-if="checkView()">
+                <ul>
+                   <li class='active has-sub last' id="filterButton">
+                      <material-button class="clicker material-button-icon" title="Filter Polls">
+                        <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_48dp.png"></material-icon>
+                      </material-button></a>
+                      <ul>
+                         <li ng-repeat="filter in menu.filters" ng-class="{last:$last}">
+                                <a id="filterButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="menu.selectFilter(filter); $event.stopImmediatePropogation()">
+                                  <span class="color-chip" style='background-color: {{filter.color}};'></span>
+                                  <span ng-bind="filter.filter"></span>
+                                  <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+                                </a>
+                              </li>
+                      </ul>
+                   </li>
+                </ul>
+              </div>
+              <material-button id="streamButton" class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" title="Show as Stream">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_48dp.png"></material-icon>
               </material-button>
-              <material-button id="quiltButton" class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}">
+              <material-button id="quiltButton" class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" title="Show as Quilt">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_48dp.png"></material-icon>
               </material-button>
             </div>

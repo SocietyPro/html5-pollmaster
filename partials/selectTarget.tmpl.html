@@ -13,11 +13,16 @@
         </div>-->
         <div>
           <div class="custom-dropdown small">
-              <select ng-model="poll.target">
+              <select ng-model="poll.pollTargetId">
                   <option value="">-- Select a Group --</option>
-                  <option ng-repeat="group in myGroups" value="{{group.id}}" ng-selected="group.id==poll.target">{{group.name}}</option>
+                  <option ng-repeat="group in myGroups" value="{{group.id}}" ng-selected="group.id==poll.pollTargetId">{{group.name}}</option>
               </select>
           </div>
+        </div>
+        <div>
+          <label>
+            <material-checkbox id="startImmediatelyCheckbox" ng-model="startNow" ng-disabled="!poll.pollTargetId"> Start this poll immediately</material-checkbox>
+          </label>
         </div>
       </div>
     </div>

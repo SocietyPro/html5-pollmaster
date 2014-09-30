@@ -1,11 +1,12 @@
 var Elements = function () {
   this.menuDrawerButton = element(by.id('menu-drawer-button'));
+  this.filterButton = element(by.id('filterButton')); 
   this.streamButton = element(by.id('streamButton'));
-  this.allFilterButton = element.all(by.css('.menu-sub-item')).get(0);
-  this.votesFilterButton = element.all(by.css('.menu-sub-item')).get(1);
-  this.runningFilterButton = element.all(by.css('.menu-sub-item')).get(2);
-  this.unstartedFilterButton = element.all(by.css('.menu-sub-item')).get(3);
-  this.completedFilterButton = element.all(by.css('.menu-sub-item')).get(4);
+  this.allFilterButton = element.all(by.css('.menu-sub-item')).get(2);
+  this.votesFilterButton = element.all(by.css('.menu-sub-item')).get(3);
+  this.runningFilterButton = element.all(by.css('.menu-sub-item')).get(4);
+  this.unstartedFilterButton = element.all(by.css('.menu-sub-item')).get(5);
+  this.completedFilterButton = element.all(by.css('.menu-sub-item')).get(6);
   this.pollCards = element.all(by.css('.cardholder'));
 };
 
@@ -39,11 +40,11 @@ describe('poll results card', function () {
     var secondCard;
 
     beforeEach(function () {
-      elements.menuDrawerButton.click();
+      elements.filterButton.click();
       browser.sleep(500);
       elements.runningFilterButton.click();
-      element(by.css('material-backdrop')).click();
-      browser.sleep(500);
+      //element(by.css('material-backdrop')).click();
+      //browser.sleep(500);
       firstCard = element.all(by.css('material-card')).get(0);
       secondCard = element.all(by.css('material-card')).get(2);
     });

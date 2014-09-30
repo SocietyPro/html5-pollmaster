@@ -1,0 +1,38 @@
+<material-content id="pollContainer" class="material-content-padding" scroll-y>
+  <div id="quilt" ng-show="listView === 'quilt'">
+    <div layout="horizontal" layout-align="center">
+      <material-card id="ballotCard" class="votes">
+        <span id="ballotOriginator">
+          <em>{{poll.originator}}</em>
+        </span>
+        <div id="ballotTitle">
+          <b>{{poll.title}}</b>
+        </div>
+        <div id="ballotDescription">
+          {{poll.description}}
+        </div>
+        <p ng-if="!poll.allowMultipleChoices">
+          Select one:
+        </p>
+        <p ng-if="poll.allowMultipleChoices">
+          Select one or more:
+        </p>
+        <div id="ballotOptionsContainer">
+          <span class="ballotOption" ng-repeat="option in poll.options">
+            <label>
+              <input type="radio" ng-model="$parent.ballot.selectedOption" ng-value="option.text"> {{option.text}}
+            </label>
+          </span>
+        </div>
+        <p ng-if="poll.allowComments">
+          <a id="addCommentLink" ng-click="showCommentInput = true" ng-hide="showCommentInput"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png"> Add comment</a>
+          <textarea id="commentInput" ng-model="ballot.ballotComment" ng-show="showCommentInput"></textarea>
+        </p>
+        <div layout="horizontal" layout-align="end">
+          <material-button id="dismissButton" class="material-button" ng-click="dismiss()">{{poll.dismissText || "Dismiss"}}</material-button>
+          <material-button id="submitButton" class="material-button-colored" ng-click="submit()">{{poll.submitText || "Submit"}}</material-button>
+        </div>
+      </material-card>
+    </div>
+  </div>
+</material-content>

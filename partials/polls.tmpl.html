@@ -1,28 +1,28 @@
 <!-- Quick Add Box -->
 <div id="quickAddBox">
-  <form name="quickAddForm" style="padding-left:20px;" ng-init="newItem=false" ng-controller="quickAddCtrl">
+  <form name="quickAddForm" style="padding-left:20px;" ng-controller="quickAddCtrl">
     <material-input-group>
       <material-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
     </material-input-group>
     <material-input-group>  
       <material-input  name="quickAddDescription" placeholder="{{addDescriptionPlaceholder}}" id="quickAddDescription" type="text" size="45" ng-model="newDescription" flex ng-show="newItem" click-anywhere-but-here="close()" is-active="isDropdownOpen()">
     </material-input-group>
-    <material-button id="quickAddButton" class="material-button-colored" ng-show="newItem && newTitle && quickAddForm.$dirty" ng-click="newItemFromScratch($event, true, quickAddForm, newTitle, newDescription)">
+    <material-button id="quickAddButton" class="material-button-colored" ng-show="newItem && quickAddForm.$dirty" ng-click="newItemFromScratch($event, true, quickAddForm, newTitle, newDescription)">
       SAVE
     </material-button>
   </form>
   <div class="clearBoth"></div>
 </div>
 <!-- end Quick Add Box -->
-<material-content id="pollsContainer" class="material-content-padding" scroll-y>
+<material-content id="pollsContainer" class="material-content-padding">
   <div id="quilt" ng-show="listView === 'quilt'">
     <ng-include src="'partials/pollCards.html'"></ng-include>
   </div>
 
-  <pre>{{poll | json}}</pre>
+  <!--<pre>{{poll | json}}</pre>-->
 
   <div>
-    <material-button class="material-button-fab material-button-fab-bottom-right material-theme-light-blue" ng-click="newItemFromScratch($event, true)">
+    <material-button class="material-button-fab material-button-fab-bottom-right material-theme-light-blue" ng-click="newItemFromScratch($event, true)" title="New Poll">
       <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png"></material-icon>
     </material-button>
   </div>

@@ -1,8 +1,8 @@
 <div> 
-  <div ng-show="selectedIndex == 0">
+  <div ng-if="selectedIndex == 0">
     <!-- Quick Add Box -->
     <div id="quickAddBox">
-      <form name="quickAddForm" style="padding-left:20px;" ng-init="newItem=false" ng-controller="quickAddCtrl">
+      <form name="quickAddForm" style="padding-left:20px;" ng-controller="quickAddCtrl">
         <material-input-group>
           <material-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
         </material-input-group>
@@ -43,7 +43,7 @@
       </div>
       <div>
       <div class="cardMenuBar animate-show" ng-show="template.menubar">
-        <material-button class="material-button-icon overflowMenuButton" ng-click="overflowToggle(template)" layout="vertical" layout-align="end end">
+        <material-button class="material-button-icon overflowMenuButton" ng-click="overflowToggle(template)" layout="vertical" layout-align="end end" title="Overflow Menu">
           <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
         </material-button>
       </div>
@@ -58,4 +58,3 @@
   </material-card>
 </div>
 
-<pre>{{quickAddForm | json}}</pre>

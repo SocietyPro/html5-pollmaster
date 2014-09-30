@@ -265,30 +265,6 @@ button {
 	width: 70px;
 }
 
-/* Styles for ballotView */
-
-#ballotTitle {
-	border: 1px solid black;
-	background-color: #ccc;
-	padding: 5px;
-	margin-bottom: 10px;
-}
-
-#ballotDescription {
-	border: 1px solid black;
-	padding: 8px;
-}
-
-#ballotOptions {
-	border: 1px solid black;
-	padding: 8px;
-	margin-bottom: 10px;
-}
-
-.ballot-table {
-  width: 100%;
-}
-
 /* Styles for Help Modal */
 
 .help-label {
@@ -423,13 +399,6 @@ textarea {
   float: right;
 }
 
-#pollsContainer {
-  height: 80vh;
-}
-
-#templatesContainer {
-  height: 80vh;
-}
 
 material-button.material-button-fab.material-button-fab-bottom-right {
       top: auto;
@@ -437,6 +406,11 @@ material-button.material-button-fab.material-button-fab-bottom-right {
       bottom: 28px;
       left: auto;
       position: fixed; 
+}
+
+#templatesContainer > .material-content,
+#pollsContainer > .material-content {
+  height: 80vh;
 }
 
 /* Styles for Cards */
@@ -477,7 +451,8 @@ material-button.material-button-fab.material-button-fab-bottom-right {
   background-color: #92e4c9;
 }
 
-.completed {
+.completed,
+.voted {
   background-color: #c9d1ff;
 }
 
@@ -507,9 +482,13 @@ material-button.material-button-fab.material-button-fab-bottom-right {
 }
 
 .options table td {
-  padding: 3px 0;
+  padding: 3px;
   border-top: none;
   vertical-align: middle;
+}
+
+.previewCheckbox {
+  width: 30px;
 }
 
 .pieChartContainer {
@@ -525,6 +504,11 @@ div .cardMenuBar {
   margin: -24px -24px -16px -24px;
   padding: 5px; 
   vertical-align: middle;
+}
+
+.startPollButton,
+.stopPollButton {
+  margin-top: 6px;
 }
 
 .overflowMenuButton {
@@ -636,7 +620,15 @@ material-checkbox[disabled] {
   margin-top: 7px;
   margin-bottom: 6px;
   float: left;
-  width: 34%;
+}
+
+.dialog-options-button-options {
+  margin-top: 7px;
+  margin-left: 7px;
+}
+
+.dialog-options-button-options label {
+  display: inline-block;
 }
 
 .custom-dropdown {
@@ -806,6 +798,11 @@ material-tab material-tab-label.active {
   opacity: 1.0;
 }
 
+a .active {
+  color: #000;
+  opacity: 1.0; 
+}
+
 material-ink-bar {
   background: #000;
 }
@@ -817,4 +814,33 @@ material-tabs .tabs-content {
 material-card {
   margin-top: 16px;
   background-color: #ffff8d;
+}
+.filterDropdown {
+  margin-right: 30zpx;
+}
+
+ul#filters {
+  display:none;
+}
+
+/* Styles for Material Voting Booth */
+#ballotCard {
+  max-width: 300px;
+  min-width: 300px;
+}
+
+#ballotTitle {
+  margin: 14px 0 10px 0;
+}
+
+#ballotOptionsContainer {
+  margin-bottom: 14px;
+}
+
+.ballotOption {
+  line-height: 48px;
+}
+
+#commentInput {
+  background-color: #fff;
 }

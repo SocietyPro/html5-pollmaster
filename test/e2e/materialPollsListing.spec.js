@@ -6,16 +6,17 @@ var Elements = function () {
   this.fab = element(by.css('.material-button-fab'));
   this.sidenav = element(by.css('material-sidenav'));
   this.menuDrawerButton = element(by.id('menu-drawer-button'));
-  this.allFilterButton = element.all(by.css('.menu-sub-item')).get(0);
-  this.votesFilterButton = element.all(by.css('.menu-sub-item')).get(1);
-  this.runningFilterButton = element.all(by.css('.menu-sub-item')).get(2);
-  this.unstartedFilterButton = element.all(by.css('.menu-sub-item')).get(3);
-  this.completedFilterButton = element.all(by.css('.menu-sub-item')).get(4);
+  this.allFilterButton = element.all(by.css('.menu-sub-item')).get(2);
+  this.votesFilterButton = element.all(by.css('.menu-sub-item')).get(3);
+  this.runningFilterButton = element.all(by.css('.menu-sub-item')).get(4);
+  this.unstartedFilterButton = element.all(by.css('.menu-sub-item')).get(5);
+  this.completedFilterButton = element.all(by.css('.menu-sub-item')).get(6);
   this.pollsButton = element(by.id('pollsButton'));
   this.templatesButton = element(by.id('templatesButton'));
   this.viewButtons = element(by.id('viewButtons'));
   this.streamButton = element(by.id('streamButton'));
   this.quiltButton = element(by.id('quiltButton'));
+  this.filterButton = element(by.id('filterButton'));
   this.pollCards = element.all(by.css('.cardholder'));
   this.materialPollCards = element.all(by.css('.mainCard'));
   this.firstCard = element.all(by.css('.mainCard')).get(0);
@@ -25,7 +26,7 @@ var Elements = function () {
   this.firstCardOverflowMenu = element.all(by.css('.cardholder')).get(0).findElement(by.css('.overflowMenu'));
   this.firstCardDeleteAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.destroyAction'));
   this.firstCardCopyAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.copyAction'));
-  //this.firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
+  this.firstCardForkAction = element.all(by.css('.cardholder')).get(0).findElement(by.css('.forkAction'));
 };
 
 var elements;
@@ -43,8 +44,7 @@ describe("material polls listing", function () {
     return Array.prototype.filter.call(inputs, function (input) {
       return input.name === name;
     })
-  });
-  
+  }); 
   it("has a quick add poll form", function () {
     expect(browser.isElementPresent(by.model('poll.title'))).toBeFalsy();
     expect(elements.quickAddBox.isDisplayed()).toBeTruthy();
@@ -208,23 +208,24 @@ describe("material polls listing", function () {
       expect(elements.sidenav.getAttribute('class')).toEqual('material-sidenav-left material-whiteframe-z2 ng-isolate-scope open');
     });
 
-    it("has buttons for poll filters", function () {
-      expect(elements.allFilterButton.getText()).toEqual('All');
-      expect(elements.votesFilterButton.getText()).toEqual('Votes');
-      expect(elements.runningFilterButton.getText()).toEqual('Running');
-      expect(elements.unstartedFilterButton.getText()).toEqual('Unstarted');
-      expect(elements.completedFilterButton.getText()).toEqual('Completed');
+    it("has buttons for polls and templates view", function () {
+      expect(elements.pollsButton.getText()).toEqual('Polls');
+      expect(elements.templatesButton.getText()).toEqual('Templates');
     });
 
-    it("filters the polls list when the poll filter buttons are clicked", function () {
+    it("changes to polls when clicking Polls button", function () {
       elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.pollsButton.click();
       expect(elements.pollCards.count()).toEqual(5);
-      elements.runningFilterButton.click();
-      expect(elements.pollCards.count()).toEqual(2);
-      elements.unstartedFilterButton.click();
-      expect(elements.pollCards.count()).toEqual(2);
-      elements.completedFilterButton.click();
-      expect(elements.pollCards.count()).toEqual(1);
+    });
+
+    it("changes to templates when clicking templates button", function () {
+      elements.menuDrawerButton.click();
+      browser.sleep(500);
+      elements.templatesButton.click();
+      var firstCardTitle = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine')).getText();
+      expect(firstCardTitle).toEqual("Join Operation Red Dawn! Bring Ships!");
     });
 
   });
@@ -238,6 +239,26 @@ describe("material polls listing", function () {
       elements.streamButton.click();
       expect(elements.streamButton.getAttribute('class')).toEqual('viewButton material-button-icon active');
       expect(elements.quiltButton.getAttribute('class')).toEqual('viewButton material-button-icon inactive');
+    });
+
+    it("has button for poll filters", function () {
+      expect(elements.filterButton.isDisplayed()).toBeTruthy();
+    });
+
+    it("filters the polls list when the poll filter buttons are clicked", function () {
+      elements.filterButton.click();
+      browser.sleep(500);
+      elements.runningFilterButton.click();
+      browser.sleep(500);
+      expect(elements.pollCards.count()).toEqual(2);
+      elements.filterButton.click();
+      browser.sleep(500);
+      elements.unstartedFilterButton.click();
+      expect(elements.pollCards.count()).toEqual(2);
+      elements.filterButton.click();
+      browser.sleep(500);
+      elements.completedFilterButton.click();
+      expect(elements.pollCards.count()).toEqual(1);
     });
 
   });
@@ -264,6 +285,7 @@ describe("material polls listing", function () {
           mouseMove(elements.firstCard).
           perform();
         elements.firstCardOverflowMenuButton.click();
+        browser.sleep(500);
         expect(elements.firstCardOverflowMenu.isDisplayed()).toBeTruthy();
         browser.actions().
           mouseMove(elements.streamButton.find()).
@@ -305,11 +327,11 @@ describe("material polls listing", function () {
         expect(elements.pollCards.count()).toEqual(6);
       });
 
-      xit("has a fork as template action", function () {
+      it("has a fork as template action", function () {
         elements.menuDrawerButton.click();
         browser.sleep(500);
         elements.templatesButton.click();    
-        var templateCards = element.all(by.css('.maincard'));
+        var templateCards = element.all(by.css('.mainCard'));
         expect(templateCards.count()).toEqual(5);
         elements.pollsButton.click();
         element(by.css('material-backdrop')).click();
@@ -320,13 +342,13 @@ describe("material polls listing", function () {
         elements.firstCardOverflowMenuButton.click();
         expect(elements.firstCardForkAction.isDisplayed()).toBeTruthy();
         expect(elements.firstCardForkAction.getText()).toEqual("Fork as a Template");
-        firstCardForkAction.click();
+        elements.firstCardForkAction.click();
         browser.sleep(500);
         element(by.id('saveButton')).click();
         elements.menuDrawerButton.click();
         browser.sleep(500);
         elements.templatesButton.click();    
-        templateCards = element.all(by.css('.maincard'));
+        templateCards = element.all(by.css('.mainCard'));
         expect(templateCards.count()).toEqual(6);
       });
 
@@ -341,9 +363,10 @@ describe("material polls listing", function () {
       var firstRunningCard;
 
       beforeEach(function () {
-        elements.menuDrawerButton.click();
+        elements.filterButton.click();
         browser.sleep(500);
         elements.runningFilterButton.click();
+        browser.sleep(500);
         firstRunningCard = element.all(by.css('material-card')).get(0);
       });
       
@@ -361,9 +384,7 @@ describe("material polls listing", function () {
       });
 
       it("zooms to a zoomed poll card when clicked", function () {
-        var pollTitle = firstRunningCard.findElement(by.binding('{{poll.title}}')).getText();
-        element(by.css('material-backdrop')).click();
-        browser.sleep(500);
+        var pollTitle = element.all(by.css('.mainCard')).get(0).findElement(by.css('.pollTitleLine')).getText();
         firstRunningCard.click();
         var zoomedPollInformation = element(by.css('.pollInformation'));
         expect(zoomedPollInformation.isDisplayed()).toBeTruthy();
@@ -378,9 +399,10 @@ describe("material polls listing", function () {
       var firstUnstartedCard;
 
       beforeEach(function () {
-        elements.menuDrawerButton.click();
+        elements.filterButton.click();
         browser.sleep(500);
         elements.unstartedFilterButton.click();
+        browser.sleep(500);
         firstUnstartedCard = element.all(by.css('material-card')).get(0);
       });
       
@@ -396,12 +418,35 @@ describe("material polls listing", function () {
 
       it("zooms to a edit poll card when clicked", function () {
         var pollTitle = firstUnstartedCard.findElement(by.binding('{{poll.title}}')).getText();
-        element(by.css('material-backdrop')).click();
-        browser.sleep(500);
         firstUnstartedCard.click();
         var dialogTitleInput = element(by.inputName('pollTitleInput'));
         expect(dialogTitleInput.isDisplayed()).toBeTruthy();
         expect(dialogTitleInput.getAttribute('value')).toEqual(pollTitle);
+      });
+
+      describe("action bar", function () {
+
+        it("has a 'start poll' icon on the far left if the poll has a target", function () {
+          expect(browser.isElementPresent(by.css('.startPollButton'))).toBeFalsy();      
+          browser.actions().
+            mouseMove(firstUnstartedCard).
+            perform();
+          expect(browser.isElementPresent(by.css('.startPollButton'))).toBeFalsy();
+          elements.fab.click();
+          element(by.id('nextButton')).click();
+          element.all(by.css('option')).get(1).click();
+          element(by.id('saveButton')).click();
+          var cards = element.all(by.css('.mainCard'));
+          expect(cards.count()).toEqual(3);
+          var lastCard = element.all(by.css('.mainCard')).last();      
+          browser.actions().
+            mouseMove(lastCard).
+            perform();
+          expect(browser.isElementPresent(by.css('.startPollButton'))).toBeTruthy();
+          element(by.css('.startPollButton')).click();
+          expect(cards.count()).toEqual(2);     
+        });
+
       });
 
     });
@@ -411,9 +456,10 @@ describe("material polls listing", function () {
       var firstCompletedCard;
       
       beforeEach(function () {
-        elements.menuDrawerButton.click();
+        elements.filterButton.click();
         browser.sleep(500);
         elements.completedFilterButton.click();
+        browser.sleep(100);
         firstCompletedCard = element.all(by.css('material-card')).get(0);
       });
 
@@ -431,8 +477,6 @@ describe("material polls listing", function () {
 
       it("zooms to a zoomed poll card when clicked", function () {
         var pollTitle = firstCompletedCard.findElement(by.binding('{{poll.title}}')).getText();
-        element(by.css('material-backdrop')).click();
-        browser.sleep(500);
         firstCompletedCard.click();
         var zoomedPollInformation = element(by.css('.pollInformation'));
         expect(zoomedPollInformation.isDisplayed()).toBeTruthy();
