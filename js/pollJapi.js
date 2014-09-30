@@ -115,6 +115,7 @@ app.factory("pollDestroy", function () {
   }
 });
 
+//var pollIsStarted = pollStart(unstartedPoll); returns true if found by id, false if not
 app.factory("pollStart", function () {
   return function (source) {
     var qtPoll = japi.polls.get(source.id);
@@ -127,11 +128,34 @@ app.factory("pollStart", function () {
   }
 });
 
+//var pollIsStopped = pollStop(runningPoll); returns true if found by id, false if not
 app.factory("pollStop", function () {
   return function (source) {
     var qtPoll = japi.polls.get(source.id);
     if (qtPoll) {
       qtPoll.stop();
+      return true;
+    } else {
+      return false;
+    }
+  }
+});
+
+//var ballotReturned = pollSubmit(ballot, comment); returns true if found by id, false if not
+app.factory("pollSubmit", function () {
+  return function (source, comment) {
+    var qtPolls = japi.polls.getList();
+    var qtPoll;
+    for (var i=0; i < qtPolls.length; i++) {
+      if (qtPolls[i].id === source.id) {
+        qtPoll = qtPolls[i];
+      }
+    }
+    if (qtPoll) {
+      for (var i=0; i < qtPoll.options.length; i++) {
+        qtPoll.options[i].isSelected = source.options[i].isSelected;
+      }
+      qtPoll.submit(comment);
       return true;
     } else {
       return false;

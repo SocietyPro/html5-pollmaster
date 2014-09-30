@@ -421,6 +421,8 @@ app.controller("pollsCtrl", function ($scope,
   $scope.zoomPoll = function (e, poll) {
     if (poll.status === "unstarted") {
       $scope.editPoll(e, poll);
+    } else if (poll.status === 'unvoted') {
+      vote(e, poll);
     } else {
       showPoll(e, poll);
     }
@@ -489,12 +491,63 @@ app.controller("pollsCtrl", function ($scope,
     $scope.startPoll(args.poll);
   });
 
+  $scope.$on('refreshPollsList', function (scope, args) {
+    getPollsList();
+  });
+
   function getPollsList() {
     console.log('refreshing polls list');
     $scope.safeApply(function () {
       $scope.polls = pollAll();
     });
   }; 
+  
+  function vote (e, poll) {
+    $materialDialog({
+      templateUrl: 'partials/votingBoothDialog.tmpl.html',
+      targetEvent: e,
+      controller: ['$scope', '$hideDialog', '$rootScope', 'pollSubmit', function ($scope, $hideDialog, $rootScope, pollSubmit) {
+        $scope.poll = poll;
+        $scope.ballot = {};
+        $scope.ballot.selectedOption = $scope.poll.options[0].text;
+        for (var i=0; i < $scope.poll.options.length; i++) {
+          if ($scope.poll.options[i].isSelected === true) {
+            $scope.ballot.selectedOption =  $scope.poll.options[i].text;
+          }
+        }
+
+        $scope.dismiss = function () {    
+          console.log("Ballot " + $scope.poll.id + " dismissed.");
+          for (var i = 0; i < $scope.poll.options.length; i++) {
+            $scope.poll.options.isSelected = false;
+          }
+          pollSubmit($scope.poll);
+          $rootScope.$broadcast('refreshPollsList');
+          $hideDialog();
+        };
+
+        $scope.submit = function () {
+          var voterComment;
+          if ($scope.poll.allowComments) {
+            voterComment = $scope.ballot.ballotComment;
+          }
+          if (!$scope.poll.allowMultipleChoices) {
+            for (var i=0; i < $scope.poll.options.length; i++) {
+              if ($scope.poll.options[i].text === $scope.ballot.selectedOption) {
+                $scope.poll.options[i].isSelected = true;
+              }
+            }
+          }
+          console.log($scope.poll);
+          console.log(voterComment);
+          pollSubmit($scope.poll, voterComment);
+          $rootScope.$broadcast('refreshPollsList');
+          $hideDialog();
+        };
+
+      }]
+    });
+  };
 
   function showPoll (e, poll) {
     $materialDialog({
@@ -695,7 +748,7 @@ app.controller('votingBoothCtrl', function ($scope, $routeParams, $location) {
   var pollID = $routeParams.pollID;
   var requestedPoll = japi.polls.get(pollID);
   
-  if (requestedPoll.status === "started") {
+  if (requestedPoll.status === "unvoted") {
     $scope.poll = requestedPoll;
     $scope.ballot = {};
     $scope.ballot.selectedOption = $scope.poll.options[0].text;
@@ -705,21 +758,27 @@ app.controller('votingBoothCtrl', function ($scope, $routeParams, $location) {
 
   $scope.dismiss = function () {
     console.log("Ballot " + $scope.poll.id + " dismissed.");
-    $scope.poll.status = "complete";
-    $scope.poll.save("save from $scope.dismiss() in votingBoothCtrl");
+    for (var i = 0; i < $scope.poll.options.length; i++) {
+      $scope.poll.options.isSelected = false;
+    }
+    pollSubmit($scope.poll)
     $location.path("/polls");
   };
 
   $scope.submit = function () {
-    console.log("Ballot submitted with selection: " + $scope.selectedOption);
-    console.log($scope.ballot.ballotComment);
-    if ($scope.poll.allowComments && $scope.ballot.ballotComment) {
-      console.log("Ballot submitted with comment: " + $scope.ballot.ballotComment);
-      comment = ["user1", $scope.ballot.ballotComment, new Date()];
-      $scope.poll.comments.push(comment);
+    console.log("Ballot " + $scope.poll.id + " submitted.")
+    var voterComment;
+    if ($scope.poll.allowComments) {
+      voterComment = $scope.ballot.ballotComment;
     }
-    $scope.poll.status = "complete";
-    $scope.poll.save("save from $scope.submit() in votingBoothCtrl");
+    if (!$scope.poll.allowMultipleChoices) {
+      for (var i=0; i < $scope.poll.options.length; i++) {
+        if ($scope.poll.options[i].text === $scope.ballot.selectedOption) {
+          $scope.poll.options[i].isSelected = true;
+        }
+      }
+    };
+    pollSubmit($scope.poll, voterComment);
     $location.path("/polls");
   };
 
