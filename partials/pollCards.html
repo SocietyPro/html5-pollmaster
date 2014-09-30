@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <div class="pieChartContainer">
+          <div class="pieChartContainer" ng-if="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'">>
             <nvd3-pie-chart
               id="{{poll.id}}"
               data="poll.options"
@@ -44,7 +44,7 @@
             <table>
               <tr><td colspan="2">VOTE</td></tr>
               <tr ng-repeat="option in poll.options">  
-                <td class="previewCheckbox"><input type="checkbox" disabled></td>
+                <td class="previewCheckbox"><input type="checkbox" ng-model="option.isSelected" disabled></td>
                 <td>{{option.text}}</td>
               </tr>
             </table>

@@ -95,6 +95,9 @@ app.factory("pollCreateOrUpdate", function () {
     qtPoll.submitText = source.submitText;
     qtPoll.title = source.title;
     qtPoll.type = source.type;
+    for (var i=0; i < qtPoll.options.length; i++) {
+      qtPoll.options[i].isSelected = source.options[i].isSelected;
+    }
     qtPoll.save("save from pollCreate factory");
 
     var poll = angular.copy(qtPoll);

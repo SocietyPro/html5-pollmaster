@@ -325,7 +325,6 @@ app.controller("pollAppCtrl", function ($scope,
       }
       item.overflow = false;
       item.status = "unsaved";
-
       if (saveMatrix.poll) {
         item.isTemplate = false;
         pollCreateOrUpdate(item);
