@@ -9,17 +9,19 @@ var EXCLUDED_ICONS = [
   "material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png",
   "material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_48dp.png",
   "material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_48dp.png",
+  "material-icons/icons/system_icons/av/res/1x_web/ic_play_arrow_wht_18dp.png",
+  "material-icons/icons/system_icons/av/res/1x_web/ic_stop_wht_18dp.png",
   "material-icons/icons/system_icons/communication/res/1x_web/ic_chat_wht_18dp.png",
   "material-icons/icons/system_icons/communication/res/1x_web/ic_forum_18dp.png",
   "material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png",
   "material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png",
   "material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png",
   "material-icons/icons/system_icons/content/res/1x_web/ic_content_copy_wht_18dp.png",
-  "material-icons/icons/system_icons/content/res/1x_web/ic_filter_48dp.png ",
+  "material-icons/icons/system_icons/content/res/1x_web/ic_filter_48dp.png",
   "material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_18dp.png",
   "material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png",
   "material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_48dp.png",
-  "material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png",
+  "material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png"
 ];
 
 // Check one path to see if it's OK to delete:
