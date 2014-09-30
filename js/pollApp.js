@@ -372,9 +372,9 @@ app.controller("pollsCtrl", function ($scope,
                                       pollStop) {
 
   Cambrian.polls.onPollSaved.connect(getPollsList);
-  //Cambrian.polls.onPollDestroyed.connect(getPollsList);
-  Cambrian.polls.onEventBallotReceived.connect(getPollsList);
-  Cambrian.polls.onEventVoteReceived.connect(getPollsList);
+  Cambrian.polls.onPollDestroyed.connect(getPollsList);
+  Cambrian.polls.onBallotReceived.connect(getPollsList);
+  Cambrian.polls.onVoteReceived.connect(getPollsList);
   $scope.polls = pollAll();
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
@@ -555,7 +555,7 @@ app.controller("pollsCtrl", function ($scope,
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
       controller: ['$scope', '$hideDialog', '$rootScope', 'pollFind', function ($scope, $hideDialog, $rootScope, pollFind) {
-        Cambrian.polls.onEventVoteReceived.connect(refreshPoll);
+        Cambrian.polls.onVoteReceived.connect(refreshPoll);
         $scope.poll = poll;
         $scope.dialog = {};
 
@@ -641,8 +641,8 @@ app.controller("templatesCtrl", function ($scope,
   var peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
 
   Cambrian.polls.onPollSaved.connect(refreshTemplates);
-  //Cambrian.polls.onPollDestroyed.connect(refreshTemplates);
-  Cambrian.polls.onEventBallotReceived.connect(refreshTemplates);
+  Cambrian.polls.onPollDestroyed.connect(refreshTemplates);
+  Cambrian.polls.onBallotReceived.connect(refreshTemplates);
 
   $scope.selectedIndex = 0;
   $scope.templates = templates;
