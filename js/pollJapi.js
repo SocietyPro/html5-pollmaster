@@ -67,7 +67,7 @@ app.factory("pollFind", function () {
 
 //var poll = pollCreateOrUpdate(pollToUpdate); returns js poll object with new id and status
 app.factory("pollCreateOrUpdate", function () {
-  return function (source) {
+  return function (source,startNow) {
     var qtPoll;
     if (source.id) {
       qtPoll = japi.polls.get(source.id);
@@ -98,8 +98,10 @@ app.factory("pollCreateOrUpdate", function () {
     for (var i=0; i < qtPoll.options.length; i++) {
       qtPoll.options[i].isSelected = source.options[i].isSelected;
     }
+    if (startNow) {
+      qtPoll.start();
+    }
     qtPoll.save("save from pollCreate factory");
-
     var poll = angular.copy(qtPoll);
     return poll;
   }

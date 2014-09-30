@@ -277,7 +277,7 @@ app.controller("pollAppCtrl", function ($scope,
           };
 
           $scope.save = function (item, saveMatrix) {
-            saveItem(item, saveMatrix);
+            saveItem(item, saveMatrix, false);
             item.overflow = false;
             $hideDialog();
           };
@@ -299,10 +299,7 @@ app.controller("pollAppCtrl", function ($scope,
 
                 $scope.save = function (item, saveMatrix) {
                   item.pollTimeLength = convertTimeToSeconds($scope.pollLength.numeral, $scope.pollLength.units);
-                  saveItem(item, saveMatrix);
-                  if ($scope.startNow && item.pollTargetId) {
-                    $rootScope.$broadcast('startNow', {poll: item});
-                  }
+                  saveItem(item, saveMatrix, $scope.startNow && item.pollTargetId);
                   item.overflow = false;
                   $scope.startNow = false;
                   $hideDialog();
@@ -317,7 +314,7 @@ app.controller("pollAppCtrl", function ($scope,
       });
     };
 
-    function saveItem (item, saveMatrix) {
+    function saveItem (item, saveMatrix, startNow) {
       for (var i = 0; i<item.options.length; i++) {
         if (!item.options[i].text) {
           item.options.splice(i,1);
@@ -327,7 +324,7 @@ app.controller("pollAppCtrl", function ($scope,
       item.status = "unsaved";
       if (saveMatrix.poll) {
         item.isTemplate = false;
-        pollCreateOrUpdate(item);
+        pollCreateOrUpdate(item,startNow);
       }
 
       if (saveMatrix.template) {
@@ -335,7 +332,7 @@ app.controller("pollAppCtrl", function ($scope,
         item.pollTargetId = "";
         item.dateStarted = null;
         item.dataStopped = null;
-        pollCreateOrUpdate(item);
+        pollCreateOrUpdate(item,startNow);
       }
 
     };
@@ -375,7 +372,7 @@ app.controller("pollsCtrl", function ($scope,
                                       pollStop) {
 
   Cambrian.polls.onPollSaved.connect(getPollsList);
-  Cambrian.polls.onPollDestroyed.connect(getPollsList);
+  //Cambrian.polls.onPollDestroyed.connect(getPollsList);
   Cambrian.polls.onEventBallotReceived.connect(getPollsList);
   Cambrian.polls.onEventVoteReceived.connect(getPollsList);
   $scope.polls = pollAll();
@@ -487,9 +484,9 @@ app.controller("pollsCtrl", function ($scope,
     $scope.copyPoll(args.event, args.poll);
   });
 
-  $scope.$on('startNow', function (scope, args) {
-    $scope.startPoll(args.poll);
-  });
+  //$scope.$on('startNow', function (scope, args) {
+  //  $scope.startPoll(args.poll);
+  //});
 
   $scope.$on('refreshPollsList', function (scope, args) {
     getPollsList();
@@ -638,7 +635,7 @@ app.controller("templatesCtrl", function ($scope,
   var peerRecommendedTemplates = japi.polls.templates.listPeerRecommended();
 
   Cambrian.polls.onPollSaved.connect(refreshTemplates);
-  Cambrian.polls.onPollDestroyed.connect(refreshTemplates);
+  //Cambrian.polls.onPollDestroyed.connect(refreshTemplates);
   Cambrian.polls.onEventBallotReceived.connect(refreshTemplates);
 
   $scope.selectedIndex = 0;
