@@ -553,7 +553,7 @@ app.controller("pollsCtrl", function ($scope,
     $materialDialog({
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
+      controller: ['$scope', '$hideDialog', '$rootScope', 'pollFind', function ($scope, $hideDialog, $rootScope, pollFind) {
         Cambrian.polls.onEventVoteReceived.connect(refreshPoll);
         $scope.poll = poll;
         $scope.dialog = {};
@@ -612,10 +612,12 @@ app.controller("pollsCtrl", function ($scope,
           });
         };
 
-        function refreshPoll (id) {
-          if ($scope.poll.id === id) {
-            pollFind($scope.poll.id);
-          }
+        function refreshPoll () {
+          $scope.$apply (function () {
+            console.log("getting the new poll stuff");
+            $scope.poll = pollFind($scope.poll.id);
+            console.log($scope.poll);
+          });
         };
 
       }]
