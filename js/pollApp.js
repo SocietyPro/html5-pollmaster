@@ -457,7 +457,11 @@ app.controller("pollsCtrl", function ($scope,
     saveMatrix = {poll: false, template: true};
     $scope.startCustomizing(e, newTemplate, saveMatrix);
   };
-
+  $scope.gen = -1;
+  $scope.getIds = function () {
+    $scope.gen = $scope.gen + 1;
+    return $scope.gen.toString();
+  }
   $scope.pieWidth = 100;
   $scope.pieHeight = 100;
   $scope.xFunction = function () {
