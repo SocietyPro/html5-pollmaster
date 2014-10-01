@@ -5,7 +5,7 @@
       <div class="pollInformation">
         <div layout="horizontal" layout-align="space-between">
           <span>
-            Poll ends at {{poll.endTime}} on {{poll.endDate | date : 'MM/dd/yy'}}
+            Poll ends in {{pollLength.numeral}} {{pollLength.units}}
           </span>
           <span>{{poll.originator}}</span>
         </div>
