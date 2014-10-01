@@ -844,3 +844,7 @@ ul#filters {
 #commentInput {
   background-color: #fff;
 }
+.chart {
+ width: 100px;
+ height: 100px;
+}

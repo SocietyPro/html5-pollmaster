@@ -373,8 +373,8 @@ app.controller("pollsCtrl", function ($scope,
 
   Cambrian.polls.onPollSaved.connect(getPollsList);
   //Cambrian.polls.onPollDestroyed.connect(getPollsList);
-  Cambrian.polls.onEventBallotReceived.connect(getPollsList);
-  Cambrian.polls.onEventVoteReceived.connect(getPollsList);
+  //Cambrian.polls.onEventBallotReceived.connect(getPollsList);
+  //Cambrian.polls.onEventVoteReceived.connect(getPollsList);
   $scope.polls = pollAll();
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
@@ -457,10 +457,13 @@ app.controller("pollsCtrl", function ($scope,
     saveMatrix = {poll: false, template: true};
     $scope.startCustomizing(e, newTemplate, saveMatrix);
   };
-  $scope.gen = -1;
-  $scope.getIds = function () {
-    $scope.gen = $scope.gen + 1;
-    return $scope.gen.toString();
+  $scope.hasData = function (i) {
+    var p = $scope.polls[i];
+    var a = 0;
+    for (var i = 0; i < p.options.length; i++) {
+      a += p.options[i].count;
+    };
+    return a!=0;
   }
   $scope.pieWidth = 100;
   $scope.pieHeight = 100;
@@ -555,7 +558,7 @@ app.controller("pollsCtrl", function ($scope,
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
       controller: ['$scope', '$hideDialog', '$rootScope', 'pollFind', function ($scope, $hideDialog, $rootScope, pollFind) {
-        Cambrian.polls.onEventVoteReceived.connect(refreshPoll);
+        //Cambrian.polls.onEventVoteReceived.connect(refreshPoll);
         $scope.poll = poll;
         $scope.dialog = {};
 

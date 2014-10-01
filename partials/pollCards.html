@@ -19,15 +19,14 @@
               </table>
             </div>
           </div>
-          {{poll.id}}
-          <div class="pieChartContainer" ng-if="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'">>
+          <div class="pieChartContainer" ng-if="(poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted') && hasData($index)">
             <nvd3-pie-chart
-              id="{{poll.id}}"
+              id="{{'id'+$index}}"
               data="poll.options"
               x="xFunction()"
               y="yFunction()"
-              width="{{ pieWidth }}"
-              height="{{ pieHeight }}"
+              width="100"
+              height="100"
               margin="{left: 15, top: 15, bottom: 15, right: 15}"
               showLabels="false"
               pieLabelsOutside="true"
