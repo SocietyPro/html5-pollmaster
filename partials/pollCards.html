@@ -8,7 +8,16 @@
         <b>{{poll.title}}</b>
       </div>
       <div class="pollDetails">
-        <div class="pollReturns" ng-show="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'">
+        <div class="ballotInfo" ng-show="poll.status === 'voted">
+          {{poll.options | filter:isSelected:true}}
+
+          You Selected:
+          <div ng-repeat="option in selectedOptions">
+            <img ng-src="material-icons/icons/system_icons/toggle/res/1x_web/ic_check_box_18dp.png">
+            {{option.text}}
+          </div>
+        </div>
+        <div class="pollReturns" ng-show="poll.status === 'started' || poll.status === 'stopped'">
           <div class="optionCounts">
             <div class="options">
               <table>

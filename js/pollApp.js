@@ -587,10 +587,11 @@ app.controller("pollsCtrl", function ($scope,
     $materialDialog({
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', '$rootScope', 'pollFind', function ($scope, $hideDialog, $rootScope, pollFind) {
+      controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', function ($scope, $hideDialog, $rootScope, $filter, pollFind) {
         Cambrian.polls.onVoteReceived.connect(refreshPoll);
         $scope.poll = poll;
         $scope.pollLength = {numeral: poll.pollTimeLength / 60, units: "Minutes"};
+        $scope.selectedOptions = $filter('filter')($scope.poll.options, {isSelected: true});
         $scope.dialog = {};
 
         $scope.close = function () {
