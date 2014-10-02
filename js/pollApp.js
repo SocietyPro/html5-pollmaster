@@ -849,7 +849,7 @@ app.controller("pollEndDateCtrl", ['$scope','$hideDialog','item','saveMatrix','p
     var today = new Date();
     var d = new Date(today.getTime() + (24*60*60*1000));
   }
-  $scope.endDate = d.format("mm/dd/yy");
+  $scope.edate = d.format("mm/dd/yy");
   $scope.endTime = new Date();
   $scope.endTime.setHours(d.getHours());
   $scope.endTime.setMinutes(d.getMinutes());
@@ -892,10 +892,13 @@ app.controller("pollEndDateCtrl", ['$scope','$hideDialog','item','saveMatrix','p
     }
   }
   $scope.save = function () {
+    if (!$scope.newDate) {
+      $scope.newDate = $scope.edate;
+    }
     if ($scope.newDate && $scope.time) {
       var seconds = $scope.convertTimeToSeconds($scope.newDate, $scope.time);
       if (seconds > 0) {
-        item.pollTimeLength
+        item.pollTimeLength = seconds;
         saveItem(item, saveMatrix, true);
         item.overflow = false;
         $hideDialog();

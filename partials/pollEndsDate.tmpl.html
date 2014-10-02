@@ -2,7 +2,7 @@
     <div class="dialog-content" style="width:600px;">
       <h2>Poll length selection</h2>
       <div layout="horizontal" layout-align="center">
-        <material-input ng-model="endDate" ui-date="{minDate:'0'}" ui-date-format="mm/dd/yy" placeholder="{{endDate}}" flex="40"></material-input><div style="width:50px;text-align:center;">at</div><material-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker class="ui-timepicker-input" placeholder="HH:MM" flex="40"></material-input>
+        <material-input ng-model="endDate" ui-date="{minDate:'0'}" ui-date-format="mm/dd/yy" placeholder="{{edate}}" flex="40"></material-input><div style="width:50px;text-align:center;">at</div><material-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker class="ui-timepicker-input" placeholder="HH:MM" flex="40"></material-input>
     </div>
     <div class="dialog-actions" layout="horizontal" layout-align="end">
       <material-button id="closeButton" ng-click="close()">
