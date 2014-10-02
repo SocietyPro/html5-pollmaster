@@ -20,6 +20,7 @@ var EXCLUDED_ICONS = [
   "material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png",
   "material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_48dp.png",
   "material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png",
+  "material-icons/icons/system_icons/toggle/res/1x_web/ic_check_box_18dp.png"
 ];
 
 // Check one path to see if it's OK to delete:

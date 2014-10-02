@@ -393,6 +393,7 @@ app.controller("pollsCtrl", function ($scope,
   Cambrian.polls.onPollDestroyed.connect(getPollsList);
   Cambrian.polls.onBallotReceived.connect(getPollsList);
   Cambrian.polls.onVoteReceived.connect(getPollsList);
+  Cambrian.polls.onPollStopped.connect(getPollsList);
   $scope.polls = pollAll();
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
