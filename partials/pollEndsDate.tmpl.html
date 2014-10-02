@@ -1,0 +1,16 @@
+<material-dialog>
+    <div class="dialog-content" style="width:600px;">
+      <h2>Poll length selection</h2>
+      <div layout="horizontal" layout-align="center">
+        <input type="text" id="lifespan" maxlength="3" size="3" ng-model="pollLength.numeral" style="margin-right:10px;border-width:2px;"></input>
+                <select id="timeSelector" ng-model="pollLength.units" ng-options="unit for unit in units"></select>
+    </div>
+    <div class="dialog-actions" layout="horizontal" layout-align="end">
+      <material-button id="closeButton" ng-click="close()">
+        Close
+      </material-button>
+      <material-button id="saveButton" ng-click="save()" class="material-button-colored">
+        Save
+      </material-button>
+    </div>
+</material-dialog>

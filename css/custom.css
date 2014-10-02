@@ -415,9 +415,18 @@ material-button.material-button-fab.material-button-fab-bottom-right {
 
 /* Styles for Cards */
 .cardholder {
-  display: inline-block;
   vertical-align: top;
   position: relative;
+}
+.quilt {
+  display: inline-block;
+}
+.stream {
+  width:100%;
+}
+.stream material-card {
+  width: 95%;
+  max-width: none;
 }
 
 .mainCard {
@@ -843,4 +852,8 @@ ul#filters {
 
 #commentInput {
   background-color: #fff;
+}
+.chart {
+ width: 100px;
+ height: 100px;
 }

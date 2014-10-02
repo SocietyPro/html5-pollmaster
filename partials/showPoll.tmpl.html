@@ -1,10 +1,11 @@
 <material-dialog>
-  <div id="materialDialogContainer" ng-show="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'" ng-class="{votes: poll.status === 'voted', running: poll.status === 'started', completed: poll.status === 'stopped'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+  <div id="materialDialogContainer" ng-show="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'" ng-class="{running: poll.status === 'started', completed: poll.status === 'stopped' || poll.status === 'voted'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+
     <div class="dialog-content">
       <div class="pollInformation">
         <div layout="horizontal" layout-align="space-between">
           <span>
-            Poll ends at {{poll.endTime}} on {{poll.endDate | date : 'MM/dd/yy'}}
+            Poll ends in {{pollLength.numeral}} {{pollLength.units}}
           </span>
           <span>{{poll.originator}}</span>
         </div>
@@ -13,7 +14,20 @@
           {{poll.description}}
         </p>
 
-        <div id="statsBox">
+        <div id="ballotResults" ng-if="poll.status === 'voted'">
+          <em>PUBLIC RESULTS ARE NOT AVAILABLE FOR THIS POLL</em>
+          <div class="options">
+            <table>
+              <tr><td colspan="2">YOU VOTED:</td></tr>
+              <tr ng-repeat="option in poll.options | filter:{isSelected:true}">  
+                <td class="previewCheckbox"><img ng-src="material-icons/icons/system_icons/toggle/res/1x_web/ic_check_box_18dp.png"></td>
+                <td>{{option.text}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div id="statsBox" ng-if="poll.status != 'voted'">
           <span class="tableTitle"><b>Poll Stats:</b></span>
           <table id="pollStatsTable">
             <tr>
@@ -35,7 +49,7 @@
           </table>
         </div>
 
-        <div id="resultsBox" layout="horizontal" layout-align="space-between">
+        <div id="resultsBox" layout="horizontal" layout-align="space-between" ng-if="poll.status != 'voted'">
           <div style="width:50%"> 
             <span class="tableTitle"><b>Poll Results:</b></span>
             <table id="pollResultsTable">
@@ -47,21 +61,22 @@
 
           </div>
 
-          <div class="bigPieChartContainer">
+          <div class="bigPieChartContainer" ng-if="poll.status != 'voted'">
             
             <nvd3-pie-chart
-              id="{{poll.id}}big"
+              id="big"
               data="poll.options"
               x="xFunction()"
               y="yFunction()"
-              width="{{ pieWidth }}"
-              height="{{ pieHeight }}"
+              width="200"
+              height="200"
               margin="{left: 15, top: 15, bottom: 15, right: 15}"
               showLabels="true"
               pieLabelsOutside="true"
               showValues="true"
-              labelType="value"
+              labelType="key"
               tooltips="true">
+              <svg height="100"></svg>
             </nvd3-pie-chart>
   
           </div>

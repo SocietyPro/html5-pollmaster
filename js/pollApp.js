@@ -287,7 +287,7 @@ app.controller("pollAppCtrl", function ($scope,
             $materialDialog({
               templateUrl: 'partials/selectTarget.tmpl.html',
               targetEvent: e,
-              controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
+              controller: ['$scope', '$hideDialog', '$rootScope','$materialDialog', function ($scope, $hideDialog, $rootScope,$materialDialog) {
                 $scope.poll = poll;
                 $scope.myGroups = groupAll();
                 $scope.saveMatrix = saveMatrix;
@@ -297,12 +297,30 @@ app.controller("pollAppCtrl", function ($scope,
                   $hideDialog();
                 };
 
-                $scope.save = function (item, saveMatrix) {
-                  item.pollTimeLength = convertTimeToSeconds($scope.pollLength.numeral, $scope.pollLength.units);
-                  saveItem(item, saveMatrix, $scope.startNow && item.pollTargetId);
-                  item.overflow = false;
+                $scope.save = function (item, saveMatrix,e) {
+                  if ($scope.startNow) {
+                    
+                    $materialDialog({
+                      templateUrl: 'partials/pollEndsDate.tmpl.html',
+                      targetEvent: e,
+                      locals: {
+                        item: item,
+                        saveMatrix: saveMatrix
+                      },
+                      controller: 'pollEndDateCtrl'
+                    });
+
                   $scope.startNow = false;
-                  $hideDialog();
+                    $hideDialog();
+                  } else {
+                    item.pollTimeLength = convertTimeToSeconds($scope.pollLength.numeral, $scope.pollLength.units);
+                    saveItem(item, saveMatrix, $scope.startNow && item.pollTargetId);
+                    item.overflow = false;  
+                    
+                  $scope.startNow = false;
+                    $hideDialog();
+                  }
+                  
                 };
 
 
@@ -428,7 +446,8 @@ app.controller("pollsCtrl", function ($scope,
   $scope.copyPoll = function(e, oldPoll){
     oldPoll.overflow = false;
     var newPoll = pollNew(oldPoll);
-    saveMatrix = {poll: true, template: false};;
+    newPoll.pollTimeLength = oldPoll.pollTimeLength;
+    saveMatrix = {poll: true, template: false};
     $scope.startCustomizing(e, newPoll, saveMatrix);
   };
 
@@ -441,8 +460,17 @@ app.controller("pollsCtrl", function ($scope,
     pollDestroy(poll);
   };
 
-  $scope.startPoll = function(poll){
-    pollStart(poll);
+  $scope.startPoll = function(poll,e){
+    var sm = {poll:true}
+    $materialDialog({
+      templateUrl: 'partials/pollEndsDate.tmpl.html',
+      targetEvent: e,
+      locals: {
+        item: poll,
+        saveMatrix: sm
+      },
+      controller: 'pollEndDateCtrl'
+    });
     getPollsList();
   };
 
@@ -454,13 +482,17 @@ app.controller("pollsCtrl", function ($scope,
   $scope.newTemplateFromPoll = function (e, poll) {
     var newTemplate = pollNew(poll);
     newTemplate.status = "unsaved";
+    newTemplate.pollTimeLength = poll.pollTimeLength;
     saveMatrix = {poll: false, template: true};
     $scope.startCustomizing(e, newTemplate, saveMatrix);
   };
-  $scope.gen = -1;
-  $scope.getIds = function () {
-    $scope.gen = $scope.gen + 1;
-    return $scope.gen.toString();
+  $scope.hasData = function (i) {
+    var p = $scope.polls[i];
+    var a = 0;
+    for (var i = 0; i < p.options.length; i++) {
+      a += p.options[i].count;
+    };
+    return a!=0;
   }
   $scope.pieWidth = 100;
   $scope.pieHeight = 100;
@@ -509,6 +541,7 @@ app.controller("pollsCtrl", function ($scope,
       targetEvent: e,
       controller: ['$scope', '$hideDialog', '$rootScope', 'pollSubmit', function ($scope, $hideDialog, $rootScope, pollSubmit) {
         $scope.poll = poll;
+        $scope.pollLength = {numeral: poll.pollTimeLength / 60, units: "Minutes"};
         $scope.ballot = {};
         $scope.ballot.selectedOption = $scope.poll.options[0].text;
         for (var i=0; i < $scope.poll.options.length; i++) {
@@ -554,9 +587,11 @@ app.controller("pollsCtrl", function ($scope,
     $materialDialog({
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', '$rootScope', 'pollFind', function ($scope, $hideDialog, $rootScope, pollFind) {
+      controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', function ($scope, $hideDialog, $rootScope, $filter, pollFind) {
         Cambrian.polls.onVoteReceived.connect(refreshPoll);
         $scope.poll = poll;
+        $scope.pollLength = {numeral: poll.pollTimeLength / 60, units: "Minutes"};
+        $scope.selectedOptions = $filter('filter')($scope.poll.options, {isSelected: true});
         $scope.dialog = {};
 
         $scope.close = function () {
@@ -801,3 +836,66 @@ app.controller("helpCtrl", function ($scope, $modalInstance) {
       };
 
 });
+
+app.controller("pollEndDateCtrl", ['$scope','$hideDialog','item','saveMatrix','pollCreateOrUpdate', function ($scope, $hideDialog,item,saveMatrix,pollCreateOrUpdate) {
+  $scope.units = ["Minutes", "Hours", "Days", "Weeks", "Months", "Years"];
+  if (item.pollTimeLength) {
+    $scope.pollLength = {numeral: item.pollTimeLength / 60, units: "Minutes"};
+  } else {
+    $scope.pollLength = {numeral: 0, units: "Minutes"};
+  }
+  function convertTimeToSeconds (length, units) {
+    switch(units) {
+      case "Minutes":
+        return length * 60;
+        break;
+      case "Hours":
+        return length * 3600;
+        break;
+      case "Days":
+        return length * 86400;
+        break;
+      case "Weeks":
+        return length * 604800;
+        break;
+      case "Months":
+        return length * 2592000;
+        break;
+      case "Years":
+        return length * 31536000;
+        break;
+    }
+  };
+  function saveItem (item, saveMatrix, startNow) {
+      for (var i = 0; i<item.options.length; i++) {
+        if (!item.options[i].text) {
+          item.options.splice(i,1);
+        }
+      }
+      item.overflow = false;
+      item.status = "unsaved";
+      if (saveMatrix.poll) {
+        item.isTemplate = false;
+        pollCreateOrUpdate(item,startNow);
+      }
+
+      if (saveMatrix.template) {
+        item.isTemplate = true;
+        item.pollTargetId = "";
+        item.dateStarted = null;
+        item.dataStopped = null;
+        pollCreateOrUpdate(item,startNow);
+      }
+
+    };
+  $scope.save = function () {
+      item.pollTimeLength = convertTimeToSeconds($scope.pollLength.numeral, $scope.pollLength.units);
+      saveItem(item, saveMatrix, true);
+      item.overflow = false;
+      $hideDialog();
+    
+  }
+  $scope.close = function () {
+    $hideDialog();
+  }
+}]);
