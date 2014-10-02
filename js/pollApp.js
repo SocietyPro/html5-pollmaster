@@ -898,7 +898,7 @@ app.controller("pollEndDateCtrl", ['$scope','$hideDialog','item','saveMatrix','p
     if ($scope.newDate && $scope.time) {
       var seconds = $scope.convertTimeToSeconds($scope.newDate, $scope.time);
       if (seconds > 0) {
-        item.pollTimeLength = seconds;
+        item.pollTimeLength = seconds | 0;
         saveItem(item, saveMatrix, true);
         item.overflow = false;
         $hideDialog();
