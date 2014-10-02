@@ -415,6 +415,7 @@ material-button.material-button-fab.material-button-fab-bottom-right {
 
 /* Styles for Cards */
 .cardholder {
+  display: inline-block;
   vertical-align: top;
   position: relative;
 }

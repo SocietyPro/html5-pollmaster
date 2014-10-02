@@ -17,7 +17,7 @@
     </div>
     <!-- end Quick Add Box -->
   </div>
-  <div class="cardholder" ng-repeat="template in templates" ng-mouseleave="template.overflow = false">
+  <div class="cardholder" ng-repeat="template in templates" ng-mouseleave="template.overflow = false" ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}">
     <material-card class="mainCard" ng-mouseover="template.menubar = true" ng-mouseleave="template.menubar = false">
       <div class="cardContentContainer" ng-click="zoomTemplate($event, template)">
         <div class="pollTitleLine">
