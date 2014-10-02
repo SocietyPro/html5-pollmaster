@@ -85,7 +85,7 @@
   </material-card>
 </div>
   <material-card class="overflowMenu animate-show" ng-show="poll.overflow">
-    <div ng-if="poll.status != 'unvoted'">
+    <div ng-if="poll.status != 'unvoted' && poll.type!='ballot'">
       <a class="destroyAction" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyPoll(poll)">Delete</a>
     </div>
     <a class="copyAction" ng-click="copyPoll($event, poll)">Make a Copy</a><br />
