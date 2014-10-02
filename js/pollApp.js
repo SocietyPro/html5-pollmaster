@@ -590,8 +590,11 @@ app.controller("pollsCtrl", function ($scope,
       controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', function ($scope, $hideDialog, $rootScope, $filter, pollFind) {
         Cambrian.polls.onVoteReceived.connect(refreshPoll);
         $scope.poll = poll;
-        var d = new Date(poll.dateStarted.getTime() + (poll.pollTimeLength*1000));    
-        $scope.endPollDate = d.toString().substring(0,d.toString().lastIndexOf(":"));
+        console.log(poll);
+        if (poll.dateStarted) {
+          var d = new Date(poll.dateStarted.getTime() + (poll.pollTimeLength*1000));    
+          $scope.endPollDate = d.toString().substring(0,d.toString().lastIndexOf(":"));
+        }
         $scope.selectedOptions = $filter('filter')($scope.poll.options, {isSelected: true});
         $scope.dialog = {};
 
