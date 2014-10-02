@@ -2,8 +2,7 @@
     <div class="dialog-content" style="width:600px;">
       <h2>Poll length selection</h2>
       <div layout="horizontal" layout-align="center">
-        <input type="text" id="lifespan" maxlength="3" size="3" ng-model="pollLength.numeral" style="margin-right:10px;border-width:2px;"></input>
-                <select id="timeSelector" ng-model="pollLength.units" ng-options="unit for unit in units"></select>
+        <material-input ng-model="endDate" ui-date="{minDate:'0'}" ui-date-format="mm/dd/yy" placeholder="{{endDate}}" flex="40"></material-input><div style="width:50px;text-align:center;">at</div><material-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker class="ui-timepicker-input" placeholder="HH:MM" flex="40"></material-input>
     </div>
     <div class="dialog-actions" layout="horizontal" layout-align="end">
       <material-button id="closeButton" ng-click="close()">
