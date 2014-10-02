@@ -8,13 +8,15 @@
         <b>{{poll.title}}</b>
       </div>
       <div class="pollDetails">
-        <div class="ballotInfo" ng-show="poll.status === 'voted">
-          {{poll.options | filter:isSelected:true}}
-
-          You Selected:
-          <div ng-repeat="option in selectedOptions">
-            <img ng-src="material-icons/icons/system_icons/toggle/res/1x_web/ic_check_box_18dp.png">
-            {{option.text}}
+        <div class="ballotInfo" ng-show="poll.status === 'voted'">
+          <div class="options">
+            <table>
+              <tr><td colspan="2">YOU VOTED:</td></tr>
+              <tr ng-repeat="option in poll.options | filter:{isSelected:true}">  
+                <td class="previewCheckbox"><img ng-src="material-icons/icons/system_icons/toggle/res/1x_web/ic_check_box_18dp.png"></td>
+                <td>{{option.text}}</td>
+              </tr>
+            </table>
           </div>
         </div>
         <div class="pollReturns" ng-show="poll.status === 'started' || poll.status === 'stopped'">
