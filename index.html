@@ -31,12 +31,13 @@
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <link rel="stylesheet" type="text/css" href="css/dropdown.css">
     <link rel="stylesheet" type="text/css" href="bower_components/nvd3/nv.d3.css">
+    <link rel="stylesheet" type="text/css" href="css/pantheonPollMaster.css">
   </head>
   <body ng-controller="pollAppCtrl">
     <div id="applicationContainer" layout="horizontal">
 
       <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left">
-        <material-toolbar class="material-theme-yellow">
+        <material-toolbar class="pantheonToolbar" ng-class="{template:isTmpl}">
           <h1 class="material-toolbar-tools">Society Pro</h1>
           <span flex></span>
         </material-toolbar>
@@ -54,21 +55,21 @@
         </material-content>
       </material-sidenav>
 
-      <div layout="vertical" layout-fill>
-        <material-toolbar scroll-shrink class="material-theme-yellow">
+      <div layout="vertical" layout-fill class="mainContent">
+        <material-toolbar scroll-shrink class="pantheonToolbar">
           <div layout="horizontal">
             <div class="material-toolbar-tools">
               <div id="menu-drawer-button" class="menu-icon" ng-click="toggleMenu()">
-                <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_48dp.png">
+                <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
               </div>
-              <h2>Ballot</h2>
+              <h2 class="toolbarTitle">Ballot</h2>
             </div>
             <div id="viewButtons" layout="horizontal" flex="25" layout-align="end">
               <div id='cssmenu' ng-if="checkView()">
                 <ul>
                    <li class='active has-sub last' id="filterButton">
-                      <material-button class="clicker material-button-icon" title="Filter Polls">
-                        <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_48dp.png"></material-icon>
+                      <material-button class="viewButton clicker material-button-icon" title="Filter Polls">
+                        <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_24dp.png"></material-icon>
                       </material-button></a>
                       <ul>
                          <li ng-repeat="filter in menu.filters" ng-class="{last:$last}">
@@ -83,10 +84,10 @@
                 </ul>
               </div>
               <material-button id="streamButton" class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" title="Show as Stream">
-                <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_48dp.png"></material-icon>
+                <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_24dp.png"></material-icon>
               </material-button>
               <material-button id="quiltButton" class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" title="Show as Quilt">
-                <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_48dp.png"></material-icon>
+                <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_24dp.png"></material-icon>
               </material-button>
             </div>
           </div>

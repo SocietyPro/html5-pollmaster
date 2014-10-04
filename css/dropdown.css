@@ -109,7 +109,7 @@
   z-index: -2;
 }
 .opa {
-  left: auto;
+  left: -105px;
   opacity: 1;
 }
 #cssmenu ul ul {
@@ -130,12 +130,13 @@
 }
 #cssmenu ul ul li {
   position: relative;
+  margin-top: 0px;
 }
 #cssmenu > ul > li > ul {
-  top: 44px;
+  top: 29px;
 }
 #cssmenu.align-right > ul > li:hover > ul {
-  left: auto;
+  left: -105px;
   right: 0;
   /*opacity: 1;*/
 }
@@ -145,7 +146,7 @@
   /*opacity: 1;*/
 }
 #cssmenu.align-right ul ul li:hover > ul {
-  left: auto;
+  left: -105px;
   right: 170px;
   top: 0;
   /*opacity: 1;*/
@@ -185,7 +186,7 @@
   left: 30px;
 }
 #cssmenu.align-right > ul > li > ul::after {
-  left: auto;
+  left: -105px;
   right: 30px;
 }
 #cssmenu ul ul li.has-sub::after {

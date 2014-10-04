@@ -406,6 +406,7 @@ material-button.material-button-fab.material-button-fab-bottom-right {
       bottom: 28px;
       left: auto;
       position: fixed; 
+      margin-right: 15px;
 }
 
 #templatesContainer > .material-content,

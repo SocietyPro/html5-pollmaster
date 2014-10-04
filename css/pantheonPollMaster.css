@@ -1,0 +1,121 @@
+.mainContent { 
+	background: url(../assets/images/153450.jpg) top right no-repeat;
+	background-attachment: fixed;
+}
+material-card {
+	opacity: 0.9;
+}
+material-toolbar {
+	min-height: 48px;
+	height: 48px;
+}
+.toolbarTitle {
+	margin-bottom: 20px;
+	font-size: 15px;
+	margin-left: 0px;
+}
+.menu-icon {
+	top: 0;
+	margin-top: 16px;
+	margin-left: 18px;
+	margin-right: 9px;
+	cursor: pointer;
+}
+.viewButton {
+	border: 1px solid rgba(0,0,0,0.2);
+	height: 26px;
+	width: 35px;
+	margin-top: 3px;
+}
+.viewButton:hover {
+	opacity: 1;
+}
+#quickAddTitle {
+	display: inline-block;
+	border-bottom: none;
+	font-size: 14px;
+	color: white;
+}
+#quickAddDescription {
+	display: inline-block;
+	border-bottom: none;
+	font-size: 14px;
+	color:white;
+}
+#quickAddButton span {
+	font-weight: bold;
+}
+::-webkit-scrollbar {  
+    width: 12px; 
+}  
+::-webkit-scrollbar-track {  
+    background-color: rgba(234,234,234,0.2);
+}  
+::-webkit-scrollbar-thumb {  
+    background-color: #ccc;  
+}  
+::-webkit-scrollbar-thumb:hover {  
+    background-color: #aaa;  
+}
+.votes {
+  background-color: #A05643;
+  color:white;
+}
+
+.running {
+  background-color: #101714;
+  color:white;
+}
+
+.completed,
+.voted {
+  background-color: #40505E;
+  color:white;
+}
+
+.unstarted {
+  background-color: #D2D6DF;
+  color:black;
+}
+
+.pantheonToolbar {
+	background-color: #a48623;
+}
+.menu-item {
+	background-color: rgba(255,255,255,0);
+	font-weight: bold;
+}
+material-sidenav {
+	background-color: rgba(255,255,255,0.4);
+}
+
+#dialogLayout {
+	background-color: #D2D6DF;
+}
+g text {
+	fill: #ffffff !important;
+}
+
+#applicationContainer {
+	height: inherit;
+}
+#templateInside {
+	width:	inherit;
+	height: inherit;
+}
+material-tabs .tabs-header .tabs-header-items {
+	background-color: #a48623;	
+}
+material-ink-bar {
+	background: #fff;
+}
+.template {
+	height: 88px;
+}
+material-card {
+	background-color: #33301E;
+	color:white;
+}
+.overflowMenu {
+	color: black;
+}

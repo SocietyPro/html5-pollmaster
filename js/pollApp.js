@@ -37,11 +37,11 @@ app.config(function($routeProvider){
 
 app.factory("menu", ['$rootScope', function ($rootScope) {
   var self;
-  var filters = [{ filter: 'All', color: '#000000' }, 
-                 { filter: 'Votes', color: '#d19b9b' },
-                 { filter: 'Running', color: '#92e4c9' },
-                 { filter: 'Unstarted', color: '#ffffff' },
-                 { filter: 'Completed', color: '#c9d1ff' }];
+  var filters = [{ filter: 'All', color: '#fff' }, 
+                 { filter: 'Votes', color: '#A05643' },
+                 { filter: 'Running', color: '#101714' },
+                 { filter: 'Unstarted', color: '#D2D6DF' },
+                 { filter: 'Completed', color: '#40505E' }];
 
   return self = {
     filters: filters,
@@ -153,10 +153,12 @@ app.controller("pollAppCtrl", function ($scope,
     };
 
     $scope.pollsShow = function () {
+      $scope.isTmpl = false;
       $location.path("/polls");
     };
 
     $scope.templatesShow = function () {
+      $scope.isTmpl = true;
       $location.path("/templates");
     };
 
@@ -398,6 +400,7 @@ app.controller("pollsCtrl", function ($scope,
   $scope.addTitlePlaceholder = "Add Poll";
   $scope.addDescriptionPlaceholder = "Add Description";
 
+  $("#cssmenu>ul>li>material-button").addClass('inactive');
   $("#cssmenu>ul>li").click(function() {
         element = $(this);
         var w = element.width();
@@ -408,13 +411,16 @@ app.controller("pollsCtrl", function ($scope,
         else {
             leftPos = element.position().left + w/2 - 6;
         }
-        if ($("#cssmenu>ul>li>ul").css('left') == "auto") {
+        if ($("#cssmenu>ul>li>ul").css('left') == "-96px") {
             $("#cssmenu>ul>li>ul").css('opacity',0);
-            $("#cssmenu>ul>li>ul").css('left',"-9999px");;
+            $("#cssmenu>ul>li>ul").css('left',"-9999px");
+            $("#cssmenu>ul>li>material-button").removeClass('active');
+            $("#cssmenu>ul>li>material-button").addClass('inactive');
         } else {
-
-        $("#cssmenu>ul>li>ul").css('left',"auto");
-        $("#cssmenu>ul>li>ul").css('opacity',1);   
+          $("#cssmenu>ul>li>ul").css('left',"-96px");
+          $("#cssmenu>ul>li>ul").css('opacity',1);
+          $("#cssmenu>ul>li>material-button").removeClass('inactive');
+          $("#cssmenu>ul>li>material-button").addClass('active');   
         }
     });
     $(document).mouseup(function (e) {
@@ -422,7 +428,9 @@ app.controller("pollsCtrl", function ($scope,
         if (!container.is(e.target) // if the target of the click isn't the container...
             && container.has(e.target).length === 0) { // ... nor a descendant of the container
             $("#cssmenu>ul>li>ul").css('opacity',0);
-            $("#cssmenu>ul>li>ul").css('left',"-9999px");       
+            $("#cssmenu>ul>li>ul").css('left',"-9999px");
+            $("#cssmenu>ul>li>material-button").addClass('inactive');
+            $("#cssmenu>ul>li>material-button").removeClass('active');       
         }
     });
 
