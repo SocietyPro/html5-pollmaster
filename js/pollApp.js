@@ -37,9 +37,9 @@ app.config(function($routeProvider){
 
 app.factory("menu", ['$rootScope', function ($rootScope) {
   var self;
-  var filters = [{ filter: 'All', color: '#fff' }, 
-                 { filter: 'Votes', color: '#A05643' },
-                 { filter: 'Running', color: '#101714' },
+  var filters = [{ filter: 'All', color: '#000' }, 
+                 { filter: 'Vote', color: '#a48623' },
+                 { filter: 'Running', color: '#458B74' },
                  { filter: 'Unstarted', color: '#D2D6DF' },
                  { filter: 'Completed', color: '#40505E' }];
 
@@ -98,7 +98,8 @@ app.controller("pollAppCtrl", function ($scope,
                                         $modal, 
                                         $materialDialog, 
                                         $materialSidenav, 
-                                        $timeout,  
+                                        $timeout,
+                                        $rootScope,  
                                         menu,
                                         pollNew, 
                                         pollCreateOrUpdate,
@@ -106,7 +107,12 @@ app.controller("pollAppCtrl", function ($scope,
 
     $scope.menu = menu;
     $scope.menu.selectFilter(menu.filters[0]);
-    $scope.view=true;
+    if ($location.path() == "/polls") {
+      $scope.view=true;
+    } else {
+      $scope.view=false;
+    }
+
     
     $(document).mouseup(function (e) {
       var container = $("#quickAddBox");
@@ -115,10 +121,7 @@ app.controller("pollAppCtrl", function ($scope,
       {
         var exists = ($('#quickAddBox').length === 1)
         if (exists) {
-          var scope = angular.element($("#quickAddBox")).scope();
-          scope.$apply(function(){
-              scope.newItem = false;
-          });       
+          $rootScope.$broadcast('resetQuickAddForm');       
         }
       }
     });
@@ -154,11 +157,13 @@ app.controller("pollAppCtrl", function ($scope,
 
     $scope.pollsShow = function () {
       $scope.isTmpl = false;
+      $scope.view=true;
       $location.path("/polls");
     };
 
     $scope.templatesShow = function () {
       $scope.isTmpl = true;
+      $scope.view=false;
       $location.path("/templates");
     };
 
@@ -434,6 +439,14 @@ app.controller("pollsCtrl", function ($scope,
         }
     });
 
+  $scope.getEndPollDate = function (dateStarted,pollTimeLength) {
+    if (dateStarted && pollTimeLength) {
+      var d = new Date(dateStarted.getTime() + (pollTimeLength*1000));    
+      return d.toString().substring(0,d.toString().lastIndexOf(":"));
+    }
+    return "";
+  };
+
   $scope.filterPolls = function (filter) {
     if (filter.filter === "All") {
       $scope.pollFilter = {status: ''};
@@ -495,11 +508,10 @@ app.controller("pollsCtrl", function ($scope,
     saveMatrix = {poll: false, template: true};
     $scope.startCustomizing(e, newTemplate, saveMatrix);
   };
-  $scope.hasData = function (i) {
-    var p = $scope.polls[i];
+  $scope.hasData = function (options) {
     var a = 0;
-    for (var i = 0; i < p.options.length; i++) {
-      a += p.options[i].count;
+    for (var i = 0; i < options.length; i++) {
+      a += options[i].count;
     };
     return a!=0;
   }
@@ -599,7 +611,6 @@ app.controller("pollsCtrl", function ($scope,
       controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', function ($scope, $hideDialog, $rootScope, $filter, pollFind) {
         Cambrian.polls.onVoteReceived.connect(refreshPoll);
         $scope.poll = poll;
-        console.log(poll);
         if (poll.dateStarted) {
           var d = new Date(poll.dateStarted.getTime() + (poll.pollTimeLength*1000));    
           $scope.endPollDate = d.toString().substring(0,d.toString().lastIndexOf(":"));
@@ -610,6 +621,13 @@ app.controller("pollsCtrl", function ($scope,
         $scope.close = function () {
           $hideDialog();
         };
+        $scope.hasData = function (options) {
+          var a = 0;
+          for (var i = 0; i < options.length; i++) {
+            a += options[i].count;
+          };
+          return a!=0;
+        }
 
         $scope.copyPoll = function (e, poll) {
           $hideDialog();
@@ -794,10 +812,13 @@ app.controller("templatesCtrl", function ($scope,
 app.controller('quickAddCtrl', function ($scope) {
 
   $scope.$on('resetQuickAddForm', function () {
-    $scope.newTitle = '';
-    $scope.newDescription = '';
-    $scope.newItem = false;
-    $scope.quickAddForm.$setPristine();
+    $scope.$apply(function() {
+      $scope.newTitle = '';
+      $scope.newDescription = '';
+      $scope.newItem = false;
+      $scope.quickAddForm.$setPristine();
+    });
+    
   });
 
 });

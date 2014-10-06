@@ -351,6 +351,7 @@ material-sidenav {
 }
 
 .content-padding {
+  padding-top: 24px;
   padding: 20px;
 }
 
@@ -367,6 +368,7 @@ material-sidenav {
   box-sizing: border-box;
   padding: 8px;
   line-height: 24px;
+  background-color: white;
 }
 
 #quickAddTitle {
@@ -809,8 +811,8 @@ material-tab material-tab-label.active {
   opacity: 1.0;
 }
 
-a .active {
-  color: #000;
+a.active {
+  color: #000 !important;
   opacity: 1.0; 
 }
 
@@ -858,4 +860,47 @@ ul#filters {
 .chart {
  width: 100px;
  height: 100px;
+}
+::-webkit-scrollbar {  
+    width: 12px; 
+}  
+::-webkit-scrollbar-track {  
+    background-color: rgba(234,234,234,0.2);
+}  
+::-webkit-scrollbar-thumb {  
+    background-color: #ccc;  
+}  
+::-webkit-scrollbar-thumb:hover {  
+    background-color: #aaa;  
+}
+
+material-toolbar {
+  min-height: 48px;
+  height: 48px;
+}
+
+.toolbarTitle {
+  margin-bottom: 15px;
+  font-size: 14px;
+  margin-left: 0px;
+  color: black;
+}
+
+.viewButton {
+  border: 1px solid rgba(0,0,0,0.2);
+  height: 26px;
+  width: 35px;
+  margin-top: 4px;
+}
+.viewButton:hover {
+  opacity: 1;
+}
+
+.menu-icon {
+  top: 0;
+  height: 48px;
+  margin-top: 8px;
+  margin-left: 18px;
+  margin-right: 9px;
+  cursor: pointer;
 }

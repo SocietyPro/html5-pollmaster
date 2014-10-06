@@ -2,27 +2,7 @@
 <html ng-app="pollApp">
   <head>
     <title>Ballot</title>
-    <script type="text/javascript" src="js/date.js"></script>
-    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-    <!--<script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>-->
-    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
-    <script src="bower_components/angular/angular.js" type="text/javascript"></script>
-    <script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
-    <script src="bower_components/angular-route/angular-route.js" type="text/javascript"></script>
-    <script src="bower_components/d3/d3.js" charset="utf-8"></script>
-    <script src="bower_components/nvd3/nv.d3.js"></script>
-    <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
-    <script src="js/angular-material.js" type="text/javascript"></script>
-    <script src="js/ui-bootstrap-tpls-0.11.0.js"></script>    
-    <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
-    <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
-    <script type="text/javascript" src="bower_components/jquery-timepicker-jt/jquery.timepicker.js"></script>
-    <script src="js/timepicker.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="bower_components/angular-ui-date/src/date.js"></script>
-    <script src="js/pollApp.js" type="text/javascript"></script>
-    <script src="js/pollJapi.js" type="text/javascript"></script>
-    <script src="js/targetSelectionCtrl.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/dropdown.js"></script>
+    
 
     <link rel="stylesheet" type="text/css" media="screen" href="bower_components/jquery-timepicker-jt/jquery.timepicker.css" />
     <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css"/>
@@ -55,7 +35,7 @@
         </material-content>
       </material-sidenav>
 
-      <div layout="vertical" layout-fill class="mainContent">
+      <div layout="vertical" layout-fill ng-class="{mainContentPolls:view,mainContentTemplates:!view}">
         <material-toolbar scroll-shrink class="pantheonToolbar">
           <div layout="horizontal">
             <div class="material-toolbar-tools">
@@ -99,5 +79,26 @@
         </div>
       </div>    
     </div>
+    <script type="text/javascript" src="js/date.js"></script>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <!--<script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>-->
+    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/angular/angular.js" type="text/javascript"></script>
+    <script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
+    <script src="bower_components/angular-route/angular-route.js" type="text/javascript"></script>
+    <script src="bower_components/d3/d3.js" charset="utf-8"></script>
+    <script src="bower_components/nvd3/nv.d3.js"></script>
+    <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+    <script src="js/angular-material.js" type="text/javascript"></script>
+    <script src="js/ui-bootstrap-tpls-0.11.0.js"></script>    
+    <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
+    <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
+    <script type="text/javascript" src="bower_components/jquery-timepicker-jt/jquery.timepicker.js"></script>
+    <script src="js/timepicker.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-date/src/date.js"></script>
+    <script src="js/pollApp.js" type="text/javascript"></script>
+    <script src="js/pollJapi.js" type="text/javascript"></script>
+    <script src="js/targetSelectionCtrl.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/dropdown.js"></script>
   </body>
 </html>

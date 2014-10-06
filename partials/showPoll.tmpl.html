@@ -60,8 +60,7 @@
             </table>
 
           </div>
-
-          <div class="bigPieChartContainer" ng-if="poll.status != 'voted'">
+          <div class="bigPieChartContainer" ng-if="(poll.status === 'stopped' || poll.status === 'voted') && hasData(poll.options)">
             
             <nvd3-pie-chart
               id="big"

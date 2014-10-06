@@ -1,18 +1,42 @@
 <!-- Quick Add Box -->
-<div id="quickAddBox">
+<material-card id="quickAddBox">
   <form name="quickAddForm" style="padding-left:20px;" ng-controller="quickAddCtrl">
-    <material-input-group>
+    <!--<material-input-group>
       <material-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
     </material-input-group>
     <material-input-group>  
       <material-input  name="quickAddDescription" placeholder="{{addDescriptionPlaceholder}}" id="quickAddDescription" type="text" size="45" ng-model="newDescription" flex ng-show="newItem" click-anywhere-but-here="close()" is-active="isDropdownOpen()">
+    </material-input-group>-->
+    <material-input-group>
+      <material-input class="bold" name="pollTitleInput" type="text" ng-model="poll.title" size="45" flex placeholder="{{addTitlePlaceholder}}" ng-click="newItem = true"></material-input>
     </material-input-group>
+    <material-input-group ng-show="newItem">
+      <textarea name="pollDescriptionInput" ng-model="poll.description" flex placeholder="{{addDescriptionPlaceholder}}"></textarea>
+    </material-input-group>
+      <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal"
+      ng-class="{focused: opt.hasFocus}" ng-mouseover="opt.menubar = true" ng-mouseleave="opt.menubar = false" ng-show="newItem">
+        <material-checkbox ng-model="opt.isSelected"></material-checkbox>
+        <material-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"  focus-this="{{$index}}" ng-keypress="keypressListener($event)" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false" ng-keyup="checkForOptionDelete($event,$index)" ></material-input>
+        <material-button ng-show="opt.menubar" ng-click="removeOption($index)" title="Remove Option"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
+      </div>
+    <div class="newOptionWrapper" ng-class="{focused: newOptionFocused}" ng-show="newItem">
+      <material-input type="text" id="addOptionInput" ng-model="newOptionText" ng-change="addOption()" placeholder="Add option" ng-focus="newOptionFocused = true" ng-blur="newOptionFocused = false"></material-input>
+    </div>
+
+    <div class="dialog-menubar-actions" layout="horizontal" layout-align="start" ng-show="newItem">
+      <material-button ng-click="optionsMenu = !optionsMenu" class="material-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}" title="Advanced Options">
+        <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
+      </material-button>
+      <material-button ng-click="ballotPreview = !ballotPreview" class="material-button-icon menuDrawerButton ballotPreviewButton" ng-class="{active: ballotPreview === true}" title="Ballot Preview">
+        <img ng-src="assets/images/eye_inv_24px.png">
+      </material-button>
+    </div>
     <material-button id="quickAddButton" class="material-button-colored" ng-show="newItem && quickAddForm.$dirty" ng-click="newItemFromScratch($event, true, quickAddForm, newTitle, newDescription)">
       SAVE
     </material-button>
   </form>
   <div class="clearBoth"></div>
-</div>
+</material-card>
 <!-- end Quick Add Box -->
 <material-content id="pollsContainer" class="material-content-padding">
   <div id="quilt">
@@ -22,7 +46,7 @@
   <!--<pre>{{poll | json}}</pre>-->
 
   <div>
-    <material-button class="material-button-fab material-button-fab-bottom-right material-theme-light-blue" ng-click="newItemFromScratch($event, true)" title="New Poll">
+    <material-button class="material-button-fab material-button-fab-bottom-right addNewPollBtn" ng-click="newItemFromScratch($event, true)" title="New Poll">
       <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png"></material-icon>
     </material-button>
   </div>

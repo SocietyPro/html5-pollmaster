@@ -1,69 +1,34 @@
-.mainContent { 
+.mainContentPolls { 
 	background: url(../assets/images/153450.jpg) top right no-repeat;
+	background-attachment: fixed;
+}
+.mainContentTemplates { 
+	background: url(../assets/images/434655.jpg) top right no-repeat;
 	background-attachment: fixed;
 }
 material-card {
 	opacity: 0.9;
 }
-material-toolbar {
-	min-height: 48px;
-	height: 48px;
-}
-.toolbarTitle {
-	margin-bottom: 20px;
-	font-size: 15px;
-	margin-left: 0px;
-}
-.menu-icon {
-	top: 0;
-	margin-top: 16px;
-	margin-left: 18px;
-	margin-right: 9px;
-	cursor: pointer;
-}
-.viewButton {
-	border: 1px solid rgba(0,0,0,0.2);
-	height: 26px;
-	width: 35px;
-	margin-top: 3px;
-}
-.viewButton:hover {
-	opacity: 1;
-}
 #quickAddTitle {
 	display: inline-block;
 	border-bottom: none;
 	font-size: 14px;
-	color: white;
 }
 #quickAddDescription {
 	display: inline-block;
 	border-bottom: none;
 	font-size: 14px;
-	color:white;
 }
 #quickAddButton span {
 	font-weight: bold;
 }
-::-webkit-scrollbar {  
-    width: 12px; 
-}  
-::-webkit-scrollbar-track {  
-    background-color: rgba(234,234,234,0.2);
-}  
-::-webkit-scrollbar-thumb {  
-    background-color: #ccc;  
-}  
-::-webkit-scrollbar-thumb:hover {  
-    background-color: #aaa;  
-}
 .votes {
-  background-color: #A05643;
+  background-color: #a48623;
   color:white;
 }
 
 .running {
-  background-color: #101714;
+  background-color: #458B74;
   color:white;
 }
 
@@ -118,4 +83,10 @@ material-card {
 }
 .overflowMenu {
 	color: black;
+}
+#closeButton:hover {
+	background-color: darkgray;
+}
+.addNewPollBtn {
+	background-color: #a48623;
 }
