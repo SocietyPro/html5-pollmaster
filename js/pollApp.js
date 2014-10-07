@@ -109,22 +109,14 @@ app.controller("pollAppCtrl", function ($scope,
     $scope.menu.selectFilter(menu.filters[0]);
     if ($location.path() == "/polls") {
       $scope.view=true;
+      $scope.isTmpl = false;
     } else {
       $scope.view=false;
+      $scope.isTmpl = true;
     }
 
     
-    $(document).mouseup(function (e) {
-      var container = $("#quickAddBox");
-      if (!container.is(e.target) // if the target of the click isn't the container...
-          && container.has(e.target).length === 0) // ... nor a descendant of the container
-      {
-        var exists = ($('#quickAddBox').length === 1)
-        if (exists) {
-          $rootScope.$broadcast('resetQuickAddForm');       
-        }
-      }
-    });
+    
 
     $scope.safeApply = function(fn) {
       var phase = this.$root.$$phase;
@@ -809,7 +801,7 @@ app.controller("templatesCtrl", function ($scope,
 
 });
 
-app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, groupAll) {
+app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, groupAll,pollCreateOrUpdate, $location) {
 
   $scope.poll = pollNew();
   $scope.poll.allowComments = true;
@@ -822,10 +814,39 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
   $scope.endTime = new Date();
   $scope.endTime.setHours(d.getHours());
   $scope.endTime.setMinutes(d.getMinutes());
+  $scope.saveMatrix = {poll: false, template: false};
+  timepickerOptions = {appendTo:'head'};
+  if ($location.path() == "/polls") {
+    $scope.saveMatrix.poll = true;
+  } else {
+    $scope.saveMatrix.template = true;
+  }
+
+  $(document).mouseup(function (e) {
+    var container = $("#quickAddBox");
+    var datepicker = $("#ui-datepicker-div");
+    var timepicker = $(".ui-timepicker-wrapper");
+    if ((!container.is(e.target) && !datepicker.is(e.target) && !timepicker.is(e.target)) // if the target of the click isn't the container...
+        && (container.has(e.target).length === 0 && datepicker.has(e.target).length === 0 && timepicker.has(e.target).length === 0 )) // ... nor a descendant of the container
+    {
+      var exists = ($('#quickAddBox').length === 1)
+      if (exists) {
+        $scope.$apply(function() {
+          $scope.poll = pollNew();
+          $scope.poll.allowComments = true;
+          $scope.newItem = false;
+          $scope.ballotPreview = false;
+          $scope.optionsMenu = false;
+          $scope.quickAddForm.$setPristine();
+        });       
+      }
+    }
+  });
 
   $scope.$on('resetQuickAddForm', function () {
     $scope.$apply(function() {
       $scope.poll = pollNew();
+      $scope.poll.allowComments = true;
       $scope.newItem = false;
       $scope.ballotPreview = false;
       $scope.optionsMenu = false;
@@ -833,7 +854,7 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
     });
     
   });
-
+  
   $scope.convertTimeToSeconds = function (date, time) {
     var pollDate = new Date(date +" " +time);
     var todayDate = new Date();
@@ -871,7 +892,7 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
       var seconds = $scope.convertTimeToSeconds($scope.newDate, $scope.time);
       if (seconds > 0) {
         $scope.poll.pollTimeLength = seconds | 0;
-        saveItem($scope.poll, saveMatrix, startNow);
+        saveItem($scope.poll, $scope.saveMatrix, startNow);
         $scope.poll.overflow = false;
       }
     }

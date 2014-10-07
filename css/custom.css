@@ -353,6 +353,8 @@ material-sidenav {
 .content-padding {
   padding-top: 24px;
   padding: 20px;
+  height: 95%;
+  padding-right: 5px;
 }
 
 .bold {
@@ -363,7 +365,8 @@ material-sidenav {
   border: 1px solid lightgrey;
   display: block;
   position: relative;
-  max-width: 500px;
+  max-width: 612px;
+  width: 612px;
   box-sizing: border-box;
   padding: 8px;
   line-height: 24px;
@@ -408,11 +411,6 @@ material-button.material-button-fab.material-button-fab-bottom-right {
       left: auto;
       position: fixed; 
       margin-right: 15px;
-}
-
-#templatesContainer > .material-content,
-#pollsContainer > .material-content {
-  height: 80vh;
 }
 
 /* Styles for Cards */
@@ -607,6 +605,7 @@ material-checkbox[disabled] {
   border: 1px solid grey;
   border-radius: 6px;
   padding: 8px;
+  margin: 1px;
 }
 
 .dialog-options-container input {
@@ -619,6 +618,7 @@ material-checkbox[disabled] {
 
 .dialog-options-options {
   margin-right: 7px;
+  margin-left: 20px; 
   float: left;
 }
 
@@ -662,7 +662,8 @@ material-checkbox[disabled] {
   text-indent: 0.01px;
   text-overflow: '';
   -webkit-appearance: button;
-  border-bottom: 2px solid #B1AFAF;  
+  border-bottom: 2px solid #B1AFAF;
+  max-width: 300px;  
 }
 .custom-dropdown::before,
 .custom-dropdown::after {
@@ -907,6 +908,11 @@ material-toolbar {
   width: 30px;
   margin-right: 5px;
 }
+#optionsQuickNewPoll {
+  margin: 20px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
 #quickBallotPreview {
   box-sizing: border-box;
   min-width: 300px;
@@ -915,4 +921,12 @@ material-toolbar {
 }
 #pollsContainer {
   padding: 0px;
+  height: 100%;
+}
+.ui-timepicker-wrapper {
+  height: 100px;
+}
+#templatesContainer {
+  height: 100%;
+  padding-right: 5px;
 }

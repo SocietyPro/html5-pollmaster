@@ -19,11 +19,17 @@ material-card {
 	border-bottom: none;
 	font-size: 14px;
 }
-#quickAddButton span {
-	font-weight: bold;
+#quickAddButton {
+	border: 1px solid darkgray;
+	background-color: gainsboro;
+	color: black;
+	margin-right: 5px;
 }
-#quickStartButton span {
-	font-weight: bold;
+#quickStartButton {
+	border: 1px solid darkgray;
+	background-color: gainsboro;
+	color: black;
+	margin-right: 10px;
 }
 .votes {
   background-color: #a48623;
