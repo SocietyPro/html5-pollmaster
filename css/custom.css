@@ -364,7 +364,6 @@ material-sidenav {
   display: block;
   position: relative;
   max-width: 500px;
-  margin: auto;
   box-sizing: border-box;
   padding: 8px;
   line-height: 24px;
@@ -648,7 +647,8 @@ material-checkbox[disabled] {
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  margin: 10px;
+  margin-top: 16px;
+  margin-left: 30px;
 }
 
 .custom-dropdown select {
@@ -678,8 +678,7 @@ material-checkbox[disabled] {
   font-size: .625em;
   line-height: 1;
   right: 1.2em;
-  top: 50%;
-  margin-top: -.5em;
+  margin-top: 8px;
 }
 
 .custom-dropdown::before {
@@ -688,7 +687,6 @@ material-checkbox[disabled] {
   top: 0;
   bottom: 0;
   border-radius: 0 3px 3px 0;
-  border-bottom: 2px solid #B1AFAF;
 }
 
 .custom-dropdown::before {
@@ -903,4 +901,18 @@ material-toolbar {
   margin-left: 18px;
   margin-right: 9px;
   cursor: pointer;
+}
+#optionsQuickNewPoll .menuDrawerButton {
+  height: 25px;
+  width: 30px;
+  margin-right: 5px;
+}
+#quickBallotPreview {
+  box-sizing: border-box;
+  min-width: 300px;
+  max-width: 300px;
+  padding: 16px 24px;
+}
+#pollsContainer {
+  padding: 0px;
 }

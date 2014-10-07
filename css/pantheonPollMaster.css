@@ -22,6 +22,9 @@ material-card {
 #quickAddButton span {
 	font-weight: bold;
 }
+#quickStartButton span {
+	font-weight: bold;
+}
 .votes {
   background-color: #a48623;
   color:white;
@@ -89,4 +92,7 @@ material-card {
 }
 .addNewPollBtn {
 	background-color: #a48623;
+}
+#optionsMenu {
+  background-color: #D2D6DF; 
 }

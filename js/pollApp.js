@@ -809,17 +809,139 @@ app.controller("templatesCtrl", function ($scope,
 
 });
 
-app.controller('quickAddCtrl', function ($scope) {
+app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, groupAll) {
+
+  $scope.poll = pollNew();
+  $scope.poll.allowComments = true;
+  $scope.myGroups = groupAll();
+  $scope.ballotPreview = false;
+  $scope.optionsMenu = false;
+  var today = new Date();
+  var d = new Date(today.getTime() + (24*60*60*1000));
+  $scope.edate = d.format("mm/dd/yy");
+  $scope.endTime = new Date();
+  $scope.endTime.setHours(d.getHours());
+  $scope.endTime.setMinutes(d.getMinutes());
 
   $scope.$on('resetQuickAddForm', function () {
     $scope.$apply(function() {
-      $scope.newTitle = '';
-      $scope.newDescription = '';
+      $scope.poll = pollNew();
       $scope.newItem = false;
+      $scope.ballotPreview = false;
+      $scope.optionsMenu = false;
       $scope.quickAddForm.$setPristine();
     });
     
   });
+
+  $scope.convertTimeToSeconds = function (date, time) {
+    var pollDate = new Date(date +" " +time);
+    var todayDate = new Date();
+    return (pollDate.getTime()-todayDate.getTime())/1000;
+  };
+
+  function saveItem (item, saveMatrix, startNow) {
+    for (var i = 0; i<item.options.length; i++) {
+      if (!item.options[i].text) {
+        item.options.splice(i,1);
+      }
+    }
+    item.overflow = false;
+    item.status = "unsaved";
+    if (saveMatrix.poll) {
+      item.isTemplate = false;
+      pollCreateOrUpdate(item,startNow);
+    }
+
+    if (saveMatrix.template) {
+      item.isTemplate = true;
+      item.pollTargetId = "";
+      item.dateStarted = null;
+      item.dataStopped = null;
+      pollCreateOrUpdate(item,startNow);
+    }
+
+  };
+
+  $scope.save = function (startNow) {
+    if (!$scope.newDate) {
+      $scope.newDate = $scope.edate;
+    }
+    if ($scope.newDate && $scope.time) {
+      var seconds = $scope.convertTimeToSeconds($scope.newDate, $scope.time);
+      if (seconds > 0) {
+        $scope.poll.pollTimeLength = seconds | 0;
+        saveItem($scope.poll, saveMatrix, startNow);
+        $scope.poll.overflow = false;
+      }
+    }
+  }
+
+  $scope.getTime = function (time) {
+    if (time != undefined) {
+      $scope.time = time.toLocaleTimeString();
+    } else {
+      $scope.time = undefined;
+    }
+  }
+  
+  $scope.hasData = function (options) {
+    if (options.length == 0) {
+      return false;
+    }
+    for (var i = 0; i < options.length; i++) {
+      if (options[i].text == "") {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  $scope.keypressListener = function (event) {
+    if (event.charCode == 13) {
+      $timeout(function () {
+        $("#addOptionInput").focus();
+      });
+    }
+  }
+
+  $scope.checkForOptionDelete = function ($event,$index) {
+    if($scope.poll.options[$index].text === '' && $event.keyCode === 8) {
+      if ($scope.poll.options[$index].empty != undefined && $scope.poll.options[$index].empty) {
+        $scope.poll.options.splice($index, 1);
+        var previousChild;
+        if ($index > 0) {
+          previousChild = $index - 1;
+        } else {
+          if ($scope.poll.options.length > 0) {
+            previousChild = 0;
+          } else {
+            $scope.keypressListener({"charCode":13});
+            return;
+          }
+        }
+        $timeout(function () {
+          $rootScope.$broadcast('focusedIndex', {focus: previousChild});
+        });
+      } else {
+        $scope.poll.options[$index].empty = true;
+      }
+    }
+  };
+
+  $scope.removeOption = function ($index) {
+    $scope.poll.options.splice($index, 1);
+  };
+
+  $scope.addOption = function () {
+    var newOption = { text: $scope.newOptionText, subgroup: "", count: 0 };
+    $scope.poll.options.push(newOption);
+    $scope.newOptionText = "";
+    var index = $scope.poll.options.length - 1;
+    $timeout(function () {
+      $rootScope.$broadcast('focusedIndex', {focus: index});
+    });
+  };
 
 });
 
