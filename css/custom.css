@@ -858,3 +858,7 @@ ul#filters {
  width: 100px;
  height: 100px;
 }
+
+.chatLink {
+  cursor: pointer;
+}

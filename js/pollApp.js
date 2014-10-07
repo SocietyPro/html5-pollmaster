@@ -636,9 +636,17 @@ app.controller("pollsCtrl", function ($scope,
           $materialDialog({
             templateUrl: 'partials/showComments.tmpl.html',
             targetEvent: e,
-            controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+            controller: ['$scope', '$hideDialog', 'pollComments', function ($scope, $hideDialog, pollComments) {
+              Cambrian.polls.onVoteReceived.connect(refreshComments);
               $scope.poll = poll;
+              $scope.comments = pollComments(poll);
               $scope.dialog = {};
+
+              $scope.goChat = function (comment) {
+                var jid = comment.name + "@xmpp.cambrian.org";
+                Cambrian.apps.chat.open(jid); //This has to be replaced with the actual jid property name
+                $hideDialog();
+              };
 
               $scope.close = function () {
                 $hideDialog();
@@ -647,6 +655,12 @@ app.controller("pollsCtrl", function ($scope,
               $scope.showPoll = function (e, poll) {
                 $hideDialog();
                 $rootScope.$broadcast('showPollResults', {event: e, poll: poll});
+              };
+
+              function refreshComments (poll) {
+                $scope.$apply (function () {
+                  $scope.comments = pollComments(poll);
+                });
               };
 
             }]

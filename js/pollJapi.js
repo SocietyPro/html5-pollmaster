@@ -169,6 +169,19 @@ app.factory("pollSubmit", function () {
   }
 });
 
+//var comments = pollComments(poll); returns the voter-submitted commments for the poll
+app.factory("pollComments", function () {
+  return function (source) {
+    var qtPoll = japi.polls.get(source.id);
+    var qtResults = qtPoll.getResults();
+    var comments = [];
+    for (var i = 0; i < qtResults.comments.length; i++) {
+      comments.push(qtResults.comments[i]);
+    }
+    return comments;
+  }
+});
+
 // var templates = templateAll(); returns array of js poll objects
 app.factory("templateAll", function ($filter) {
   return function () {
