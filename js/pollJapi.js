@@ -10,6 +10,7 @@ var Cambrian = Cambrian || {}
 // var polls = pollAll(); returns array of js poll objects
 app.factory("pollAll", function($filter) {
   return function () {
+    console.log("pollAll called");
     var qtPolls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
     var polls = [];
     for (var i=0; i < qtPolls.length; i++) {

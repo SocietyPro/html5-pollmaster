@@ -15,7 +15,9 @@ Usage
     $ git clone https://github.com/SocietyPro/html5-pollmaster.git
     $ cd html5-pollmaster
     $ node --version        # should be >= 10.25
+    $ git submodule update --init
     $ npm install
+      # if using in Society Pro, point the SoPro web browser to this directory's index.html
     $ npm start             # starts serving static http content in this terminal
     $ npm test              # run tests
     $ npm run karma         # start karma monitor and auto run unit tests
