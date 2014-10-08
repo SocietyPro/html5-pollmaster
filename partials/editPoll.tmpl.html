@@ -11,7 +11,7 @@
           <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal"
           ng-class="{focused: opt.hasFocus}" ng-mouseover="opt.menubar = true" ng-mouseleave="opt.menubar = false">
             <material-checkbox ng-model="opt.isSelected"></material-checkbox>
-            <material-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"  focus-this="{{$index}}" ng-keypress="keypressListener($event)" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false" ng-keyup="checkForOptionDelete($event,$index)" ></material-input>
+            <material-input type="text" class="optionsInput" name="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"  focus-this="{{$index}}" ng-keypress="keypressListener($event)" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false" ng-keyup="checkForOptionDelete($event,$index)" ></material-input>
             <material-button ng-show="opt.menubar" ng-click="removeOption($index)" title="Remove Option"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
           </div>
         <div class="newOptionWrapper" ng-class="{focused: newOptionFocused}">
@@ -92,10 +92,10 @@
       <div class="pollOriginatorLine">
         <em>{{poll.id}}</em>
       </div>
-      <div class="pollTitleLine">
+      <div class="pollTitleLine" id="pollTitlePreview">
         <b>{{poll.title}}</b>
       </div>
-      <div>
+      <div id="pollDescriptionPreview">
         {{poll.description}}
       </div>
       <p ng-if="!poll.allowMultipleChoices">
