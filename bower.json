@@ -5,7 +5,7 @@
     "CambrianExp"
   ],
   "description": "Cambrian app to manage polls",
-  "main": "default.htm",
+  "main": "index.html",
   "license": "MIT",
   "homepage": "http://cambrian.org",
   "ignore": [

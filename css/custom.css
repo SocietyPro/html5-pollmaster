@@ -935,4 +935,6 @@ material-toolbar {
 }
 #quickStartButton:hover {
   border-color: rgb(75,75,75);
+.chatLink {
+  cursor: pointer;
 }

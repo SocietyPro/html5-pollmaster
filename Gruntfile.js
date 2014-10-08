@@ -9,6 +9,8 @@ var EXCLUDED_ICONS = [
   "material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png",
   "material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_24dp.png",
   "material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_24dp.png",
+  "material-icons/icons/system_icons/av/res/1x_web/ic_play_arrow_wht_18dp.png",
+  "material-icons/icons/system_icons/av/res/1x_web/ic_stop_wht_18dp.png",
   "material-icons/icons/system_icons/communication/res/1x_web/ic_chat_wht_18dp.png",
   "material-icons/icons/system_icons/communication/res/1x_web/ic_forum_18dp.png",
   "material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png",

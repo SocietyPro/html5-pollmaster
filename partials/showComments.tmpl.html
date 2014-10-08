@@ -17,12 +17,21 @@
       <div id="pollCommentsTable">
 
         <table>
-          <tr ng-repeat="comment in poll.comments">
-            <td><em>{{comment[0]}}</em></td>
-            <td>{{comment[1]}}</td>
+          <tr ng-repeat="comment in comments">
+            <td>
+              <a class="chatLink" ng-click="goChat(comment)">
+                <em>{{comment.name}}</em></td>
+              </a>
+            <td>
+              <a class="chatLink" ng-click="goChat(comment)">
+                {{comment.comment}}
+              </a>
+            </td>
             <td class="chatCell">
-              <img ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_forum_18dp.png"> 
-              Chat
+              <a class="chatLink" ng-click="goChat(comment)">
+                <img ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_forum_18dp.png"> 
+                Chat
+              </a>
             </td>
           </tr>
         </table>

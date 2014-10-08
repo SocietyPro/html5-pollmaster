@@ -10,6 +10,7 @@ var Cambrian = Cambrian || {}
 // var polls = pollAll(); returns array of js poll objects
 app.factory("pollAll", function($filter) {
   return function () {
+    console.log("pollAll called");
     var qtPolls = $filter('filter')(japi.polls.getList(), {isTemplate: false});
     var polls = [];
     for (var i=0; i < qtPolls.length; i++) {
@@ -165,6 +166,19 @@ app.factory("pollSubmit", function () {
     } else {
       return false;
     }
+  }
+});
+
+//var comments = pollComments(poll); returns the voter-submitted commments for the poll
+app.factory("pollComments", function () {
+  return function (source) {
+    var qtPoll = japi.polls.get(source.id);
+    var qtResults = qtPoll.getResults();
+    var comments = [];
+    for (var i = 0; i < qtResults.comments.length; i++) {
+      comments.push(qtResults.comments[i]);
+    }
+    return comments;
   }
 });
 
