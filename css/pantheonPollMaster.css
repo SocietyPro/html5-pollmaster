@@ -102,3 +102,8 @@ material-card {
 #optionsMenu {
   background-color: #D2D6DF; 
 }
+#commentInput {
+	background-color: #8B6D0A;
+	border: 1px solid white;
+	color: white;
+}

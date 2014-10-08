@@ -71,6 +71,7 @@
       <div ng-if="poll.dateStarted && poll.pollTimeLength && (poll.status === 'unstarted' || poll.status === 'vote' || poll.status === 'started' || poll.status === 'unvoted')" class="pollEndsDate" align="center">
         Poll Ends in {{getEndPollDate(poll.dateStarted,poll.pollTimeLength)}}
       </div>
+    </div>
     <div class="cardMenuBar animate-show" ng-show="poll.menubar">
       <material-button ng-if="poll.status === 'unstarted' && poll.pollTargetId" class="material-button-icon startPollButton" ng-click="startPoll(poll,$event)" title="Start Poll">
         <img class="startPollIcon" ng-src="material-icons/icons/system_icons/av/res/1x_web/ic_play_arrow_wht_18dp.png">
@@ -83,7 +84,6 @@
       </material-button>
     </div>
   </material-card>
-</div>
   <material-card class="overflowMenu animate-show" ng-show="poll.overflow">
     <div ng-if="poll.status != 'unvoted' && poll.type!='ballot'">
       <a class="destroyAction" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyPoll(poll)">Delete</a>

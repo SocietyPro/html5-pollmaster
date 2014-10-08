@@ -924,9 +924,15 @@ material-toolbar {
   height: 100%;
 }
 .ui-timepicker-wrapper {
-  height: 100px;
+  height: 125px;
 }
 #templatesContainer {
   height: 100%;
   padding-right: 5px;
+}
+#quickAddButton:hover {
+  border-color: rgb(75,75,75);
+}
+#quickStartButton:hover {
+  border-color: rgb(75,75,75);
 }

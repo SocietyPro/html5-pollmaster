@@ -25,12 +25,6 @@
           <material-input type="text" id="addOptionInput" ng-model="newOptionText" ng-change="addOption()" placeholder="Add option" ng-focus="newOptionFocused = true" ng-blur="newOptionFocused = false"></material-input>
         </div>
         <div ng-show="newItem" layout="horizontal">
-          <p style="color:black;margin-right:30px;">Poll length selection:</p>
-          <div layout="horizontal" layout-align="start center">
-            <material-input ng-model="endDate" ui-date="{minDate:'0'}" ui-date-format="mm/dd/yy" placeholder="{{edate}}" flex="40" style="width:0px;"></material-input><div style="width:50px;text-align:center;color:black;">at</div><material-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker="timepickerOptions" class="ui-timepicker-input" placeholder="HH:MM" flex="40" style="width:180px;"></material-input>
-          </div>
-        </div>
-        <div ng-show="newItem" layout="horizontal">
           <p style="color:black;">Select poll targets:</p>
           <div class="custom-dropdown small" >
               <select ng-model="poll.pollTargetId">
@@ -58,6 +52,12 @@
       <div class="animate-show" ng-if="optionsMenu" style="color:black;">
         <div class="dialog-options-options">
           Options:
+          <div class="dialog-options-container" layout="horizontal">
+            <p style="color:black;margin:0px;margin-right:30px;">Poll length selection:</p>
+            <div layout="horizontal" layout-align="start center" flex>
+              <material-input ng-model="endDate" ui-date="{minDate:'0'}" ui-date-format="mm/dd/yy" placeholder="{{edate}}" style="width:100px;"></material-input><div style="text-align:center;color:black;width:100px;">at</div><material-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker="timepickerOptions" class="ui-timepicker-input" placeholder="HH:MM" style="width:50px;"></material-input>
+            </div>
+          </div>
           <div layout="horizontal" layout-align="start">
             <div class="dialog-options-container">
               <material-checkbox ng-model="poll.allowMultipleChoices" aria-label="Multiple selections">Multiple selections</material-checkbox>
