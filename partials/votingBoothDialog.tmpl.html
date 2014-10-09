@@ -1,6 +1,5 @@
 <material-dialog>
-  <div id="materialDialogContainer" class="votes">
-    <div class="dialog-content">
+    <div class="dialog-content votes">
       <span id="ballotOriginator">
         <em>{{poll.originator}}</em>
       </span>
@@ -16,7 +15,7 @@
       <p ng-if="poll.allowMultipleChoices">
         Select one or more:
       </p>
-      <div id="ballotOptionsContainer">
+      <material-content id="ballotOptionsContainer">
         <div id="singleChoicePollOptions" ng-if="!poll.allowMultipleChoices">
           <span class="ballotOption" ng-repeat="option in poll.options">
             <label>
@@ -31,17 +30,16 @@
             </label>
           </span>
         </div>
-      </div>
+      </material-content>
       <p ng-if="poll.allowComments">
         <a id="addCommentLink" ng-click="showCommentInput = true" ng-hide="showCommentInput"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png"> Add comment</a>
         <textarea id="commentInput" ng-model="ballot.ballotComment" ng-show="showCommentInput"></textarea>
       </p>
     </div>
-    <div class="dialog-actions" layout="horizontal" layout-align="end">
+    <div class="dialog-actions votes" layout="horizontal" layout-align="end">
       <div layout="horizontal" layout-align="end">
         <material-button id="dismissButton" class="material-button" ng-click="dismiss()">{{poll.dismissText || "Dismiss"}}</material-button>
         <material-button id="submitButton" class="material-button-colored" ng-click="submit()">{{poll.submitText || "Submit"}}</material-button>
       </div>
     </div>
-  </div>
 </material-dialog>

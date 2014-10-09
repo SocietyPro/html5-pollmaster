@@ -296,8 +296,8 @@ app.controller("pollAppCtrl", function ($scope,
                   $hideDialog();
                 };
 
-                $scope.save = function (item, saveMatrix,e) {
-                  if ($scope.startNow) {
+                $scope.save = function (item, saveMatrix,e,startNow) {
+                  if (startNow) {
                     
                     $materialDialog({
                       templateUrl: 'partials/pollEndsDate.tmpl.html',
@@ -309,14 +309,14 @@ app.controller("pollAppCtrl", function ($scope,
                       controller: 'pollEndDateCtrl'
                     });
 
-                  $scope.startNow = false;
+                    startNow = false;
                     $hideDialog();
                   } else {
                     item.pollTimeLength = convertTimeToSeconds($scope.pollLength.numeral, $scope.pollLength.units);
-                    saveItem(item, saveMatrix, $scope.startNow && item.pollTargetId);
+                    saveItem(item, saveMatrix, startNow && item.pollTargetId);
                     item.overflow = false;  
                     
-                  $scope.startNow = false;
+                    startNow = false;
                     $hideDialog();
                   }
                   
@@ -895,6 +895,13 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
       item.dataStopped = null;
       pollCreateOrUpdate(item,startNow);
     }
+
+    $scope.poll = pollNew();
+    $scope.poll.allowComments = true;
+    $scope.newItem = false;
+    $scope.ballotPreview = false;
+    $scope.optionsMenu = false;
+    $scope.quickAddForm.$setPristine();
 
   };
 
