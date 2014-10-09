@@ -944,14 +944,18 @@ material-toolbar {
 }
 #quickStartButton:hover {
   border-color: rgb(75,75,75);
+}
 .chatLink {
   cursor: pointer;
 }
-@media (min-width: 600px) {
+.material-dialog-container material-dialog {
+  width:671px;
+}
+.material-dialog-container material-dialog .dialog-content {
+  width:671px;
+}
+@media (max-width: 1271px) {
   .material-dialog-container material-dialog {
-    width:671px;
-  }
-  .material-dialog-container material-dialog .dialog-content {
-    width: 671px;
+    margin-right: 300px;
   }
 }
