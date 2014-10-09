@@ -828,6 +828,7 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
   $scope.endTime = new Date();
   $scope.endTime.setHours(d.getHours());
   $scope.endTime.setMinutes(d.getMinutes());
+  $scope.time = today.toLocaleTimeString();
   $scope.saveMatrix = {poll: false, template: false};
   timepickerOptions = {appendTo:'head'};
   if ($location.path() == "/polls") {
@@ -909,13 +910,14 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
     if (!$scope.newDate) {
       $scope.newDate = $scope.edate;
     }
-    if ($scope.newDate && $scope.time) {
-      var seconds = $scope.convertTimeToSeconds($scope.newDate, $scope.time);
-      if (seconds > 0) {
-        $scope.poll.pollTimeLength = seconds | 0;
-        saveItem($scope.poll, $scope.saveMatrix, startNow);
-        $scope.poll.overflow = false;
-      }
+    var seconds = $scope.convertTimeToSeconds($scope.newDate, $scope.time);
+    if (seconds > 0) {
+      $scope.poll.pollTimeLength = seconds | 0;
+      console.log("hey")
+      saveItem($scope.poll, $scope.saveMatrix, startNow);
+      $scope.poll.overflow = false;
+    } else {
+      console.log("error in seconds");
     }
   }
 
