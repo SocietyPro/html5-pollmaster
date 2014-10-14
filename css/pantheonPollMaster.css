@@ -1,71 +1,83 @@
 .mainContentPolls { 
-	background: url(../assets/images/153450.jpg) top right no-repeat;
-	background-attachment: fixed;
+	background: url(../assets/images/153450.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
+
 .mainContentTemplates { 
-	background: url(../assets/images/434655.jpg) top right no-repeat;
-	background-attachment: fixed;
+	background: url(../assets/images/434655.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
-material-card {
-	opacity: 0.9;
-}
+
 #quickAddTitle {
 	display: inline-block;
 	border-bottom: none;
 	font-size: 14px;
 }
+
 #quickAddDescription {
 	display: inline-block;
 	border-bottom: none;
 	font-size: 14px;
 }
+
 #quickAddButton {
 	border: 1px solid darkgray;
 	background-color: gainsboro;
 	color: black;
 	margin-right: 5px;
 }
+
 #quickStartButton {
 	border: 1px solid darkgray;
 	background-color: gainsboro;
 	color: black;
 	margin-right: 10px;
 }
+
 .votes {
-  background-color: #a48623;
-  color:white;
+  background: rgba(164, 134, 35, 0.7);
+  border: 1px solid rgba(228, 189, 60, 0.4);
 }
 
 .running {
-  background-color: #458B74;
-  color:white;
+  background: rgba(69, 139, 116, 0.7);
+  border: 1px solid rgba(72, 226, 175, 0.4);
 }
 
 .completed,
 .voted {
-  background-color: #40505E;
-  color:white;
+  background: rgba(64, 80, 94, 0.7);	
+  border: 1px solid rgba(100, 111, 121, 0.4);
 }
 
 .unstarted {
-  background-color: #D2D6DF;
-  color:black;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 148, 255, 0.4);
 }
 
 .pantheonToolbar {
-	background-color: #a48623;
+	background-color: #000;
 }
+
 .menu-item {
 	background-color: rgba(255,255,255,0);
 	font-weight: bold;
 }
+
 material-sidenav {
-	background-color: rgba(255,255,255,0.4);
+	background-color: rgba(0,0,0,0.8);
 }
 
 #dialogLayout {
 	background-color: #D2D6DF;
 }
+
 g text {
 	fill: #ffffff !important;
 }
@@ -73,37 +85,55 @@ g text {
 #applicationContainer {
 	height: inherit;
 }
+
 #templateInside {
 	width:	inherit;
 	height: inherit;
 }
+
 material-tabs .tabs-header .tabs-header-items {
-	background-color: #a48623;	
+	background-color: rgba(0, 0, 0, 0.5);	
 }
+
 material-ink-bar {
 	background: #fff;
 }
+
 .template {
 	height: 88px;
 }
+
 material-card {
-	background-color: #33301E;
-	color:white;
+	background: rgba(51, 48, 30, 0.7);
+	border: 1px solid rgba(113, 109, 83, 0.5);
+	color: white;
+	-webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
+
 .overflowMenu {
 	color: black;
 }
+
 #closeButton:hover {
 	background-color: darkgray;
 }
+
 .addNewPollBtn {
 	background-color: #a48623;
 }
+
 #optionsMenu {
   background-color: #D2D6DF; 
 }
+
 #commentInput {
 	background-color: #8B6D0A;
 	border: 1px solid white;
 	color: white;
+}
+
+.menu-item {
+	color: #ccc 
 }

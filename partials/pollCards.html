@@ -1,4 +1,5 @@
-<div class="cardholder" ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}" ng-repeat="poll in polls | filter:pollFilter:true" ng-mouseleave="poll.overflow = false">
+<div masonry>
+<div class="cardholder masonry-brick" ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}" ng-repeat="poll in polls | filter:pollFilter:true" ng-mouseleave="poll.overflow = false">
   <material-card class="mainCard" ng-class="{votes: poll.status === 'unvoted', voted: poll.status === 'voted', running: poll.status === 'started', completed: poll.status === 'stopped', unstarted: poll.status === 'unstarted'}" ng-mouseover="poll.menubar = true" ng-mouseleave="poll.menubar = false">
     <div class="cardContentContainer" ng-click="zoomPoll($event, poll)">
       <div class="pollOriginatorLine">
@@ -91,4 +92,5 @@
     <a class="copyAction" ng-click="copyPoll($event, poll)">Make a Copy</a><br />
     <a class="forkAction" ng-click="newTemplateFromPoll($event, poll)">Fork as a Template</a>
   </material-card>
+</div>
 </div>

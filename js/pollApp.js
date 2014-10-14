@@ -8,7 +8,7 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var app = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker']) // array is required
+var app = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker','wu.masonry']) // array is required
 var saveMatrix = {poll: false, template: false};
 
 app.config(function($routeProvider){

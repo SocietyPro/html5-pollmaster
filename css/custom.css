@@ -801,17 +801,17 @@ material-tabs .tabs-header .tabs-header-items {
 }
 
 material-tab material-tab-label {
-  color: #000;
+  color: #fff;
   opacity: 0.5;
 }
 
 material-tab material-tab-label.active {
-  color: #000;
+  color: #fff;
   opacity: 1.0;
 }
 
 a.active {
-  color: #000 !important;
+  color: #fff !important;
   opacity: 1.0; 
 }
 
@@ -882,7 +882,7 @@ material-toolbar {
   margin-bottom: 15px;
   font-size: 14px;
   margin-left: 0px;
-  color: black;
+  color: #fff;
 }
 
 .viewButton {
