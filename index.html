@@ -13,21 +13,28 @@
 </head>
 <body ng-controller="pollAppCtrl">
 <div id="applicationContainer" layout="horizontal">
-  <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left">
-    <material-toolbar class="pantheonToolbar" ng-class="{template:isTmpl}">
-      <h1 class="material-toolbar-tools">Society Pro</h1>
-      <span flex></span> </material-toolbar>
-    <material-content flex>
-      <div>
-        <button id="pollsButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation();"> Polls
-        <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
-        </button>
-        <button id="templatesButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation();"> Templates
-        <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
-        </button>
-      </div>
-    </material-content>
-  </material-sidenav>
+  <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left" layout="vertical">
+        <material-toolbar class="pantheonToolbar" ng-class="{template:isTmpl}">
+          <h1 class="material-toolbar-tools">Society Pro</h1>
+          <span flex></span>
+        </material-toolbar>
+        <material-content>
+          <div>
+            <button id="pollsButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation();">
+              Polls
+              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+            </button>
+            <button id="templatesButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation();">
+              Templates
+              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+            </button>
+          </div>
+        </material-content>
+        <span flex></span>
+        <div class="appVersion">
+          <p>Ballot version: 0.1.8</p>
+        </div>
+      </material-sidenav>
   <div layout="vertical" layout-fill ng-class="{mainContentPolls:view,mainContentTemplates:!view}">
     <material-toolbar scroll-shrink class="pantheonToolbar">
       <div layout="horizontal">
@@ -42,11 +49,16 @@
                 <material-button class="viewButton clicker material-button-icon" title="Filter Polls">
                   <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_wht_24dp.png"></material-icon>
                 </material-button>
-                </a>
                 <ul>
-                  <li ng-repeat="filter in menu.filters" ng-class="{last:$last}"> <a id="filterButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="menu.selectFilter(filter); $event.stopImmediatePropogation()"> <span class="color-chip" style='background-color: {{filter.color}};'></span> <span ng-bind="filter.filter"></span>
-                    <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
-                    </a> </li>
+                  <ul>
+                    <li class='active has-sub last' id="filterButton">
+                      <material-button class="viewButton clicker material-button-icon" title="Filter Polls">
+                        <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_wht_24dp.png"></material-icon>
+                      </material-button>
+                      </ul>
+                        <li ng-repeat="filter in menu.filters" ng-class="{last:$last}"> <a id="filterButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="menu.selectFilter(filter); $event.stopImmediatePropogation()"> <span class="color-chip" style='background-color: {{filter.color}};'></span> <span ng-bind="filter.filter"></span>
+                          <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+                          </a> </li>
                 </ul>
               </li>
             </ul>

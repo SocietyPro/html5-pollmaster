@@ -19,18 +19,16 @@
               </select>
           </div>
         </div>
-        <div>
-          <label>
-            <material-checkbox id="startImmediatelyCheckbox" ng-model="startNow" ng-disabled="!poll.pollTargetId"> Start this poll immediately</material-checkbox>
-          </label>
-        </div>
       </div>
     </div>
     <div class="dialog-actions" layout="horizontal" layout-align="end">
       <material-button id="closeButton" ng-click="close()">
         Close
       </material-button>
-      <material-button id="saveButton" ng-click="save(poll, saveMatrix, $event)" class="material-button-colored">
+      <material-button ng-show="poll.pollTargetId" id="startButton" ng-click="save(poll, saveMatrix, $event,true)" class="material-button-colored">
+        Start
+      </material-button>
+      <material-button id="saveButton" ng-click="save(poll, saveMatrix, $event,false)" class="material-button-colored">
         Save
       </material-button>
     </div>
