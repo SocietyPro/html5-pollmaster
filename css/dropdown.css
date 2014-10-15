@@ -133,7 +133,7 @@
   margin-top: 0px;
 }
 #cssmenu > ul > li > ul {
-  top: 29px;
+  top: 40px;
 }
 #cssmenu.align-right > ul > li:hover > ul {
   left: -105px;
@@ -155,7 +155,7 @@
 #cssmenu ul ul li a {
   width: 130px;
   border-bottom: 1px solid #eeeeee;
-  padding: 10px 20px;
+  padding: 0 20px;
   font-size: 12px;
   color: #9ea2a5;
   background: #ffffff;
@@ -171,6 +171,10 @@
 #cssmenu ul ul li:hover > a {
   background: #f2f2f2;
   color: #8c9195;
+}
+#cssmenu ul ul li > a.active {
+  background: #f2f2f2 !important;
+  color: #8c9195 !important;
 }
 #cssmenu ul ul li:last-child > a,
 #cssmenu ul ul li.last > a {
