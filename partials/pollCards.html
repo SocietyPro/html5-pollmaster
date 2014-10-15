@@ -31,7 +31,7 @@
               </table>
             </div>
           </div>
-          <div class="pieChartContainer" ng-if="(poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted') && hasData(poll.options)">
+          <div class="pieChartContainer" ng-if="hasData(poll.options)">
             <nvd3-pie-chart
               id="{{'id'+$index}}"
               data="poll.options"
@@ -45,6 +45,24 @@
               showValues="true"
               labelType="value"
               tooltips="true">
+            </nvd3-pie-chart>
+          </div>
+           <div class="pieChartContainer" ng-if="!hasData(poll.options)">
+            <nvd3-pie-chart
+              id="{{'noOption'+$index}}"
+              data="noOptions"
+              x="xFunction()"
+              y="yFunction()"
+              width="100"
+              height="100"
+              margin="{left: 15, top: 15, bottom: 15, right: 15}"
+              showLabels="false"
+              pieLabelsOutside="true"
+              showValues="true"
+              labelType="value"
+              tooltips="true"
+              color="colorFunction()"
+              tooltipcontent="toolTipContentFunction()">
             </nvd3-pie-chart>
           </div>
         </div>

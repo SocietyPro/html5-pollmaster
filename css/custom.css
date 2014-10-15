@@ -552,10 +552,8 @@ div .cardMenuBar {
 }
 
 .material-dialog-container material-dialog .dialog-content {
-  min-width: 671px;
   max-width: 671px;
   padding: 16px 24px;
-  overflow: hidden;
 }
 
 .optionsLine.focused {
@@ -607,6 +605,8 @@ material-checkbox[disabled] {
 }
 
 .dialog-options-container {
+  vertical-align: top;
+  height: 122px;
   border: 1px solid grey;
   border-radius: 6px;
   padding: 8px;
@@ -617,7 +617,6 @@ material-checkbox[disabled] {
   display: inline;
   color: #444;
   font-family: 'RobotoDraft', 'Helvetica Neue', Helvetica, Arial;
-  height: 100%; 
   border: none;
 }
 
@@ -668,7 +667,7 @@ material-checkbox[disabled] {
   text-overflow: '';
   -webkit-appearance: button;
   border-bottom: 2px solid #B1AFAF;
-  max-width: 300px;  
+  width: 170px;  
 }
 .custom-dropdown::before,
 .custom-dropdown::after {
@@ -683,15 +682,12 @@ material-checkbox[disabled] {
   height: 1em;
   font-size: .625em;
   line-height: 1;
-  right: 1.2em;
   margin-top: 8px;
+  left: 150px;
 }
 
 .custom-dropdown::before {
   width: 2em;
-  right: 0;
-  top: 0;
-  bottom: 0;
   border-radius: 0 3px 3px 0;
 }
 
@@ -716,6 +712,7 @@ material-checkbox[disabled] {
   right: -310px;
   top: 0;
   padding: 16px 24px;
+  margin-top: 0px;
 }
 
 /* Results Card Styles */
@@ -935,7 +932,35 @@ material-toolbar {
   border-color: rgb(75,75,75);
 }
 #quickStartButton:hover {
-  border-color: rgb(75,75,75);
+  border-color: rgb(75,75,75)
+}
 .chatLink {
   cursor: pointer;
 }
+material-dialog-container material-dialog {
+  width:671px;
+}
+.material-dialog-container material-dialog .dialog-content {
+  width:671px;
+}
+@media (max-width: 1271px) {
+  .material-dialog-container material-dialog {
+    margin-right: 300px;
+  }
+}
+.appVersion p {
+  color: slategray;
+  background-color: white;
+  margin-bottom: 0px;
+  padding: 10px;
+}
+.nvd3.nv-pie path {
+  stroke: #000 !important;
+}
+.pieChartContainer {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+ }
