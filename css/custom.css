@@ -950,7 +950,6 @@ material-dialog-container material-dialog {
 }
 .appVersion p {
   color: slategray;
-  background-color: white;
   margin-bottom: 0px;
   padding: 10px;
 }

@@ -20,8 +20,8 @@
             </table>
           </div>
         </div>
-        <div class="pollReturns" ng-show="poll.status === 'started' || poll.status === 'stopped'">
-          <div class="optionCounts">
+        <div class="pollReturns" layout="horizontal" layout-align="center center">
+          <div class="optionCounts" ng-show="poll.status === 'started' || poll.status === 'stopped'" flex>
             <div class="options">
               <table>
                 <tr ng-repeat="option in poll.options">
@@ -31,6 +31,17 @@
               </table>
             </div>
           </div>
+          <div class="optionPreview" ng-show="poll.status === 'unstarted' || poll.status === 'unvoted'"  flex="50">
+          <div class="options">
+            <table>
+              <tr><td colspan="2">VOTE</td></tr>
+              <tr ng-repeat="option in poll.options">  
+                <td class="previewCheckbox"><input type="checkbox" ng-model="option.isSelected" disabled></td>
+                <td>{{option.text}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
           <div class="pieChartContainer" ng-if="hasData(poll.options)">
             <nvd3-pie-chart
               id="{{'id'+$index}}"
@@ -67,18 +78,7 @@
           </div>
         </div>
 
-        <div class="optionPreview" ng-show="poll.status === 'unstarted' || poll.status === 'unvoted'">
-          <div class="options">
-            <table>
-              <tr><td colspan="2">VOTE</td></tr>
-              <tr ng-repeat="option in poll.options">  
-                <td class="previewCheckbox"><input type="checkbox" ng-model="option.isSelected" disabled></td>
-                <td>{{option.text}}</td>
-              </tr>
-            </table>
-          </div>
-          <div class="clearBoth"></div>
-        </div>
+        
 
         <div class="clearBoth"></div>
       </div>
