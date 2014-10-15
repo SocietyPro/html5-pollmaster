@@ -52,13 +52,14 @@
 
 .completed,
 .voted {
-  background: rgba(64, 80, 94, 0.7);	
-  border: 1px solid rgba(100, 111, 121, 0.4);
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 148, 255, 0.4);
+  color: white;
 }
 
 .unstarted {
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(0, 148, 255, 0.4);
+	background: rgba(64, 80, 94, 0.7);	
+  border: 1px solid rgba(100, 111, 121, 0.4);
 }
 
 .pantheonToolbar {

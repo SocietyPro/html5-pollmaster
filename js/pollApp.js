@@ -38,10 +38,10 @@ app.config(function($routeProvider){
 app.factory("menu", ['$rootScope', function ($rootScope) {
   var self;
   var filters = [{ filter: 'All', color: '#000' }, 
-                 { filter: 'Vote', color: '#a48623' },
-                 { filter: 'Running', color: '#458B74' },
-                 { filter: 'Unstarted', color: '#D2D6DF' },
-                 { filter: 'Completed', color: '#40505E' }];
+                 { filter: 'Vote', color: 'rgba(164, 134, 35, 0.7)' },
+                 { filter: 'Running', color: 'rgba(69, 139, 116, 0.7)' },
+                 { filter: 'Unstarted', color: 'rgba(64, 80, 94, 0.7)' },
+                 { filter: 'Completed', color: 'rgba(0, 0, 0, 0.7)' }];
 
   return self = {
     filters: filters,
@@ -627,6 +627,29 @@ app.controller("pollsCtrl", function ($scope,
       targetEvent: e,
       controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', function ($scope, $hideDialog, $rootScope, $filter, pollFind) {
         Cambrian.polls.onVoteReceived.connect(refreshPoll);
+        // NVD3 CHARTS CONFIG ==========================================
+        $scope.noOptions = [
+          {
+            text:"No Votes",
+            count:1
+          },
+          {
+            text:"",
+            count:0
+          }
+        ];
+        var colorArray = ['#A7A7A7', '#000'];
+        $scope.colorFunction = function() {
+          return function(d, i) {
+              return colorArray[i];
+            };
+        }
+        $scope.toolTipContentFunction = function(){
+          return function(key, x, y, e, graph) {
+              return  key;
+          }
+        }
+        //====================================================================
         $scope.poll = poll;
         if (poll.dateStarted) {
           var d = new Date(poll.dateStarted.getTime() + (poll.pollTimeLength*1000));    

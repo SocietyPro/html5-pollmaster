@@ -60,24 +60,39 @@
             </table>
 
           </div>
-          <div class="bigPieChartContainer" ng-if="(poll.status === 'stopped' || poll.status === 'voted') && hasData(poll.options)">
-            
+          <div class="bigPieChartContainer" ng-show="hasData(poll.options)">
             <nvd3-pie-chart
-              id="big"
+              id="id"
               data="poll.options"
               x="xFunction()"
               y="yFunction()"
               width="200"
               height="200"
               margin="{left: 15, top: 15, bottom: 15, right: 15}"
-              showLabels="true"
+              showLabels="false"
               pieLabelsOutside="true"
               showValues="true"
-              labelType="key"
+              labelType="value"
               tooltips="true">
-              <svg height="100"></svg>
             </nvd3-pie-chart>
-  
+          </div>
+           <div class="bigPieChartContainer" ng-show="!hasData(poll.options)">
+            <nvd3-pie-chart
+              id="noOption"
+              data="noOptions"
+              x="xFunction()"
+              y="yFunction()"
+              width="200"
+              height="200"
+              margin="{left: 15, top: 15, bottom: 15, right: 15}"
+              showLabels="false"
+              pieLabelsOutside="true"
+              showValues="true"
+              labelType="value"
+              tooltips="true"
+              color="colorFunction()"
+              tooltipcontent="toolTipContentFunction()">
+            </nvd3-pie-chart>
           </div>
         </div>
         <div class="clearBoth"></div>
