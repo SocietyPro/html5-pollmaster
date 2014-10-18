@@ -625,9 +625,36 @@ app.controller("pollsCtrl", function ($scope,
     $materialDialog({
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', function ($scope, $hideDialog, $rootScope, $filter, pollFind) {
+      controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', 'pollResults', function ($scope, $hideDialog, $rootScope, $filter, pollFind, pollResults) {
         Cambrian.polls.onVoteReceived.connect(refreshPoll);
-        $scope.poll = poll;
+        // NVD3 CHARTS CONFIG ==========================================
+        $scope.noOptions = [
+          {
+            text:"No Votes",
+            count:1
+          },
+          {
+            text:"",
+            count:0
+          }
+        ];
+        var colorArray = ['#A7A7A7', '#000'];
+        $scope.colorFunction = function() {
+          return function(d, i) {
+              return colorArray[i];
+            };
+        }
+        $scope.toolTipContentFunction = function(){
+          return function(key, x, y, e, graph) {
+              return  key;
+          }
+        }
+        //====================================================================
+        if (poll.status === 'voted') {
+          $scope.poll = poll;
+        } else {
+          $scope.poll = pollResults(poll);
+        }
         if (poll.dateStarted) {
           var d = new Date(poll.dateStarted.getTime() + (poll.pollTimeLength*1000));    
           $scope.endPollDate = d.toString().substring(0,d.toString().lastIndexOf(":"));
