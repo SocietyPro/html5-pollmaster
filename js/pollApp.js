@@ -8,7 +8,7 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var app = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker','wu.masonry']) // array is required
+var app = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker']) // array is required
 var saveMatrix = {poll: false, template: false};
 
 app.config(function($routeProvider){
@@ -107,12 +107,12 @@ app.controller("pollAppCtrl", function ($scope,
 
     $scope.menu = menu;
     $scope.menu.selectFilter(menu.filters[0]);
-    if ($location.path() == "/polls") {
-      $scope.view=true;
-      $scope.isTmpl = false;
+    if ($location.path() == "/templates") {
+      $scope.view=!true;
+      $scope.isTmpl = !false;
     } else {
-      $scope.view=false;
-      $scope.isTmpl = true;
+      $scope.view=!false;
+      $scope.isTmpl = !true;
     }
 
     
@@ -203,7 +203,23 @@ app.controller("pollAppCtrl", function ($scope,
 
           $timeout(function () {
             $("#addOptionInput").focus();
-          });          
+          });      
+
+          $scope.selected = -1;
+          $scope.optionSelected = function (i) {
+            if (!$scope.poll.allowMultipleChoices) {
+              if ($scope.selected != -1) {
+                if ($scope.selected == i) {
+                  $scope.selected = -1;
+                } else {
+                  $scope.poll.options[$scope.selected].isSelected = false;
+                  $scope.selected = i;
+                }  
+              } else {
+                $scope.selected = i;
+              }
+            }
+          }    
 
           $scope.checkHeight = function () {
             var dialogHeight = $('.dialog-content').height();
@@ -456,6 +472,22 @@ app.controller("pollsCtrl", function ($scope,
         }
     });
 
+  $scope.selected = -1;
+  $scope.optionSelected = function (poll,i) {
+    if (!poll.allowMultipleChoices) {
+      if ($scope.selected != -1) {
+        if ($scope.selected == i) {
+          $scope.selected = -1;
+        } else {
+          poll.options[$scope.selected].isSelected = false;
+          $scope.selected = i;
+        }  
+      } else {
+        $scope.selected = i;
+      }
+    }
+  }
+
   $scope.getEndPollDate = function (dateStarted,pollTimeLength) {
     if (dateStarted && pollTimeLength) {
       var d = new Date(dateStarted.getTime() + (pollTimeLength*1000));    
@@ -473,6 +505,7 @@ app.controller("pollsCtrl", function ($scope,
   };
 
   $scope.zoomPoll = function (e, poll) {
+    console.log(e);
     if (poll.status === "unstarted") {
       $scope.editPoll(e, poll);
     } else if (poll.status === 'unvoted') {
@@ -625,7 +658,7 @@ app.controller("pollsCtrl", function ($scope,
     $materialDialog({
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', function ($scope, $hideDialog, $rootScope, $filter, pollFind) {
+      controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', 'pollResults', function ($scope, $hideDialog, $rootScope, $filter, pollFind, pollResults) {
         Cambrian.polls.onVoteReceived.connect(refreshPoll);
         // NVD3 CHARTS CONFIG ==========================================
         $scope.noOptions = [
@@ -650,7 +683,11 @@ app.controller("pollsCtrl", function ($scope,
           }
         }
         //====================================================================
-        $scope.poll = poll;
+        if (poll.status === 'voted') {
+          $scope.poll = poll;
+        } else {
+          $scope.poll = pollResults(poll);
+        }
         if (poll.dateStarted) {
           var d = new Date(poll.dateStarted.getTime() + (poll.pollTimeLength*1000));    
           $scope.endPollDate = d.toString().substring(0,d.toString().lastIndexOf(":"));

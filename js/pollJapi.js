@@ -169,6 +169,16 @@ app.factory("pollSubmit", function () {
   }
 });
 
+//var results = pollResults(poll); returns the results object for the poll
+app.factory("pollResults", function () {
+  return function (source) {
+    var qtPoll = japi.polls.get(source.id);
+    var qtResults = qtPoll.getResults();
+    results = angular.copy(qtResults);
+    return results;
+  }
+});
+
 //var comments = pollComments(poll); returns the voter-submitted commments for the poll
 app.factory("pollComments", function () {
   return function (source) {
