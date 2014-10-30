@@ -25,12 +25,8 @@ app.config(function($routeProvider){
     templateUrl: "partials/votingBooth.tmpl.html",
     controller: "votingBoothCtrl"
   }).
-  when("/", {
-    templateUrl: "partials/polls.tmpl.html",
-    controller: "pollsCtrl"
-  }).
   otherwise({
-    redirectTo: "/"
+    redirectTo: "/polls"
   });
 
 });
