@@ -8,7 +8,7 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var app = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker']) // array is required
+var app = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker','wu.masonry']) // array is required
 var saveMatrix = {poll: false, template: false};
 
 app.config(function($routeProvider){
@@ -111,8 +111,20 @@ app.controller("pollAppCtrl", function ($scope,
       $scope.isTmpl = !true;
     }
 
-    
-    
+    $scope.reloadMasonry = true;
+
+    $scope.selectFilter = function (filter) {
+      menu.selectFilter(filter);
+      $scope.safeApply(reloadM);
+    }
+
+    var reloadM = function () {
+      $scope.reloadMasonry = false;
+      $timeout(function () {
+        console.log("reload");
+        $scope.reloadMasonry = true;
+      },50); 
+    }
 
     $scope.safeApply = function(fn) {
       var phase = this.$root.$$phase;
@@ -132,11 +144,15 @@ app.controller("pollAppCtrl", function ($scope,
     $scope.listView = "quilt";
 
     $scope.streamView = function () {
+      $( ".cardholder" ).addClass( "positionAuto");
       $scope.listView = "stream";
+      $scope.safeApply(reloadM);
     };
 
     $scope.quiltView = function () {
+      $( ".cardholder" ).removeClass( "positionAuto");
       $scope.listView = "quilt";
+      $scope.safeApply(reloadM);
     };
 
     $scope.overflowToggle = function (item) {

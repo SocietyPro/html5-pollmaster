@@ -963,3 +963,8 @@ material-dialog-container material-dialog {
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
  }
+ .positionAuto {
+    top: auto !important;
+    left: auto !important;
+    position: relative !important;
+  }
