@@ -1,5 +1,4 @@
 /* Unified Style Draft - Blue header, tight square elements */
-
 .soProContainer{
   border-top: 20px solid blue;
   margin-top: 0px;
@@ -918,8 +917,8 @@ material-toolbar {
 #pollsContainer {
   padding: 0px;
   height: 100%;
-  width: 1000px;
-  margin: auto
+  width: 100%;
+  margin: 0px;
 }
 .ui-timepicker-wrapper {
   height: 125px;
@@ -968,3 +967,36 @@ material-dialog-container material-dialog {
     left: auto !important;
     position: relative !important;
   }
+.stream .overflowMenu {
+  width: initial;
+  right: 4%;
+}
+material-content > .material-content {
+  padding: 0px 5%;
+}
+.streamMainCard {
+  height: 48px;
+  max-height: 48px;
+  margin:0px;
+}
+.firstCard {
+  margin-top: 16px;
+}
+.streamCardContentContainer {
+  width:90%;
+}
+.streamPollOriginatorLine {
+  padding-right:10px;
+}
+.streamCardMenuBar {
+  width: 10%;
+}
+.startPollButton {
+  margin-right: 10px;
+}
+.stopPollButton {
+  margin-right: 10px;
+}
+.streamCardholder {
+  position: relative;
+}

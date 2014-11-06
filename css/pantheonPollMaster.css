@@ -1,9 +1,13 @@
-.mainContentPolls { 
+/*.mainContentPolls { 
 	background: url(../assets/images/153450.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}*/
+
+.mainContentPolls { 
+	background-color: #eee;
 }
 
 .mainContentTemplates { 
