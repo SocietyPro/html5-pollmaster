@@ -8,7 +8,7 @@ if(Cambrian.JAPI !== undefined){
   japi = Cambrian.mockJAPI();
 }
 
-var app = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial", 'nvd3ChartDirectives','ui.date','ui.timepicker','wu.masonry']) // array is required
+var app = angular.module("pollApp", ["ngRoute", "ui.bootstrap", "ngMaterial","ngAria", 'nvd3ChartDirectives','ui.date','ui.timepicker','wu.masonry']) // array is required
 var saveMatrix = {poll: false, template: false};
 
 app.config(function($routeProvider){
@@ -92,8 +92,8 @@ app.directive('focusThis', function () {
 app.controller("pollAppCtrl", function ($scope, 
                                         $location, 
                                         $modal, 
-                                        $materialDialog, 
-                                        $materialSidenav, 
+                                        $mdDialog, 
+                                        $mdSidenav, 
                                         $timeout,
                                         $rootScope,  
                                         menu,
@@ -149,7 +149,7 @@ app.controller("pollAppCtrl", function ($scope,
     };
 
     $scope.toggleMenu = function () {
-      $materialSidenav('left').toggle();
+      $mdSidenav('left').toggle();
     };
 
     $scope.listView = "quilt";
@@ -207,7 +207,7 @@ app.controller("pollAppCtrl", function ($scope,
     };
 
     $scope.dialog = function (e, poll, saveMatrix) {
-      $materialDialog({
+      $mdDialog({
         templateUrl: 'partials/editPoll.tmpl.html',
         targetEvent: e,
         controller: ['$scope', '$hideDialog', '$rootScope', '$timeout', function ($scope, $hideDialog, $rootScope, $timeout) {
@@ -322,10 +322,10 @@ app.controller("pollAppCtrl", function ($scope,
 
           $scope.nextDialog = function (e, poll, saveMatrix, pollLength) {
             $hideDialog();
-            $materialDialog({
+            $mdDialog({
               templateUrl: 'partials/selectTarget.tmpl.html',
               targetEvent: e,
-              controller: ['$scope', '$hideDialog', '$rootScope','$materialDialog', function ($scope, $hideDialog, $rootScope,$materialDialog) {
+              controller: ['$scope', '$hideDialog', '$rootScope','$mdDialog', function ($scope, $hideDialog, $rootScope,$mdDialog) {
                 $scope.poll = poll;
                 $scope.myGroups = groupAll();
                 $scope.saveMatrix = saveMatrix;
@@ -337,7 +337,7 @@ app.controller("pollAppCtrl", function ($scope,
 
                 $scope.save = function (item, saveMatrix,e,startNow) {
                   if (startNow) {    
-                    $materialDialog({
+                    $mdDialog({
                       templateUrl: 'partials/pollEndsDate.tmpl.html',
                       targetEvent: e,
                       locals: {
@@ -418,7 +418,7 @@ app.controller("pollAppCtrl", function ($scope,
 });
 
 app.controller("pollsCtrl", function ($scope, 
-                                      $materialDialog, 
+                                      $mdDialog, 
                                       $filter, 
                                       pollAll, 
                                       pollNew, 
@@ -459,41 +459,6 @@ app.controller("pollsCtrl", function ($scope,
     }
   }
   //====================================================================
-
-
-  $("#cssmenu>ul>li>material-button").addClass('inactive');
-  $("#cssmenu>ul>li").click(function() {
-        element = $(this);
-        var w = element.width();
-        if ($(this).hasClass('has-sub'))
-        {
-            leftPos = element.position().left + w/2 - 12;
-        }
-        else {
-            leftPos = element.position().left + w/2 - 6;
-        }
-        if ($("#cssmenu>ul>li>ul").css('left') == "-96px") {
-            $("#cssmenu>ul>li>ul").css('opacity',0);
-            $("#cssmenu>ul>li>ul").css('left',"-9999px");
-            $("#cssmenu>ul>li>material-button").removeClass('active');
-            $("#cssmenu>ul>li>material-button").addClass('inactive');
-        } else {
-          $("#cssmenu>ul>li>ul").css('left',"-96px");
-          $("#cssmenu>ul>li>ul").css('opacity',1);
-          $("#cssmenu>ul>li>material-button").removeClass('inactive');
-          $("#cssmenu>ul>li>material-button").addClass('active');   
-        }
-    });
-    $(document).mouseup(function (e) {
-        var container = $("#cssmenu>ul>li");
-        if (!container.is(e.target) // if the target of the click isn't the container...
-            && container.has(e.target).length === 0) { // ... nor a descendant of the container
-            $("#cssmenu>ul>li>ul").css('opacity',0);
-            $("#cssmenu>ul>li>ul").css('left',"-9999px");
-            $("#cssmenu>ul>li>material-button").addClass('inactive');
-            $("#cssmenu>ul>li>material-button").removeClass('active');       
-        }
-    });
 
   $scope.selected = -1;
   $scope.optionSelected = function (poll,i) {
@@ -557,7 +522,7 @@ app.controller("pollsCtrl", function ($scope,
 
   $scope.startPoll = function(poll,e){
     var sm = {poll:true}
-    $materialDialog({
+    $mdDialog({
       templateUrl: 'partials/pollEndsDate.tmpl.html',
       targetEvent: e,
       locals: {
@@ -630,7 +595,7 @@ app.controller("pollsCtrl", function ($scope,
   }; 
   
   function vote (e, poll) {
-    $materialDialog({
+    $mdDialog({
       templateUrl: 'partials/votingBoothDialog.tmpl.html',
       targetEvent: e,
       controller: ['$scope', '$hideDialog', '$rootScope', 'pollSubmit', function ($scope, $hideDialog, $rootScope, pollSubmit) {
@@ -678,7 +643,7 @@ app.controller("pollsCtrl", function ($scope,
   };
 
   function showPoll (e, poll) {
-    $materialDialog({
+    $mdDialog({
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
       controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', 'pollResults', function ($scope, $hideDialog, $rootScope, $filter, pollFind, pollResults) {
@@ -759,7 +724,7 @@ app.controller("pollsCtrl", function ($scope,
 
         $scope.showComments = function (e, poll) {
           $hideDialog();
-          $materialDialog({
+          $mdDialog({
             templateUrl: 'partials/showComments.tmpl.html',
             targetEvent: e,
             controller: ['$scope', '$hideDialog', 'pollComments', function ($scope, $hideDialog, pollComments) {
@@ -808,7 +773,7 @@ app.controller("pollsCtrl", function ($scope,
 });
 
 app.controller("templatesCtrl", function ($scope, 
-                                          $materialDialog, 
+                                          $mdDialog, 
                                           $filter, 
                                           pollAll, 
                                           pollNew, 
@@ -895,7 +860,7 @@ app.controller("templatesCtrl", function ($scope,
   };
 
   function showTemplate (e, template, selectedIndex) {
-    $materialDialog({
+    $mdDialog({
       templateUrl: 'partials/showTemplate.tmpl.html',
       targetEvent: e,
       controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
