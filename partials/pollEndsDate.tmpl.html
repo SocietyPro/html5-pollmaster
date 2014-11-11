@@ -1,15 +1,15 @@
-<material-dialog>
+<md-dialog>
     <div class="dialog-content" style="width:600px;">
       <h2>Poll length selection</h2>
       <div layout="horizontal" layout-align="center">
-        <material-input ng-model="endDate" ui-date="{minDate:'0'}" ui-date-format="mm/dd/yy" placeholder="{{edate}}" flex="40"></material-input><div style="width:50px;text-align:center;">at</div><material-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker class="ui-timepicker-input" placeholder="HH:MM" flex="40"></material-input>
+        <md-input ng-model="endDate" ui-date="{minDate:'0'}" ui-date-format="mm/dd/yy" placeholder="{{edate}}" flex="40"></md-input><div style="width:50px;text-align:center;">at</div><md-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker class="ui-timepicker-input" placeholder="HH:MM" flex="40"></md-input>
     </div>
     <div class="dialog-actions" layout="horizontal" layout-align="end">
-      <material-button id="closeButton" ng-click="close()">
+      <md-button id="closeButton" ng-click="close()">
         Close
-      </material-button>
-      <material-button id="saveButton" ng-click="save()" class="material-button-colored">
+      </md-button>
+      <md-button id="saveButton" ng-click="save()" class="md-button-colored">
         Save
-      </material-button>
+      </md-button>
     </div>
-</material-dialog>
+</md-dialog>

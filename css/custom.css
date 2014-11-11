@@ -342,7 +342,7 @@ button {
   display: inline-block;
 }
 
-.viewButton material-icon {
+.viewButton md-icon {
   height: 24px;
   outline: none;
   width: 24px;
@@ -445,7 +445,7 @@ textarea {
 }
 
 
-material-button.material-button-fab.material-button-fab-bottom-right {
+md-button.md-button-fab.md-button-fab-bottom-right {
       right: 24px;
       bottom: 24px;
       position: fixed; 
@@ -464,7 +464,7 @@ material-button.material-button-fab.material-button-fab-bottom-right {
 .stream {
   width:100%;
 }
-.stream material-card {
+.stream md-card {
   width: 95%;
   max-width: none;
 }
@@ -608,7 +608,7 @@ div .cardMenuBar {
   position: relative;
 }
 
-.material-dialog-container material-dialog .dialog-content {
+.md-dialog-container md-dialog .dialog-content {
   max-width: 671px;
   padding: 16px 24px;
 }
@@ -636,7 +636,7 @@ div .cardMenuBar {
   border-bottom: 1px solid lightgrey;
 }
 
-material-checkbox {
+md-checkbox {
   margin: 1px;
 }
 
@@ -646,7 +646,7 @@ material-checkbox {
   text-indent: 20px;
 }
 
-material-checkbox[disabled] {
+md-checkbox[disabled] {
   opacity: 0.3;
 }
 
@@ -655,7 +655,7 @@ material-checkbox[disabled] {
   float: left;
 }
 
-.dialog-menubar-actions .material-button-icon {
+.dialog-menubar-actions .md-button-icon {
   height: 32px;
   width: 32px;
   line-height: 43px;
@@ -818,7 +818,7 @@ material-checkbox[disabled] {
   -webkit-transform: rotate(90deg);
 }
 
-material-dialog div .cardMenuBar {
+md-dialog div .cardMenuBar {
   margin: 0;
   line-height: 17px;
 }
@@ -830,8 +830,8 @@ material-dialog div .cardMenuBar {
   opacity: 0.7;
 }
 
-/* Styles for Material Tabs */
-.tabs-content .material-view {
+/* Styles for md Tabs */
+.tabs-content .md-view {
     background-color: #fff;
     height: 100%;
 }
@@ -846,16 +846,16 @@ div.infoBar {
     font-size: .8em;
 }
 
-material-tabs {
+md-tabs {
   width: auto;
 }
 
-material-tab material-tab-label {
+md-tab md-tab-label {
   color: #fff;
   opacity: 0.5;
 }
 
-material-tab material-tab-label.active {
+md-tab md-tab-label.active {
   color: #fff;
   opacity: 1.0;
 }
@@ -865,15 +865,15 @@ a.active {
   opacity: 1.0; 
 }
 
-material-ink-bar {
+md-ink-bar {
   background: #000;
 }
 
-material-tabs .tabs-content {
+md-tabs .tabs-content {
     height: 100%;
 }
 
-material-card {
+md-card {
   margin-top: 16px;
   background-color: #ffff8d;
 }
@@ -885,7 +885,7 @@ ul#filters {
   display:none;
 }
 
-/* Styles for Material Voting Booth */
+/* Styles for md Voting Booth */
 #ballotCard {
   max-width: 300px;
   min-width: 300px;
@@ -923,7 +923,7 @@ ul#filters {
     background-color: #aaa;  
 }
 
-material-toolbar {
+md-toolbar {
   box-shadow: 0px 1px 4px rgba(0,0,0,.3);
   font-family: Roboto,Arial,sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -976,10 +976,10 @@ material-toolbar {
 .chatLink {
   cursor: pointer;
 }
-material-dialog-container material-dialog {
+md-dialog-container md-dialog {
   width:671px;
 }
-.material-dialog-container material-dialog .dialog-content {
+.md-dialog-container md-dialog .dialog-content {
   width:671px;
 }
 .appVersion p {
@@ -1006,7 +1006,7 @@ material-dialog-container material-dialog {
   width: initial;
   right: 4%;
 }
-material-content > .material-content {
+md-content > .md-content {
   padding: 0px 5%;
 }
 .streamMainCard {
@@ -1061,7 +1061,7 @@ material-content > .material-content {
   position: relative;
 }
 
-.material-toolbar-tools {
+.md-toolbar-tools {
   display: inline-block;
   position: relative;
   color: white;
@@ -1132,19 +1132,19 @@ material-content > .material-content {
   vertical-align: middle;
   width: 21px;
 }
-material-content > .material-content {
+md-content > .md-content {
   padding: 0;
 }
 ng-view {
   overflow: visible;
 }
-material-content, .material-content {
+md-content, .md-content {
   overflow: visible;
 }
 .optionPreview {
   overflow:hidden;
 }
-material-sidenav {
+md-sidenav {
   border: 1px solid #e3e3e3;
   border-top: none;
   border-width: 1px 0;
@@ -1177,7 +1177,7 @@ material-sidenav {
 .streamMargin {
   margin-top: 55px;
 }
-material-dialog>div{
+md-dialog>div{
   overflow: auto;
 }
 .noShadow {

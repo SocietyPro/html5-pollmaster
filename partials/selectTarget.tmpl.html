@@ -1,4 +1,4 @@
-<material-dialog>
+<md-dialog>
   <div ng-show="poll.status === 'unstarted' || poll.status === 'unsaved'">
     <div class="dialog-content" style="width:600px;">
       <h2>Poll target selection</h2>
@@ -22,15 +22,15 @@
       </div>
     </div>
     <div class="dialog-actions" layout="horizontal" layout-align="end">
-      <material-button id="closeButton" ng-click="close()">
+      <md-button id="closeButton" ng-click="close()">
         Close
-      </material-button>
-      <material-button ng-show="poll.pollTargetId" id="startButton" ng-click="save(poll, saveMatrix, $event,true)" class="material-button-colored">
+      </md-button>
+      <md-button ng-show="poll.pollTargetId" id="startButton" ng-click="save(poll, saveMatrix, $event,true)" class="md-button-colored">
         Start
-      </material-button>
-      <material-button id="saveButton" ng-click="save(poll, saveMatrix, $event,false)" class="material-button-colored">
+      </md-button>
+      <md-button id="saveButton" ng-click="save(poll, saveMatrix, $event,false)" class="md-button-colored">
         Save
-      </material-button>
+      </md-button>
     </div>
   </div>
-</material-dialog>
+</md-dialog>

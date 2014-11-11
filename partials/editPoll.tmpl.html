@@ -1,42 +1,42 @@
-<material-dialog>
+<md-dialog>
   <div id="dialogLayout" layout="horizontal">
     <div class="dialog-content" ng-show="poll.status === 'unstarted' || poll.status === 'unsaved'" ng-class="{of:checkHeight()}">
       <div id="content">
-        <material-input-group>
-          <material-input class="bold" name="pollTitleInput" type="text" ng-model="poll.title" size="45" flex placeholder="Poll Title (click to edit)"></material-input>
-        </material-input-group>
-        <material-input-group>
+        <md-input-group>
+          <md-input class="bold" name="pollTitleInput" type="text" ng-model="poll.title" size="45" flex placeholder="Poll Title (click to edit)"></md-input>
+        </md-input-group>
+        <md-input-group>
           <textarea name="pollDescriptionInput" ng-model="poll.description" flex placeholder="Poll Description (click to edit)"></textarea>
-        </material-input-group>
+        </md-input-group>
           <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal"
           ng-class="{focused: opt.hasFocus}" ng-mouseover="opt.menubar = true" ng-mouseleave="opt.menubar = false">
-            <material-checkbox ng-model="opt.isSelected" ng-click="optionSelected($index)"></material-checkbox>
-            <material-input type="text" class="optionsInput" name="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"  focus-this="{{$index}}" ng-keypress="keypressListener($event)" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false" ng-keyup="checkForOptionDelete($event,$index)" ></material-input>
-            <material-button ng-show="opt.menubar" ng-click="removeOption($index)" title="Remove Option"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
+            <md-checkbox ng-model="opt.isSelected" ng-click="optionSelected($index)"></md-checkbox>
+            <md-input type="text" class="optionsInput" name="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"  focus-this="{{$index}}" ng-keypress="keypressListener($event)" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false" ng-keyup="checkForOptionDelete($event,$index)" ></md-input>
+            <md-button ng-show="opt.menubar" ng-click="removeOption($index)" title="Remove Option"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></md-button>
           </div>
         <div class="newOptionWrapper" ng-class="{focused: newOptionFocused}">
-          <material-input type="text" id="addOptionInput" ng-model="newOptionText" ng-change="addOption()" placeholder="Add option" ng-focus="newOptionFocused = true" ng-blur="newOptionFocused = false"></material-input>
+          <md-input type="text" id="addOptionInput" ng-model="newOptionText" ng-change="addOption()" placeholder="Add option" ng-focus="newOptionFocused = true" ng-blur="newOptionFocused = false"></md-input>
         </div>
         <div layout="horizontal">
           <div class="dialog-menubar-actions" layout="horizontal" layout-align="start">
-            <material-button ng-click="optionsMenu = !optionsMenu" class="material-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}" title="Advanced Options">
+            <md-button ng-click="optionsMenu = !optionsMenu" class="md-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}" title="Advanced Options">
               <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
-            </material-button>
-            <material-button ng-click="ballotPreview = !ballotPreview" class="material-button-icon menuDrawerButton ballotPreviewButton" ng-class="{active: ballotPreview === true}" title="Ballot Preview">
+            </md-button>
+            <md-button ng-click="ballotPreview = !ballotPreview" class="md-button-icon menuDrawerButton ballotPreviewButton" ng-class="{active: ballotPreview === true}" title="Ballot Preview">
               <img ng-src="assets/images/eye_inv_24px.png">
-            </material-button>
+            </md-button>
           </div>
           <span flex></span>
           <div class="dialog-actions" layout="horizontal" layout-align="end">
-            <material-button id="closeButton" ng-click="close()">
+            <md-button id="closeButton" ng-click="close()">
               Close
-            </material-button>
-            <material-button ng-if="saveMatrix.poll" id="nextButton" ng-click="nextDialog($event, poll, saveMatrix, pollLength)" class="material-button-colored">
+            </md-button>
+            <md-button ng-if="saveMatrix.poll" id="nextButton" ng-click="nextDialog($event, poll, saveMatrix, pollLength)" class="md-button-colored">
               Next
-            </material-button>
-            <material-button ng-if="saveMatrix.template && !saveMatrix.poll" id="saveButton" ng-click="save(poll, saveMatrix)" class="material-button-colored">
+            </md-button>
+            <md-button ng-if="saveMatrix.template && !saveMatrix.poll" id="saveButton" ng-click="save(poll, saveMatrix)" class="md-button-colored">
               Save
-            </material-button>
+            </md-button>
           </div>
         </div>
 
@@ -45,19 +45,19 @@
           Options:
           <div>
             <div class="dialog-options-container" inline-block>
-              <material-checkbox ng-model="poll.allowMultipleChoices" aria-label="Multiple selections">Multiple selections</material-checkbox>
-              <material-checkbox ng-model="poll.allowComments" aria-label="Comments">Comments</material-checkbox>
-              <material-checkbox ng-model="poll.showResults" aria-label="Show results" disabled>Show results</material-checkbox>
+              <md-checkbox ng-model="poll.allowMultipleChoices" aria-label="Multiple selections">Multiple selections</md-checkbox>
+              <md-checkbox ng-model="poll.allowComments" aria-label="Comments">Comments</md-checkbox>
+              <md-checkbox ng-model="poll.showResults" aria-label="Show results" disabled>Show results</md-checkbox>
             </div>
             <div class="dialog-options-container" inline-block>
-              <material-checkbox ng-model="saveMatrix.template" aria-label="Save as Template">Save as Template</material-checkbox>
-              <material-checkbox ng-model="saveMatrix.poll" aria-label="Save as Poll">Save as Poll</material-checkbox>
+              <md-checkbox ng-model="saveMatrix.template" aria-label="Save as Template">Save as Template</md-checkbox>
+              <md-checkbox ng-model="saveMatrix.poll" aria-label="Save as Poll">Save as Poll</md-checkbox>
             </div>
             <div class="dialog-options-container" inline-block>
               <label for="dismissTextInput">Dismiss Button: </label>
-              <material-input id="dismissTextInput" type="text" ng-model="poll.dismissText" placeholder="dismiss"></material-input>
+              <md-input id="dismissTextInput" type="text" ng-model="poll.dismissText" placeholder="dismiss"></md-input>
               <label for="submitTextInput">Submit Button: </label>
-              <material-input id="submitTextInput" type="text" ng-model="poll.submitText" placeholder="submit"></material-input>
+              <md-input id="submitTextInput" type="text" ng-model="poll.submitText" placeholder="submit"></md-input>
             </div>
           </div>
         
@@ -65,7 +65,7 @@
       </div>
     </div> <!-- end dialog-content -->
 
-    <material-card class="animate-show votes" id="ballotPreview" ng-if="ballotPreview">
+    <md-card class="animate-show votes" id="ballotPreview" ng-if="ballotPreview">
       <div class="pollOriginatorLine">
         <em>{{poll.id}}</em>
       </div>
@@ -97,11 +97,11 @@
         <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png"> Add comment
       </p>
       <div layout="horizontal" layout-align="end">
-        <material-button id="dismissButton">{{poll.dismissText || "dismiss"}}</material-button>
-        <material-button id="submitButton" class="material-button-colored">{{poll.submitText || "submit"}}</material-button>
+        <md-button id="dismissButton">{{poll.dismissText || "dismiss"}}</md-button>
+        <md-button id="submitButton" class="md-button-colored">{{poll.submitText || "submit"}}</md-button>
       </div>
-    </material-card>
+    </md-card>
     
 
   </div>
-</material-dialog>
+</md-dialog>

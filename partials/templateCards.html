@@ -1,28 +1,28 @@
 <div> 
   <div ng-if="selectedIndex == 0 && listView == 'quilt'" ng-controller="quickAddCtrl" layout="horizontal" layout-align="center start">
     <!-- Quick Add Box -->
-    <material-card id="quickAddBox" style="margin-right:0px;">
+    <md-card id="quickAddBox" style="margin-right:0px;">
       <form name="quickAddForm" style="padding-left:20px;">
-        <!--<material-input-group>
-          <material-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
-        </material-input-group>
-        <material-input-group>  
-          <material-input  name="quickAddDescription" placeholder="{{addDescriptionPlaceholder}}" id="quickAddDescription" type="text" size="45" ng-model="newDescription" flex ng-show="newItem" click-anywhere-but-here="close()" is-active="isDropdownOpen()">
-        </material-input-group>-->
-        <material-input-group>
-          <material-input class="bold" name="pollTitleInput" type="text" ng-model="poll.title" size="45" flex placeholder="{{addTitlePlaceholder}}" ng-click="newItem = true"></material-input>
-        </material-input-group>
-        <material-input-group ng-show="newItem">
+        <!--<md-input-group>
+          <md-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
+        </md-input-group>
+        <md-input-group>  
+          <md-input  name="quickAddDescription" placeholder="{{addDescriptionPlaceholder}}" id="quickAddDescription" type="text" size="45" ng-model="newDescription" flex ng-show="newItem" click-anywhere-but-here="close()" is-active="isDropdownOpen()">
+        </md-input-group>-->
+        <md-input-group>
+          <md-input class="bold" name="pollTitleInput" type="text" ng-model="poll.title" size="45" flex placeholder="{{addTitlePlaceholder}}" ng-click="newItem = true"></md-input>
+        </md-input-group>
+        <md-input-group ng-show="newItem">
           <textarea name="pollDescriptionInput" ng-model="poll.description" flex placeholder="{{addDescriptionPlaceholder}}"></textarea>
-        </material-input-group>
+        </md-input-group>
         <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal"
           ng-class="{focused: opt.hasFocus}" ng-mouseover="opt.menubar = true" ng-mouseleave="opt.menubar = false" ng-show="newItem">
-          <material-checkbox ng-model="opt.isSelected"></material-checkbox>
-          <material-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"  focus-this="{{$index}}" ng-keypress="keypressListener($event)" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false" ng-keyup="checkForOptionDelete($event,$index)" ></material-input>
-          <material-button ng-show="opt.menubar" ng-click="removeOption($index)" title="Remove Option"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
+          <md-checkbox ng-model="opt.isSelected"></md-checkbox>
+          <md-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"  focus-this="{{$index}}" ng-keypress="keypressListener($event)" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false" ng-keyup="checkForOptionDelete($event,$index)" ></md-input>
+          <md-button ng-show="opt.menubar" ng-click="removeOption($index)" title="Remove Option"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></md-button>
         </div>
         <div class="newOptionWrapper" ng-class="{focused: newOptionFocused}" ng-show="newItem">
-          <material-input type="text" id="addOptionInput" ng-model="newOptionText" ng-change="addOption()" placeholder="Add option" ng-focus="newOptionFocused = true" ng-blur="newOptionFocused = false"></material-input>
+          <md-input type="text" id="addOptionInput" ng-model="newOptionText" ng-change="addOption()" placeholder="Add option" ng-focus="newOptionFocused = true" ng-blur="newOptionFocused = false"></md-input>
         </div>
         <div ng-show="newItem" layout="horizontal">
           <p style="color:black;">Select poll targets:</p>
@@ -35,19 +35,19 @@
         </div>
       </form>
       <div layout="horizontal" layout-align="start" ng-show="newItem" id="optionsQuickNewPoll">
-        <material-button ng-click="optionsMenu = !optionsMenu" class="material-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}" title="Advanced Options">
+        <md-button ng-click="optionsMenu = !optionsMenu" class="md-button-icon menuDrawerButton" ng-class="{active: optionsMenu === true}" title="Advanced Options">
           <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
-        </material-button>
-        <material-button ng-click="ballotPreview = !ballotPreview" class="material-button-icon menuDrawerButton ballotPreviewButton" ng-class="{active: ballotPreview === true}" title="Ballot Preview">
+        </md-button>
+        <md-button ng-click="ballotPreview = !ballotPreview" class="md-button-icon menuDrawerButton ballotPreviewButton" ng-class="{active: ballotPreview === true}" title="Ballot Preview">
           <img ng-src="assets/images/eye_inv_24px.png">
-        </material-button>
+        </md-button>
         <span flex></span>
-        <material-button id="quickStartButton" class="material-button-colored" ng-show="newItem && poll.title && poll.pollTargetId && hasData(poll.options) && saveMatrix.poll" ng-click="save(true)">
+        <md-button id="quickStartButton" class="md-button-colored" ng-show="newItem && poll.title && poll.pollTargetId && hasData(poll.options) && saveMatrix.poll" ng-click="save(true)">
         START
-        </material-button>
-        <material-button id="quickAddButton" class="material-button-colored" ng-show="newItem && poll.title && (saveMatrix.poll || saveMatrix.template)" ng-click="save(false)">
+        </md-button>
+        <md-button id="quickAddButton" class="md-button-colored" ng-show="newItem && poll.title && (saveMatrix.poll || saveMatrix.template)" ng-click="save(false)">
         SAVE
-        </material-button>
+        </md-button>
       </div>
       <div class="animate-show" ng-if="optionsMenu" style="color:black;">
         <div class="dialog-options-options">
@@ -55,31 +55,31 @@
           <div class="dialog-options-container" layout="horizontal">
             <p style="color:black;margin:0px;margin-right:30px;">Poll length selection:</p>
             <div layout="horizontal" layout-align="start center" flex>
-              <material-input ng-model="endDate" ui-date="{minDate:'0'}" ui-date-format="mm/dd/yy" placeholder="{{edate}}" style="width:100px;"></material-input><div style="text-align:center;color:black;width:100px;">at</div><material-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker="timepickerOptions" class="ui-timepicker-input" placeholder="HH:MM" style="width:50px;"></material-input>
+              <md-input ng-model="endDate" ui-date="{minDate:'0'}" ui-date-format="mm/dd/yy" placeholder="{{edate}}" style="width:100px;"></md-input><div style="text-align:center;color:black;width:100px;">at</div><md-input ng-change="getTime(endTime)" ng-model="endTime" ui-timepicker="timepickerOptions" class="ui-timepicker-input" placeholder="HH:MM" style="width:50px;"></md-input>
             </div>
           </div>
           <div layout="horizontal" layout-align="start">
             <div class="dialog-options-container">
-              <material-checkbox ng-model="poll.allowMultipleChoices" aria-label="Multiple selections">Multiple selections</material-checkbox>
-              <material-checkbox ng-model="poll.allowComments" aria-label="Comments">Comments</material-checkbox>
-              <material-checkbox ng-model="poll.showResults" aria-label="Show results" disabled>Show results</material-checkbox>
+              <md-checkbox ng-model="poll.allowMultipleChoices" aria-label="Multiple selections">Multiple selections</md-checkbox>
+              <md-checkbox ng-model="poll.allowComments" aria-label="Comments">Comments</md-checkbox>
+              <md-checkbox ng-model="poll.showResults" aria-label="Show results" disabled>Show results</md-checkbox>
             </div>
             <div class="dialog-options-container">
-              <material-checkbox ng-model="saveMatrix.template" aria-label="Save as Template">Save as Template</material-checkbox>
-              <material-checkbox ng-model="saveMatrix.poll" aria-label="Save as Poll">Save as Poll</material-checkbox>
+              <md-checkbox ng-model="saveMatrix.template" aria-label="Save as Template">Save as Template</md-checkbox>
+              <md-checkbox ng-model="saveMatrix.poll" aria-label="Save as Poll">Save as Poll</md-checkbox>
             </div>
             <div class="dialog-options-container">
               <label for="dismissTextInput">Dismiss Button: </label>
-              <material-input id="dismissTextInput" type="text" ng-model="poll.dismissText" placeholder="dismiss"></material-input>
+              <md-input id="dismissTextInput" type="text" ng-model="poll.dismissText" placeholder="dismiss"></md-input>
               <label for="submitTextInput">Submit Button: </label>
-              <material-input id="submitTextInput" type="text" ng-model="poll.submitText" placeholder="submit"></material-input>
+              <md-input id="submitTextInput" type="text" ng-model="poll.submitText" placeholder="submit"></md-input>
             </div>
           </div>
         </div>
       </div>
       <div class="clearBoth"></div>
-    </material-card>
-    <material-card class="animate-show votes" id="quickBallotPreview" ng-if="ballotPreview" style="margin-left:0px;">
+    </md-card>
+    <md-card class="animate-show votes" id="quickBallotPreview" ng-if="ballotPreview" style="margin-left:0px;">
       <div class="pollOriginatorLine">
         <em>{{poll.id}}</em>
       </div>
@@ -111,15 +111,15 @@
         <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png"> Add comment
       </p>
       <div layout="horizontal" layout-align="end">
-        <material-button id="dismissButton">{{poll.dismissText || "dismiss"}}</material-button>
-        <material-button id="submitButton" class="material-button-colored">{{poll.submitText || "submit"}}</material-button>
+        <md-button id="dismissButton">{{poll.dismissText || "dismiss"}}</md-button>
+        <md-button id="submitButton" class="md-button-colored">{{poll.submitText || "submit"}}</md-button>
       </div>
-    </material-card>
+    </md-card>
     <!-- end Quick Add Box -->
   </div>
   <div masonry="{ transitionDuration: 0 }" reload-on-show load-images="false" ng-show="reloadMasonry" ng-class="{streamMargin:isTmpl && selectedIndex != 0}" ng-if="listView == 'quilt'">
   <div class="cardholder masonry-brick" ng-repeat="template in templates" ng-mouseleave="template.overflow = false" ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}">
-    <material-card class="mainCard" ng-mouseover="template.menubar = true" ng-mouseleave="template.menubar = false">
+    <md-card class="mainCard" ng-mouseover="template.menubar = true" ng-mouseleave="template.menubar = false">
       <div class="cardContentContainer" ng-click="zoomTemplate($event, template)">
         <div class="pollTitleLine">
           <b>{{template.title}}</b>
@@ -144,19 +144,19 @@
       </div>
       <div>
         <div class="cardMenuBar animate-show">
-          <material-button class="material-button-icon overflowMenuButton" ng-click="template.overflow = !template.overflow" layout="vertical" layout-align="end end" title="Overflow Menu">
+          <md-button class="md-button-icon overflowMenuButton" ng-click="template.overflow = !template.overflow" layout="vertical" layout-align="end end" title="Overflow Menu">
             <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
-          </material-button>
+          </md-button>
         </div>
       </div>
-    </material-card>
-    <material-card class="overflowMenu animate-show overflowMenuQuilt" ng-show="template.overflow" layout="vertical">
+    </md-card>
+    <md-card class="overflowMenu animate-show overflowMenuQuilt" ng-show="template.overflow" layout="vertical">
       <a class="destroyAction" ng-if="selectedIndex == 0" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyTemplate(template)">Delete</a>
       <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">Fork this Template</a>
       <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">New Poll from This Template</a>
       <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 1">New Template From This Poll</a>
       <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 1">New Poll From This Poll</a>
-    </material-card>
+    </md-card>
   </div>
 </div>
 <div class="streamMargin" ng-show="listView == 'stream' && templates.length != 0">
@@ -169,7 +169,7 @@
   <div></div>
 </div>
 <div class="streamCardholder" ng-repeat="template in templates | filter:pollFilter:true" ng-mouseleave="template.overflow = false"  ng-if="listView == 'stream'">
-  <material-card class="streamMainCard"  layout="horizontal">
+  <md-card class="streamMainCard"  layout="horizontal">
     <div class="streamCardContentContainer" ng-click="zoomPoll($event, template)" layout="horizontal" layout-align="start center">
       <div class="streamPollLine" flex="70">
         <b>{{template.title}}</b>
@@ -180,17 +180,17 @@
     </div>
       
     <div class="streamCardMenuBar" layout="horizontal" layout-align="end center">
-      <material-button class="material-button-icon overflowMenuButton streamOverflowMenuButton" ng-click="template.overflow = !template.overflow" layout="vertical" layout-align="end end" title="Overflow Menu">
+      <md-button class="md-button-icon overflowMenuButton streamOverflowMenuButton" ng-click="template.overflow = !template.overflow" layout="vertical" layout-align="end end" title="Overflow Menu">
         <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_18dp.png">
-      </material-button>
+      </md-button>
     </div>
-  </material-card>
-  <material-card class="overflowMenu animate-show" ng-show="template.overflow" layout="vertical">
+  </md-card>
+  <md-card class="overflowMenu animate-show" ng-show="template.overflow" layout="vertical">
       <a class="destroyAction" ng-if="selectedIndex == 0" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyTemplate(template)">Delete</a>
       <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">Fork this Template</a>
       <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">New Poll from This Template</a>
       <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 1">New Template From This Poll</a>
       <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 1">New Poll From This Poll</a>
-    </material-card>
+    </md-card>
 </div>
 

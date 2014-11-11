@@ -1,5 +1,5 @@
-<material-dialog>
-  <div id="materialDialogContainer" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+<md-dialog>
+  <div id="mdDialogContainer" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
     <div class="dialog-content">
       <h3>{{template.title}}</h3>
       <p>
@@ -21,24 +21,24 @@
       </p>
     </div>
     <div class="dialog-actions" layout="horizontal" layout-align="end">
-      <material-button id="closeButton" ng-click="close()">
+      <md-button id="closeButton" ng-click="close()">
         Close
-      </material-button>
+      </md-button>
     </div>
 
     <div id="actionMenuBar" class="cardMenuBar animate-show" ng-show="dialog.menubar" style="display:block !important;">
       <div class="dialog-menubar-actions">
-        <material-button id="copyPollButton" class="material-button-icon" ng-click="forkTemplate($event, template)" title="Fork This Template" ng-if="selectedIndex == 2 || selectedIndex == 3">
+        <md-button id="copyPollButton" class="md-button-icon" ng-click="forkTemplate($event, template)" title="Fork This Template" ng-if="selectedIndex == 2 || selectedIndex == 3">
           <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_content_copy_wht_18dp.png">
-        </material-button>
-        <material-button id="copyPollButton" class="material-button-icon" ng-click="forkTemplate($event, template)" title="Fork As a New Template" ng-if="selectedIndex == 1">
+        </md-button>
+        <md-button id="copyPollButton" class="md-button-icon" ng-click="forkTemplate($event, template)" title="Fork As a New Template" ng-if="selectedIndex == 1">
           <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_content_copy_wht_18dp.png">
-        </material-button>
-        <material-button id="createPollButton" class="material-button-icon" ng-click="newPollFromTemplate($event, template)" title="Create a new poll using this template">
+        </md-button>
+        <md-button id="createPollButton" class="md-button-icon" ng-click="newPollFromTemplate($event, template)" title="Create a new poll using this template">
           <img ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_done_all_wht_18dp.png">
-        </material-button>
+        </md-button>
       </div>
     </div>
 
   </div>
-</material-dialog>
+</md-dialog>

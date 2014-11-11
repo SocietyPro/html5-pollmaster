@@ -1,11 +1,11 @@
-<material-tabs selected="selectedIndex" noink>
-  <material-tab on-select="collectionChange()" label="My Templates"></material-tab>
-  <material-tab on-select="collectionChange()" label="Copy From Recent Polls"></material-tab>
-  <material-tab on-select="collectionChange()" label="Copy From Examples"></material-tab>
-  <material-tab on-select="collectionChange()" label="Copy From Peer Recommended"></material-tab>
-</material-tabs>
+<md-tabs selected="selectedIndex" noink>
+  <md-tab on-select="collectionChange()" label="My Templates"></md-tab>
+  <md-tab on-select="collectionChange()" label="Copy From Recent Polls"></md-tab>
+  <md-tab on-select="collectionChange()" label="Copy From Examples"></md-tab>
+  <md-tab on-select="collectionChange()" label="Copy From Peer Recommended"></md-tab>
+</md-tabs>
 
-<material-content id="templatesContainer" class="container" scroll-y>
+<md-content id="templatesContainer" class="container" scroll-y>
 
 
   <div class="quilt"  id="templateInside">
@@ -15,8 +15,8 @@
   <!--<pre>{{poll | json}}</pre>-->
 
   <div>
-    <material-button class="material-button-fab material-button-fab-bottom-right addNewPollBtn material-theme-light-blue" ng-click="newItemFromScratch($event, false)" title="New Template">
-      <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png"></material-icon>
-    </material-button>
+    <md-button class="md-button-fab md-button-fab-bottom-right addNewPollBtn md-theme-light-blue" ng-click="newItemFromScratch($event, false)" title="New Template">
+      <md-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png"></md-icon>
+    </md-button>
   </div>
-</material-content>
+</md-content>

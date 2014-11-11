@@ -68,7 +68,7 @@
           </div>-->
           <div  id="filterDropdown" style="position:relative;display:inline-block;" ng-if="!isTmpl">
             <md-button id="buttonFilterDropdown" class="viewButton" aria-label="Filter Polls" ng-click="showFilter=!showFilter">
-              <md-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_wht_24dp.png"></md-icon>
+              <md-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_wht_24dp.png" style="width: 24px; height: 24px;"></md-icon>
             </md-button>
             <div class="filterDropdown" ng-show="showFilter">
               <div class="dropdownContent">
@@ -84,10 +84,10 @@
             </div>
           </div>
           <md-button id="streamButton" class="viewButton" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" aria-label="Show as Stream">
-            <md-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_24dp.png"></md-icon>
+            <md-icon style="width: 24px; height: 24px;" icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_24dp.png"></md-icon>
           </md-button>
           <md-button id="quiltButton" class="viewButton" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" aria-label="Show as Quilt">
-            <md-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_24dp.png"></md-icon>
+            <md-icon style="width: 24px; height: 24px;" icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_24dp.png"></md-icon>
           </md-button>
         </div>
       </div>
