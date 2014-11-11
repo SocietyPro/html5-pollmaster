@@ -14,22 +14,24 @@
 <body ng-controller="pollAppCtrl">
 <div id="applicationContainer" layout="horizontal">
   <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left" layout="vertical">
-        <material-toolbar class="pantheonToolbar">
-          <h1 class="material-toolbar-tools">Society Pro</h1>
-          <span flex></span>
+        <material-toolbar class="sidenavToolbar">
+          <div class="material-toolbar-tools sidenavToolbar" ng-click="toggleMenu()">
+            <div style="height:48px;margin:0px;">
+              <div id="menu-drawer-button" class="menu-icon"> 
+                <img class="toggleImage" src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
+              </div>
+              <div class="toolbarTitle">Society Pro</div>
+            </div>  
+          </div>        
         </material-toolbar>
-        <material-content>
-          <div>
-            <button id="pollsButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation();">
-              Polls
-              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
-            </button>
-            <button id="templatesButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation();">
-              Templates
-              <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
-            </button>
-          </div>
-        </material-content>
+        <material-button id="pollsButton" class="sidenavButton" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation();">
+          Polls
+          <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+        </material-button>
+        <material-button id="templatesButton" class="sidenavButton" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation();">
+          Templates
+          <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+        </material-button>
         <span flex></span>
         <div class="appVersion">
           <p>Ballot version: 0.1.12</p>
@@ -37,14 +39,19 @@
       </material-sidenav>
 
   <div layout="vertical" layout-fill ng-class="{mainContentPolls:view,mainContentTemplates:!view}">
-    <material-toolbar scroll-shrink class="pantheonToolbar">
+    <material-toolbar scroll-shrink class="pantheonToolbar" ng-class="{noShadow:isTmpl}">
       <div layout="horizontal">
-        <div class="material-toolbar-tools">
-          <div id="menu-drawer-button" class="menu-icon" ng-click="toggleMenu()"> <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_wht_24dp.png"> </div>
-          <h2 class="toolbarTitle">Ballot</h2>
+        <div class="material-toolbar-tools" ng-click="toggleMenu()">
+          <div style="height:48px;margin:0px;">
+            <div id="menu-drawer-button" class="menu-icon"> 
+              <img class="toggleImage" src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_wht_24dp.png">
+            </div>
+            <div class="toolbarTitle">Ballot</div>
+          </div>  
         </div>
-        <div id="viewButtons" layout="horizontal" flex="25" layout-align="end">
-          <div id='cssmenu' ng-if="checkView()">
+        <span flex></span>
+        <div id="viewButtons" layout="horizontal">
+          <!--<div id='cssmenu' ng-if="checkView()">
             <ul>
               <li class='active has-sub last' id="filterButton">
                 <material-button class="viewButton clicker material-button-icon" title="Filter Polls">
@@ -59,19 +66,34 @@
                 </ul>
               </li>
             </ul>
+          </div>-->
+          <div  id="filterDropdown" style="position:relative;display:inline-block;" ng-if="!isTmpl">
+            <material-button id="buttonFilterDropdown" class="viewButton" title="Filter Polls" ng-click="showFilter=!showFilter">
+              <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_wht_24dp.png"></material-icon>
+            </material-button>
+            <div class="filterDropdown" ng-show="showFilter">
+              <div class="dropdownContent">
+                <div ng-repeat="filter in menu.filters"> 
+                  <a id="filterButton" class="menu-item menu-sub-item" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="selectFilter(filter); $event.stopImmediatePropogation()"> 
+                    <span class="color-chip" style='background-color: {{filter.color}};'></span> 
+                    <span class="color-tag" ng-bind="filter.filter"></span>
+                    <div class="clearBoth"></div>
+                    <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-          <material-button id="streamButton" class="viewButton material-button-icon" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" title="Show as Stream">
+          <material-button id="streamButton" class="viewButton" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" title="Show as Stream">
             <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_24dp.png"></material-icon>
           </material-button>
-          <material-button id="quiltButton" class="viewButton material-button-icon" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" title="Show as Quilt">
+          <material-button id="quiltButton" class="viewButton" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" title="Show as Quilt">
             <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_24dp.png"></material-icon>
           </material-button>
         </div>
       </div>
     </material-toolbar>
-    <div class="content-padding">
       <ng-view></ng-view>
-    </div>
   </div>
 </div>
 <script type="text/javascript" src="js/date.js"></script> 

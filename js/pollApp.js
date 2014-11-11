@@ -34,10 +34,10 @@ app.config(function($routeProvider){
 app.factory("menu", ['$rootScope', function ($rootScope) {
   var self;
   var filters = [{ filter: 'All', color: '#000' }, 
-                 { filter: 'Vote', color: 'rgba(164, 134, 35, 0.7)' },
-                 { filter: 'Running', color: 'rgba(69, 139, 116, 0.7)' },
-                 { filter: 'Unstarted', color: 'rgba(64, 80, 94, 0.7)' },
-                 { filter: 'Completed', color: 'rgba(0, 0, 0, 0.7)' }];
+                 { filter: 'Vote', color: '#FF6D3F' },
+                 { filter: 'Running', color: '#1CE8B5' },
+                 { filter: 'Unstarted', color: '#B8C4C9' },
+                 { filter: 'Completed', color: '#3FC3FF' }];
 
   return self = {
     filters: filters,
@@ -112,6 +112,17 @@ app.controller("pollAppCtrl", function ($scope,
     }
 
     $scope.reloadMasonry = true;
+
+    $(document).mouseup(function (e) {
+        var container = $("#filterDropdown");
+        var button = $("#buttonFilterDropdown");
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && !button.is(e.target) && button.has(e.target).length === 0) { // ... nor a descendant of the container
+            $scope.safeApply(function () {
+              $scope.showFilter = false;
+            });       
+        }
+    });
 
     $scope.selectFilter = function (filter) {
       menu.selectFilter(filter);
@@ -1010,7 +1021,6 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
        var seconds = $scope.convertTimeToSeconds($scope.newDate, $scope.time);
     if (seconds > 0) {
       $scope.poll.pollTimeLength = seconds | 0;
-      console.log("hey")
       saveItem($scope.poll, $scope.saveMatrix, startNow);
       $scope.poll.overflow = false;
     } else {

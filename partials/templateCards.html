@@ -1,5 +1,5 @@
 <div> 
-  <div ng-if="selectedIndex == 0" ng-controller="quickAddCtrl" layout="horizontal" layout-align="center start">
+  <div ng-if="selectedIndex == 0 && listView == 'quilt'" ng-controller="quickAddCtrl" layout="horizontal" layout-align="center start">
     <!-- Quick Add Box -->
     <material-card id="quickAddBox" style="margin-right:0px;">
       <form name="quickAddForm" style="padding-left:20px;">
@@ -117,7 +117,7 @@
     </material-card>
     <!-- end Quick Add Box -->
   </div>
-  <div masonry >
+  <div masonry="{ transitionDuration: 0 }" reload-on-show load-images="false" ng-show="reloadMasonry" ng-class="{streamMargin:isTmpl && selectedIndex != 0}" ng-if="listView == 'quilt'">
   <div class="cardholder masonry-brick" ng-repeat="template in templates" ng-mouseleave="template.overflow = false" ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}">
     <material-card class="mainCard" ng-mouseover="template.menubar = true" ng-mouseleave="template.menubar = false">
       <div class="cardContentContainer" ng-click="zoomTemplate($event, template)">
@@ -143,20 +143,54 @@
         </div>
       </div>
       <div>
-      <div class="cardMenuBar animate-show" ng-show="template.menubar">
-        <material-button class="material-button-icon overflowMenuButton" ng-click="overflowToggle(template)" layout="vertical" layout-align="end end" title="Overflow Menu">
-          <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
-        </material-button>
+        <div class="cardMenuBar animate-show">
+          <material-button class="material-button-icon overflowMenuButton" ng-click="template.overflow = !template.overflow" layout="vertical" layout-align="end end" title="Overflow Menu">
+            <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
+          </material-button>
+        </div>
       </div>
     </material-card>
+    <material-card class="overflowMenu animate-show overflowMenuQuilt" ng-show="template.overflow" layout="vertical">
+      <a class="destroyAction" ng-if="selectedIndex == 0" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyTemplate(template)">Delete</a>
+      <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">Fork this Template</a>
+      <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">New Poll from This Template</a>
+      <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 1">New Template From This Poll</a>
+      <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 1">New Poll From This Poll</a>
+    </material-card>
   </div>
+</div>
+<div class="streamMargin" ng-show="listView == 'stream' && templates.length != 0">
+  <div class="streamTitles">
+    <div layout="horizontal" flex="90">
+      <div flex="70" style="margin-left:16px;">Title</div>
+      <div flex="20" style="margin-left:16px;">Owner</div>
+    </div>
   </div>
-  <material-card class="overflowMenu animate-show" ng-show="template.overflow" layout="vertical">
-    <a class="destroyAction" ng-if="selectedIndex == 0" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyTemplate(template)">Delete</a>
-    <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">Fork this Template</a>
-    <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">New Poll from This Template</a>
-    <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 1">New Template From This Poll</a>
-    <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 1">New Poll From This Poll</a>
+  <div></div>
+</div>
+<div class="streamCardholder" ng-repeat="template in templates | filter:pollFilter:true" ng-mouseleave="template.overflow = false"  ng-if="listView == 'stream'">
+  <material-card class="streamMainCard"  layout="horizontal">
+    <div class="streamCardContentContainer" ng-click="zoomPoll($event, template)" layout="horizontal" layout-align="start center">
+      <div class="streamPollLine" flex="70">
+        <b>{{template.title}}</b>
+      </div>
+      <div class="streamPollLine gray" flex="20">
+        <em>{{template.originator}}</em>
+      </div>
+    </div>
+      
+    <div class="streamCardMenuBar" layout="horizontal" layout-align="end center">
+      <material-button class="material-button-icon overflowMenuButton streamOverflowMenuButton" ng-click="template.overflow = !template.overflow" layout="vertical" layout-align="end end" title="Overflow Menu">
+        <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_18dp.png">
+      </material-button>
+    </div>
   </material-card>
+  <material-card class="overflowMenu animate-show" ng-show="template.overflow" layout="vertical">
+      <a class="destroyAction" ng-if="selectedIndex == 0" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyTemplate(template)">Delete</a>
+      <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">Fork this Template</a>
+      <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 0 || selectedIndex == 2 || selectedIndex == 3">New Poll from This Template</a>
+      <a class="forkAction" ng-click="forkTemplate($event, template)" ng-if="selectedIndex == 1">New Template From This Poll</a>
+      <a class="pollFromTemplateAction" ng-click="newPollFromTemplate($event, template)" ng-if="selectedIndex == 1">New Poll From This Poll</a>
+    </material-card>
 </div>
 

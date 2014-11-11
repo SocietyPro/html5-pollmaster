@@ -19,7 +19,7 @@
         <div id="singleChoicePollOptions" ng-if="!poll.allowMultipleChoices">
           <span class="ballotOption" ng-repeat="option in poll.options">
             <label>
-              <input type="radio" ng-model="$parent.ballot.selectedOption" ng-value="option.text"> {{option.text}}
+              <input type="radio" ng-model="option.isSelected" ng-value="option.text"> {{option.text}}
             </label>
           </span>
         </div>

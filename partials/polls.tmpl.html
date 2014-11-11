@@ -1,7 +1,7 @@
 <!-- Quick Add Box -->
-<material-content id="pollsContainer" class="material-content-padding">
-  <div ng-controller="quickAddCtrl" layout="horizontal" layout-align="center start" style="margin-bottom:10px;">
-    <material-card id="quickAddBox" style="margin-right:0px;">
+<material-content id="pollsContainer" class="container">
+  <div ng-controller="quickAddCtrl" layout="horizontal" layout-align="center start" style="margin:0px;" ng-show="listView == 'quilt'">
+    <material-card id="quickAddBox">
       <form name="quickAddForm" style="padding-left:20px;">
         <!--<material-input-group>
           <material-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
@@ -80,7 +80,7 @@
       </div>
       <div class="clearBoth"></div>
     </material-card>
-    <material-card class="animate-show votes" id="quickBallotPreview" ng-if="ballotPreview" style="margin-left:0px;">
+    <material-card class="animate-show votes" id="quickBallotPreview" ng-show="ballotPreview" style="margin-left:0px;">
       <div class="pollOriginatorLine">
         <em>{{poll.id}}</em>
       </div>
@@ -123,5 +123,11 @@
   </div>
 
   <!--<pre>{{poll | json}}</pre>-->
+
+  <div>
+    <material-button class="material-button-fab material-button-fab-bottom-right material-theme-light-blue" ng-click="newItemFromScratch($event, true, undefined, '', '')" title="New Poll">
+      <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png"></material-icon>
+    </material-button>
+  </div>
 
 </material-content>

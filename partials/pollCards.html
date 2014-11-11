@@ -20,7 +20,7 @@
               </table>
             </div>
           </div>
-          <div class="pollReturns" layout="horizontal" layout-align="center">
+          <div class="pollReturns" layout="horizontal" layout-align="center" ng-hide="poll.status === 'voted'">
             <div class="optionCounts" ng-show="poll.status === 'started' || poll.status === 'stopped'" flex>
               <div class="options">
                 <table>
@@ -89,7 +89,7 @@
         <div ng-if="poll.dateStarted && poll.pollTimeLength && (poll.status === 'unstarted' || poll.status === 'vote' || poll.status === 'started' || poll.status === 'unvoted')" class="pollEndsDate" align="center" ng-click="zoomPoll($event, poll)">
           Poll Ends in {{getEndPollDate(poll.dateStarted,poll.pollTimeLength)}}
         </div>
-      <div class="cardMenuBar animate-show" ng-show="poll.menubar">
+      <div class="cardMenuBar animate-show" ng-show="true">
         <material-button ng-if="poll.status === 'unstarted' && poll.pollTargetId" class="material-button-icon startPollButton" ng-click="startPoll(poll,$event)" title="Start Poll">
           <img class="startPollIcon" ng-src="material-icons/icons/system_icons/av/res/1x_web/ic_play_arrow_wht_18dp.png">
         </material-button>
@@ -110,19 +110,30 @@
     </material-card>
   </div>
 </div>
+<div class="streamMargin" ng-show="listView == 'stream' && polls.length != 0">
+  <div class="streamTitles">
+    <div layout="horizontal" flex="90">
+      <div flex="50" style="margin-left:16px;">Title</div>
+      <div flex="10" style="margin-left:16px;">Owner</div>
+      <div flex="10" style="margin-left:16px;">Status</div>
+      <div flex="30" style="margin-left:16px;">End Date</div>
+    </div>
+  </div>
+  <div></div>
+</div>
 <div class="streamCardholder" ng-repeat="poll in polls | filter:pollFilter:true" ng-mouseleave="poll.overflow = false"  ng-if="listView == 'stream'">
   <material-card class="streamMainCard" ng-class="{votes: poll.status === 'unvoted', voted: poll.status === 'voted', running: poll.status === 'started', completed: poll.status === 'stopped', unstarted: poll.status === 'unstarted', firstCard: $first}" layout="horizontal">
     <div class="streamCardContentContainer" ng-click="zoomPoll($event, poll)" layout="horizontal" layout-align="start center">
-      <div class="streamPollTitleLine" flex="50">
+      <div class="streamPollLine" flex="50">
         <b>{{poll.title}}</b>
       </div>
-      <div class="streamPollOriginatorLine" flex="15">
+      <div class="streamPollLine gray" flex="10">
         <em>{{poll.originator}}</em>
       </div>
-      <div class="streamPollOriginatorLine" flex="10">
+      <div class="streamPollLine gray" flex="10">
         <em>{{poll.status}}</em>
       </div>
-      <div class="streamPollEndsDate" flex="25">
+      <div class="streamPollLine gray" flex="30">
         <div ng-if="poll.dateStarted && poll.pollTimeLength && poll.status === 'stopped'" >
           Poll Ended At {{getEndPollDate(poll.dateStarted,poll.pollTimeLength)}} 
         </div>
@@ -133,13 +144,13 @@
     </div>
       
     <div class="streamCardMenuBar" layout="horizontal" layout-align="end center">
-      <material-button ng-if="poll.status === 'unstarted' && poll.pollTargetId" class="material-button-icon startPollButton" ng-click="startPoll(poll,$event)" title="Start Poll">
+      <material-button ng-if="poll.status === 'unstarted' && poll.pollTargetId" class="material-button-icon startPollButton streamOverflowMenuButton" ng-click="startPoll(poll,$event)" title="Start Poll">
         <img class="startPollIcon" ng-src="material-icons/icons/system_icons/av/res/1x_web/ic_play_arrow_wht_18dp.png">
       </material-button>
-      <material-button ng-if="poll.status === 'started'" class="material-button-icon stopPollButton" ng-click="stopPoll(poll)" title="Stop Poll">
+      <material-button ng-if="poll.status === 'started'" class="material-button-icon stopPollButton streamOverflowMenuButton" ng-click="stopPoll(poll)" title="Stop Poll">
         <img class="stopPollIcon" ng-src="material-icons/icons/system_icons/av/res/1x_web/ic_stop_wht_18dp.png">
       </material-button>
-      <material-button class="material-button-icon overflowMenuButton" ng-click="overflowToggle(poll)" layout="vertical" layout-align="end end" title="Overflow Menu">
+      <material-button class="material-button-icon overflowMenuButton streamOverflowMenuButton" ng-click="overflowToggle(poll)" layout="vertical" layout-align="end end" title="Overflow Menu">
         <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
       </material-button>
     </div>
