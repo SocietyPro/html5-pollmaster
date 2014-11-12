@@ -28,8 +28,8 @@
 
 /* Miscellaneous app-wide styles: */
 
-button {
-	margin-left: .5em;
+md-button .md-button-inner {
+	padding: 5px 0px;
 }
 
 .navButtons {
@@ -283,7 +283,7 @@ button {
 .animate-show {
   line-height:20px;
   opacity:1;
-  padding: 10px 0px 0px 0px;
+  padding: 0px;
   background:white;
 }
 
@@ -350,6 +350,7 @@ button {
   overflow: hidden;
   position: relative;
   vertical-align: middle;
+  margin-top: 0px;
 }
 .viewButton:hover {
   background-color: rgba(0,0,0,0.1);
@@ -357,18 +358,17 @@ button {
 .viewButton.inactive {
   opacity: 0.5;
 }
-
-.menuDrawerButton {
-  border: 1px solid rgba(0,0,0,0.2);
-}
 .menuDrawerButton.active {
-  background-color: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.2);
+  opacity: 1 !important;
 }
 .menuDrawerButton.inactive {
   opacity: 0.5;
 }
 
 #quilt {
+  margin-top: 30px;
   vertical-align: top;
 }
 
@@ -404,13 +404,13 @@ button {
   display: block;
   position: relative;
   max-width: 612px;
-  min-width: 545px;
+  min-width: 612px;
   box-sizing: border-box;
   padding: 8px;
   line-height: 24px;
   background-color: white;
-  margin:30px;
-  margin-right: 0px;
+  margin: auto;
+  margin-top: 30px;
 }
 
 #quickAddTitle {
@@ -437,6 +437,7 @@ textarea {
   border-bottom: none;
   width: 100%;
   line-height: 1.2em;
+  resize: none;
 }
 
 #quickAddButton {
@@ -617,6 +618,10 @@ div .cardMenuBar {
   border-bottom: 1px solid lightgrey;
 }
 
+.optionsLine {
+  max-height: 32px;
+}
+
 .optionsInput {
   display: inline-block !important;
 }
@@ -666,20 +671,22 @@ md-checkbox[disabled] {
   border: 1px solid grey;
   border-radius: 6px;
   padding: 8px;
-  margin: 1px;
+  margin: 10px 1px;
 }
 
 .dialog-options-container input {
   display: inline;
-  color: #444;
+  color: rgba(0,0,0,.8);
+  margin-right: 20px;
+  width: 181px;
   font-family: 'RobotoDraft', 'Helvetica Neue', Helvetica, Arial;
-  border: none;
-}
-
-.dialog-options-options {
-  margin-right: 7px;
-  margin-left: 20px; 
-  float: left;
+  border-radius: 1px;
+  border: 1px solid #d9d9d9;
+  border-top: 1px solid #c0c0c0;
+  font-size: 13px;
+  height: 25px;
+  padding: 1px 8px;
+  background-color: white;
 }
 
 .dialog-options-poll-ends {
@@ -943,10 +950,20 @@ md-toolbar {
 }
 
 #optionsQuickNewPoll .menuDrawerButton {
+  opacity: .55;
   height: 25px;
   width: 30px;
   margin-right: 5px;
 }
+
+#optionsQuickNewPoll > .menuDrawerButton > button {
+  margin-top: -5px;
+}
+
+#optionsQuickNewPoll > .menuDrawerButton:hover {
+  opacity: 1;
+}
+
 #optionsQuickNewPoll {
   margin: 20px;
   margin-top: 5px;
@@ -1139,6 +1156,7 @@ ng-view {
 }
 md-content, .md-content {
   overflow: visible;
+  background-color: inherit !important;
 }
 .optionPreview {
   overflow:hidden;
@@ -1163,7 +1181,7 @@ md-sidenav {
 }
 .sidenavButton {
   color: #555555;
-  padding: 13px 0 13px 28px;
+  padding: 13px 0 13px 76px;
   font-weight: 500;
   position: relative;
   cursor: pointer;
@@ -1192,4 +1210,35 @@ md-dialog>div{
   outline: none;
   font-weight: 500;
   margin: 0px 10px;
+}
+md-backdrop.md-opaque.md-default-theme {
+  background-color: rgba(0,0,0,0);
+}
+
+md-sidenav > md-button > button {
+  text-align: start;
+}
+
+md-input-group, .md-input-group {
+  margin: 0px;
+}
+.quickFabButton {
+  position: fixed;
+  right: 39px;
+  bottom: 24px;
+}
+.quickAddForm {
+  display: table;
+  width: 100%;  
+}
+.optionsMenu {
+  box-sizing: border-box;
+  color: rgba(0,0,0,0.8);
+  width: 612px;
+  margin: auto;
+  background-color: rgba(0,0,0,0.17);
+}
+.optionsMenu > .dialog-options-options {
+  padding: 15px;
+  background-color: inherit;
 }

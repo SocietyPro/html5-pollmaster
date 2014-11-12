@@ -912,10 +912,11 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
 
   $(document).mouseup(function (e) {
     var container = $("#quickAddBox");
+    var options = $(".optionsMenu");
     var datepicker = $("#ui-datepicker-div");
     var timepicker = $(".ui-timepicker-wrapper");
-    if ((!container.is(e.target) && !datepicker.is(e.target) && !timepicker.is(e.target)) // if the target of the click isn't the container...
-        && (container.has(e.target).length === 0 && datepicker.has(e.target).length === 0 && timepicker.has(e.target).length === 0 )) // ... nor a descendant of the container
+    if ((!container.is(e.target) && !datepicker.is(e.target) && !timepicker.is(e.target) && !options.is(e.target)) // if the target of the click isn't the container...
+        && (container.has(e.target).length === 0 && datepicker.has(e.target).length === 0 && timepicker.has(e.target).length === 0 && options.has(e.target).length === 0)) // ... nor a descendant of the container
     {
       var exists = ($('#quickAddBox').length === 1)
       if (exists) {
