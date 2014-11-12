@@ -847,7 +847,9 @@ div.infoBar {
 }
 
 material-tabs {
-  width: auto;
+  width: 100%;
+  position: fixed;
+  z-index: 7;
 }
 
 material-tab material-tab-label {
@@ -1006,9 +1008,6 @@ material-dialog-container material-dialog {
   width: initial;
   right: 4%;
 }
-material-content > .material-content {
-  padding: 0px 5%;
-}
 .streamMainCard {
   height: 48px;
   max-height: 48px;
@@ -1134,9 +1133,10 @@ material-content > .material-content {
 }
 material-content > .material-content {
   padding: 0;
+  margin-top: 40px;
 }
 ng-view {
-  overflow: visible;
+  overflow: auto;
 }
 material-content, .material-content {
   overflow: visible;

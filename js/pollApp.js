@@ -784,7 +784,7 @@ app.controller("pollsCtrl", function ($scope,
               };
 
               function refreshComments (poll) {
-                $scope.$apply (function () {
+                $scope.safeApply (function () {
                   $scope.comments = pollComments(poll);
                 });
               };
@@ -794,7 +794,7 @@ app.controller("pollsCtrl", function ($scope,
         };
 
         function refreshPoll () {
-          $scope.$apply (function () {
+          $scope.safeApply (function () {
             console.log("getting the new poll stuff");
             $scope.poll = pollFind($scope.poll.id);
             console.log($scope.poll);
@@ -954,7 +954,7 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
     {
       var exists = ($('#quickAddBox').length === 1)
       if (exists) {
-        $scope.$apply(function() {
+        $scope.safeApply(function() {
           $scope.poll = pollNew();
           $scope.poll.allowComments = true;
           $scope.newItem = false;
@@ -967,7 +967,7 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
   });
 
   $scope.$on('resetQuickAddForm', function () {
-    $scope.$apply(function() {
+    $scope.safeApply(function() {
       $scope.poll = pollNew();
       $scope.poll.allowComments = true;
       $scope.newItem = false;
