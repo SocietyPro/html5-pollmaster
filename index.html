@@ -12,9 +12,9 @@
 </head>
 <body ng-controller="pollAppCtrl">
 <div id="applicationContainer" layout="horizontal">
-  <md-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left" layout="vertical">
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" component-id="left" layout="vertical">
         <md-toolbar class="sidenavToolbar">
-          <div class="material-toolbar-tools sidenavToolbar" ng-click="toggleMenu()">
+          <div class="md-toolbar-tools sidenavToolbar" ng-click="toggleMenu()">
             <div style="height:48px;margin:0px;">
               <div id="menu-drawer-button" class="menu-icon"> 
                 <img class="toggleImage" src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
@@ -40,7 +40,7 @@
   <div layout="vertical" layout-fill ng-class="{mainContentPolls:view,mainContentTemplates:!view}">
     <md-toolbar scroll-shrink class="pantheonToolbar" ng-class="{noShadow:isTmpl}">
       <div layout="horizontal">
-        <div class="material-toolbar-tools" ng-click="toggleMenu()">
+        <div class="md-toolbar-tools" ng-click="toggleMenu()">
           <div style="height:48px;margin:0px;">
             <div id="menu-drawer-button" class="menu-icon"> 
               <img class="toggleImage" src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_wht_24dp.png">
