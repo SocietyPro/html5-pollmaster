@@ -1,5 +1,5 @@
-<material-dialog>
-  <div id="materialDialogContainer" ng-show="poll.status === 'started' || poll.status === 'complete'" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+<md-dialog>
+  <div id="mdDialogContainer" ng-show="poll.status === 'started' || poll.status === 'complete'" ng-class="{votes: poll.status === 'vote', running: poll.status === 'started', completed: poll.status === 'complete'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
     
     <div class="dialog-content">
       
@@ -41,17 +41,17 @@
     </div>
 
     <div class="dialog-menubar-actions">
-      <material-button id="backToResultsButton" ng-click="showPoll($event, poll)">
+      <md-button id="backToResultsButton" ng-click="showPoll($event, poll)">
         <img ng-src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_18dp.png">
         Back to Poll Results
-      </material-button>
+      </md-button>
     </div>
 
     <div class="dialog-actions" layout="horizontal" layout-align="space-between">
-      <material-button id="closeButton" ng-click="close()">
+      <md-button id="closeButton" ng-click="close()">
         Close
-      </material-button>
+      </md-button>
     </div>
 
   </div>
-</material-dialog>
+</md-dialog>

@@ -4,18 +4,17 @@
 <title>Ballot</title>
 <link rel="stylesheet" type="text/css" media="screen" href="bower_components/jquery-timepicker-jt/jquery.timepicker.css" />
 <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css"/>
-<link rel="stylesheet" type="text/css" href="css/angular-material.css">
+<link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.css">
 <link rel="stylesheet" type="text/css" href="css/docs.css">
 <link rel="stylesheet" type="text/css" href="css/custom.css">
-<link rel="stylesheet" type="text/css" href="css/dropdown.css">
 <link rel="stylesheet" type="text/css" href="bower_components/nvd3/nv.d3.css">
 <link rel="stylesheet" type="text/css" href="css/pantheonPollMaster.css">
 </head>
 <body ng-controller="pollAppCtrl">
 <div id="applicationContainer" layout="horizontal">
-  <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left" layout="vertical">
-        <material-toolbar class="sidenavToolbar">
-          <div class="material-toolbar-tools sidenavToolbar" ng-click="toggleMenu()">
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" component-id="left" layout="vertical">
+        <md-toolbar class="sidenavToolbar">
+          <div class="md-toolbar-tools sidenavToolbar" ng-click="toggleMenu()">
             <div style="height:48px;margin:0px;">
               <div id="menu-drawer-button" class="menu-icon"> 
                 <img class="toggleImage" src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_24dp.png">
@@ -23,25 +22,25 @@
               <div class="toolbarTitle">Society Pro</div>
             </div>  
           </div>        
-        </material-toolbar>
-        <material-button id="pollsButton" class="sidenavButton" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation();">
+        </md-toolbar>
+        <md-button id="pollsButton" class="sidenavButton" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="pollsShow(); $event.stopImmediatePropogation();">
           Polls
-          <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
-        </material-button>
-        <material-button id="templatesButton" class="sidenavButton" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation();">
+          <md-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></md-ripple>
+        </md-button>
+        <md-button id="templatesButton" class="sidenavButton" ng-class="{active: menu.isFilterSelected(filter)}" ng-click="templatesShow(); $event.stopImmediatePropogation();">
           Templates
-          <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
-        </material-button>
+          <md-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></md-ripple>
+        </md-button>
         <span flex></span>
         <div class="appVersion">
           <p>Ballot version: 0.1.12</p>
         </div>
-      </material-sidenav>
+      </md-sidenav>
 
   <div layout="vertical" layout-fill ng-class="{mainContentPolls:view,mainContentTemplates:!view}">
-    <material-toolbar scroll-shrink class="pantheonToolbar" ng-class="{noShadow:isTmpl}">
+    <md-toolbar scroll-shrink class="pantheonToolbar" ng-class="{noShadow:isTmpl}">
       <div layout="horizontal">
-        <div class="material-toolbar-tools" ng-click="toggleMenu()">
+        <div class="md-toolbar-tools" ng-click="toggleMenu()">
           <div style="height:48px;margin:0px;">
             <div id="menu-drawer-button" class="menu-icon"> 
               <img class="toggleImage" src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_wht_24dp.png">
@@ -68,9 +67,9 @@
             </ul>
           </div>-->
           <div  id="filterDropdown" style="position:relative;display:inline-block;" ng-if="!isTmpl">
-            <material-button id="buttonFilterDropdown" class="viewButton" title="Filter Polls" ng-click="showFilter=!showFilter">
-              <material-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_wht_24dp.png"></material-icon>
-            </material-button>
+            <md-button id="buttonFilterDropdown" class="viewButton" aria-label="Filter Polls" ng-click="showFilter=!showFilter">
+              <md-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_filter_wht_24dp.png" style="width: 24px; height: 24px;"></md-icon>
+            </md-button>
             <div class="filterDropdown" ng-show="showFilter">
               <div class="dropdownContent">
                 <div ng-repeat="filter in menu.filters"> 
@@ -78,21 +77,21 @@
                     <span class="color-chip" style='background-color: {{filter.color}};'></span> 
                     <span class="color-tag" ng-bind="filter.filter"></span>
                     <div class="clearBoth"></div>
-                    <material-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></material-ripple>
+                    <md-ripple initial-opactiy="0.4" opacity-decay-velocity="1.75"></md-ripple>
                   </a>
                 </div>
               </div>
             </div>
           </div>
-          <material-button id="streamButton" class="viewButton" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" title="Show as Stream">
-            <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_24dp.png"></material-icon>
-          </material-button>
-          <material-button id="quiltButton" class="viewButton" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" title="Show as Quilt">
-            <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_24dp.png"></material-icon>
-          </material-button>
+          <md-button id="streamButton" class="viewButton" ng-click="streamView()" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" aria-label="Show as Stream">
+            <md-icon style="width: 24px; height: 24px;" icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_24dp.png"></md-icon>
+          </md-button>
+          <md-button id="quiltButton" class="viewButton" ng-click="quiltView()" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" aria-label="Show as Quilt">
+            <md-icon style="width: 24px; height: 24px;" icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_24dp.png"></md-icon>
+          </md-button>
         </div>
       </div>
-    </material-toolbar>
+    </md-toolbar>
       <ng-view></ng-view>
   </div>
 </div>
@@ -101,12 +100,14 @@
 <!--<script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>--> 
 <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script> 
 <script src="bower_components/angular/angular.js" type="text/javascript"></script> 
-<script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script> 
+<script src="bower_components/angular-aria/angular-aria.js" type="text/javascript"></script>
+<script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
+<script src="bower_components/hammerjs/hammer.js" type="text/javascript"></script> 
 <script src="bower_components/angular-route/angular-route.js" type="text/javascript"></script> 
 <script src="bower_components/d3/d3.js" charset="utf-8"></script> 
 <script src="bower_components/nvd3/nv.d3.js"></script> 
 <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script> 
-<script src="js/angular-material.js" type="text/javascript"></script> 
+<script src="bower_components/angular-material/angular-material.js" type="text/javascript"></script> 
 <script src="js/ui-bootstrap-tpls-0.11.0.js"></script> 
 <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script> 
 <script src="bower_components/japi/js/japi.js" type="text/javascript"></script> 
@@ -116,7 +117,6 @@
 <script src="js/pollApp.js" type="text/javascript"></script> 
 <script src="js/pollJapi.js" type="text/javascript"></script> 
 <script src="js/targetSelectionCtrl.js" type="text/javascript"></script> 
-<script type="text/javascript" src="js/dropdown.js"></script>
 <script src="bower_components/jquery-bridget/jquery.bridget.js"></script>
 <script src="bower_components/get-style-property/get-style-property.js"></script>
 <script src="bower_components/get-size/get-size.js"></script>

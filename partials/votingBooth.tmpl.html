@@ -1,7 +1,7 @@
-<material-content id="pollContainer" class="material-content-padding" scroll-y>
+<md-content id="pollContainer" class="md-content-padding" scroll-y>
   <div id="quilt" ng-show="listView === 'quilt'">
     <div layout="horizontal" layout-align="center">
-      <material-card id="ballotCard" class="votes">
+      <md-card id="ballotCard" class="votes">
         <span id="ballotOriginator">
           <em>{{poll.originator}}</em>
         </span>
@@ -29,10 +29,10 @@
           <textarea id="commentInput" ng-model="ballot.ballotComment" ng-show="showCommentInput"></textarea>
         </p>
         <div layout="horizontal" layout-align="end">
-          <material-button id="dismissButton" class="material-button" ng-click="dismiss()">{{poll.dismissText || "Dismiss"}}</material-button>
-          <material-button id="submitButton" class="material-button-colored" ng-click="submit()">{{poll.submitText || "Submit"}}</material-button>
+          <md-button id="dismissButton" class="md-button" ng-click="dismiss()">{{poll.dismissText || "Dismiss"}}</md-button>
+          <md-button id="submitButton" class="md-button-colored" ng-click="submit()">{{poll.submitText || "Submit"}}</md-button>
         </div>
-      </material-card>
+      </md-card>
     </div>
   </div>
-</material-content>
+</md-content>

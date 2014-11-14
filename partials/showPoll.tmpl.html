@@ -1,5 +1,5 @@
-<material-dialog>
-  <div id="materialDialogContainer" ng-show="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'" ng-class="{running: poll.status === 'started', completed: poll.status === 'stopped' || poll.status === 'voted'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+<md-dialog style="min-height:470px;">
+  <div id="mdDialogContainer" ng-show="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'" ng-class="{running: poll.status === 'started', completed: poll.status === 'stopped' || poll.status === 'voted'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
 
     <div class="dialog-content">
       <div class="pollInformation">
@@ -99,24 +99,24 @@
       </div>
     </div>
     <div class="dialog-actions" layout="horizontal" layout-align="end">
-      <material-button id="closeButton" ng-click="close()">
+      <md-button id="closeButton" ng-click="close()" style="margin: 14px;">
         Close
-      </material-button>
+      </md-button>
     </div>
 
-    <div id="actionMenuBar" class="cardMenuBar animate-show" ng-show="dialog.menubar" style="display:block !important;">
-      <div class="dialog-menubar-actions">
-        <material-button id="showCommentsButton" ng-if="poll.allowComments" class="material-button-icon" ng-click="showComments($event, poll)" title="Show Poll Comments">
+    <div id="actionMenuBar" class="cardMenuBar animate-show" ng-class="{hover:dialog.menubar}" style="display:block !important;">
+      <div class="dialog-menubar-actions" ng-show="dialog.menubar">
+        <md-button id="showCommentsButton" ng-if="poll.allowComments" class="md-button-icon" ng-click="showComments($event, poll)" title="Show Poll Comments">
           <img ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_chat_wht_18dp.png">
-        </material-button>
-        <material-button id="copyPollButton" class="material-button-icon" ng-click="copyPoll($event, poll)" title="Copy This Poll">
+        </md-button>
+        <md-button id="copyPollButton" class="md-button-icon" ng-click="copyPoll($event, poll)" title="Copy This Poll">
           <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_content_copy_wht_18dp.png">
-        </material-button>
-        <material-button id="deletePollButton" class="material-button-icon" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyPoll(poll)" title="Delete This Poll">
+        </md-button>
+        <md-button id="deletePollButton" class="md-button-icon" ng-really-message="Are you sure you want to delete this poll?" ng-really-click="destroyPoll(poll)" title="Delete This Poll">
           <img ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_delete_wht_18dp.png">
-        </material-button>
+        </md-button>
       </div>
     </div>
 
   </div>
-</material-dialog>
+</md-dialog>
