@@ -1,6 +1,7 @@
 <!-- Quick Add Box -->
 <md-content id="pollsContainer" class="container">
-  <div ng-controller="quickAddCtrl" ng-show="listView == 'quilt'" class="quickAddForm">
+  <div ng-controller="quickAddCtrl" ng-show="listView == 'quilt'" class="quickAddForm" ng-class="{extraWidth:ballotPreview}">
+    <div style="display: inline-block;">
     <md-card id="quickAddBox">
       <form name="quickAddForm" style="padding-left:20px;">
         <!--<md-input-group>
@@ -81,7 +82,8 @@
         
       </div>
     </div>
-    <md-card class="animate-show votes" id="quickBallotPreview" ng-show="ballotPreview" style="margin-left:0px;">
+    </div>
+    <md-card class="votes" id="quickBallotPreview" ng-show="ballotPreview" style="margin-left:0px;">
       <div class="pollOriginatorLine">
         <em>{{poll.id}}</em>
       </div>
@@ -101,8 +103,8 @@
         <div class="options">
           <table>
             <tr ng-repeat="option in poll.options" ng-if="option.text">  
-            <td ng-if="poll.allowMultipleChoices"><input type="checkbox" disabled></td>
-            <td ng-if="!poll.allowMultipleChoices"><input type="radio" disabled></td>
+            <td class="previewCheckbox" ng-if="poll.allowMultipleChoices"><input type="checkbox" disabled></td>
+            <td class="previewCheckbox" ng-if="!poll.allowMultipleChoices"><input type="radio" disabled></td>
             <td>{{option.text}}</td>
             </tr>
           </table>

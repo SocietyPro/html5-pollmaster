@@ -1,22 +1,41 @@
-<md-tabs selected="selectedIndex" noink>
-  <md-tab on-select="collectionChange()" label="My Templates"></md-tab>
-  <md-tab on-select="collectionChange()" label="Copy From Recent Polls"></md-tab>
-  <md-tab on-select="collectionChange()" label="Copy From Examples"></md-tab>
-  <md-tab on-select="collectionChange()" label="Copy From Peer Recommended"></md-tab>
+<md-tabs selected="selectedIndex">
+  <md-tab on-select="collectionChange()" label="{{tab}}" ng-repeat="tab in tabs">
+    <md-content id="templatesContainer" class="container" scroll-y>
+      <div class="quilt"  id="templateInside">
+        <ng-include src="'partials/templateCards.html'"></ng-include>
+      </div>
+    </md-content>
+  </md-tab>
+ <!-- <md-tab on-select="collectionChange()" label="Copy From Recent Polls">
+    <md-content id="templatesContainer" class="container" scroll-y>
+      <div class="quilt"  id="templateInside">
+        <ng-include src="'partials/templateCards.html'"></ng-include>
+      </div>
+    </md-content>
+  </md-tab>
+  <md-tab on-select="collectionChange()" label="Copy From Examples">
+    <md-content id="templatesContainer" class="container" scroll-y>
+      <div class="quilt"  id="templateInside">
+        <ng-include src="'partials/templateCards.html'"></ng-include>
+      </div>
+    </md-content>
+  </md-tab>
+  <md-tab on-select="collectionChange()" label="Copy From Peer Recommended">
+    <md-content id="templatesContainer" class="container" scroll-y>
+      <div class="quilt"  id="templateInside">
+        <ng-include src="'partials/templateCards.html'"></ng-include>
+      </div>
+    </md-content>
+  </md-tab>-->
 </md-tabs>
 
-<md-content id="templatesContainer" class="container" scroll-y>
 
-
-  <div class="quilt"  id="templateInside">
-    <ng-include src="'partials/templateCards.html'"></ng-include>
-  </div>
-
-  <!--<pre>{{poll | json}}</pre>-->
-
-  <div>
-    <md-button class="md-button-fab md-button-fab-bottom-right addNewPollBtn md-theme-light-blue" ng-click="newItemFromScratch($event, false)" title="New Template">
-      <md-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png"></md-icon>
+<div>
+    <md-button class="md-fab md-button-fab-bottom-right md-primary quickFabButton"  aria-label="New Template" ng-click="newItemFromScratch($event, false, undefined, '', '')" >
+        
+        <md-icon icon="material-icons/icons/system_icons/content/res/1x_web/ic_add_24dp.png" style="width: 24px; height: 24px;"></md-icon>
+        <md-tooltip>
+          New Template
+        </md-tooltip>
     </md-button>
   </div>
-</md-content>

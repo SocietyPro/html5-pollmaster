@@ -1,4 +1,4 @@
-<md-dialog>
+<md-dialog style="min-height:470px;">
   <div id="mdDialogContainer" ng-show="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'" ng-class="{running: poll.status === 'started', completed: poll.status === 'stopped' || poll.status === 'voted'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
 
     <div class="dialog-content">
@@ -99,13 +99,13 @@
       </div>
     </div>
     <div class="dialog-actions" layout="horizontal" layout-align="end">
-      <md-button id="closeButton" ng-click="close()">
+      <md-button id="closeButton" ng-click="close()" style="margin: 14px;">
         Close
       </md-button>
     </div>
 
-    <div id="actionMenuBar" class="cardMenuBar animate-show" ng-show="dialog.menubar" style="display:block !important;">
-      <div class="dialog-menubar-actions">
+    <div id="actionMenuBar" class="cardMenuBar animate-show" ng-class="{hover:dialog.menubar}" style="display:block !important;">
+      <div class="dialog-menubar-actions" ng-show="dialog.menubar">
         <md-button id="showCommentsButton" ng-if="poll.allowComments" class="md-button-icon" ng-click="showComments($event, poll)" title="Show Poll Comments">
           <img ng-src="material-icons/icons/system_icons/communication/res/1x_web/ic_chat_wht_18dp.png">
         </md-button>

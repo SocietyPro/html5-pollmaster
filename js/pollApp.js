@@ -132,13 +132,12 @@ app.controller("pollAppCtrl", function ($scope,
     var reloadM = function () {
       $scope.reloadMasonry = false;
       $timeout(function () {
-        console.log("reload");
         $scope.reloadMasonry = true;
       },50); 
     }
 
     $scope.safeApply = function(fn) {
-      var phase = this.$root.$$phase;
+      var phase = $rootScope.$$phase;
       if(phase == '$apply' || phase == '$digest') {
         if(fn && (typeof(fn) === 'function')) {
           fn();
@@ -207,52 +206,99 @@ app.controller("pollAppCtrl", function ($scope,
     };
 
     $scope.dialog = function (e, poll, saveMatrix) {
-      $mdDialog({
+      $mdDialog.show({
         templateUrl: 'partials/editPoll.tmpl.html',
         targetEvent: e,
-        controller: ['$scope', '$hideDialog', '$rootScope', '$timeout', function ($scope, $hideDialog, $rootScope, $timeout) {
+        controller: ['$scope', '$timeout', '$rootScope', 'pollNew', 'groupAll','pollCreateOrUpdate', '$location', '$mdDialog', function ($scope, $timeout, $rootScope, pollNew, groupAll,pollCreateOrUpdate, $location, $mdDialog) {
           $scope.poll = poll;
-          $scope.poll.pollTimeLength = $scope.poll.pollTimeLength || 86400;
-          $scope.units = ["Minutes", "Hours", "Days", "Weeks", "Months", "Years"];
-          $scope.pollLength = {numeral: $scope.poll.pollTimeLength / 60, units: "Minutes"};
-          $scope.saveMatrix = saveMatrix;
+          $scope.poll.allowComments = true;
+          $scope.myGroups = groupAll();
           $scope.ballotPreview = false;
           $scope.optionsMenu = false;
-          if ($scope.poll.endTime) {
-            $scope.endTime = new Date();
-            $scope.endTime.setHours(parseInt($scope.poll.endTime.substring(0,2)));
-            $scope.endTime.setMinutes(parseInt($scope.poll.endTime.substring(3,5)));
+          var today = new Date();
+          var d = new Date(today.getTime() + (24*60*60*1000));
+          $scope.edate = d.format("mm/dd/yy");
+          $scope.endTime = new Date();
+          $scope.endTime.setHours(d.getHours());
+          $scope.endTime.setMinutes(d.getMinutes());
+          $scope.time = today.toLocaleTimeString();
+          $scope.saveMatrix = {poll: false, template: false};
+          timepickerOptions = {appendTo:'head'};
+          if ($location.path() == "/polls") {
+            $scope.saveMatrix.poll = true;
+          } else {
+            $scope.saveMatrix.template = true;
           }
 
-          $timeout(function () {
-            $("#addOptionInput").focus();
-          });      
+          $scope.hide = function () {
+            $mdDialog.hide();
+          };
+          
+          $scope.convertTimeToSeconds = function (date, time) {
+            var pollDate = new Date(date +" " +time);
+            var todayDate = new Date();
+            return (pollDate.getTime()-todayDate.getTime())/1000;
+          };
 
-          $scope.selected = -1;
-          $scope.optionSelected = function (i) {
-            if (!$scope.poll.allowMultipleChoices) {
-              if ($scope.selected != -1) {
-                if ($scope.selected == i) {
-                  $scope.selected = -1;
-                } else {
-                  $scope.poll.options[$scope.selected].isSelected = false;
-                  $scope.selected = i;
-                }  
-              } else {
-                $scope.selected = i;
+          function saveItem (item, saveMatrix, startNow) {
+            for (var i = 0; i<item.options.length; i++) {
+              if (!item.options[i].text) {
+                item.options.splice(i,1);
               }
             }
-          }    
+            item.overflow = false;
+            item.status = "unsaved";
+            if (saveMatrix.poll) {
+              item.isTemplate = false;
+              pollCreateOrUpdate(item,startNow);
+            }
 
-          $scope.checkHeight = function () {
-            var dialogHeight = $('.dialog-content').height();
-            var curHeight = $('#content').height();            
-            if (dialogHeight < curHeight) {
-               $('.dialog-content').css("overflow","auto");
+            if (saveMatrix.template) {
+              item.isTemplate = true;
+              item.pollTargetId = "";
+              item.dateStarted = null;
+              item.dataStopped = null;
+              pollCreateOrUpdate(item,startNow);
+            }
+            $mdDialog.hide();
+
+          };
+
+          $scope.save = function (startNow) {
+            if (!$scope.newDate) {
+              $scope.newDate = $scope.edate;
+            }
+            if ($scope.newDate && $scope.time) {
+               var seconds = $scope.convertTimeToSeconds($scope.newDate, $scope.time);
+            if (seconds > 0) {
+              $scope.poll.pollTimeLength = seconds | 0;
+              saveItem($scope.poll, $scope.saveMatrix, startNow);
+              $scope.poll.overflow = false;
             } else {
-              $('.dialog-content').css("overflow","hidden");
+              console.log("error in seconds");
+              }
             }
           }
+
+          $scope.getTime = function (time) {
+            if (time != undefined) {
+              $scope.time = time.toLocaleTimeString();
+            } else {
+              $scope.time = undefined;
+            }
+          }
+          
+          $scope.hasData = function (options) {
+            if (options.length == 0) {
+              return false;
+            }
+            for (var i = 0; i < options.length; i++) {
+              if (options[i].text == "") {
+                return false;
+              }
+            }
+            return true;
+          };
 
           $scope.keypressListener = function (event) {
             if (event.charCode == 13) {
@@ -261,30 +307,6 @@ app.controller("pollAppCtrl", function ($scope,
               });
             }
           }
-
-          $scope.close = function () {
-            $hideDialog();
-          };
-
-          $scope.getTime = function (et) {
-            if (et) {
-              $scope.poll.endTime = et.toTimeString().substring(0,5);
-            }
-          };
-
-          $scope.getDate = function (ed) {
-            $scope.poll.endDate = new Date(ed);
-          }
-
-          $scope.addOption = function () {
-            var newOption = { text: $scope.newOptionText, subgroup: "", count: 0 };
-            $scope.poll.options.push(newOption);
-            $scope.newOptionText = "";
-            var index = $scope.poll.options.length - 1;
-            $timeout(function () {
-              $rootScope.$broadcast('focusedIndex', {focus: index});
-            });
-          };
 
           $scope.checkForOptionDelete = function ($event,$index) {
             if($scope.poll.options[$index].text === '' && $event.keyCode === 8) {
@@ -314,54 +336,13 @@ app.controller("pollAppCtrl", function ($scope,
             $scope.poll.options.splice($index, 1);
           };
 
-          $scope.save = function (item, saveMatrix) {
-            saveItem(item, saveMatrix, false);
-            item.overflow = false;
-            $hideDialog();
-          };
-
-          $scope.nextDialog = function (e, poll, saveMatrix, pollLength) {
-            $hideDialog();
-            $mdDialog({
-              templateUrl: 'partials/selectTarget.tmpl.html',
-              targetEvent: e,
-              controller: ['$scope', '$hideDialog', '$rootScope','$mdDialog', function ($scope, $hideDialog, $rootScope,$mdDialog) {
-                $scope.poll = poll;
-                $scope.myGroups = groupAll();
-                $scope.saveMatrix = saveMatrix;
-                $scope.pollLength = pollLength;
-
-                $scope.close = function () {
-                  $hideDialog();
-                };
-
-                $scope.save = function (item, saveMatrix,e,startNow) {
-                  if (startNow) {    
-                    $mdDialog({
-                      templateUrl: 'partials/pollEndsDate.tmpl.html',
-                      targetEvent: e,
-                      locals: {
-                        item: item,
-                        saveMatrix: saveMatrix
-                      },
-                      controller: 'pollEndDateCtrl'
-                    });
-
-                  startNow = false;
-                    $hideDialog();
-                  } else {
-                    item.pollTimeLength = convertTimeToSeconds($scope.pollLength.numeral, $scope.pollLength.units);
-                    saveItem(item, saveMatrix, $scope.startNow && item.pollTargetId);
-                    item.overflow = false;  
-                    
-                  startNow = false;
-                    $hideDialog();
-                  }
-                  
-                };
-
-
-              }]
+          $scope.addOption = function () {
+            var newOption = { text: $scope.newOptionText, subgroup: "", count: 0 };
+            $scope.poll.options.push(newOption);
+            $scope.newOptionText = "";
+            var index = $scope.poll.options.length - 1;
+            $timeout(function () {
+              $rootScope.$broadcast('focusedIndex', {focus: index});
             });
           };
 
@@ -522,7 +503,7 @@ app.controller("pollsCtrl", function ($scope,
 
   $scope.startPoll = function(poll,e){
     var sm = {poll:true}
-    $mdDialog({
+    $mdDialog.show({
       templateUrl: 'partials/pollEndsDate.tmpl.html',
       targetEvent: e,
       locals: {
@@ -595,10 +576,10 @@ app.controller("pollsCtrl", function ($scope,
   }; 
   
   function vote (e, poll) {
-    $mdDialog({
+    $mdDialog.show({
       templateUrl: 'partials/votingBoothDialog.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', '$rootScope', 'pollSubmit', function ($scope, $hideDialog, $rootScope, pollSubmit) {
+      controller: ['$scope', '$mdDialog', '$rootScope', 'pollSubmit', function ($scope, $mdDialog, $rootScope, pollSubmit) {
         $scope.poll = poll;
         $scope.pollLength = {numeral: poll.pollTimeLength / 60, units: "Minutes"};
         $scope.ballot = {};
@@ -616,7 +597,7 @@ app.controller("pollsCtrl", function ($scope,
           }
           pollSubmit($scope.poll);
           $rootScope.$broadcast('refreshPollsList');
-          $hideDialog();
+          $mdDialog.hide();
         };
 
         $scope.submit = function () {
@@ -635,7 +616,7 @@ app.controller("pollsCtrl", function ($scope,
           console.log(voterComment);
           pollSubmit($scope.poll, voterComment);
           $rootScope.$broadcast('refreshPollsList');
-          $hideDialog();
+          $mdDialog.hide();
         };
 
       }]
@@ -643,10 +624,10 @@ app.controller("pollsCtrl", function ($scope,
   };
 
   function showPoll (e, poll) {
-    $mdDialog({
+    $mdDialog.show({
       templateUrl: 'partials/showPoll.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', '$rootScope', '$filter', 'pollFind', 'pollResults', function ($scope, $hideDialog, $rootScope, $filter, pollFind, pollResults) {
+      controller: ['$scope', '$mdDialog', '$rootScope', '$filter', 'pollFind', 'pollResults', function ($scope, $mdDialog, $rootScope, $filter, pollFind, pollResults) {
         Cambrian.polls.onVoteReceived.connect(refreshPoll);
         // NVD3 CHARTS CONFIG ==========================================
         $scope.noOptions = [
@@ -684,7 +665,7 @@ app.controller("pollsCtrl", function ($scope,
         $scope.dialog = {};
 
         $scope.close = function () {
-          $hideDialog();
+          $mdDialog.hide();
         };
         $scope.hasData = function (options) {
           var a = 0;
@@ -695,13 +676,13 @@ app.controller("pollsCtrl", function ($scope,
         }
 
         $scope.copyPoll = function (e, poll) {
-          $hideDialog();
+          $mdDialog.hide();
           $rootScope.$broadcast('zoomedCopyPoll', {event: e, poll: poll});
         };
 
         $scope.destroyPoll = function (poll) {
           pollDestroy(poll);
-          $hideDialog();
+          $mdDialog.hide();
         };
 
         $scope.pieWidth = 200;
@@ -723,11 +704,11 @@ app.controller("pollsCtrl", function ($scope,
         };
 
         $scope.showComments = function (e, poll) {
-          $hideDialog();
-          $mdDialog({
+          $mdDialog.hide();
+          $mdDialog.show({
             templateUrl: 'partials/showComments.tmpl.html',
             targetEvent: e,
-            controller: ['$scope', '$hideDialog', 'pollComments', function ($scope, $hideDialog, pollComments) {
+            controller: ['$scope', '$mdDialog', 'pollComments', function ($scope, $mdDialog, pollComments) {
               Cambrian.polls.onVoteReceived.connect(refreshComments);
               $scope.poll = poll;
               $scope.comments = pollComments(poll);
@@ -736,20 +717,20 @@ app.controller("pollsCtrl", function ($scope,
               $scope.goChat = function (comment) {
                 var jid = comment.name + "@xmpp.cambrian.org";
                 Cambrian.apps.chat.open(jid); //This has to be replaced with the actual jid property name
-                $hideDialog();
+                $mdDialog.hide();
               };
 
               $scope.close = function () {
-                $hideDialog();
+                $mdDialog.hide();
               };
 
               $scope.showPoll = function (e, poll) {
-                $hideDialog();
+                $mdDialog.hide();
                 $rootScope.$broadcast('showPollResults', {event: e, poll: poll});
               };
 
               function refreshComments (poll) {
-                $scope.$apply (function () {
+                $scope.safeApply (function () {
                   $scope.comments = pollComments(poll);
                 });
               };
@@ -759,7 +740,7 @@ app.controller("pollsCtrl", function ($scope,
         };
 
         function refreshPoll () {
-          $scope.$apply (function () {
+          $scope.safeApply (function () {
             console.log("getting the new poll stuff");
             $scope.poll = pollFind($scope.poll.id);
             console.log($scope.poll);
@@ -790,6 +771,7 @@ app.controller("templatesCtrl", function ($scope,
   Cambrian.polls.onBallotReceived.connect(refreshTemplates);
 
   $scope.selectedIndex = 0;
+  $scope.tabs = ["My templates","Copy from recent polls", "copy from examples", "copy from peer recommended"];
   $scope.templates = templates;
   $scope.addTitlePlaceholder = "Add Template";
   $scope.addDescriptionPlaceholder = "Add Description";
@@ -860,25 +842,25 @@ app.controller("templatesCtrl", function ($scope,
   };
 
   function showTemplate (e, template, selectedIndex) {
-    $mdDialog({
+    $mdDialog.show({
       templateUrl: 'partials/showTemplate.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', '$rootScope', function ($scope, $hideDialog, $rootScope) {
+      controller: ['$scope', '$mdDialog', '$rootScope', function ($scope, $mdDialog, $rootScope) {
         $scope.template = template;
         $scope.dialog = {};
         $scope.selectedIndex = selectedIndex;
 
         $scope.close = function () {
-          $hideDialog();
+          $mdDialog.hide();
         };
 
         $scope.forkTemplate = function (e, template) {
-          $hideDialog();
+          $mdDialog.hide();
           $rootScope.$broadcast('zoomedForkTemplate', {event: e, template: template});
         };
 
         $scope.newPollFromTemplate = function(e, template){
-          $hideDialog();
+          $mdDialog.hide();
           $rootScope.$broadcast('zoomedPollFromTemplate', {event: e, template: template});
         };
 
@@ -888,8 +870,7 @@ app.controller("templatesCtrl", function ($scope,
 
 });
 
-app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, groupAll,pollCreateOrUpdate, $location) {
-
+app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, groupAll,pollCreateOrUpdate, $location, $mdDialog) {
   $scope.poll = pollNew();
   $scope.poll.allowComments = true;
   $scope.myGroups = groupAll();
@@ -911,16 +892,17 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
   }
 
   $(document).mouseup(function (e) {
+    var ballotPreview = $("#quickBallotPreview");
     var container = $("#quickAddBox");
     var options = $(".optionsMenu");
     var datepicker = $("#ui-datepicker-div");
     var timepicker = $(".ui-timepicker-wrapper");
-    if ((!container.is(e.target) && !datepicker.is(e.target) && !timepicker.is(e.target) && !options.is(e.target)) // if the target of the click isn't the container...
-        && (container.has(e.target).length === 0 && datepicker.has(e.target).length === 0 && timepicker.has(e.target).length === 0 && options.has(e.target).length === 0)) // ... nor a descendant of the container
+    if ((!container.is(e.target) && !ballotPreview.is(e.target) && !datepicker.is(e.target) && !timepicker.is(e.target) && !options.is(e.target)) // if the target of the click isn't the container...
+        && (container.has(e.target).length === 0 && datepicker.has(e.target).length === 0 && ballotPreview.has(e.target).length === 0 && timepicker.has(e.target).length === 0 && options.has(e.target).length === 0)) // ... nor a descendant of the container
     {
       var exists = ($('#quickAddBox').length === 1)
       if (exists) {
-        $scope.$apply(function() {
+        $scope.safeApply(function() {
           $scope.poll = pollNew();
           $scope.poll.allowComments = true;
           $scope.newItem = false;
@@ -933,7 +915,7 @@ app.controller('quickAddCtrl', function ($scope, $timeout, $rootScope, pollNew, 
   });
 
   $scope.$on('resetQuickAddForm', function () {
-    $scope.$apply(function() {
+    $scope.safeApply(function() {
       $scope.poll = pollNew();
       $scope.poll.allowComments = true;
       $scope.newItem = false;
@@ -1111,7 +1093,7 @@ app.controller("helpCtrl", function ($scope, $modalInstance) {
 
 });
 
-app.controller("pollEndDateCtrl", ['$scope','$hideDialog','item','saveMatrix','pollCreateOrUpdate', function ($scope, $hideDialog,item,saveMatrix,pollCreateOrUpdate) {
+app.controller("pollEndDateCtrl", ['$scope','$mdDialog','item','saveMatrix','pollCreateOrUpdate', function ($scope, $mdDialog,item,saveMatrix,pollCreateOrUpdate) {
   if (item.dateStarted) {
     var d = new Date(item.dateStarted.getTime() + (item.pollTimeLength*1000));    
   } else {
@@ -1170,11 +1152,11 @@ app.controller("pollEndDateCtrl", ['$scope','$hideDialog','item','saveMatrix','p
         item.pollTimeLength = seconds | 0;
         saveItem(item, saveMatrix, true);
         item.overflow = false;
-        $hideDialog();
+        $mdDialog.hide();
       }
     }
   }
   $scope.close = function () {
-    $hideDialog();
+    $mdDialog.hide();
   }
 }]);

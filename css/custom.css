@@ -551,7 +551,7 @@ md-button.md-button-fab.md-button-fab-bottom-right {
 }
 
 .previewCheckbox {
-  width: 30px;
+  width: 20px;
 }
 
 .pieChartContainer {
@@ -561,22 +561,27 @@ md-button.md-button-fab.md-button-fab-bottom-right {
 }
 
 div .cardMenuBar {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: inherit;
   min-height: 40px;
   max-height: 40px;
-  margin: -25px -10px -10px -10px;
+  margin: -25px -8px -8px -8px;
   padding: 5px; 
   vertical-align: middle;
 }
 
+div .cardMenuBar.hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 .startPollButton,
 .stopPollButton {
-  margin-top: 6px;
+  margin-top: 2px;
 }
 
 .overflowMenuButton {
-  margin-top: 6px;
-  float: right; 
+  margin-top: 2px;
+  float: right;
+  height: 25px; 
 }
 
 .streamOverflowMenuButton:hover {
@@ -663,6 +668,10 @@ md-checkbox[disabled] {
   height: 32px;
   width: 32px;
   line-height: 43px;
+}
+
+.dialog-menubar-actions .md-button-icon > button {
+  padding: 0px;
 }
 
 .dialog-options-container {
@@ -871,8 +880,8 @@ a.active {
   opacity: 1.0; 
 }
 
-md-ink-bar {
-  background: #000;
+md-tabs-ink-bar {
+  background-color: #000 !important;
 }
 
 md-tabs .tabs-content {
@@ -958,6 +967,7 @@ md-toolbar {
 
 #optionsQuickNewPoll > .menuDrawerButton > button {
   margin-top: -5px;
+  height: 25px;
 }
 
 #optionsQuickNewPoll > .menuDrawerButton:hover {
@@ -975,6 +985,9 @@ md-toolbar {
   max-width: 300px;
   padding: 16px 24px;
   margin-top: 30px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
 }
 .ui-timepicker-wrapper {
   height: 125px;
@@ -982,12 +995,6 @@ md-toolbar {
 #templatesContainer {
   height: 100%;
   padding-right: 5px;
-}
-#quickAddButton:hover {
-  border-color: rgb(75,75,75);
-}
-#quickStartButton:hover {
-  border-color: rgb(75,75,75)
 }
 .chatLink {
   cursor: pointer;
@@ -997,6 +1004,7 @@ md-dialog-container md-dialog {
 }
 .md-dialog-container md-dialog .dialog-content {
   width:671px;
+  overflow: auto;
 }
 .appVersion p {
   color: slategray;
@@ -1193,9 +1201,6 @@ md-sidenav {
 .streamMargin {
   margin-top: 55px;
 }
-md-dialog>div{
-  overflow: auto;
-}
 .noShadow {
   box-shadow: 0px 0px 0px;
 }
@@ -1229,16 +1234,41 @@ md-input-group, .md-input-group {
 }
 .quickAddForm {
   display: table;
-  width: 100%;  
+  width: 612px;  
+  margin: 0 auto;
+}
+.extraWidth {
+  width: 920px;
 }
 .optionsMenu {
   box-sizing: border-box;
   color: rgba(0,0,0,0.8);
   width: 612px;
   margin: auto;
-  background-color: rgba(0,0,0,0.17);
+  background-color: white;
 }
 .optionsMenu > .dialog-options-options {
   padding: 15px;
-  background-color: inherit;
+  background-color: rgba(0,0,0,0.17);
+}
+table {
+  table-layout: fixed;
+}
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.md-dialog-container {
+  overflow: auto;
+  background-color: rgba(229,229,229,.75);
+}
+
+#dismissButton {
+  margin-right: 14px;
+}
+#mdDialogContainer {
+  min-height: 470px;
+  min-width: 671px;
 }
