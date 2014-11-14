@@ -1,5 +1,5 @@
 <md-dialog style="min-height:470px;">
-  <div id="mdDialogContainer" ng-show="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'" ng-class="{running: poll.status === 'started', completed: poll.status === 'stopped' || poll.status === 'voted'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false">
+  <div id="mdDialogContainer" ng-show="poll.status === 'started' || poll.status === 'stopped' || poll.status === 'voted'" ng-class="{running: poll.status === 'started', completed: poll.status === 'stopped' || poll.status === 'voted'}" ng-mouseover="dialog.menubar = true" ng-mouseleave="dialog.menubar = false" layout="vertical">
 
     <div class="dialog-content">
       <div class="pollInformation">
@@ -98,6 +98,7 @@
         <div class="clearBoth"></div>
       </div>
     </div>
+    <span flex></span>
     <div class="dialog-actions" layout="horizontal" layout-align="end">
       <md-button id="closeButton" ng-click="close()" style="margin: 14px;">
         Close

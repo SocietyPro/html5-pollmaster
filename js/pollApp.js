@@ -807,11 +807,8 @@ app.controller("templatesCtrl", function ($scope,
 
   $scope.zoomTemplate = function (e, template) {
     saveMatrix = {poll: false, template: true};
-    if($scope.selectedIndex == 0) {
       $scope.startCustomizing(e, template, saveMatrix);
-    } else {
-      showTemplate(e, template, $scope.selectedIndex);
-    };
+    
   };
 
   $scope.newPollFromTemplate = function(e, template){

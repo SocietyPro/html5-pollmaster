@@ -112,47 +112,46 @@
 </div>
 <div class="streamMargin" ng-show="listView == 'stream' && polls.length != 0">
   <div class="streamTitles">
-    <div layout="horizontal" flex="90">
+    <div layout="horizontal" flex="100">
       <div flex="50" style="margin-left:16px;">Title</div>
       <div flex="10" style="margin-left:16px;">Owner</div>
       <div flex="10" style="margin-left:16px;">Status</div>
-      <div flex="30" style="margin-left:16px;">End Date</div>
+      <div flex="15" style="margin-left:16px;">End Date</div>
     </div>
   </div>
   <div></div>
 </div>
 <div class="streamCardholder" ng-repeat="poll in polls | filter:pollFilter:true" ng-mouseleave="poll.overflow = false"  ng-if="listView == 'stream'">
   <md-card class="streamMainCard" ng-class="{votes: poll.status === 'unvoted', voted: poll.status === 'voted', running: poll.status === 'started', completed: poll.status === 'stopped', unstarted: poll.status === 'unstarted', firstCard: $first}" layout="horizontal">
-    <div class="streamCardContentContainer" ng-click="zoomPoll($event, poll)" layout="horizontal" layout-align="start center">
-      <div class="streamPollLine" flex="50">
+    <div class="streamCardContentContainer" layout="horizontal" layout-align="start center">
+      <div class="streamPollLine" flex="50" ng-click="zoomPoll($event, poll)">
         <b>{{poll.title}}</b>
       </div>
-      <div class="streamPollLine gray" flex="10">
+      <div class="streamPollLine gray" flex="10" ng-click="zoomPoll($event, poll)">
         <em>{{poll.originator}}</em>
       </div>
-      <div class="streamPollLine gray" flex="10">
+      <div class="streamPollLine gray" flex="10" ng-click="zoomPoll($event, poll)">
         <em>{{poll.status}}</em>
       </div>
-      <div class="streamPollLine gray" flex="30">
-        <div ng-if="poll.dateStarted && poll.pollTimeLength && poll.status === 'stopped'" >
+      <div class="streamPollLine endDate gray" flex="15" ng-click="zoomPoll($event, poll)">
+        <div ng-if="poll.dateStarted && poll.pollTimeLength && poll.status === 'stopped'">
           Poll Ended At {{getEndPollDate(poll.dateStarted,poll.pollTimeLength)}} 
         </div>
         <div ng-if="poll.dateStarted && poll.pollTimeLength && (poll.status === 'unstarted' || poll.status === 'vote' || poll.status === 'started' || poll.status === 'unvoted')" >
           Poll Ends in {{getEndPollDate(poll.dateStarted,poll.pollTimeLength)}}
         </div>
       </div>
-    </div>
-      
-    <div class="streamCardMenuBar" layout="horizontal" layout-align="end center">
-      <md-button ng-if="poll.status === 'unstarted' && poll.pollTargetId" class="md-button-icon startPollButton streamOverflowMenuButton" ng-click="startPoll(poll,$event)" title="Start Poll" style="margin-top: 6px;">
-        <img class="startPollIcon" ng-src="material-icons/icons/system_icons/av/res/1x_web/ic_play_arrow_wht_18dp.png">
-      </md-button>
-      <md-button ng-if="poll.status === 'started'" class="md-button-icon stopPollButton streamOverflowMenuButton" ng-click="stopPoll(poll)" title="Stop Poll" style="margin-top: 6px;">
-        <img class="stopPollIcon" ng-src="material-icons/icons/system_icons/av/res/1x_web/ic_stop_wht_18dp.png">
-      </md-button>
-      <md-button class="md-button-icon overflowMenuButton streamOverflowMenuButton" ng-click="overflowToggle(poll)" layout="vertical" layout-align="end end" title="Overflow Menu">
-        <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
-      </md-button>
+      <div class="streamCardMenuBar" flex="15" layout="horizontal" layout-align="end center">
+        <md-button ng-if="poll.status === 'unstarted' && poll.pollTargetId" class="md-button-icon startPollButton streamOverflowMenuButton" ng-click="startPoll(poll,$event)" title="Start Poll" style="margin-top: 6px;">
+          <img class="startPollIcon" ng-src="material-icons/icons/system_icons/av/res/1x_web/ic_play_arrow_wht_18dp.png">
+        </md-button>
+        <md-button ng-if="poll.status === 'started'" class="md-button-icon stopPollButton streamOverflowMenuButton" ng-click="stopPoll(poll)" title="Stop Poll" style="margin-top: 6px;">
+          <img class="stopPollIcon" ng-src="material-icons/icons/system_icons/av/res/1x_web/ic_stop_wht_18dp.png">
+        </md-button>
+        <md-button class="md-button-icon overflowMenuButton streamOverflowMenuButton" ng-click="overflowToggle(poll)" layout="vertical" layout-align="end end" title="Overflow Menu">
+          <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
+        </md-button>
+      </div>
     </div>
   </md-card>
   <md-card class="overflowMenu animate-show" ng-show="poll.overflow">

@@ -2,7 +2,7 @@
   <div ng-if="selectedIndex == 0 && listView == 'quilt'" ng-controller="quickAddCtrl" layout="horizontal" layout-align="center start">
     <!-- Quick Add Box -->
     <div style="display: inline-block;">
-    <md-card id="quickAddBox"  style="margin-bottom:30px;">
+    <md-card id="quickAddBox" style="margin-top:78px">
       <form name="quickAddForm" style="padding-left:20px;">
         <!--<md-input-group>
           <md-input ng-class="{bold:newItem}" name="quickAddTitle" placeholder="{{addTitlePlaceholder}}" id="quickAddTitle" type="text" size="45" ng-model="newTitle" flex ng-click="newItem = true">
@@ -121,7 +121,7 @@
     </md-card>
     <!-- end Quick Add Box -->
   </div>
-  <div masonry="{ transitionDuration: 0 }" reload-on-show load-images="false" ng-show="reloadMasonry" ng-class="{streamMargin:isTmpl && selectedIndex != 0}" ng-if="listView == 'quilt'">
+  <div id="quilt" masonry="{ transitionDuration: 0 }" reload-on-show load-images="false" ng-show="reloadMasonry" ng-class="{streamMargin:isTmpl && selectedIndex != 0}" ng-if="listView == 'quilt'">
   <div class="cardholder masonry-brick" ng-repeat="template in templates" ng-mouseleave="template.overflow = false" ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}">
     <md-card class="mainCard" ng-mouseover="template.menubar = true" ng-mouseleave="template.menubar = false">
       <div class="cardContentContainer" ng-click="zoomTemplate($event, template)">
@@ -166,7 +166,7 @@
 </div>
 <div class="streamMargin" ng-show="listView == 'stream' && templates.length != 0">
   <div class="streamTitles">
-    <div layout="horizontal" flex="90">
+    <div layout="horizontal" flex="100">
       <div flex="70" style="margin-left:16px;">Title</div>
       <div flex="20" style="margin-left:16px;">Owner</div>
     </div>
@@ -175,19 +175,18 @@
 </div>
 <div class="streamCardholder" ng-repeat="template in templates | filter:pollFilter:true" ng-mouseleave="template.overflow = false"  ng-if="listView == 'stream'">
   <md-card class="streamMainCard"  layout="horizontal">
-    <div class="streamCardContentContainer" ng-click="zoomPoll($event, template)" layout="horizontal" layout-align="start center">
-      <div class="streamPollLine" flex="70">
+    <div class="streamCardContentContainer" layout="horizontal" layout-align="start center">
+      <div class="streamPollLine" flex="70" ng-click="zoomTemplate($event, template)">
         <b>{{template.title}}</b>
       </div>
-      <div class="streamPollLine gray" flex="20">
+      <div class="streamPollLine gray" flex="20" ng-click="zoomTemplate($event, template)">
         <em>{{template.originator}}</em>
       </div>
+      <div class="streamCardMenuBar" layout="horizontal" layout-align="end center" style="margin-left: 15px;">
+        <md-button class="md-button-icon overflowMenuButton streamOverflowMenuButton" ng-click="template.overflow = !template.overflow" layout="vertical" layout-align="end end" title="Overflow Menu">
+          <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_18dp.png">
+        </md-button>
     </div>
-      
-    <div class="streamCardMenuBar" layout="horizontal" layout-align="end center">
-      <md-button class="md-button-icon overflowMenuButton streamOverflowMenuButton" ng-click="template.overflow = !template.overflow" layout="vertical" layout-align="end end" title="Overflow Menu">
-        <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_18dp.png">
-      </md-button>
     </div>
   </md-card>
   <md-card class="overflowMenu animate-show" ng-show="template.overflow" layout="vertical">
